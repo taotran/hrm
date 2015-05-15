@@ -1,0 +1,47 @@
+create table HRM_Candidate (
+	c_id LONG not null primary key,
+	first_name VARCHAR(75) null,
+	middle_name VARCHAR(75) null,
+	last_name VARCHAR(75) null,
+	email VARCHAR(75) null,
+	contact_number VARCHAR(75) null,
+	comment_ VARCHAR(75) null,
+	mode_of_application INTEGER,
+	date_of_application DATE null,
+	cv_file_id LONG,
+	cv_text_version VARCHAR(75) null,
+	keywords VARCHAR(75) null,
+	added_person INTEGER
+);
+
+create table HRM_JTitle (
+	jobtitleId LONG not null primary key,
+	title VARCHAR(75) null,
+	description VARCHAR(75) null,
+	note VARCHAR(75) null,
+	isDeleted BOOLEAN
+);
+
+create table HRM_Vacancies_Candidates (
+	c_id LONG not null,
+	v_id LONG not null,
+	primary key (c_id, v_id)
+);
+
+create table HRM_Vacancy (
+	v_id LONG not null primary key,
+	jtitle_id LONG,
+	hiring_manager_id LONG,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	no_of_positions INTEGER,
+	published_in_feed BOOLEAN,
+	insert_date DATE null,
+	update_date DATE null
+);
+
+create table HRM_jtittle_id (
+	id_ LONG not null,
+	id_ LONG not null,
+	primary key (id_, id_)
+);

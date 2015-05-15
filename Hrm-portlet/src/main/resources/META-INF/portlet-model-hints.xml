@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="vn.com.ecopharma.hrm.model.Candidate">
+		<field name="c_id" type="long" />
+		<field name="first_name" type="String" />
+		<field name="middle_name" type="String" />
+		<field name="last_name" type="String" />
+		<field name="email" type="String" />
+		<field name="contact_number" type="String" />
+		<field name="comment" type="String" />
+		<field name="mode_of_application" type="int" />
+		<field name="date_of_application" type="Date" />
+		<field name="cv_file_id" type="long" />
+		<field name="cv_text_version" type="String" />
+		<field name="keywords" type="String" />
+		<field name="added_person" type="int" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.JTitle">
+		<field name="jobtitleId" type="long" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="note" type="String" />
+		<field name="isDeleted" type="boolean" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.Vacancy">
+		<field name="v_id" type="long" />
+		<field name="jtitle_id" type="long" />
+		<field name="hiring_manager_id" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="no_of_positions" type="int" />
+		<field name="published_in_feed" type="boolean" />
+		<field name="insert_date" type="Date" />
+		<field name="update_date" type="Date" />
+	</model>
+</model-hints>

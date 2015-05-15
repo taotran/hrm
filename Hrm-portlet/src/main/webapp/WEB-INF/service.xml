@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="vn.com.ecopharma.hrm">
+	<author>tvt</author>
+	<namespace>HRM</namespace>
+
+	<entity name="Candidate" local-service="true" trash-enabled="true" remote-service="true">
+		<column name="c_id" type="long" primary="true"></column>
+		<column name="first_name" type="String"></column>
+		<column name="middle_name" type="String"></column>
+		<column name="last_name" type="String"></column>
+		<column name="email" type="String"></column>
+		<column name="contact_number" type="String"></column>
+		<column name="comment" type="String"></column>
+		<column name="mode_of_application" type="int"></column>
+		<column name="date_of_application" type="Date"></column>
+		<column name="cv_file_id" type="long"></column>
+		<column name="cv_text_version" type="String"></column>
+		<column name="keywords" type="String"></column>
+		<column name="added_person" type="int"></column>
+		<column name="vancancies" type="Collection" entity="Vacancy" mapping-table="Vacancies_Candidates"></column>
+        <finder name="findCandidates" return-type="Collection">
+            <finder-column name="c_id"></finder-column>
+        </finder>
+	</entity>
+
+
+	<entity name="Vacancy" local-service="true" trash-enabled="true" remote-service="true">
+		<column name="v_id" type="long" primary="true"></column>
+		<column name="jtitle_id" type="long"></column>
+		<column name="hiring_manager_id" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="no_of_positions" type="int"></column>
+		
+		<column name="published_in_feed" type="boolean"></column>
+		<column name="insert_date" type="Date"></column>
+		<column name="update_date" type="Date"></column>
+		<column name="candidates" type="Collection" entity="Candidate" mapping-table="Vacancies_Candidates"></column>
+	</entity>
+
+	<entity name="JTitle" local-service="true" trash-enabled="true" remote-service="true">
+		<column name="jobtitleId" type="long" primary="true"></column>
+		<column name="title" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="note" type="String"></column>
+		<column name="isDeleted" type="boolean"></column>
+<!-- 		<column name="vacancies" type="Collection" entity="Vacancy" mapping-table="jtittle_id"></column> -->
+	</entity>
+</service-builder>
+	
