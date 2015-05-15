@@ -3,7 +3,7 @@
 
 <display>
 	<category name="category.sample">
-		<portlet id="Hrm-portlet" />
+		<!-- <portlet id="Hrm-portlet" /> -->
 		<portlet id="hrm"></portlet>
 	</category>
 </display>

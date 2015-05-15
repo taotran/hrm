@@ -2,12 +2,12 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
-	<portlet>
+<!-- 	<portlet>
 		<portlet-name>Hrm-portlet</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
-	</portlet>
+	</portlet> -->
 	<portlet>
 		<portlet-name>hrm</portlet-name>
 		<icon>/icon.png</icon>
@@ -15,10 +15,10 @@
 		<!-- <header-portlet-css>/css/select2-bootstrap.css</header-portlet-css> -->
 		<header-portlet-css>/css/select2.min.css</header-portlet-css>
 		<header-portlet-css>/css/main.css</header-portlet-css>
-		<header-portlet-css>http://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css</header-portlet-css>
+		<header-portlet-css>/css/bootstrap.min.css</header-portlet-css>
 		<!-- <header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript> -->
 		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
-		<header-portlet-javascript>http://cdn.alloyui.com/3.0.1/aui/aui-min.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/aui-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/select2.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/bootstrap-datepicker.js</header-portlet-javascript>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>

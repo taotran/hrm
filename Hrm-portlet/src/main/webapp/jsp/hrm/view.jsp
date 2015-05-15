@@ -6,6 +6,8 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@include file="init.jsp"%>
 
+
+
 <div id="myTab">
 
 	<ul class="nav nav-tabs">
@@ -23,22 +25,19 @@
 					<!-- Bootstrap trigger to open modal -->
 					<div class="advancedSearchBox">
 						<div class="searchFields">
-							<label for="jTitle">Job Title</label>
-							<select class="select2-container" id="jTitle">
+							<label for="jTitle">Job Title</label> <select
+								class="select2-container" id="jTitle">
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
 								<option value="3">Test 3</option>
 								<option value="4">Test 4</option>
-							</select> 
-							<label for="vSelect">Vacancy</label>
-							<select class="select2-container" id="vSelect">
+							</select> <label for="vSelect">Vacancy</label> <select
+								class="select2-container" id="vSelect">
 								<option value="1">Test 1</option>
 								<option value="2">Test 2</option>
 								<option value="3">Test 3</option>
 								<option value="4">Test 4</option>
-							</select> 
-							 <input id="cName"
-								placeholder="Type..." />
+							</select> <input id="cName" placeholder="Type..." />
 						</div>
 						<div class="searchButtons">
 							<button class="btn btn-primary">Search</button>
@@ -60,7 +59,7 @@
 					<table id="ctable" class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<!-- 								<th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+								<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 								<th><liferay-ui:message key="candidate.id" /></th>
 								<th><liferay-ui:message key="candidate.first_name" /></th>
 								<th><liferay-ui:message key="candidate.middle_name" /></th>
@@ -75,7 +74,29 @@
 
 		</div>
 		<div id="tab-2">
-			<p>Vacancies</p>
+			<div class="actionButtons">
+				<div class="buttons">
+					<a data-toggle="modal" class="btn btn-primary" href="#add-modal"><liferay-ui:message
+							key="global.button.add" /></a>
+					<button disabled='disabled' data-toggle="modal" id="cDeleteBtn"
+						class="btn" onclick="deleteCandidates()">
+						<liferay-ui:message key="global.button.delete" />
+					</button>
+				</div>
+			</div>
+
+			<table id="ctable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+						<th><liferay-ui:message key="vacancy.id" /></th>
+						<th><liferay-ui:message key="vacancy.name" /></th>
+						<th><liferay-ui:message key="vacancy.hiring_manager" /></th>
+						<th><liferay-ui:message key="vacancy.published_in_feed" /></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
 		</div>
 	</div>
 

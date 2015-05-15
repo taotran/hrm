@@ -47,7 +47,6 @@ public class HRMPortlet extends MVCPortlet {
 		try {
 			allVacancies = VacancyLocalServiceUtil.findAll();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		request.setAttribute("allVacancies",
@@ -70,10 +69,13 @@ public class HRMPortlet extends MVCPortlet {
 					resourceRequest.getPortletInputStream()));
 			if (br != null) {
 				json = br.readLine();
-				final JsonObject jObject = (JsonObject) new JsonParser().parse(json);
+				final JsonObject jObject = (JsonObject) new JsonParser()
+						.parse(json);
 				final long c_id = jObject.get("c_id").getAsLong();
-				final String first_name = jObject.get("first_name").getAsString();
-				final String middle_name = jObject.get("middle_name").getAsString();
+				final String first_name = jObject.get("first_name")
+						.getAsString();
+				final String middle_name = jObject.get("middle_name")
+						.getAsString();
 				final String last_name = jObject.get("last_name").getAsString();
 				final String contact_number = jObject.get("contact_number")
 						.getAsString();
@@ -113,7 +115,7 @@ public class HRMPortlet extends MVCPortlet {
 					resourceRequest.getPortletInputStream()));
 			if (br != null) {
 				json = br.readLine();
-				JsonArray jsonArr = (JsonArray) new JsonParser().parse(json);
+				final JsonArray jsonArr = (JsonArray) new JsonParser().parse(json);
 
 				for (int i = 0; i < jsonArr.size(); i++) {
 					JsonObject jsonObject = (JsonObject) jsonArr.get(i);
@@ -144,7 +146,7 @@ public class HRMPortlet extends MVCPortlet {
 					e.printStackTrace();
 				}
 			}
-		} 
+		}
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
