@@ -47,10 +47,11 @@
 
 					<div class="actionButtons">
 						<div class="buttons">
-							<a data-toggle="modal" class="btn btn-primary" href="#add-modal"><liferay-ui:message
+							<a data-toggle="modal" class="btn btn-primary"
+								href="#modify-candidate-modal"><liferay-ui:message
 									key="global.button.add" /></a>
-							<button disabled='disabled' data-toggle="modal" id="cDeleteBtn"
-								class="btn" onclick="deleteCandidates()">
+							<button data-toggle="modal" id="cDeleteBtn" class="btn"
+								onclick="deleteCandidates()">
 								<liferay-ui:message key="global.button.delete" />
 							</button>
 						</div>
@@ -76,16 +77,17 @@
 		<div id="tab-2">
 			<div class="actionButtons">
 				<div class="buttons">
-					<a data-toggle="modal" class="btn btn-primary" href="#add-modal"><liferay-ui:message
+					<a data-toggle="modal" class="btn btn-primary"
+						href="#modify-vacancy-modal"><liferay-ui:message
 							key="global.button.add" /></a>
-					<button disabled='disabled' data-toggle="modal" id="cDeleteBtn"
-						class="btn" onclick="deleteCandidates()">
+					<button data-toggle="modal" id="vDeleteBtn" class="btn"
+						onclick="deleteVacancies()">
 						<liferay-ui:message key="global.button.delete" />
 					</button>
 				</div>
 			</div>
 
-			<table id="ctable" class="table table-striped table-bordered">
+			<table id="vtable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
@@ -102,7 +104,7 @@
 
 </div>
 
-<div class="modal" id="add-modal">
+<div class="modal" id="modify-candidate-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<h4>Add New Candidate</h4>
@@ -199,6 +201,87 @@
 		</button>
 		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
 				key="global.button.cancel" /></a>
+	</div>
+</div>
+
+<div class="modal" id="modify-vacancy-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h4>Add New Vacancy</h4>
+	</div>
+
+	<div class="modal-body" id="vacancyInfo">
+		<input type="hidden" id="v_id" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="jTitleSelect"><liferay-ui:message
+						key="vacancy.jTitle" /></label> <select id="jTitleSelect">
+					<option value="1">Application Dev</option>
+					<option value="2">Human Resource Manager</option>
+					<option value="3">Quality Assurance</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="name"><liferay-ui:message key="vacancy.name" /></label>
+				<input type="text" class="form-control" id="name" placeholder="Name">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="status"><liferay-ui:message key="vacancy.status" /></label>
+				<input type="text" class="form-control" id="status"
+					value="Published" placeholder="Status">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="location"><liferay-ui:message
+						key="vacancy.location" /></label> <select id="location">
+					<option value="1">ECO HCM</option>
+					<option value="2">ECO HN</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="hiring_managers"><liferay-ui:message
+						key="vacancy.hiring_managers" /></label> <input type="text"
+					class="form-control" id="hiring_managers" value="TEST"
+					placeholder="Hiring Manager">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="no_of_pos"><liferay-ui:message
+						key="vacancy.no_positions" /></label> <input type="text"
+					class="form-control" id="no_of_pos" value="3"
+					placeholder="Number of positions">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="job_posting"><liferay-ui:message
+						key="vacancy.job_posting" /></label>
+				<textarea id="job_posting" rows="5" cols="50"></textarea>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal"
+				onclick="saveVacancy()">
+				<liferay-ui:message key="global.button.save" />
+			</button>
+			<button class="btn" onclick="clearFields()">
+				<liferay-ui:message key="global.button.clear_all" />
+			</button>
+			<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+					key="global.button.cancel" /></a>
+		</div>
 	</div>
 </div>
 
@@ -303,9 +386,46 @@
 						});
 	}
 
+	function loadVacancyTable() {
+		$('#vtable')
+				.dataTable(
+						{
+							bProcessing : true,
+							bServerSide : true,
+							bPaginate : true,
+							iDisplayRecords : 20,
+							sPaginationType : "full_numbers",
+							sAjaxSource : '<portlet:resourceURL id="get_all_vacancies"/>',
+							"aoColumns" : [
+									{
+										"mData" : "_v_id",
+										"bSortable" : false,
+										"mRender" : function(data, type, full) {
+											return "<input id='vCheckbox' type='checkbox' id='"+full._v_id+"' value='"+full._v_id+"'/>";
+										}
+									},
+									{
+										"mData" : "_name",
+										"mRender" : function(data, type, full) {
+											var name = data;
+											return "<a id='"
+													+ full._v_id
+													+ "' href='#vtable' onclick='getVacancy("
+													+ full._v_id + ");'>"
+													+ name + "</a>";
+										}
+									}, {
+										"mData" : "_hiring_manager_id"
+									}, {
+										"mData" : "_published_in_feed"
+									} ]
+
+						});
+	}
+
 	$(document).ready(function() {
 		loadCandidateTable();
-		/* $("#vacancySelect").select2(); */
+		loadVacancyTable();
 		$(".select2-container").select2();
 		$('#datepicker').datepicker();
 		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
@@ -342,7 +462,8 @@
 				$('#inputEmail').val(obj._email);
 				$('#contact_number').val(obj._contact_number);
 				$('#comment').val(obj._comment);
-				$('#add-modal').modal('show');
+				/* Show edit vacancy modal */
+				$('#modify-candidate-modal').modal('show');
 			}
 		});
 

@@ -40,6 +40,11 @@ public class HRMPortlet extends MVCPortlet {
 	private static final String GET_CANDIDATE = "getCandidate";
 	private static final String DELETE_CANDIDATES = "deleteCandidates";
 
+	private static final String GET_ALL_VACANCIES = "get_all_vacancies";
+	private static final String SAVE_VACANCY = "saveCandidate";
+	private static final String GET_VACANCY = "getCandidate";
+	private static final String DELETE_VACANCIES = "deleteCandidates";
+
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
@@ -61,6 +66,8 @@ public class HRMPortlet extends MVCPortlet {
 		final String resourceRequestId = resourceRequest.getResourceID();
 		final Map<String, Object> map = new HashMap<String, Object>();
 		String json = "";
+
+		// All candidate resource actions
 		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
 			map.put("aaData", findAllCandidates());
 			JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
@@ -115,7 +122,8 @@ public class HRMPortlet extends MVCPortlet {
 					resourceRequest.getPortletInputStream()));
 			if (br != null) {
 				json = br.readLine();
-				final JsonArray jsonArr = (JsonArray) new JsonParser().parse(json);
+				final JsonArray jsonArr = (JsonArray) new JsonParser()
+						.parse(json);
 
 				for (int i = 0; i < jsonArr.size(); i++) {
 					JsonObject jsonObject = (JsonObject) jsonArr.get(i);
@@ -146,6 +154,19 @@ public class HRMPortlet extends MVCPortlet {
 					e.printStackTrace();
 				}
 			}
+
+		}
+
+		// All vacancy resource actions
+		if (GET_ALL_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
+			map.put("aaData", findAllVacancies());
+			JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+		} else if (SAVE_VACANCY.equalsIgnoreCase(resourceRequestId)) {
+
+		} else if (DELETE_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
+
+		} else if (GET_VACANCY.equalsIgnoreCase(resourceRequestId)) {
+
 		}
 		super.serveResource(resourceRequest, resourceResponse);
 	}
@@ -153,6 +174,15 @@ public class HRMPortlet extends MVCPortlet {
 	private List<Candidate> findAllCandidates() {
 		try {
 			return CandidateServiceUtil.findAll();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private List<Vacancy> findAllVacancies() {
+		try {
+			return VacancyLocalServiceUtil.findAll();
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}

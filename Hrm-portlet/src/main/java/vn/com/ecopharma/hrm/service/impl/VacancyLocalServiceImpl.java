@@ -43,7 +43,8 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 	public Vacancy createVacancy(long jTitle_id, long hiring_mananager_id,
 			String name, String description, int no_of_positions,
-			boolean published_in_feed, List<Candidate> candidates) throws NoSuchVacancyException {
+			boolean published_in_feed, List<Candidate> candidates)
+			throws NoSuchVacancyException {
 		try {
 			final long v_id = counterLocalService.increment();
 			final Vacancy v = vacancyPersistence.create(v_id);
@@ -60,6 +61,29 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			v.set_candidates(candidates);
 			vacancyPersistence.update(v);
 			return v;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Vacancy editVacancy(long id, long jtitle_id, long hiring_manager_id,
+			String name, String description, int number_of_positions,
+			boolean published_in_feed, Date update_date) {
+		Vacancy vacancy;
+		try {
+			vacancy = vacancyPersistence.findByPrimaryKey(id);
+			vacancy.setJtitle_id(jtitle_id);
+			vacancy.setHiring_manager_id(hiring_manager_id);
+			vacancy.setName(name);
+			vacancy.setDescription(description);
+			vacancy.setNo_of_positions(number_of_positions);
+			vacancy.setPublished_in_feed(published_in_feed);
+			vacancy.setUpdate_date(update_date);
+			vacancyPersistence.update(vacancy);
+			return vacancy;
+		} catch (NoSuchVacancyException e) {
+			e.printStackTrace();
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
