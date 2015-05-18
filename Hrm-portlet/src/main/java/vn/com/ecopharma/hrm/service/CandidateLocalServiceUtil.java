@@ -402,6 +402,12 @@ public class CandidateLocalServiceUtil {
         return getService().findAll();
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findCandidates(start, end);
+    }
+
     public static vn.com.ecopharma.hrm.model.Candidate createCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
@@ -434,6 +440,10 @@ public class CandidateLocalServiceUtil {
 
     public static void delele(long c_id) {
         getService().delele(c_id);
+    }
+
+    public static int countAll() {
+        return getService().countAll();
     }
 
     public static void clearService() {

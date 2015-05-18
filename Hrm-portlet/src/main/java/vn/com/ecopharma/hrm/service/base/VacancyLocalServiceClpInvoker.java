@@ -81,6 +81,8 @@ public class VacancyLocalServiceClpInvoker {
     private String[] _methodParameterTypes68;
     private String _methodName69;
     private String[] _methodParameterTypes69;
+    private String _methodName70;
+    private String[] _methodParameterTypes70;
 
     public VacancyLocalServiceClpInvoker() {
         _methodName0 = "addVacancy";
@@ -253,6 +255,13 @@ public class VacancyLocalServiceClpInvoker {
         _methodParameterTypes69 = new String[] {
                 "long", "long", "java.lang.String", "java.lang.String", "int",
                 "boolean", "java.util.List"
+            };
+
+        _methodName70 = "editVacancy";
+
+        _methodParameterTypes70 = new String[] {
+                "long", "long", "long", "java.lang.String", "java.lang.String",
+                "int", "boolean", "java.util.Date"
             };
     }
 
@@ -486,6 +495,18 @@ public class VacancyLocalServiceClpInvoker {
                 ((Integer) arguments[4]).intValue(),
                 ((Boolean) arguments[5]).booleanValue(),
                 (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) arguments[6]);
+        }
+
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+            return VacancyLocalServiceUtil.editVacancy(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Long) arguments[2]).longValue(),
+                (java.lang.String) arguments[3],
+                (java.lang.String) arguments[4],
+                ((Integer) arguments[5]).intValue(),
+                ((Boolean) arguments[6]).booleanValue(),
+                (java.util.Date) arguments[7]);
         }
 
         throw new UnsupportedOperationException();

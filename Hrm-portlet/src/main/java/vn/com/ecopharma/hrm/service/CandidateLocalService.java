@@ -349,6 +349,10 @@ public interface CandidateLocalService extends BaseLocalService,
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll()
         throws com.liferay.portal.kernel.exception.SystemException;
 
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
     public vn.com.ecopharma.hrm.model.Candidate createCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
@@ -369,4 +373,6 @@ public interface CandidateLocalService extends BaseLocalService,
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public void delele(long c_id);
+
+    public int countAll();
 }

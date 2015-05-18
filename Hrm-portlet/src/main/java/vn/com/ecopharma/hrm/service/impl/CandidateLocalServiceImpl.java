@@ -45,6 +45,10 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	public List<Candidate> findAll() throws SystemException {
 		return candidatePersistence.findAll();
 	}
+	
+	public List<Candidate> findCandidates(int start, int end) throws SystemException {
+		return candidatePersistence.findAll(start, end);
+	}
 
 	public Candidate createCandidate(String first_name, String middle_name,
 			String last_name, String email, String contact_number,
@@ -117,5 +121,15 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int countAll(){
+		try {
+			return candidatePersistence.countAll();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

@@ -429,6 +429,13 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _candidateLocalService.findCandidates(start, end);
+    }
+
+    @Override
     public vn.com.ecopharma.hrm.model.Candidate createCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
@@ -462,6 +469,11 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     @Override
     public void delele(long c_id) {
         _candidateLocalService.delele(c_id);
+    }
+
+    @Override
+    public int countAll() {
+        return _candidateLocalService.countAll();
     }
 
     /**

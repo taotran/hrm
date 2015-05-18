@@ -11,14 +11,14 @@
 <div id="myTab">
 
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#tab-1"><liferay-ui:message
+		<li class="active"><a href="#cTab"><liferay-ui:message
 					key="tab.candidate.title" /></a></li>
-		<li><a href="#tab-2"><liferay-ui:message
+		<li><a href="#vTab"><liferay-ui:message
 					key="tab.vacancy.title" /></a></li>
 	</ul>
 
 	<div class="tab-content">
-		<div id="tab-1" class="tab-pane">
+		<div id="cTab" class="tab-pane">
 			<div class="box searchForm" id="candidateSrchForm">
 				<div class="srch-header"></div>
 				<div class="srch-body">
@@ -57,7 +57,10 @@
 						</div>
 					</div>
 
-					<table id="ctable" class="table table-striped table-bordered">
+					<!-- <table id="ctable" class="table table-striped table-bordered"> -->
+					<form>
+					<table id="ctable" width="100%" border="0" margin="0" padding="0"
+						class="row-border tableHeader">
 						<thead>
 							<tr>
 								<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
@@ -67,14 +70,24 @@
 								<th><liferay-ui:message key="candidate.last_name" /></th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+								<th><liferay-ui:message key="candidate.id" /></th>
+								<th><liferay-ui:message key="candidate.first_name" /></th>
+								<th><liferay-ui:message key="candidate.middle_name" /></th>
+								<th><liferay-ui:message key="candidate.last_name" /></th>
+							</tr>
+						</tfoot>
 						<tbody></tbody>
 					</table>
+					</form>
 				</div>
 			</div>
 
 
 		</div>
-		<div id="tab-2">
+		<div id="vTab">
 			<div class="actionButtons">
 				<div class="buttons">
 					<a data-toggle="modal" class="btn btn-primary"
@@ -286,6 +299,8 @@
 </div>
 
 <script type="text/javascript">
+	var vTabClickCount = 0;
+	var cTable;
 	YUI().use('aui-tabview', function(Y) {
 		new Y.TabView({
 			srcNode : '#myTab'
@@ -343,23 +358,22 @@
 		 }); */
 	};
 
-	function loadCandidateTable() {
-		$('#ctable')
+	/*function loadCandidateTable() {
+		 $('#ctable')
 				.dataTable(
 						{
-							// 							bAutoWidth : true,
-							bProcessing : true,
-							bServerSide : true,
-							bPaginate : true,
-							iDisplayRecords : 20,
-							// 							bFilter : true,
-							// 							bRetrieve : true,
-							// 							bStateSave : true,
-							sPaginationType : "full_numbers",
-							sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
-							"aoColumns" : [
+							'bPaginate' : true,
+							'order' : [ 0, 'asc' ],
+							'bInfo' : true,
+							'iDisplayStart' : 0,
+							'bProcessing' : true,
+							'bServerSide' : true,
+							'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
+							'dom' : 'C<"clear">lfrtip',
+							'aoColumns' : [
 									{
 										"mData" : "_c_id",
+										"type" : "number",
 										"bSortable" : false,
 										"mRender" : function(data, type, full) {
 											return "<input id='cCheckbox' type='checkbox' id='"+full._c_id+"' value='"+full._c_id+"'/>";
@@ -367,6 +381,7 @@
 									},
 									{
 										"mData" : "_first_name",
+										"type" : "text",
 										"mRender" : function(data, type, full) {
 											var fullName = data + " "
 													+ full._middle_name + " "
@@ -378,13 +393,16 @@
 													+ fullName + "</a>";
 										}
 									}, {
-										"mData" : "_middle_name"
+										"mData" : "_middle_name",
+										"type" : "text"
 									}, {
-										"mData" : "_last_name"
-									} ]
+										"mData" : "_last_name",
+										"type" : "text"
+									} ],
+							bUseColVis : true
 
 						});
-	}
+	} */
 
 	function loadVacancyTable() {
 		$('#vtable')
@@ -423,22 +441,123 @@
 						});
 	}
 
-	$(document).ready(function() {
-		loadCandidateTable();
-		loadVacancyTable();
-		$(".select2-container").select2();
-		$('#datepicker').datepicker();
-		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
-		$('#cCheckbox').change(function() {
-			alert("checked");
-			if ($("#cCheckbox:checked").length) {
-				$("#cDeleteBtn").removeAttr('disabled');
-			} else {
-				$("#cDeleteBtn").attr('disabled', 'disabled');
-			}
+	jQuery(document)
+			.ready(
+					function() {
+						/* 	loadCandidateTable(); */
+						cTable = $('#ctable')
+								.dataTable(
+										{
+											'bPaginate' : true,
+											'order' : [ 0, 'asc' ],
+											'bInfo' : true,
+											"<portlet:namespace/>iDisplayStart": "0",
+											'bProcessing' : true,
+											'bServerSide' : true,
+											'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
+											'dom' : 'C<"clear">lfrtip',
+											colVis : {
+												"align" : "right",
+												restore : "Restore",
+												showAll : "Show all",
+												showNone : "Show none",
+												order : 'alpha',
+												"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
+											},
+											"language" : {
+												"infoFiltered" : ""
+											},
+											"dom" : 'Cf<"toolbar"">rtip',
 
+										}).columnFilter({
+									aoColumns : /* [
+																					 {
+																						"mData" : "_c_id",
+																						"type" : "number",
+																						"bSortable" : false,
+																						"mRender" : function(
+																								data, type,
+																								full) {
+																							return "<input id='cCheckbox' type='checkbox' id='"+full._c_id+"' value='"+full._c_id+"'/>";
+																						}
+																					},
+																					{
+																						"mData" : "_first_name",
+																						"type" : "text",
+																						"mRender" : function(
+																								data, type,
+																								full) {
+																							var fullName = data
+																									+ " "
+																									+ full._middle_name
+																									+ " "
+																									+ full._last_name;
+																							return "<a id='"
+																									+ full._c_id
+																									+ "' href='#ctable' onclick='getCandidate("
+																									+ full._c_id
+																									+ ");'>"
+																									+ fullName
+																									+ "</a>";
+																						}
+																					},
+																					{
+																						"mData" : "_middle_name",
+																						"type" : "text"
+																					}, {
+																						"mData" : "_last_name",
+																						"type" : "text"
+																					} ], */
+									[ {
+										type : "number"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, ],
+									bUseColVis : true
+								}).fnSetFilteringDelay();
+						$("#ctable_length").hide();
+						$("div.toolbar")
+								.append(
+										'<div class="btn-group" style="padding:5px "><button class="btn btn-default" id="refreshbtn" style="background:none;border:1px solid #ccc;height:30px" type="button"><span class="glyphicon glyphicon-refresh" style="padding:3px"></span></button></div>');
+						$("div.toolbar").css("float", "right");
+						$('#refreshbtn').click(function() {
+							cTable.fnStandingRedraw();
+						});
+
+						/* loadVacancyTable(); */
+						$(".select2-container").select2();
+						$('#datepicker').datepicker();
+						/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
+						$('#cCheckbox').change(function() {
+							alert("checked");
+							if ($("#cCheckbox:checked").length) {
+								$("#cDeleteBtn").removeAttr('disabled');
+							} else {
+								$("#cDeleteBtn").attr('disabled', 'disabled');
+							}
+
+						});
+					});
+
+	/* 	function vTabClick(){
+	 console.log("inside click");
+	 if (vTabClickCount == 0) {
+	 console.log("load Vancancies");
+	 loadVacancyTable();
+	 vTabClickCount=1;
+	 }
+	 }; */
+
+	function clearFields() {
+		$('#candidateInfo :input').each(function() {
+			$(this).val('');
 		});
-	});
+		$('#c_id').val('-1');
+	};
 
 	function getCandidate(id) {
 		var obj = new Object();
@@ -494,10 +613,61 @@
 	}
 
 	//Util functions
-	function clearFields() {
-		$('#candidateInfo :input').each(function() {
-			$(this).val('');
-		});
-		$('#c_id').val('-1');
-	}
 </script>
+
+<style>
+tfoot input {
+	width: 100%;
+	padding: 3px;
+	box-sizing: border-box;
+}
+
+.tableHeader {
+	text-align: left;
+}
+
+tfoot {
+	display: table-header-group;
+}
+
+.dataTables_length {
+	position: absolute;
+	top: 10px;
+	left: 220px;
+}
+
+.dataTables_info {
+	position: absolute;
+	top: 0px;
+	left: 5px;
+}
+
+.ColVis {
+	padding-right: 10px;
+	padding-top: 5px;
+}
+
+.dataTables_filter {
+	position: absolute;
+	top: 10px;
+	left: 200px;
+	font-size: 15px;
+}
+
+.dataTables_filter input {
+	height: 22px;
+	width: 150px
+}
+
+input {
+	-moz-border-radius: 15px;
+	border-radius: 3px;
+	border: solid 1px #c7c7c7;
+	padding: 5px;
+}
+
+table.dataTable tbody td {
+	padding: 5px;
+	padding-left: 20px;
+}
+</style>

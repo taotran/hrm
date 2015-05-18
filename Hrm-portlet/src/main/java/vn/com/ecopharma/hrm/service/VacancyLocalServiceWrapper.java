@@ -438,6 +438,16 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
             published_in_feed, candidates);
     }
 
+    @Override
+    public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
+        long jtitle_id, long hiring_manager_id, java.lang.String name,
+        java.lang.String description, int number_of_positions,
+        boolean published_in_feed, java.util.Date update_date) {
+        return _vacancyLocalService.editVacancy(id, jtitle_id,
+            hiring_manager_id, name, description, number_of_positions,
+            published_in_feed, update_date);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

@@ -411,6 +411,15 @@ public class VacancyLocalServiceUtil {
             description, no_of_positions, published_in_feed, candidates);
     }
 
+    public static vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
+        long jtitle_id, long hiring_manager_id, java.lang.String name,
+        java.lang.String description, int number_of_positions,
+        boolean published_in_feed, java.util.Date update_date) {
+        return getService()
+                   .editVacancy(id, jtitle_id, hiring_manager_id, name,
+            description, number_of_positions, published_in_feed, update_date);
+    }
+
     public static void clearService() {
         _service = null;
     }

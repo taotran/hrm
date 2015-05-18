@@ -80,6 +80,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes35;
     private String _methodName36;
     private String[] _methodParameterTypes36;
+    private String _methodName37;
+    private String[] _methodParameterTypes37;
 
     public VacancyLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -254,6 +256,13 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodParameterTypes36 = new String[] {
                 "long", "long", "java.lang.String", "java.lang.String", "int",
                 "boolean", "java.util.List"
+            };
+
+        _methodName37 = "editVacancy";
+
+        _methodParameterTypes37 = new String[] {
+                "long", "long", "long", "java.lang.String", "java.lang.String",
+                "int", "boolean", "java.util.Date"
             };
     }
 
@@ -1225,6 +1234,47 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
             if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
                 throw (vn.com.ecopharma.hrm.NoSuchVacancyException) t;
             }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Vacancy) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
+        long jtitle_id, long hiring_manager_id, java.lang.String name,
+        java.lang.String description, int number_of_positions,
+        boolean published_in_feed, java.util.Date update_date) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName37,
+                    _methodParameterTypes37,
+                    new Object[] {
+                        id,
+                        
+                    jtitle_id,
+                        
+                    hiring_manager_id,
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(description),
+                        
+                    number_of_positions,
+                        
+                    published_in_feed,
+                        
+                    ClpSerializer.translateInput(update_date)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;

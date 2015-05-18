@@ -85,6 +85,10 @@ public class CandidateLocalServiceClpInvoker {
     private String[] _methodParameterTypes70;
     private String _methodName71;
     private String[] _methodParameterTypes71;
+    private String _methodName72;
+    private String[] _methodParameterTypes72;
+    private String _methodName73;
+    private String[] _methodParameterTypes73;
 
     public CandidateLocalServiceClpInvoker() {
         _methodName0 = "addCandidate";
@@ -252,27 +256,35 @@ public class CandidateLocalServiceClpInvoker {
 
         _methodParameterTypes68 = new String[] {  };
 
-        _methodName69 = "createCandidate";
+        _methodName69 = "findCandidates";
 
-        _methodParameterTypes69 = new String[] {
+        _methodParameterTypes69 = new String[] { "int", "int" };
+
+        _methodName70 = "createCandidate";
+
+        _methodParameterTypes70 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "int", "java.sql.Date", "long", "java.lang.String", "int",
                 "java.util.List"
             };
 
-        _methodName70 = "editCandidate";
+        _methodName71 = "editCandidate";
 
-        _methodParameterTypes70 = new String[] {
+        _methodParameterTypes71 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
                 "java.lang.String", "int", "java.util.List"
             };
 
-        _methodName71 = "delele";
+        _methodName72 = "delele";
 
-        _methodParameterTypes71 = new String[] { "long" };
+        _methodParameterTypes72 = new String[] { "long" };
+
+        _methodName73 = "countAll";
+
+        _methodParameterTypes73 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -498,6 +510,12 @@ public class CandidateLocalServiceClpInvoker {
 
         if (_methodName69.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+            return CandidateLocalServiceUtil.findCandidates(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
             return CandidateLocalServiceUtil.createCandidate((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -512,8 +530,8 @@ public class CandidateLocalServiceClpInvoker {
                 (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) arguments[11]);
         }
 
-        if (_methodName70.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+        if (_methodName71.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
             return CandidateLocalServiceUtil.editCandidate(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -529,11 +547,16 @@ public class CandidateLocalServiceClpInvoker {
                 (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) arguments[12]);
         }
 
-        if (_methodName71.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
+        if (_methodName72.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
             CandidateLocalServiceUtil.delele(((Long) arguments[0]).longValue());
 
             return null;
+        }
+
+        if (_methodName73.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
+            return CandidateLocalServiceUtil.countAll();
         }
 
         throw new UnsupportedOperationException();

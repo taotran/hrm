@@ -355,4 +355,9 @@ public interface VacancyLocalService extends BaseLocalService,
         boolean published_in_feed,
         java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
+
+    public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
+        long jtitle_id, long hiring_manager_id, java.lang.String name,
+        java.lang.String description, int number_of_positions,
+        boolean published_in_feed, java.util.Date update_date);
 }
