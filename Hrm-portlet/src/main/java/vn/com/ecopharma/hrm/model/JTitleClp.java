@@ -35,6 +35,8 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
     private String _description;
     private String _note;
     private boolean _isDeleted;
+    private long _user_id;
+    private long _group_id;
     private BaseModel<?> _jTitleRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -80,6 +82,8 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
         attributes.put("description", getDescription());
         attributes.put("note", getNote());
         attributes.put("isDeleted", getIsDeleted());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -114,6 +118,18 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
 
         if (isDeleted != null) {
             setIsDeleted(isDeleted);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -226,6 +242,50 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
                 Method method = clazz.getMethod("setIsDeleted", boolean.class);
 
                 method.invoke(_jTitleRemoteModel, isDeleted);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+
+        if (_jTitleRemoteModel != null) {
+            try {
+                Class<?> clazz = _jTitleRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUser_id", long.class);
+
+                method.invoke(_jTitleRemoteModel, user_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
+
+        if (_jTitleRemoteModel != null) {
+            try {
+                Class<?> clazz = _jTitleRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setGroup_id", long.class);
+
+                method.invoke(_jTitleRemoteModel, group_id);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -397,6 +457,8 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
         clone.setDescription(getDescription());
         clone.setNote(getNote());
         clone.setIsDeleted(getIsDeleted());
+        clone.setUser_id(getUser_id());
+        clone.setGroup_id(getGroup_id());
 
         return clone;
     }
@@ -446,7 +508,7 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(11);
+        StringBundler sb = new StringBundler(15);
 
         sb.append("{jobtitleId=");
         sb.append(getJobtitleId());
@@ -458,6 +520,10 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
         sb.append(getNote());
         sb.append(", isDeleted=");
         sb.append(getIsDeleted());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -465,7 +531,7 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.JTitle");
@@ -490,6 +556,14 @@ public class JTitleClp extends BaseModelImpl<JTitle> implements JTitle {
         sb.append(
             "<column><column-name>isDeleted</column-name><column-value><![CDATA[");
         sb.append(getIsDeleted());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

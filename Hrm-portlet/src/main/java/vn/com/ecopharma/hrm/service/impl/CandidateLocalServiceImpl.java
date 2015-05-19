@@ -3,7 +3,10 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.sql.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
@@ -50,12 +53,13 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return candidatePersistence.findAll(start, end);
 	}
 
-	public Candidate createCandidate(String first_name, String middle_name,
+	public Candidate createCandidate(long user_id, String first_name, String middle_name,
 			String last_name, String email, String contact_number,
 			String comment, int mode_of_application, Date date_of_application,
 			long cv_file_id, String cv_text_version, int added_person,
-			List<Vacancy> vacancies) throws NoSuchVacancyException {
+			List<Vacancy> vacancies, ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
+			User user = userPersistence.findByPrimaryKey(user_id);
 			long c_id = counterLocalService.increment();
 			Candidate c = candidatePersistence.create(c_id);
 			c.setFirst_name(first_name);
@@ -69,11 +73,15 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			c.setCv_file_id(cv_file_id);
 			c.setCv_text_version(cv_text_version);
 			c.set_vacancies(vacancies);
+			c.setUser_id(user.getUserId());
+			c.setGroup_id(serviceContext.getScopeGroupId());
 			candidatePersistence.update(c);
-
+			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(), user.getUserId(),
+				       Candidate.class.getName(), c_id, false, true, true);
 			return c;
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortalException e) {
 			e.printStackTrace();
 		}
 		return null;

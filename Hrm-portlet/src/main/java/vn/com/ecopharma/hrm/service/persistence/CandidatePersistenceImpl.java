@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
@@ -101,7 +103,17 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
     private static final String _SQL_SELECT_CANDIDATE_WHERE = "SELECT candidate FROM Candidate candidate WHERE ";
     private static final String _SQL_COUNT_CANDIDATE = "SELECT COUNT(candidate) FROM Candidate candidate";
     private static final String _SQL_COUNT_CANDIDATE_WHERE = "SELECT COUNT(candidate) FROM Candidate candidate WHERE ";
+    private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "candidate.c_id";
+    private static final String _FILTER_SQL_SELECT_CANDIDATE_WHERE = "SELECT DISTINCT {candidate.*} FROM HRM_Candidate candidate WHERE ";
+    private static final String _FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_1 =
+        "SELECT {HRM_Candidate.*} FROM (SELECT DISTINCT candidate.c_id FROM HRM_Candidate candidate WHERE ";
+    private static final String _FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_2 =
+        ") TEMP_TABLE INNER JOIN HRM_Candidate ON TEMP_TABLE.c_id = HRM_Candidate.c_id";
+    private static final String _FILTER_SQL_COUNT_CANDIDATE_WHERE = "SELECT COUNT(DISTINCT candidate.c_id) AS COUNT_VALUE FROM HRM_Candidate candidate WHERE ";
+    private static final String _FILTER_ENTITY_ALIAS = "candidate";
+    private static final String _FILTER_ENTITY_TABLE = "HRM_Candidate";
     private static final String _ORDER_BY_ENTITY_ALIAS = "candidate.";
+    private static final String _ORDER_BY_ENTITY_TABLE = "HRM_Candidate.";
     private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Candidate exists with the primary key ";
     private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Candidate exists with the key {";
     private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
@@ -388,6 +400,125 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
     }
 
     /**
+     * Returns all the candidates that the user has permission to view where c_id = &#63;.
+     *
+     * @param c_id the c_id
+     * @return the matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfindCandidates(long c_id)
+        throws SystemException {
+        return filterFindByfindCandidates(c_id, QueryUtil.ALL_POS,
+            QueryUtil.ALL_POS, null);
+    }
+
+    /**
+     * Returns a range of all the candidates that the user has permission to view where c_id = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param c_id the c_id
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @return the range of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfindCandidates(long c_id, int start,
+        int end) throws SystemException {
+        return filterFindByfindCandidates(c_id, start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the candidates that the user has permissions to view where c_id = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param c_id the c_id
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfindCandidates(long c_id, int start,
+        int end, OrderByComparator orderByComparator) throws SystemException {
+        if (!InlineSQLHelperUtil.isEnabled()) {
+            return findByfindCandidates(c_id, start, end, orderByComparator);
+        }
+
+        StringBundler query = null;
+
+        if (orderByComparator != null) {
+            query = new StringBundler(3 +
+                    (orderByComparator.getOrderByFields().length * 3));
+        } else {
+            query = new StringBundler(3);
+        }
+
+        if (getDB().isSupportsInlineDistinct()) {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_WHERE);
+        } else {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_1);
+        }
+
+        query.append(_FINDER_COLUMN_FINDCANDIDATES_C_ID_2);
+
+        if (!getDB().isSupportsInlineDistinct()) {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_2);
+        }
+
+        if (orderByComparator != null) {
+            if (getDB().isSupportsInlineDistinct()) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator, true);
+            } else {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+                    orderByComparator, true);
+            }
+        } else {
+            if (getDB().isSupportsInlineDistinct()) {
+                query.append(CandidateModelImpl.ORDER_BY_JPQL);
+            } else {
+                query.append(CandidateModelImpl.ORDER_BY_SQL);
+            }
+        }
+
+        String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+                Candidate.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            if (getDB().isSupportsInlineDistinct()) {
+                q.addEntity(_FILTER_ENTITY_ALIAS, CandidateImpl.class);
+            } else {
+                q.addEntity(_FILTER_ENTITY_TABLE, CandidateImpl.class);
+            }
+
+            QueryPos qPos = QueryPos.getInstance(q);
+
+            qPos.add(c_id);
+
+            return (List<Candidate>) QueryUtil.list(q, getDialect(), start, end);
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    /**
      * Removes all the candidates where c_id = &#63; from the database.
      *
      * @param c_id the c_id
@@ -450,6 +581,52 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         }
 
         return count.intValue();
+    }
+
+    /**
+     * Returns the number of candidates that the user has permission to view where c_id = &#63;.
+     *
+     * @param c_id the c_id
+     * @return the number of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int filterCountByfindCandidates(long c_id) throws SystemException {
+        if (!InlineSQLHelperUtil.isEnabled()) {
+            return countByfindCandidates(c_id);
+        }
+
+        StringBundler query = new StringBundler(2);
+
+        query.append(_FILTER_SQL_COUNT_CANDIDATE_WHERE);
+
+        query.append(_FINDER_COLUMN_FINDCANDIDATES_C_ID_2);
+
+        String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+                Candidate.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addScalar(COUNT_COLUMN_NAME,
+                com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+            QueryPos qPos = QueryPos.getInstance(q);
+
+            qPos.add(c_id);
+
+            Long count = (Long) q.uniqueResult();
+
+            return count.intValue();
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
     }
 
     /**
@@ -713,6 +890,8 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         candidateImpl.setCv_text_version(candidate.getCv_text_version());
         candidateImpl.setKeywords(candidate.getKeywords());
         candidateImpl.setAdded_person(candidate.getAdded_person());
+        candidateImpl.setUser_id(candidate.getUser_id());
+        candidateImpl.setGroup_id(candidate.getGroup_id());
 
         return candidateImpl;
     }

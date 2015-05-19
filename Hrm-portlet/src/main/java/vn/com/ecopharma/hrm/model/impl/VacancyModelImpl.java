@@ -69,9 +69,11 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             { "no_of_positions", Types.INTEGER },
             { "published_in_feed", Types.BOOLEAN },
             { "insert_date", Types.TIMESTAMP },
-            { "update_date", Types.TIMESTAMP }
+            { "update_date", Types.TIMESTAMP },
+            { "user_id", Types.BIGINT },
+            { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Vacancy (v_id LONG not null primary key,jtitle_id LONG,hiring_manager_id LONG,name VARCHAR(75) null,description VARCHAR(75) null,no_of_positions INTEGER,published_in_feed BOOLEAN,insert_date DATE null,update_date DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Vacancy (v_id LONG not null primary key,jtitle_id LONG,hiring_manager_id LONG,name VARCHAR(75) null,description VARCHAR(75) null,no_of_positions INTEGER,published_in_feed BOOLEAN,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Vacancy";
     public static final String ORDER_BY_JPQL = " ORDER BY vacancy.v_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Vacancy.v_id ASC";
@@ -111,6 +113,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
     private boolean _published_in_feed;
     private Date _insert_date;
     private Date _update_date;
+    private long _user_id;
+    private long _group_id;
     private Vacancy _escapedModel;
 
     public VacancyModelImpl() {
@@ -138,6 +142,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         model.setPublished_in_feed(soapModel.getPublished_in_feed());
         model.setInsert_date(soapModel.getInsert_date());
         model.setUpdate_date(soapModel.getUpdate_date());
+        model.setUser_id(soapModel.getUser_id());
+        model.setGroup_id(soapModel.getGroup_id());
 
         return model;
     }
@@ -205,6 +211,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         attributes.put("published_in_feed", getPublished_in_feed());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -264,6 +272,18 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         if (update_date != null) {
             setUpdate_date(update_date);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -377,6 +397,28 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
     @Override
     public void setUpdate_date(Date update_date) {
         _update_date = update_date;
+    }
+
+    @JSON
+    @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    @JSON
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
     }
 
     @Override
@@ -508,6 +550,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         vacancyImpl.setPublished_in_feed(getPublished_in_feed());
         vacancyImpl.setInsert_date(getInsert_date());
         vacancyImpl.setUpdate_date(getUpdate_date());
+        vacancyImpl.setUser_id(getUser_id());
+        vacancyImpl.setGroup_id(getGroup_id());
 
         vacancyImpl.resetOriginalValues();
 
@@ -603,12 +647,16 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             vacancyCacheModel.update_date = Long.MIN_VALUE;
         }
 
+        vacancyCacheModel.user_id = getUser_id();
+
+        vacancyCacheModel.group_id = getGroup_id();
+
         return vacancyCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{v_id=");
         sb.append(getV_id());
@@ -628,6 +676,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getInsert_date());
         sb.append(", update_date=");
         sb.append(getUpdate_date());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -635,7 +687,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(31);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -676,6 +728,14 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(
             "<column><column-name>update_date</column-name><column-value><![CDATA[");
         sb.append(getUpdate_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

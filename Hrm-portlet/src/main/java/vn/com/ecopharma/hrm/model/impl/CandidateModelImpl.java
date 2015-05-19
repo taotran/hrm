@@ -73,9 +73,11 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
             { "cv_file_id", Types.BIGINT },
             { "cv_text_version", Types.VARCHAR },
             { "keywords", Types.VARCHAR },
-            { "added_person", Types.INTEGER }
+            { "added_person", Types.INTEGER },
+            { "user_id", Types.BIGINT },
+            { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Candidate (c_id LONG not null primary key,first_name VARCHAR(75) null,middle_name VARCHAR(75) null,last_name VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,comment_ VARCHAR(75) null,mode_of_application INTEGER,date_of_application DATE null,cv_file_id LONG,cv_text_version VARCHAR(75) null,keywords VARCHAR(75) null,added_person INTEGER)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Candidate (c_id LONG not null primary key,first_name VARCHAR(75) null,middle_name VARCHAR(75) null,last_name VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,comment_ VARCHAR(75) null,mode_of_application INTEGER,date_of_application DATE null,cv_file_id LONG,cv_text_version VARCHAR(75) null,keywords VARCHAR(75) null,added_person INTEGER,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Candidate";
     public static final String ORDER_BY_JPQL = " ORDER BY candidate.c_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Candidate.c_id ASC";
@@ -124,6 +126,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
     private String _cv_text_version;
     private String _keywords;
     private int _added_person;
+    private long _user_id;
+    private long _group_id;
     private long _columnBitmask;
     private Candidate _escapedModel;
 
@@ -156,6 +160,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         model.setCv_text_version(soapModel.getCv_text_version());
         model.setKeywords(soapModel.getKeywords());
         model.setAdded_person(soapModel.getAdded_person());
+        model.setUser_id(soapModel.getUser_id());
+        model.setGroup_id(soapModel.getGroup_id());
 
         return model;
     }
@@ -227,6 +233,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         attributes.put("cv_text_version", getCv_text_version());
         attributes.put("keywords", getKeywords());
         attributes.put("added_person", getAdded_person());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -310,6 +318,18 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
         if (added_person != null) {
             setAdded_person(added_person);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -500,6 +520,28 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         _added_person = added_person;
     }
 
+    @JSON
+    @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    @JSON
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
+    }
+
     @Override
     public int getStatus() {
         return 0;
@@ -637,6 +679,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         candidateImpl.setCv_text_version(getCv_text_version());
         candidateImpl.setKeywords(getKeywords());
         candidateImpl.setAdded_person(getAdded_person());
+        candidateImpl.setUser_id(getUser_id());
+        candidateImpl.setGroup_id(getGroup_id());
 
         candidateImpl.resetOriginalValues();
 
@@ -777,12 +821,16 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
         candidateCacheModel.added_person = getAdded_person();
 
+        candidateCacheModel.user_id = getUser_id();
+
+        candidateCacheModel.group_id = getGroup_id();
+
         return candidateCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(27);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("{c_id=");
         sb.append(getC_id());
@@ -810,6 +858,10 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         sb.append(getKeywords());
         sb.append(", added_person=");
         sb.append(getAdded_person());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -817,7 +869,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(43);
+        StringBundler sb = new StringBundler(49);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Candidate");
@@ -874,6 +926,14 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         sb.append(
             "<column><column-name>added_person</column-name><column-value><![CDATA[");
         sb.append(getAdded_person());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

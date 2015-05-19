@@ -8,6 +8,7 @@
 	<portlet>
 		<portlet-name>hrm</portlet-name>
 		<icon>/icon.png</icon>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-portlet-css>/css/dataTableUI.css</header-portlet-css>
 		<!-- <header-portlet-css>/css/select2-bootstrap.css</header-portlet-css> -->
 		<header-portlet-css>/css/select2.min.css</header-portlet-css>
@@ -20,9 +21,9 @@
 		<header-portlet-javascript>/js/bootstrap-datepicker.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.dataTables.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery.dataTables.columnFilter.js</header-portlet-javascript>
-		<header-portlet-javascript>/plugin/fnSetFilteringDelay.js</header-portlet-javascript>
+ 		<header-portlet-javascript>/plugin/fnSetFilteringDelay.js</header-portlet-javascript>
 		<header-portlet-javascript>/plugin/fnStandingRedraw.js</header-portlet-javascript>
-		<header-portlet-javascript>/js/dataTables.colVis.js</header-portlet-javascript>
+		<header-portlet-javascript>/js/dataTables.colVis.js</header-portlet-javascript> 
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/bootstrap.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/jquery.bootstrap.wizard.js</footer-portlet-javascript>

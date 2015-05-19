@@ -64,9 +64,11 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
             { "title", Types.VARCHAR },
             { "description", Types.VARCHAR },
             { "note", Types.VARCHAR },
-            { "isDeleted", Types.BOOLEAN }
+            { "isDeleted", Types.BOOLEAN },
+            { "user_id", Types.BIGINT },
+            { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_JTitle (jobtitleId LONG not null primary key,title VARCHAR(75) null,description VARCHAR(75) null,note VARCHAR(75) null,isDeleted BOOLEAN)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_JTitle (jobtitleId LONG not null primary key,title VARCHAR(75) null,description VARCHAR(75) null,note VARCHAR(75) null,isDeleted BOOLEAN,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_JTitle";
     public static final String ORDER_BY_JPQL = " ORDER BY jTitle.jobtitleId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_JTitle.jobtitleId ASC";
@@ -89,6 +91,8 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
     private String _description;
     private String _note;
     private boolean _isDeleted;
+    private long _user_id;
+    private long _group_id;
     private JTitle _escapedModel;
 
     public JTitleModelImpl() {
@@ -112,6 +116,8 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
         model.setDescription(soapModel.getDescription());
         model.setNote(soapModel.getNote());
         model.setIsDeleted(soapModel.getIsDeleted());
+        model.setUser_id(soapModel.getUser_id());
+        model.setGroup_id(soapModel.getGroup_id());
 
         return model;
     }
@@ -175,6 +181,8 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
         attributes.put("description", getDescription());
         attributes.put("note", getNote());
         attributes.put("isDeleted", getIsDeleted());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -209,6 +217,18 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
 
         if (isDeleted != null) {
             setIsDeleted(isDeleted);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -282,6 +302,28 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
     @Override
     public void setIsDeleted(boolean isDeleted) {
         _isDeleted = isDeleted;
+    }
+
+    @JSON
+    @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    @JSON
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
     }
 
     @Override
@@ -409,6 +451,8 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
         jTitleImpl.setDescription(getDescription());
         jTitleImpl.setNote(getNote());
         jTitleImpl.setIsDeleted(getIsDeleted());
+        jTitleImpl.setUser_id(getUser_id());
+        jTitleImpl.setGroup_id(getGroup_id());
 
         jTitleImpl.resetOriginalValues();
 
@@ -490,12 +534,16 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
 
         jTitleCacheModel.isDeleted = getIsDeleted();
 
+        jTitleCacheModel.user_id = getUser_id();
+
+        jTitleCacheModel.group_id = getGroup_id();
+
         return jTitleCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(11);
+        StringBundler sb = new StringBundler(15);
 
         sb.append("{jobtitleId=");
         sb.append(getJobtitleId());
@@ -507,6 +555,10 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
         sb.append(getNote());
         sb.append(", isDeleted=");
         sb.append(getIsDeleted());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -514,7 +566,7 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.JTitle");
@@ -539,6 +591,14 @@ public class JTitleModelImpl extends BaseModelImpl<JTitle>
         sb.append(
             "<column><column-name>isDeleted</column-name><column-value><![CDATA[");
         sb.append(getIsDeleted());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

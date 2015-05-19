@@ -27,6 +27,8 @@ public class CandidateSoap implements Serializable {
     private String _cv_text_version;
     private String _keywords;
     private int _added_person;
+    private long _user_id;
+    private long _group_id;
 
     public CandidateSoap() {
     }
@@ -47,6 +49,8 @@ public class CandidateSoap implements Serializable {
         soapModel.setCv_text_version(model.getCv_text_version());
         soapModel.setKeywords(model.getKeywords());
         soapModel.setAdded_person(model.getAdded_person());
+        soapModel.setUser_id(model.getUser_id());
+        soapModel.setGroup_id(model.getGroup_id());
 
         return soapModel;
     }
@@ -197,5 +201,21 @@ public class CandidateSoap implements Serializable {
 
     public void setAdded_person(int added_person) {
         _added_person = added_person;
+    }
+
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
     }
 }

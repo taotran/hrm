@@ -353,13 +353,14 @@ public interface CandidateLocalService extends BaseLocalService,
         int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
 
-    public vn.com.ecopharma.hrm.model.Candidate createCandidate(
+    public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
+        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public vn.com.ecopharma.hrm.model.Candidate editCandidate(

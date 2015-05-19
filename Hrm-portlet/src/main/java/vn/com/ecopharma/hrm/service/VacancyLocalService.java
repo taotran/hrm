@@ -349,11 +349,12 @@ public interface VacancyLocalService extends BaseLocalService,
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> findAll()
         throws com.liferay.portal.kernel.exception.SystemException;
 
-    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long jTitle_id,
-        long hiring_mananager_id, java.lang.String name,
+    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long user_id,
+        long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
         boolean published_in_feed,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates)
+        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,

@@ -6,6 +6,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.ClpSerializer;
+import vn.com.ecopharma.hrm.service.FileAttachmentLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.FileAttachmentServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
@@ -27,6 +29,9 @@ public class ClpMessageListener extends BaseMessageListener {
             CandidateLocalServiceUtil.clearService();
 
             CandidateServiceUtil.clearService();
+            FileAttachmentLocalServiceUtil.clearService();
+
+            FileAttachmentServiceUtil.clearService();
             JTitleLocalServiceUtil.clearService();
 
             JTitleServiceUtil.clearService();

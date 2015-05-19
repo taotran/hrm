@@ -46,6 +46,8 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
         attributes.put("published_in_feed", getPublished_in_feed());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -105,6 +107,18 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
         if (update_date != null) {
             setUpdate_date(update_date);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -316,6 +330,46 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     @Override
     public void setUpdate_date(java.util.Date update_date) {
         _vacancy.setUpdate_date(update_date);
+    }
+
+    /**
+    * Returns the user_id of this vacancy.
+    *
+    * @return the user_id of this vacancy
+    */
+    @Override
+    public long getUser_id() {
+        return _vacancy.getUser_id();
+    }
+
+    /**
+    * Sets the user_id of this vacancy.
+    *
+    * @param user_id the user_id of this vacancy
+    */
+    @Override
+    public void setUser_id(long user_id) {
+        _vacancy.setUser_id(user_id);
+    }
+
+    /**
+    * Returns the group_id of this vacancy.
+    *
+    * @return the group_id of this vacancy
+    */
+    @Override
+    public long getGroup_id() {
+        return _vacancy.getGroup_id();
+    }
+
+    /**
+    * Sets the group_id of this vacancy.
+    *
+    * @param group_id the group_id of this vacancy
+    */
+    @Override
+    public void setGroup_id(long group_id) {
+        _vacancy.setGroup_id(group_id);
     }
 
     /**

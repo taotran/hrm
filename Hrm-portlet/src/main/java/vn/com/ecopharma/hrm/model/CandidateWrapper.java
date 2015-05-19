@@ -50,6 +50,8 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
         attributes.put("cv_text_version", getCv_text_version());
         attributes.put("keywords", getKeywords());
         attributes.put("added_person", getAdded_person());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -133,6 +135,18 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 
         if (added_person != null) {
             setAdded_person(added_person);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -414,6 +428,46 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
     @Override
     public void setAdded_person(int added_person) {
         _candidate.setAdded_person(added_person);
+    }
+
+    /**
+    * Returns the user_id of this candidate.
+    *
+    * @return the user_id of this candidate
+    */
+    @Override
+    public long getUser_id() {
+        return _candidate.getUser_id();
+    }
+
+    /**
+    * Sets the user_id of this candidate.
+    *
+    * @param user_id the user_id of this candidate
+    */
+    @Override
+    public void setUser_id(long user_id) {
+        _candidate.setUser_id(user_id);
+    }
+
+    /**
+    * Returns the group_id of this candidate.
+    *
+    * @return the group_id of this candidate
+    */
+    @Override
+    public long getGroup_id() {
+        return _candidate.getGroup_id();
+    }
+
+    /**
+    * Sets the group_id of this candidate.
+    *
+    * @param group_id the group_id of this candidate
+    */
+    @Override
+    public void setGroup_id(long group_id) {
+        _candidate.setGroup_id(group_id);
     }
 
     /**

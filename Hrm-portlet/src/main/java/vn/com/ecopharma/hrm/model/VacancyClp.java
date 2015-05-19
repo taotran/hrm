@@ -40,6 +40,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     private boolean _published_in_feed;
     private Date _insert_date;
     private Date _update_date;
+    private long _user_id;
+    private long _group_id;
     private BaseModel<?> _vacancyRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -89,6 +91,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         attributes.put("published_in_feed", getPublished_in_feed());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -148,6 +152,18 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
         if (update_date != null) {
             setUpdate_date(update_date);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -357,6 +373,50 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     }
 
     @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+
+        if (_vacancyRemoteModel != null) {
+            try {
+                Class<?> clazz = _vacancyRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUser_id", long.class);
+
+                method.invoke(_vacancyRemoteModel, user_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
+
+        if (_vacancyRemoteModel != null) {
+            try {
+                Class<?> clazz = _vacancyRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setGroup_id", long.class);
+
+                method.invoke(_vacancyRemoteModel, group_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public void set_candidates(
         java.util.List<vn.com.ecopharma.hrm.model.Candidate> _candidates) {
         try {
@@ -559,6 +619,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         clone.setPublished_in_feed(getPublished_in_feed());
         clone.setInsert_date(getInsert_date());
         clone.setUpdate_date(getUpdate_date());
+        clone.setUser_id(getUser_id());
+        clone.setGroup_id(getGroup_id());
 
         return clone;
     }
@@ -608,7 +670,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{v_id=");
         sb.append(getV_id());
@@ -628,6 +690,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(getInsert_date());
         sb.append(", update_date=");
         sb.append(getUpdate_date());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -635,7 +701,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(31);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -676,6 +742,14 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(
             "<column><column-name>update_date</column-name><column-value><![CDATA[");
         sb.append(getUpdate_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

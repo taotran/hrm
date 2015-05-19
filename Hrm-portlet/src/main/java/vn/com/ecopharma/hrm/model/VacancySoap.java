@@ -23,6 +23,8 @@ public class VacancySoap implements Serializable {
     private boolean _published_in_feed;
     private Date _insert_date;
     private Date _update_date;
+    private long _user_id;
+    private long _group_id;
 
     public VacancySoap() {
     }
@@ -39,6 +41,8 @@ public class VacancySoap implements Serializable {
         soapModel.setPublished_in_feed(model.getPublished_in_feed());
         soapModel.setInsert_date(model.getInsert_date());
         soapModel.setUpdate_date(model.getUpdate_date());
+        soapModel.setUser_id(model.getUser_id());
+        soapModel.setGroup_id(model.getGroup_id());
 
         return soapModel;
     }
@@ -161,5 +165,21 @@ public class VacancySoap implements Serializable {
 
     public void setUpdate_date(Date update_date) {
         _update_date = update_date;
+    }
+
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
     }
 }

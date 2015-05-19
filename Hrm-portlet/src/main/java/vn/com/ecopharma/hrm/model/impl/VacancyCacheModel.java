@@ -30,10 +30,12 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     public boolean published_in_feed;
     public long insert_date;
     public long update_date;
+    public long user_id;
+    public long group_id;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(19);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{v_id=");
         sb.append(v_id);
@@ -53,6 +55,10 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         sb.append(insert_date);
         sb.append(", update_date=");
         sb.append(update_date);
+        sb.append(", user_id=");
+        sb.append(user_id);
+        sb.append(", group_id=");
+        sb.append(group_id);
         sb.append("}");
 
         return sb.toString();
@@ -93,6 +99,9 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
             vacancyImpl.setUpdate_date(new Date(update_date));
         }
 
+        vacancyImpl.setUser_id(user_id);
+        vacancyImpl.setGroup_id(group_id);
+
         vacancyImpl.resetOriginalValues();
 
         return vacancyImpl;
@@ -109,6 +118,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         published_in_feed = objectInput.readBoolean();
         insert_date = objectInput.readLong();
         update_date = objectInput.readLong();
+        user_id = objectInput.readLong();
+        group_id = objectInput.readLong();
     }
 
     @Override
@@ -134,5 +145,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         objectOutput.writeBoolean(published_in_feed);
         objectOutput.writeLong(insert_date);
         objectOutput.writeLong(update_date);
+        objectOutput.writeLong(user_id);
+        objectOutput.writeLong(group_id);
     }
 }

@@ -342,6 +342,8 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
         vacancyImpl.setPublished_in_feed(vacancy.isPublished_in_feed());
         vacancyImpl.setInsert_date(vacancy.getInsert_date());
         vacancyImpl.setUpdate_date(vacancy.getUpdate_date());
+        vacancyImpl.setUser_id(vacancy.getUser_id());
+        vacancyImpl.setGroup_id(vacancy.getGroup_id());
 
         return vacancyImpl;
     }

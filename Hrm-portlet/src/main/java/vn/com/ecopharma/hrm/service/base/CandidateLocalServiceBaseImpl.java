@@ -20,6 +20,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.service.CandidateLocalService;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
+import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
@@ -49,6 +50,12 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected vn.com.ecopharma.hrm.service.CandidateService candidateService;
     @BeanReference(type = CandidatePersistence.class)
     protected CandidatePersistence candidatePersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentLocalService.class)
+    protected vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentService.class)
+    protected vn.com.ecopharma.hrm.service.FileAttachmentService fileAttachmentService;
+    @BeanReference(type = FileAttachmentPersistence.class)
+    protected FileAttachmentPersistence fileAttachmentPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleLocalService.class)
     protected vn.com.ecopharma.hrm.service.JTitleLocalService jTitleLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleService.class)
@@ -495,6 +502,63 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     public void setCandidatePersistence(
         CandidatePersistence candidatePersistence) {
         this.candidatePersistence = candidatePersistence;
+    }
+
+    /**
+     * Returns the file attachment local service.
+     *
+     * @return the file attachment local service
+     */
+    public vn.com.ecopharma.hrm.service.FileAttachmentLocalService getFileAttachmentLocalService() {
+        return fileAttachmentLocalService;
+    }
+
+    /**
+     * Sets the file attachment local service.
+     *
+     * @param fileAttachmentLocalService the file attachment local service
+     */
+    public void setFileAttachmentLocalService(
+        vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService) {
+        this.fileAttachmentLocalService = fileAttachmentLocalService;
+    }
+
+    /**
+     * Returns the file attachment remote service.
+     *
+     * @return the file attachment remote service
+     */
+    public vn.com.ecopharma.hrm.service.FileAttachmentService getFileAttachmentService() {
+        return fileAttachmentService;
+    }
+
+    /**
+     * Sets the file attachment remote service.
+     *
+     * @param fileAttachmentService the file attachment remote service
+     */
+    public void setFileAttachmentService(
+        vn.com.ecopharma.hrm.service.FileAttachmentService fileAttachmentService) {
+        this.fileAttachmentService = fileAttachmentService;
+    }
+
+    /**
+     * Returns the file attachment persistence.
+     *
+     * @return the file attachment persistence
+     */
+    public FileAttachmentPersistence getFileAttachmentPersistence() {
+        return fileAttachmentPersistence;
+    }
+
+    /**
+     * Sets the file attachment persistence.
+     *
+     * @param fileAttachmentPersistence the file attachment persistence
+     */
+    public void setFileAttachmentPersistence(
+        FileAttachmentPersistence fileAttachmentPersistence) {
+        this.fileAttachmentPersistence = fileAttachmentPersistence;
     }
 
     /**

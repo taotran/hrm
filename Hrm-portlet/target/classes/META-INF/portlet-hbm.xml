@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="vn.com.ecopharma.hrm.model.Candidate" />
+	<import class="vn.com.ecopharma.hrm.model.FileAttachment" />
 	<import class="vn.com.ecopharma.hrm.model.JTitle" />
 	<import class="vn.com.ecopharma.hrm.model.Vacancy" />
 	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Candidate">
@@ -22,6 +23,25 @@
 		<property name="cv_text_version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="keywords" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="added_person" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_FileAttachment">
+		<cache usage="read-write" />
+		<id name="f_id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="c_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="file_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="attachment_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.JTitleImpl" table="HRM_JTitle">
 		<cache usage="read-write" />
@@ -32,6 +52,8 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="isDeleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.VacancyImpl" table="HRM_Vacancy">
 		<cache usage="read-write" />
@@ -46,5 +68,7 @@
 		<property name="published_in_feed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="insert_date" type="org.hibernate.type.TimestampType" />
 		<property name="update_date" type="org.hibernate.type.TimestampType" />
+		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

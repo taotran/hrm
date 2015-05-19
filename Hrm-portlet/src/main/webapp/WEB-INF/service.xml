@@ -4,7 +4,8 @@
 	<author>tvt</author>
 	<namespace>HRM</namespace>
 
-	<entity name="Candidate" local-service="true" trash-enabled="true" remote-service="true">
+	<entity name="Candidate" local-service="true" trash-enabled="true"
+		remote-service="true">
 		<column name="c_id" type="long" primary="true"></column>
 		<column name="first_name" type="String"></column>
 		<column name="middle_name" type="String"></column>
@@ -18,34 +19,75 @@
 		<column name="cv_text_version" type="String"></column>
 		<column name="keywords" type="String"></column>
 		<column name="added_person" type="int"></column>
-		<column name="vancancies" type="Collection" entity="Vacancy" mapping-table="Vacancies_Candidates"></column>
-        <finder name="findCandidates" return-type="Collection">
-            <finder-column name="c_id"></finder-column>
-        </finder>
+		<column name="user_id" type="long"></column>
+		<column name="group_id" type="long"></column>
+		<column name="vancancies" type="Collection" entity="Vacancy"
+			mapping-table="Vacancies_Candidates"></column>
+		<finder name="findCandidates" return-type="Collection">
+			<finder-column name="c_id"></finder-column>
+		</finder>
 	</entity>
 
 
-	<entity name="Vacancy" local-service="true" trash-enabled="true" remote-service="true">
+	<entity name="Vacancy" local-service="true" trash-enabled="true"
+		remote-service="true">
 		<column name="v_id" type="long" primary="true"></column>
 		<column name="jtitle_id" type="long"></column>
 		<column name="hiring_manager_id" type="long"></column>
 		<column name="name" type="String"></column>
 		<column name="description" type="String"></column>
 		<column name="no_of_positions" type="int"></column>
-		
+
 		<column name="published_in_feed" type="boolean"></column>
 		<column name="insert_date" type="Date"></column>
 		<column name="update_date" type="Date"></column>
-		<column name="candidates" type="Collection" entity="Candidate" mapping-table="Vacancies_Candidates"></column>
+		<column name="user_id" type="long"></column>
+		<column name="group_id" type="long"></column>
+		<column name="candidates" type="Collection" entity="Candidate"
+			mapping-table="Vacancies_Candidates"></column>
 	</entity>
 
-	<entity name="JTitle" local-service="true" trash-enabled="true" remote-service="true">
+	<entity name="JTitle" local-service="true" trash-enabled="true"
+		remote-service="true">
 		<column name="jobtitleId" type="long" primary="true"></column>
 		<column name="title" type="String"></column>
 		<column name="description" type="String"></column>
 		<column name="note" type="String"></column>
 		<column name="isDeleted" type="boolean"></column>
-<!-- 		<column name="vacancies" type="Collection" entity="Vacancy" mapping-table="jtittle_id"></column> -->
+		<column name="user_id" type="long"></column>
+		<column name="group_id" type="long"></column>
+		<!-- <column name="vacancies" type="Collection" entity="Vacancy" mapping-table="jtittle_id"></column> -->
+	</entity>
+	<entity name="FileAttachment" local-service="true"
+		trash-enabled="true">
+
+		<!-- PK fields -->
+
+		<column name="f_id" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="c_id" type="long"></column>
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+        <column name="name" type="String"></column>
+        <column name="file_type" type="String"></column>
+        <column name="size" type="long"></column>
+        <column name="content" type="String"></column>
+        <column name="attachment_type" type="String"></column>
 	</entity>
 </service-builder>
 	

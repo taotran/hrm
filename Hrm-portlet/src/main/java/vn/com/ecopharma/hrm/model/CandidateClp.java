@@ -44,6 +44,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
     private String _cv_text_version;
     private String _keywords;
     private int _added_person;
+    private long _user_id;
+    private long _group_id;
     private BaseModel<?> _candidateRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -97,6 +99,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         attributes.put("cv_text_version", getCv_text_version());
         attributes.put("keywords", getKeywords());
         attributes.put("added_person", getAdded_person());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -180,6 +184,18 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
         if (added_person != null) {
             setAdded_person(added_person);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -474,6 +490,50 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
     }
 
     @Override
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    @Override
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+
+        if (_candidateRemoteModel != null) {
+            try {
+                Class<?> clazz = _candidateRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUser_id", long.class);
+
+                method.invoke(_candidateRemoteModel, user_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    @Override
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
+
+        if (_candidateRemoteModel != null) {
+            try {
+                Class<?> clazz = _candidateRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setGroup_id", long.class);
+
+                method.invoke(_candidateRemoteModel, group_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> get_vacancies() {
         try {
             String methodName = "get_vacancies";
@@ -680,6 +740,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         clone.setCv_text_version(getCv_text_version());
         clone.setKeywords(getKeywords());
         clone.setAdded_person(getAdded_person());
+        clone.setUser_id(getUser_id());
+        clone.setGroup_id(getGroup_id());
 
         return clone;
     }
@@ -729,7 +791,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(27);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("{c_id=");
         sb.append(getC_id());
@@ -757,6 +819,10 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         sb.append(getKeywords());
         sb.append(", added_person=");
         sb.append(getAdded_person());
+        sb.append(", user_id=");
+        sb.append(getUser_id());
+        sb.append(", group_id=");
+        sb.append(getGroup_id());
         sb.append("}");
 
         return sb.toString();
@@ -764,7 +830,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(43);
+        StringBundler sb = new StringBundler(49);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Candidate");
@@ -821,6 +887,14 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         sb.append(
             "<column><column-name>added_person</column-name><column-value><![CDATA[");
         sb.append(getAdded_person());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>user_id</column-name><column-value><![CDATA[");
+        sb.append(getUser_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>group_id</column-name><column-value><![CDATA[");
+        sb.append(getGroup_id());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

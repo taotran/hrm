@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -78,13 +83,13 @@ public class HRMPortlet extends MVCPortlet {
 		String json = "";
 		// All candidate resource actions
 		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
-			// map.put("aaData", findAllCandidates());
-			// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+//			 map.put("aaData", findAllCandidates());
+//			 JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
 //			while (resourceRequest.getParameterNames().hasMoreElements()) {
 //				String param = (String) resourceRequest.getAttributeNames().nextElement();
 //				System.out.println(param);
 //			}
-			String[] columnNames = { "id", "first_name", "middle_name",
+			 String[] columnNames = { "id", "first_name", "middle_name",
 					"last_name" };
 			JSONObject result = new JSONObject();
 			JSONArray array = new JSONArray();
@@ -93,7 +98,6 @@ public class HRMPortlet extends MVCPortlet {
 			int start = 0;
 			int column = 0;
 			String direction = "asc";
-			System.out.println(resourceRequest.getParameter("iDisplayStart"));
 			int pageNo = ParamUtil.getInteger(resourceRequest, "iDisplayStart");
 			int pageSize = ParamUtil.getInteger(resourceRequest,
 					"iDisplayLength");
@@ -123,7 +127,11 @@ public class HRMPortlet extends MVCPortlet {
 			String colName = columnNames[column];
 			int totalRecords = -1;
 			totalRecords = CandidateLocalServiceUtil.countAll();
+			System.out.println("TOTAL RECORDS: " + totalRecords);
 			int totalRecordsAfterSearch = totalRecords;
+			
+			INITIAL = start;
+			RECORD_SIZE = listDisplayAmount;
 			List<Candidate> pagingCandidates;
 			try {
 				pagingCandidates = CandidateLocalServiceUtil.findCandidates(
@@ -153,6 +161,8 @@ public class HRMPortlet extends MVCPortlet {
 			}
 
 		} else if (SAVE_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
+			
+			
 			final BufferedReader br = new BufferedReader(new InputStreamReader(
 					resourceRequest.getPortletInputStream()));
 			if (br != null) {
@@ -169,16 +179,18 @@ public class HRMPortlet extends MVCPortlet {
 						.getAsString();
 				final String comment = jObject.get("comment").getAsString();
 				final String email = jObject.get("email").getAsString();
+				final long v_id = jObject.get("vacancy").getAsLong();
 				// verify c_id to check create/update action
 				if (c_id == -1) {
 					try {
-						CandidateLocalServiceUtil.createCandidate(first_name,
+						ServiceContext serviceContext = ServiceContextFactory.getInstance(Candidate.class.getName(), resourceRequest);
+						CandidateLocalServiceUtil.createCandidate(serviceContext.getUserId(), first_name,
 								middle_name, last_name, email, contact_number,
 								comment, 1,
 								new Date(System.currentTimeMillis()), 1, "zzz",
-								1, VacancyLocalServiceUtil.findAll());
-					} catch (NoSuchVacancyException e) {
-						e.printStackTrace();
+								1, Arrays.asList(VacancyLocalServiceUtil.getVacancy(v_id)), serviceContext);
+					} catch (PortalException e) {
+					
 					} catch (SystemException e) {
 						e.printStackTrace();
 					}
@@ -188,9 +200,9 @@ public class HRMPortlet extends MVCPortlet {
 								first_name, middle_name, last_name, email,
 								contact_number, comment, 1,
 								new Date(System.currentTimeMillis()), 1, "zzz",
-								1, VacancyLocalServiceUtil.findAll());
+								1, Arrays.asList(VacancyLocalServiceUtil.getVacancy(v_id)));
 
-					} catch (NoSuchVacancyException e) {
+					} catch (PortalException e) {
 						e.printStackTrace();
 					} catch (SystemException e) {
 						e.printStackTrace();
@@ -248,6 +260,12 @@ public class HRMPortlet extends MVCPortlet {
 
 		} else if (GET_VACANCY.equalsIgnoreCase(resourceRequestId)) {
 
+		} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
+			System.out.println("###INSIDE UPLOAD FILE");
+			
+			UploadPortletRequest uploadRequest = PortalUtil.getUploadPortletRequest(resourceRequest);
+			String uploadFileName = uploadRequest.getFileName("addCandidate_resume");
+			System.out.println(uploadFileName);
 		}
 		super.serveResource(resourceRequest, resourceResponse);
 	}

@@ -11,7 +11,24 @@ create table HRM_Candidate (
 	cv_file_id LONG,
 	cv_text_version VARCHAR(75) null,
 	keywords VARCHAR(75) null,
-	added_person INTEGER
+	added_person INTEGER,
+	user_id LONG,
+	group_id LONG
+);
+
+create table HRM_FileAttachment (
+	f_id LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	c_id LONG,
+	name VARCHAR(75) null,
+	file_type VARCHAR(75) null,
+	size_ LONG,
+	content VARCHAR(75) null,
+	attachment_type VARCHAR(75) null
 );
 
 create table HRM_JTitle (
@@ -19,7 +36,9 @@ create table HRM_JTitle (
 	title VARCHAR(75) null,
 	description VARCHAR(75) null,
 	note VARCHAR(75) null,
-	isDeleted BOOLEAN
+	isDeleted BOOLEAN,
+	user_id LONG,
+	group_id LONG
 );
 
 create table HRM_Vacancies_Candidates (
@@ -37,7 +56,9 @@ create table HRM_Vacancy (
 	no_of_positions INTEGER,
 	published_in_feed BOOLEAN,
 	insert_date DATE null,
-	update_date DATE null
+	update_date DATE null,
+	user_id LONG,
+	group_id LONG
 );
 
 create table HRM_jtittle_id (

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import vn.com.ecopharma.hrm.model.CandidateClp;
+import vn.com.ecopharma.hrm.model.FileAttachmentClp;
 import vn.com.ecopharma.hrm.model.JTitleClp;
 import vn.com.ecopharma.hrm.model.VacancyClp;
 
@@ -94,6 +95,10 @@ public class ClpSerializer {
             return translateInputCandidate(oldModel);
         }
 
+        if (oldModelClassName.equals(FileAttachmentClp.class.getName())) {
+            return translateInputFileAttachment(oldModel);
+        }
+
         if (oldModelClassName.equals(JTitleClp.class.getName())) {
             return translateInputJTitle(oldModel);
         }
@@ -121,6 +126,16 @@ public class ClpSerializer {
         CandidateClp oldClpModel = (CandidateClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getCandidateRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputFileAttachment(BaseModel<?> oldModel) {
+        FileAttachmentClp oldClpModel = (FileAttachmentClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getFileAttachmentRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -165,6 +180,41 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.CandidateImpl")) {
             return translateOutputCandidate(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl")) {
+            return translateOutputFileAttachment(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -347,6 +397,11 @@ public class ClpSerializer {
             return new vn.com.ecopharma.hrm.NoSuchCandidateException();
         }
 
+        if (className.equals(
+                    "vn.com.ecopharma.hrm.NoSuchFileAttachmentException")) {
+            return new vn.com.ecopharma.hrm.NoSuchFileAttachmentException();
+        }
+
         if (className.equals("vn.com.ecopharma.hrm.NoSuchJTitleException")) {
             return new vn.com.ecopharma.hrm.NoSuchJTitleException();
         }
@@ -364,6 +419,16 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setCandidateRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputFileAttachment(BaseModel<?> oldModel) {
+        FileAttachmentClp newModel = new FileAttachmentClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setFileAttachmentRemoteModel(oldModel);
 
         return newModel;
     }

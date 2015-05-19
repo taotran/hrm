@@ -24,10 +24,12 @@ public class JTitleCacheModel implements CacheModel<JTitle>, Externalizable {
     public String description;
     public String note;
     public boolean isDeleted;
+    public long user_id;
+    public long group_id;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(11);
+        StringBundler sb = new StringBundler(15);
 
         sb.append("{jobtitleId=");
         sb.append(jobtitleId);
@@ -39,6 +41,10 @@ public class JTitleCacheModel implements CacheModel<JTitle>, Externalizable {
         sb.append(note);
         sb.append(", isDeleted=");
         sb.append(isDeleted);
+        sb.append(", user_id=");
+        sb.append(user_id);
+        sb.append(", group_id=");
+        sb.append(group_id);
         sb.append("}");
 
         return sb.toString();
@@ -69,6 +75,8 @@ public class JTitleCacheModel implements CacheModel<JTitle>, Externalizable {
         }
 
         jTitleImpl.setIsDeleted(isDeleted);
+        jTitleImpl.setUser_id(user_id);
+        jTitleImpl.setGroup_id(group_id);
 
         jTitleImpl.resetOriginalValues();
 
@@ -82,6 +90,8 @@ public class JTitleCacheModel implements CacheModel<JTitle>, Externalizable {
         description = objectInput.readUTF();
         note = objectInput.readUTF();
         isDeleted = objectInput.readBoolean();
+        user_id = objectInput.readLong();
+        group_id = objectInput.readLong();
     }
 
     @Override
@@ -108,5 +118,7 @@ public class JTitleCacheModel implements CacheModel<JTitle>, Externalizable {
         }
 
         objectOutput.writeBoolean(isDeleted);
+        objectOutput.writeLong(user_id);
+        objectOutput.writeLong(group_id);
     }
 }

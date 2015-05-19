@@ -41,10 +41,10 @@ public class JTitleLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName46;
-    private String[] _methodParameterTypes46;
-    private String _methodName47;
-    private String[] _methodParameterTypes47;
+    private String _methodName52;
+    private String[] _methodParameterTypes52;
+    private String _methodName53;
+    private String[] _methodParameterTypes53;
 
     public JTitleLocalServiceClpInvoker() {
         _methodName0 = "addJTitle";
@@ -129,13 +129,13 @@ public class JTitleLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.JTitle"
             };
 
-        _methodName46 = "getBeanIdentifier";
+        _methodName52 = "getBeanIdentifier";
 
-        _methodParameterTypes46 = new String[] {  };
+        _methodParameterTypes52 = new String[] {  };
 
-        _methodName47 = "setBeanIdentifier";
+        _methodName53 = "setBeanIdentifier";
 
-        _methodParameterTypes47 = new String[] { "java.lang.String" };
+        _methodParameterTypes53 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -227,13 +227,13 @@ public class JTitleLocalServiceClpInvoker {
             return JTitleLocalServiceUtil.updateJTitle((vn.com.ecopharma.hrm.model.JTitle) arguments[0]);
         }
 
-        if (_methodName46.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+        if (_methodName52.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
             return JTitleLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName47.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+        if (_methodName53.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
             JTitleLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

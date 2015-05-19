@@ -18,6 +18,8 @@ public class JTitleSoap implements Serializable {
     private String _description;
     private String _note;
     private boolean _isDeleted;
+    private long _user_id;
+    private long _group_id;
 
     public JTitleSoap() {
     }
@@ -30,6 +32,8 @@ public class JTitleSoap implements Serializable {
         soapModel.setDescription(model.getDescription());
         soapModel.setNote(model.getNote());
         soapModel.setIsDeleted(model.getIsDeleted());
+        soapModel.setUser_id(model.getUser_id());
+        soapModel.setGroup_id(model.getGroup_id());
 
         return soapModel;
     }
@@ -120,5 +124,21 @@ public class JTitleSoap implements Serializable {
 
     public void setIsDeleted(boolean isDeleted) {
         _isDeleted = isDeleted;
+    }
+
+    public long getUser_id() {
+        return _user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        _user_id = user_id;
+    }
+
+    public long getGroup_id() {
+        return _group_id;
+    }
+
+    public void setGroup_id(long group_id) {
+        _group_id = group_id;
     }
 }

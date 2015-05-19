@@ -186,6 +186,34 @@ public interface VacancyModel extends BaseModel<Vacancy>, TrashedModel {
     public void setUpdate_date(Date update_date);
 
     /**
+     * Returns the user_id of this vacancy.
+     *
+     * @return the user_id of this vacancy
+     */
+    public long getUser_id();
+
+    /**
+     * Sets the user_id of this vacancy.
+     *
+     * @param user_id the user_id of this vacancy
+     */
+    public void setUser_id(long user_id);
+
+    /**
+     * Returns the group_id of this vacancy.
+     *
+     * @return the group_id of this vacancy
+     */
+    public long getGroup_id();
+
+    /**
+     * Sets the group_id of this vacancy.
+     *
+     * @param group_id the group_id of this vacancy
+     */
+    public void setGroup_id(long group_id);
+
+    /**
      * Returns the status of this vacancy.
      *
      * @return the status of this vacancy

@@ -3,7 +3,10 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.model.Candidate;
@@ -41,11 +44,12 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return vacancyPersistence.findAll();
 	}
 
-	public Vacancy createVacancy(long jTitle_id, long hiring_mananager_id,
-			String name, String description, int no_of_positions,
-			boolean published_in_feed, List<Candidate> candidates)
-			throws NoSuchVacancyException {
+	public Vacancy createVacancy(long user_id, long jTitle_id,
+			long hiring_mananager_id, String name, String description,
+			int no_of_positions, boolean published_in_feed,
+			List<Candidate> candidates, ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
+			User user = userPersistence.findByPrimaryKey(user_id);
 			final long v_id = counterLocalService.increment();
 			final Vacancy v = vacancyPersistence.create(v_id);
 			final Date now = new Date(System.currentTimeMillis());
@@ -59,10 +63,18 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			v.setUpdate_date(now);
 			vacancyPersistence.addCandidates(v_id, candidates);
 			v.set_candidates(candidates);
+			v.setUser_id(user.getUserId());
+			v.setGroup_id(serviceContext.getScopeGroupId());
+			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(),
+					user.getUserId(), Vacancy.class.getName(), v_id, false,
+					true, true);
 			vacancyPersistence.update(v);
 			return v;
 		} catch (SystemException e) {
 			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+
 		}
 		return null;
 	}

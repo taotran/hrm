@@ -1,3 +1,5 @@
+<%@page
+	import="vn.com.ecopharma.hrm.service.permission.CandidatePermission"%>
 <%@page import="vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil"%>
 <%@page import="vn.com.ecopharma.hrm.service.VacancyServiceUtil"%>
 <%@page import="vn.com.ecopharma.hrm.service.persistence.VacancyUtil"%>
@@ -6,7 +8,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@include file="init.jsp"%>
 
-
+<portlet:resourceURL id="saveCandidate" var="saveCandidateURL" />
 
 <div id="myTab">
 
@@ -59,28 +61,30 @@
 
 					<!-- <table id="ctable" class="table table-striped table-bordered"> -->
 					<form>
-					<table id="ctable" width="100%" border="0" margin="0" padding="0"
-						class="row-border tableHeader">
-						<thead>
-							<tr>
-								<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
-								<th><liferay-ui:message key="candidate.id" /></th>
-								<th><liferay-ui:message key="candidate.first_name" /></th>
-								<th><liferay-ui:message key="candidate.middle_name" /></th>
-								<th><liferay-ui:message key="candidate.last_name" /></th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
-								<th><liferay-ui:message key="candidate.id" /></th>
-								<th><liferay-ui:message key="candidate.first_name" /></th>
-								<th><liferay-ui:message key="candidate.middle_name" /></th>
-								<th><liferay-ui:message key="candidate.last_name" /></th>
-							</tr>
-						</tfoot>
-						<tbody></tbody>
-					</table>
+						<table id="ctable" width="100%" border="0" margin="0" padding="0"
+							class="row-border tableHeader">
+							<thead>
+								<tr>
+									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+									<th><liferay-ui:message key="candidate.id" /></th>
+									<th><liferay-ui:message key="candidate.first_name" /></th>
+									<th><liferay-ui:message key="candidate.middle_name" /></th>
+									<th><liferay-ui:message key="candidate.last_name" /></th>
+								</tr>
+							</thead>
+
+							<tbody></tbody>
+
+							<tfoot>
+								<tr>
+									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+									<th><liferay-ui:message key="candidate.id" /></th>
+									<th><liferay-ui:message key="candidate.first_name" /></th>
+									<th><liferay-ui:message key="candidate.middle_name" /></th>
+									<th><liferay-ui:message key="candidate.last_name" /></th>
+								</tr>
+							</tfoot>
+						</table>
 					</form>
 				</div>
 			</div>
@@ -122,99 +126,112 @@
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<h4>Add New Candidate</h4>
 	</div>
+	<form method="post" action="<%=saveCandidateURL%>>" id="cForm"
+		enctype="multipart/form-data" name="cForm">
+		<div class="modal-body" id="candidateInfo">
+			<input type="hidden" id="c_id" value="-1" />
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="first_name"><liferay-ui:message
+							key="candidate.first_name" /></label> <input type="text"
+						class="form-control" id="first_name" placeholder="First Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="middle_name"><liferay-ui:message
+							key="candidate.middle_name" /></label> <input type="text"
+						class="form-control" id="middle_name" value="testValue"
+						placeholder="Middle Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="last_name"><liferay-ui:message
+							key="candidate.last_name" /></label> <input type="text"
+						class="form-control" id="last_name" value="testValue"
+						placeholder="Last Name">
+				</div>
+			</div>
 
-	<div class="modal-body" id="candidateInfo">
-		<input type="hidden" id="c_id" value="-1" />
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="first_name"><liferay-ui:message
-						key="candidate.first_name" /></label> <input type="text"
-					class="form-control" id="first_name" placeholder="First Name">
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="inputEmail"><liferay-ui:message
+							key="candidate.email" /></label> <input type="email"
+						class="form-control" id="inputEmail" value="testValue@eco.com"
+						placeholder="Email">
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="middle_name"><liferay-ui:message
-						key="candidate.middle_name" /></label> <input type="text"
-					class="form-control" id="middle_name" value="testValue"
-					placeholder="Middle Name">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="last_name"><liferay-ui:message
-						key="candidate.last_name" /></label> <input type="text"
-					class="form-control" id="last_name" value="testValue"
-					placeholder="Last Name">
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="inputEmail"><liferay-ui:message
-						key="candidate.email" /></label> <input type="email" class="form-control"
-					id="inputEmail" value="testValue@eco.com" placeholder="Email">
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="contact_number"><liferay-ui:message
+							key="candidate.contact_number" /></label> <input type="text"
+						class="form-control" id="contact_number" value="123-456-789"
+						placeholder="Contact Number">
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="contact_number"><liferay-ui:message
-						key="candidate.contact_number" /></label> <input type="text"
-					class="form-control" id="contact_number" value="123-456-789"
-					placeholder="Contact Number">
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="select2"><liferay-ui:message
+							key="candidate.job_vacancy" /></label>
+					<c:if test="${fn:length(allVacancies) > 0}">
+						<select class="form-control select2-container" id="vacancySelect"
+							class="vacancySelect2">
+							<c:forEach items="${allVacancies}" var="vacancy">
+								<option value="${vacancy.v_id}">${vacancy.name }</option>
+							</c:forEach>
+						</select>
+					</c:if>
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="select2"><liferay-ui:message
-						key="candidate.job_vacancy" /></label>
-				<c:if test="${fn:length(allVacancies) > 0}">
-					<select class="form-control select2-container" id="vacancySelect"
-						class="vacancySelect2">
-						<c:forEach items="${allVacancies}" var="vacancy">
-							<option value="${vacancy.v_id}">${vacancy.name }</option>
-						</c:forEach>
-					</select>
-				</c:if>
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="addCandidate_resume">Resume</label> <input type="file"
+						name='<porlet:namespace/>addCandidate_resume'
+						id="addCandidate_resume" />
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="comment"><liferay-ui:message
-						key="candidate.comment" /></label>
-				<!-- 				<textarea rows="5" cols="50" class="form-control" id="comment">Test Test</textarea> -->
-				<input class="form-control" id="comment" value="Ghi chú"
-					placeholder="Comment..." />
+			<div class="form-group">
+				<div class="form-inline">
+					<label for="comment"><liferay-ui:message
+							key="candidate.comment" /></label>
+					<!-- 				<textarea rows="5" cols="50" class="form-control" id="comment">Test Test</textarea> -->
+					<input class="form-control" id="comment" value="Ghi chú"
+						placeholder="Comment..." />
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-inline">
-				<!-- 				<label for="date_of_application">Date of application</label> <input
+			<div class="form-group">
+				<div class="form-inline">
+					<!-- 				<label for="date_of_application">Date of application</label> <input
 					type="text" class="form-control" id="date_of_application"
 					placeholder="Date of Application">
 					<label class="control-label">Date picker</label> -->
-				<label class="control-label">Date picker</label> <input type="text"
-					value="02/16/12" data-date-format="mm/dd/yy" id="datepicker"
-					class="datepicker">
+					<label class="control-label">Date picker</label> <input type="text"
+						value="02/16/12" data-date-format="mm/dd/yy" id="datepicker"
+						class="datepicker">
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="modal-footer">
-		<button type="button" class="btn btn-primary" data-dismiss="modal"
-			onclick="saveCandidate()">
-			<liferay-ui:message key="global.button.save" />
-		</button>
-		<button class="btn" onclick="clearFields()">
-			<liferay-ui:message key="global.button.clear_all" />
-		</button>
-		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
-				key="global.button.cancel" /></a>
-	</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveCandidate()"> SUBMIT </button>
+			<!-- <input type="submit" class="btn btn-primary" data-dismiss="modal" /> -->
+
+
+
+			<button class="btn" onclick="clearFields()">
+				<liferay-ui:message key="global.button.clear_all" />
+			</button>
+			<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+					key="global.button.cancel" /></a>
+		</div>
+	</form>
 </div>
 
 <div class="modal" id="modify-vacancy-modal">
@@ -299,8 +316,57 @@
 </div>
 
 <script type="text/javascript">
+	var cForm = $('#cForm');
+	cForm.submit(function(ev) {
+		console.log("SUBMIT");
+		$.ajax({
+			type : cForm.attr('method'),
+			url : cForm.attr('action'),
+			data : cForm.serialize(),
+			success : function(data) {
+				alert('OK');
+			}
+		});
+		ev.preventDefault();
+
+	});
+
 	var vTabClickCount = 0;
 	var cTable;
+
+	$('#addCandidate_resume').change(function() {
+		console.log("aaaaaaaaaaaaaaaa");
+		sendFile(this.files[0]);
+	});
+
+	function sendFile(file) {
+		jQuery
+				.ajax({
+					type : 'POST',
+					url : '<portlet:resourceURL id="uploadResume"/>',
+					enctype : 'multipart/form-data',
+					data : file,
+					success : function() {
+
+					},
+					xhrFields : {
+						// add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
+						onprogress : function(progress) {
+							// calculate upload progress
+							var percentage = Math
+									.floor((progress.total / progress.totalSize) * 100);
+							// log upload progress to console
+							console.log('progress', percentage);
+							if (percentage === 100) {
+								console.log('DONE!');
+							}
+						}
+					},
+					processData : false,
+					contentType : file.type
+				});
+	}
+
 	YUI().use('aui-tabview', function(Y) {
 		new Y.TabView({
 			srcNode : '#myTab'
@@ -333,7 +399,39 @@
 		candidate.last_name = $('#last_name').val();
 		candidate.email = $('#inputEmail').val();
 		candidate.contact_number = $('#contact_number').val();
+		candidate.vacancy = $('#vacancySelect').val();
 		candidate.comment = $('#comment').val();
+		// 		candidate.file = $('#addCandidate_resume');
+
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveCandidate'/>",
+			data : JSON.stringify(candidate),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				$('#ctable').dataTable().fnDraw();
+			}
+		});
+	}
+	//AJAX save new/updated candidate
+	/*function saveCandidate() {
+		var formData = $('#cForm');
+		var candidate = new Object();
+
+		candidate.c_id = $("#c_id").val();
+		candidate.first_name = $('#first_name').val();
+		candidate.middle_name = $('#middle_name').val();
+		candidate.last_name = $('#last_name').val();
+		candidate.email = $('#inputEmail').val();
+		candidate.contact_number = $('#contact_number').val();
+		candidate.vacancy = $('#vacancySelect').val();
+		candidate.comment = $('#comment').val();
+		// 		candidate.file = $('#addCandidate_resume');
 
 		jQuery.ajax({
 			type : 'POST',
@@ -355,11 +453,11 @@
 		//clear input fields after creating new
 		/* 		$('#candidateInfo :input').each(function() {
 		 $(this).val('');
-		 }); */
-	};
+		 }); 
+	};*/
 
-	/*function loadCandidateTable() {
-		 $('#ctable')
+	function loadCandidateTable() {
+		$('#ctable')
 				.dataTable(
 						{
 							'bPaginate' : true,
@@ -399,10 +497,10 @@
 										"mData" : "_last_name",
 										"type" : "text"
 									} ],
-							bUseColVis : true
+						/* bUseColVis : true */
 
 						});
-	} */
+	}
 
 	function loadVacancyTable() {
 		$('#vtable')
@@ -441,107 +539,70 @@
 						});
 	}
 
-	jQuery(document)
-			.ready(
-					function() {
-						/* 	loadCandidateTable(); */
-						cTable = $('#ctable')
-								.dataTable(
-										{
-											'bPaginate' : true,
-											'order' : [ 0, 'asc' ],
-											'bInfo' : true,
-											"<portlet:namespace/>iDisplayStart": "0",
-											'bProcessing' : true,
-											'bServerSide' : true,
-											'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
-											'dom' : 'C<"clear">lfrtip',
-											colVis : {
-												"align" : "right",
-												restore : "Restore",
-												showAll : "Show all",
-												showNone : "Show none",
-												order : 'alpha',
-												"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
-											},
-											"language" : {
-												"infoFiltered" : ""
-											},
-											"dom" : 'Cf<"toolbar"">rtip',
+	jQuery(document).ready(
+	/*	 loadCandidateTable(); */
+	function() {
+		/* loadCandidateTable(); */
+		cTable = $('#ctable')
+				.dataTable(
+						{
+							'bPaginate' : true,
+							'order' : [ 0, 'asc' ],
+							'bInfo' : true,
+							'iDisplayStart': 0,
+							'bProcessing' : true,
+							'bServerSide' : true,
+							'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
+							'dom' : 'C<"clear">lfrtip',
+							colVis : {
+								"align" : "right",
+								restore : "Restore",
+								showAll : "Show all",
+								showNone : "Show none",
+								order : 'alpha',
+								"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
+							},
+							"language" : {
+								"infoFiltered" : ""
+							},
+							"dom" : 'Cf<"toolbar"">rtip',
 
-										}).columnFilter({
-									aoColumns : /* [
-																					 {
-																						"mData" : "_c_id",
-																						"type" : "number",
-																						"bSortable" : false,
-																						"mRender" : function(
-																								data, type,
-																								full) {
-																							return "<input id='cCheckbox' type='checkbox' id='"+full._c_id+"' value='"+full._c_id+"'/>";
-																						}
-																					},
-																					{
-																						"mData" : "_first_name",
-																						"type" : "text",
-																						"mRender" : function(
-																								data, type,
-																								full) {
-																							var fullName = data
-																									+ " "
-																									+ full._middle_name
-																									+ " "
-																									+ full._last_name;
-																							return "<a id='"
-																									+ full._c_id
-																									+ "' href='#ctable' onclick='getCandidate("
-																									+ full._c_id
-																									+ ");'>"
-																									+ fullName
-																									+ "</a>";
-																						}
-																					},
-																					{
-																						"mData" : "_middle_name",
-																						"type" : "text"
-																					}, {
-																						"mData" : "_last_name",
-																						"type" : "text"
-																					} ], */
-									[ {
-										type : "number"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, ],
-									bUseColVis : true
-								}).fnSetFilteringDelay();
-						$("#ctable_length").hide();
-						$("div.toolbar")
-								.append(
-										'<div class="btn-group" style="padding:5px "><button class="btn btn-default" id="refreshbtn" style="background:none;border:1px solid #ccc;height:30px" type="button"><span class="glyphicon glyphicon-refresh" style="padding:3px"></span></button></div>');
-						$("div.toolbar").css("float", "right");
-						$('#refreshbtn').click(function() {
-							cTable.fnStandingRedraw();
-						});
+						}).columnFilter({
+					aoColumns : 
+					[ {
+						type : "number"
+					}, {
+						type : "text"
+					}, {
+						type : "text"
+					}, {
+						type : "text"
+					}, ],
+					bUseColVis : true
+				}).fnSetFilteringDelay();
+		$("#ctable_length").hide();
+		$("div.toolbar")
+				.append(
+						'<div class="btn-group" style="padding:5px "><button class="btn btn-default" id="refreshbtn" style="background:none;border:1px solid #ccc;height:30px" type="button"><span class="glyphicon glyphicon-refresh" style="padding:3px"></span></button></div>');
+		$("div.toolbar").css("float", "right");
+		$('#refreshbtn').click(function() {
+			cTable.fnStandingRedraw();
+		}); 
 
-						/* loadVacancyTable(); */
-						$(".select2-container").select2();
-						$('#datepicker').datepicker();
-						/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
-						$('#cCheckbox').change(function() {
-							alert("checked");
-							if ($("#cCheckbox:checked").length) {
-								$("#cDeleteBtn").removeAttr('disabled');
-							} else {
-								$("#cDeleteBtn").attr('disabled', 'disabled');
-							}
+		loadVacancyTable();
+		$(".select2-container").select2();
+		$('#datepicker').datepicker();
+		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
+		$('#cCheckbox').change(function() {
+			alert("checked");
+			if ($("#cCheckbox:checked").length) {
+				$("#cDeleteBtn").removeAttr('disabled');
+			} else {
+				$("#cDeleteBtn").attr('disabled', 'disabled');
+			}
 
-						});
-					});
+		});
+	});
 
 	/* 	function vTabClick(){
 	 console.log("inside click");
@@ -610,6 +671,35 @@
 				$('#ctable').dataTable().fnDraw();
 			}
 		});
+	}
+
+	function getVacancy(id) {
+		var obj = new Object();
+		obj.v_id = id;
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='getVacancy'/>",
+			data : JSON.stringify(obj),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				var obj = response.candidate;
+				$('#v_id').val(obj._c_id);
+				$('#first_name').val(obj._first_name);
+				$('#middle_name').val(obj._middle_name);
+				$('#last_name').val(obj._last_name);
+				$('#inputEmail').val(obj._email);
+				$('#contact_number').val(obj._contact_number);
+				$('#comment').val(obj._comment);
+				/* Show edit vacancy modal */
+				$('#modify-candidate-modal').modal('show');
+			}
+		});
+
 	}
 
 	//Util functions

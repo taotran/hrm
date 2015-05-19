@@ -41,6 +41,8 @@ public class JTitleWrapper implements JTitle, ModelWrapper<JTitle> {
         attributes.put("description", getDescription());
         attributes.put("note", getNote());
         attributes.put("isDeleted", getIsDeleted());
+        attributes.put("user_id", getUser_id());
+        attributes.put("group_id", getGroup_id());
 
         return attributes;
     }
@@ -75,6 +77,18 @@ public class JTitleWrapper implements JTitle, ModelWrapper<JTitle> {
 
         if (isDeleted != null) {
             setIsDeleted(isDeleted);
+        }
+
+        Long user_id = (Long) attributes.get("user_id");
+
+        if (user_id != null) {
+            setUser_id(user_id);
+        }
+
+        Long group_id = (Long) attributes.get("group_id");
+
+        if (group_id != null) {
+            setGroup_id(group_id);
         }
     }
 
@@ -206,6 +220,46 @@ public class JTitleWrapper implements JTitle, ModelWrapper<JTitle> {
     @Override
     public void setIsDeleted(boolean isDeleted) {
         _jTitle.setIsDeleted(isDeleted);
+    }
+
+    /**
+    * Returns the user_id of this j title.
+    *
+    * @return the user_id of this j title
+    */
+    @Override
+    public long getUser_id() {
+        return _jTitle.getUser_id();
+    }
+
+    /**
+    * Sets the user_id of this j title.
+    *
+    * @param user_id the user_id of this j title
+    */
+    @Override
+    public void setUser_id(long user_id) {
+        _jTitle.setUser_id(user_id);
+    }
+
+    /**
+    * Returns the group_id of this j title.
+    *
+    * @return the group_id of this j title
+    */
+    @Override
+    public long getGroup_id() {
+        return _jTitle.getGroup_id();
+    }
+
+    /**
+    * Sets the group_id of this j title.
+    *
+    * @param group_id the group_id of this j title
+    */
+    @Override
+    public void setGroup_id(long group_id) {
+        _jTitle.setGroup_id(group_id);
     }
 
     /**

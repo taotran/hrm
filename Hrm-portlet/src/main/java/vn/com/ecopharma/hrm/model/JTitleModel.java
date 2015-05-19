@@ -129,6 +129,34 @@ public interface JTitleModel extends BaseModel<JTitle>, TrashedModel {
     public void setIsDeleted(boolean isDeleted);
 
     /**
+     * Returns the user_id of this j title.
+     *
+     * @return the user_id of this j title
+     */
+    public long getUser_id();
+
+    /**
+     * Sets the user_id of this j title.
+     *
+     * @param user_id the user_id of this j title
+     */
+    public void setUser_id(long user_id);
+
+    /**
+     * Returns the group_id of this j title.
+     *
+     * @return the group_id of this j title
+     */
+    public long getGroup_id();
+
+    /**
+     * Sets the group_id of this j title.
+     *
+     * @param group_id the group_id of this j title
+     */
+    public void setGroup_id(long group_id);
+
+    /**
      * Returns the status of this j title.
      *
      * @return the status of this j title

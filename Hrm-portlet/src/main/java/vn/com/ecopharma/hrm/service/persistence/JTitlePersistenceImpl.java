@@ -324,6 +324,8 @@ public class JTitlePersistenceImpl extends BasePersistenceImpl<JTitle>
         jTitleImpl.setDescription(jTitle.getDescription());
         jTitleImpl.setNote(jTitle.getNote());
         jTitleImpl.setIsDeleted(jTitle.isIsDeleted());
+        jTitleImpl.setUser_id(jTitle.getUser_id());
+        jTitleImpl.setGroup_id(jTitle.getGroup_id());
 
         return jTitleImpl;
     }

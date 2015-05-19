@@ -241,6 +241,34 @@ public interface CandidateModel extends BaseModel<Candidate>, TrashedModel {
     public void setAdded_person(int added_person);
 
     /**
+     * Returns the user_id of this candidate.
+     *
+     * @return the user_id of this candidate
+     */
+    public long getUser_id();
+
+    /**
+     * Sets the user_id of this candidate.
+     *
+     * @param user_id the user_id of this candidate
+     */
+    public void setUser_id(long user_id);
+
+    /**
+     * Returns the group_id of this candidate.
+     *
+     * @return the group_id of this candidate
+     */
+    public long getGroup_id();
+
+    /**
+     * Sets the group_id of this candidate.
+     *
+     * @param group_id the group_id of this candidate
+     */
+    public void setGroup_id(long group_id);
+
+    /**
      * Returns the status of this candidate.
      *
      * @return the status of this candidate

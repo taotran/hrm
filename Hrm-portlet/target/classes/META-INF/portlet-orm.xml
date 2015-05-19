@@ -26,9 +26,37 @@
 			<basic name="cv_text_version" />
 			<basic name="keywords" />
 			<basic name="added_person" />
+			<basic name="user_id" />
+			<basic name="group_id" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.FileAttachmentModelImpl">
+		<attributes>
+			<id name="f_id" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="c_id" />
+			<basic name="name" />
+			<basic name="file_type" />
+			<basic name="size">
+				<column name="SIZE_" />
+			</basic>
+			<basic name="content" />
+			<basic name="attachment_type" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.JTitleModelImpl">
@@ -38,6 +66,8 @@
 			<basic name="description" />
 			<basic name="note" />
 			<basic name="isDeleted" />
+			<basic name="user_id" />
+			<basic name="group_id" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -58,6 +88,8 @@
 			<basic name="update_date">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="user_id" />
+			<basic name="group_id" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -68,6 +100,10 @@
 		<attributes>
 			<transient name="_vacancies" />
 		</attributes>
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">
+		<table name="HRM_FileAttachment" />
+		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">
 		<table name="HRM_JTitle" />

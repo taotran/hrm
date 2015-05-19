@@ -254,8 +254,9 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodName36 = "createVacancy";
 
         _methodParameterTypes36 = new String[] {
-                "long", "long", "java.lang.String", "java.lang.String", "int",
-                "boolean", "java.util.List"
+                "long", "long", "long", "java.lang.String", "java.lang.String",
+                "int", "boolean", "java.util.List",
+                "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName37 = "editVacancy";
@@ -1202,11 +1203,12 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long jTitle_id,
-        long hiring_mananager_id, java.lang.String name,
+    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long user_id,
+        long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
         boolean published_in_feed,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates)
+        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
 
@@ -1214,7 +1216,9 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
             returnObj = _invokableLocalService.invokeMethod(_methodName36,
                     _methodParameterTypes36,
                     new Object[] {
-                        jTitle_id,
+                        user_id,
+                        
+                    jTitle_id,
                         
                     hiring_mananager_id,
                         
@@ -1226,7 +1230,9 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     published_in_feed,
                         
-                    ClpSerializer.translateInput(candidates)
+                    ClpSerializer.translateInput(candidates),
+                        
+                    ClpSerializer.translateInput(serviceContext)
                     });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);

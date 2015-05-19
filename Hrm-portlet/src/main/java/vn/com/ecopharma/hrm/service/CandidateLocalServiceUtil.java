@@ -409,17 +409,20 @@ public class CandidateLocalServiceUtil {
     }
 
     public static vn.com.ecopharma.hrm.model.Candidate createCandidate(
-        java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email,
-        java.lang.String contact_number, java.lang.String comment,
-        int mode_of_application, java.sql.Date date_of_application,
-        long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
+        long user_id, java.lang.String first_name,
+        java.lang.String middle_name, java.lang.String last_name,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String comment, int mode_of_application,
+        java.sql.Date date_of_application, long cv_file_id,
+        java.lang.String cv_text_version, int added_person,
+        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()
-                   .createCandidate(first_name, middle_name, last_name, email,
-            contact_number, comment, mode_of_application, date_of_application,
-            cv_file_id, cv_text_version, added_person, vacancies);
+                   .createCandidate(user_id, first_name, middle_name,
+            last_name, email, contact_number, comment, mode_of_application,
+            date_of_application, cv_file_id, cv_text_version, added_person,
+            vacancies, serviceContext);
     }
 
     public static vn.com.ecopharma.hrm.model.Candidate editCandidate(
