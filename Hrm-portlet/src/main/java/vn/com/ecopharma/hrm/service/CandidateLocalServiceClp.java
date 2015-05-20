@@ -88,6 +88,14 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     private String[] _methodParameterTypes39;
     private String _methodName40;
     private String[] _methodParameterTypes40;
+    private String _methodName41;
+    private String[] _methodParameterTypes41;
+    private String _methodName42;
+    private String[] _methodParameterTypes42;
+    private String _methodName43;
+    private String[] _methodParameterTypes43;
+    private String _methodName44;
+    private String[] _methodParameterTypes44;
 
     public CandidateLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -257,13 +265,24 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
         _methodParameterTypes35 = new String[] {  };
 
-        _methodName36 = "findCandidates";
+        _methodName36 = "findAll";
 
         _methodParameterTypes36 = new String[] { "int", "int" };
 
-        _methodName37 = "createCandidate";
+        _methodName37 = "findCandidates";
 
-        _methodParameterTypes37 = new String[] {
+        _methodParameterTypes37 = new String[] { "int", "int" };
+
+        _methodName38 = "searchCandidates";
+
+        _methodParameterTypes38 = new String[] {
+                "long", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "int", "int"
+            };
+
+        _methodName39 = "createCandidate";
+
+        _methodParameterTypes39 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
@@ -271,22 +290,36 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName38 = "editCandidate";
+        _methodName40 = "editCandidate";
 
-        _methodParameterTypes38 = new String[] {
+        _methodParameterTypes40 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
                 "java.lang.String", "int", "java.util.List"
             };
 
-        _methodName39 = "delele";
+        _methodName41 = "delele";
 
-        _methodParameterTypes39 = new String[] { "long" };
+        _methodParameterTypes41 = new String[] { "long" };
 
-        _methodName40 = "countAll";
+        _methodName42 = "findCandidates";
 
-        _methodParameterTypes40 = new String[] {  };
+        _methodParameterTypes42 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String"
+            };
+
+        _methodName43 = "findCandidates";
+
+        _methodParameterTypes43 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "int", "int"
+            };
+
+        _methodName44 = "countAll";
+
+        _methodParameterTypes44 = new String[] {  };
     }
 
     @Override
@@ -1225,9 +1258,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
-        int start, int end)
-        throws com.liferay.portal.kernel.exception.SystemException {
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end) {
         Object returnObj = null;
 
         try {
@@ -1236,9 +1268,70 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName37,
+                    _methodParameterTypes37, new Object[] { start, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
             if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
                 throw (com.liferay.portal.kernel.exception.SystemException) t;
             }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
+        long id, java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName38,
+                    _methodParameterTypes38,
+                    new Object[] {
+                        id,
+                        
+                    ClpSerializer.translateInput(first_name),
+                        
+                    ClpSerializer.translateInput(middle_name),
+                        
+                    ClpSerializer.translateInput(last_name),
+                        
+                    ClpSerializer.translateInput(email),
+                        
+                    start,
+                        
+                    end
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -1264,8 +1357,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName37,
-                    _methodParameterTypes37,
+            returnObj = _invokableLocalService.invokeMethod(_methodName39,
+                    _methodParameterTypes39,
                     new Object[] {
                         user_id,
                         
@@ -1326,8 +1419,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName38,
-                    _methodParameterTypes38,
+            returnObj = _invokableLocalService.invokeMethod(_methodName40,
+                    _methodParameterTypes40,
                     new Object[] {
                         candidateId,
                         
@@ -1376,8 +1469,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     @Override
     public void delele(long c_id) {
         try {
-            _invokableLocalService.invokeMethod(_methodName39,
-                _methodParameterTypes39, new Object[] { c_id });
+            _invokableLocalService.invokeMethod(_methodName41,
+                _methodParameterTypes41, new Object[] { c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1391,12 +1484,80 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName42,
+                    _methodParameterTypes42,
+                    new Object[] {
+                        ClpSerializer.translateInput(first_name),
+                        
+                    ClpSerializer.translateInput(middle_name),
+                        
+                    ClpSerializer.translateInput(last_name),
+                        
+                    ClpSerializer.translateInput(email)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName43,
+                    _methodParameterTypes43,
+                    new Object[] {
+                        ClpSerializer.translateInput(first_name),
+                        
+                    ClpSerializer.translateInput(middle_name),
+                        
+                    ClpSerializer.translateInput(last_name),
+                        
+                    ClpSerializer.translateInput(email),
+                        
+                    start,
+                        
+                    end
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public int countAll() {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName40,
-                    _methodParameterTypes40, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName44,
+                    _methodParameterTypes44, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

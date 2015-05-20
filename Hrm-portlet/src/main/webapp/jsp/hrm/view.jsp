@@ -542,7 +542,15 @@
 	jQuery(document).ready(
 	/*	 loadCandidateTable(); */
 	function() {
-		/* loadCandidateTable(); */
+		$('#ctable').dataTable({
+			 "bServerSide": true,
+             "sAjaxSource": '<portlet:resourceURL id="get_all_candidates"/>',
+             "bProcessing": true,
+			"sPaginationType": "full_numbers",
+            "bJQueryUI": true
+		});
+		
+		/* loadCandidateTable(); 
 		cTable = $('#ctable')
 				.dataTable(
 						{
@@ -577,6 +585,10 @@
 						type : "text"
 					}, {
 						type : "text"
+					}, {
+						type : "text"
+					}, {
+						type : "text"
 					}, ],
 					bUseColVis : true
 				}).fnSetFilteringDelay();
@@ -593,6 +605,9 @@
 		$(".select2-container").select2();
 		$('#datepicker').datepicker();
 		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
+		
+		
+		
 		$('#cCheckbox').change(function() {
 			alert("checked");
 			if ($("#cCheckbox:checked").length) {

@@ -26,6 +26,7 @@ import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.persistence.CandidateUtil;
 import vn.com.ecopharma.hrm.util.JSONServiceUtil;
 
 import com.google.gson.JsonArray;
@@ -59,6 +60,7 @@ public class HRMPortlet extends MVCPortlet {
 	private String DIRECTION;
 	private int INITIAL;
 	private int RECORD_SIZE;
+	private String ID_SEARCH, GLOB_SEARCH, VACANCY_SEARCH, FIRST_NAME_SEARCH, MIDDLE_NAME_SEARCH, LAST_NAME_SEARCH, EMAIL_SEARCH;
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
@@ -82,7 +84,7 @@ public class HRMPortlet extends MVCPortlet {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		String json = "";
 		// All candidate resource actions
-		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
+		/*if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
 //			 map.put("aaData", findAllCandidates());
 //			 JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
 //			while (resourceRequest.getParameterNames().hasMoreElements()) {
@@ -140,10 +142,11 @@ public class HRMPortlet extends MVCPortlet {
 				DIRECTION = direction;
 				INITIAL = start;
 				RECORD_SIZE = listDisplayAmount;
-
+/*
 				for (Candidate c : pagingCandidates) {
 					JSONArray ja = new JSONArray();
 					ja.put(c.getC_id());
+//					ja.put(VacancyLocalServiceUtil.getCandidateVacancies(c.getC_id()).get(0).getName());
 					ja.put(c.getFirst_name());
 					ja.put(c.getMiddle_name());
 					ja.put(c.getLast_name());
@@ -152,14 +155,100 @@ public class HRMPortlet extends MVCPortlet {
 				totalRecordsAfterSearch = pagingCandidates.size();
 				result.put("iTotalRecords", totalRecords);
 				result.put("iTotalDisplayRecords", totalRecordsAfterSearch);
-				result.put("aaData", array);
-
-				resourceResponse.getWriter().print(result);
+				result.put("aaData", array); 
+				
+				resourceResponse.getWriter().print(getCandidates(totalRecords, resourceRequest));
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
+			int iTotalRecords; // total number of records (unfiltered)
+		    int iTotalDisplayRecords;//value will be set when code filters companies by keyword
+		    JSONArray data = new JSONArray(); //data that will be shown in the table
+			
+			GLOB_SEARCH =  ParamUtil.getString(resourceRequest, "sSearch");
+			FIRST_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch0");
+			MIDDLE_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_1");
+			LAST_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_2");
+			EMAIL_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_3");
+			 String[] columnNames = { "id", "name", "place", "city", "state","phone" };
+			 
+			  JSONObject jsonResult = new JSONObject();
+			  int listDisplayAmount = 10;
+			  int start = 0;
+			  int column = 0;
+			  String dir = "asc";
+			  String pageNo = resourceRequest.getParameter("iDisplayStart");
+			  String pageSize = resourceRequest.getParameter("iDisplayLength");
+			  String colIndex = resourceRequest.getParameter("iSortCol_0");
+			  String sortDirection = resourceRequest.getParameter("sSortDir_0");
+			   
+			  if (pageNo != null) {
+				  start = Integer.parseInt(pageNo);
+				  if (start < 0) {
+					  start = 0;
+				  }
+			  }
+			  if (pageSize != null) {
+				  listDisplayAmount = Integer.parseInt(pageSize);
+			   if (listDisplayAmount < 10 || listDisplayAmount > 50) {
+				   	listDisplayAmount = 10;
+			   }
+			  }
+			  if (colIndex != null) {
+				  column = Integer.parseInt(colIndex);
+				  if (column < 0 || column > 5)
+					  column = 0;
+			  }
+			  if (sortDirection != null) {
+				  if (!sortDirection.equals("asc"))
+					  dir = "desc";
+			  }
+			 
+			  String colName = columnNames[column];
+			  int totalRecords= -1;
+			  
+			  try {
+				totalRecords = CandidateLocalServiceUtil.findAll().size();
+				List<Candidate> candidates = new ArrayList<Candidate>();
+				for (Candidate c: CandidateLocalServiceUtil.findAll()) {
+					
+					if(c.getFirst_name().toLowerCase().contains(GLOB_SEARCH.toLowerCase()) ||
+							c.getMiddle_name().toLowerCase().contains(GLOB_SEARCH.toLowerCase()) ||
+							c.getLast_name().toLowerCase().contains(GLOB_SEARCH.toLowerCase())
+					) {
+						candidates.add(c);
+					}
+					
+				}
+				
+				iTotalDisplayRecords = candidates.size();
+				
+				if (candidates.size() < start + listDisplayAmount) {
+					candidates = candidates.subList(start, candidates.size());
+				} else {
+					candidates = candidates.subList(start, start + listDisplayAmount);
+				}
+				jsonResult.put("iTotalRecords", totalRecords);
+				jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
+				JSONArray array = new JSONArray();
+				for (Candidate c: candidates) {
+					JSONArray ja = new JSONArray();
+					ja.put(c.getC_id());
+					ja.put(c.getFirst_name());
+					ja.put(c.getMiddle_name());
+					ja.put(c.getLast_name());
+					array.put(ja);
+				}
+				
+				jsonResult.put("aaData", array);
+				resourceResponse.getWriter().print(jsonResult);
 			} catch (SystemException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			 
 		} else if (SAVE_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
 			
 			
@@ -268,6 +357,39 @@ public class HRMPortlet extends MVCPortlet {
 			System.out.println(uploadFileName);
 		}
 		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private JSONObject getCandidates(int totalRecords, ResourceRequest resourceRequest) {
+		int totalAfterSearch = totalRecords;
+		  JSONObject result = new JSONObject();
+		  JSONArray array = new JSONArray();
+		  
+//		  ID_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_0");
+		  GLOB_SEARCH =  ParamUtil.getString(resourceRequest, "sSearch");
+		  FIRST_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch0");
+		  MIDDLE_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_1");
+		  LAST_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_2");
+		  EMAIL_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_3");
+		  
+		  List<Candidate> foundCandidates = CandidateLocalServiceUtil.findCandidates(FIRST_NAME_SEARCH, MIDDLE_NAME_SEARCH, LAST_NAME_SEARCH, EMAIL_SEARCH, INITIAL, RECORD_SIZE);
+		  
+		  
+		  
+		  for (Candidate c : foundCandidates) {
+				JSONArray ja = new JSONArray();
+				ja.put(c.getC_id());
+//				ja.put(VacancyLocalServiceUtil.getCandidateVacancies(c.getC_id()).get(0).getName());
+				ja.put(c.getFirst_name());
+				ja.put(c.getMiddle_name());
+				ja.put(c.getLast_name());
+				array.put(ja);
+			}
+		  totalAfterSearch = foundCandidates.size();
+			result.put("iTotalRecords", totalRecords);
+			result.put("iTotalDisplayRecords", totalAfterSearch);
+			result.put("aaData", array);
+		  
+		  return result;
 	}
 
 	private List<Candidate> findAllCandidates() {

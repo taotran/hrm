@@ -94,6 +94,10 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
                 "value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.model.Candidate"),
             true);
     public static long C_ID_COLUMN_BITMASK = 1L;
+    public static long EMAIL_COLUMN_BITMASK = 2L;
+    public static long FIRST_NAME_COLUMN_BITMASK = 4L;
+    public static long LAST_NAME_COLUMN_BITMASK = 8L;
+    public static long MIDDLE_NAME_COLUMN_BITMASK = 16L;
     public static final String MAPPING_TABLE_HRM_VACANCIES_CANDIDATES_NAME = "HRM_Vacancies_Candidates";
     public static final Object[][] MAPPING_TABLE_HRM_VACANCIES_CANDIDATES_COLUMNS =
         {
@@ -115,9 +119,13 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
     private long _originalC_id;
     private boolean _setOriginalC_id;
     private String _first_name;
+    private String _originalFirst_name;
     private String _middle_name;
+    private String _originalMiddle_name;
     private String _last_name;
+    private String _originalLast_name;
     private String _email;
+    private String _originalEmail;
     private String _contact_number;
     private String _comment;
     private int _mode_of_application;
@@ -368,7 +376,17 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
     @Override
     public void setFirst_name(String first_name) {
+        _columnBitmask |= FIRST_NAME_COLUMN_BITMASK;
+
+        if (_originalFirst_name == null) {
+            _originalFirst_name = _first_name;
+        }
+
         _first_name = first_name;
+    }
+
+    public String getOriginalFirst_name() {
+        return GetterUtil.getString(_originalFirst_name);
     }
 
     @JSON
@@ -383,7 +401,17 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
     @Override
     public void setMiddle_name(String middle_name) {
+        _columnBitmask |= MIDDLE_NAME_COLUMN_BITMASK;
+
+        if (_originalMiddle_name == null) {
+            _originalMiddle_name = _middle_name;
+        }
+
         _middle_name = middle_name;
+    }
+
+    public String getOriginalMiddle_name() {
+        return GetterUtil.getString(_originalMiddle_name);
     }
 
     @JSON
@@ -398,7 +426,17 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
     @Override
     public void setLast_name(String last_name) {
+        _columnBitmask |= LAST_NAME_COLUMN_BITMASK;
+
+        if (_originalLast_name == null) {
+            _originalLast_name = _last_name;
+        }
+
         _last_name = last_name;
+    }
+
+    public String getOriginalLast_name() {
+        return GetterUtil.getString(_originalLast_name);
     }
 
     @JSON
@@ -413,7 +451,17 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
     @Override
     public void setEmail(String email) {
+        _columnBitmask |= EMAIL_COLUMN_BITMASK;
+
+        if (_originalEmail == null) {
+            _originalEmail = _email;
+        }
+
         _email = email;
+    }
+
+    public String getOriginalEmail() {
+        return GetterUtil.getString(_originalEmail);
     }
 
     @JSON
@@ -733,6 +781,14 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
         candidateModelImpl._originalC_id = candidateModelImpl._c_id;
 
         candidateModelImpl._setOriginalC_id = false;
+
+        candidateModelImpl._originalFirst_name = candidateModelImpl._first_name;
+
+        candidateModelImpl._originalMiddle_name = candidateModelImpl._middle_name;
+
+        candidateModelImpl._originalLast_name = candidateModelImpl._last_name;
+
+        candidateModelImpl._originalEmail = candidateModelImpl._email;
 
         candidateModelImpl._columnBitmask = 0;
     }

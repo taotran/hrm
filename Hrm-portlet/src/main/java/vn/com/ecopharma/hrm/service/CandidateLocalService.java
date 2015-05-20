@@ -349,9 +349,17 @@ public interface CandidateLocalService extends BaseLocalService,
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll()
         throws com.liferay.portal.kernel.exception.SystemException;
 
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end);
+
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
+        long id, java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end);
 
     public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
@@ -374,6 +382,14 @@ public interface CandidateLocalService extends BaseLocalService,
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public void delele(long c_id);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end);
 
     public int countAll();
 }

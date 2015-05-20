@@ -3,10 +3,14 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.sql.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
@@ -48,16 +52,42 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	public List<Candidate> findAll() throws SystemException {
 		return candidatePersistence.findAll();
 	}
-	
-	public List<Candidate> findCandidates(int start, int end) throws SystemException {
+
+	public List<Candidate> findAll(int start, int end) {
+		try {
+			return candidatePersistence.findAll(start, end);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Candidate> findCandidates(int start, int end)
+			throws SystemException {
 		return candidatePersistence.findAll(start, end);
 	}
 
-	public Candidate createCandidate(long user_id, String first_name, String middle_name,
-			String last_name, String email, String contact_number,
-			String comment, int mode_of_application, Date date_of_application,
-			long cv_file_id, String cv_text_version, int added_person,
-			List<Vacancy> vacancies, ServiceContext serviceContext) throws NoSuchVacancyException {
+	public List<Candidate> searchCandidates(long id, String first_name,
+			String middle_name, String last_name, String email, int start,
+			int end) {
+		try {
+			return candidatePersistence.filterFindByC_Search(first_name,
+					middle_name, last_name, email, start, end);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public Candidate createCandidate(long user_id, String first_name,
+			String middle_name, String last_name, String email,
+			String contact_number, String comment, int mode_of_application,
+			Date date_of_application, long cv_file_id, String cv_text_version,
+			int added_person, List<Vacancy> vacancies,
+			ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
 			User user = userPersistence.findByPrimaryKey(user_id);
 			long c_id = counterLocalService.increment();
@@ -76,8 +106,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			c.setUser_id(user.getUserId());
 			c.setGroup_id(serviceContext.getScopeGroupId());
 			candidatePersistence.update(c);
-			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(), user.getUserId(),
-				       Candidate.class.getName(), c_id, false, true, true);
+			resourceLocalService.addResources(user.getCompanyId(),
+					serviceContext.getScopeGroupId(), user.getUserId(),
+					Candidate.class.getName(), c_id, false, true, true);
 			return c;
 		} catch (SystemException e) {
 			e.printStackTrace();
@@ -130,8 +161,32 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 	}
-	
-	public int countAll(){
+
+	public List<Candidate> findCandidates(String first_name,
+			String middle_name, String last_name, String email) {
+
+		try {
+			return candidatePersistence.filterFindByC_Search(first_name,
+					middle_name, last_name, email);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Candidate> findCandidates(String first_name,
+			String middle_name, String last_name, String email, int start,
+			int end) {
+
+		try {
+			return candidatePersistence.filterFindByC_Search(first_name, middle_name, last_name, email, start, end);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int countAll() {
 		try {
 			return candidatePersistence.countAll();
 		} catch (SystemException e) {
