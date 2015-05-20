@@ -220,7 +220,7 @@
 
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" data-dismiss="modal"
-			onclick="saveCandidate()"> SUBMIT </button>
+				onclick="saveCandidate()">SUBMIT</button>
 			<!-- <input type="submit" class="btn btn-primary" data-dismiss="modal" /> -->
 
 
@@ -450,10 +450,10 @@
 
 		/* ajaxCall("<portlet:resourceURL id='addCandidate'/>", candidate, $('#ctable').dataTable().fnDraw()); */
 
-		//clear input fields after creating new
-		/* 		$('#candidateInfo :input').each(function() {
-		 $(this).val('');
-		 }); 
+	//clear input fields after creating new
+	/* 		$('#candidateInfo :input').each(function() {
+	 $(this).val('');
+	 }); 
 	};*/
 
 	function loadCandidateTable() {
@@ -543,13 +543,15 @@
 	/*	 loadCandidateTable(); */
 	function() {
 		$('#ctable').dataTable({
-			 "bServerSide": true,
-             "sAjaxSource": '<portlet:resourceURL id="get_all_candidates"/>',
-             "bProcessing": true,
-			"sPaginationType": "full_numbers",
-            "bJQueryUI": true
+			"bServerSide" : true,
+			"sAjaxSource" : '<portlet:resourceURL id="get_all_candidates"/>',
+			"bProcessing" : true,
+			"sPaginationType" : "full_numbers",
+			"bJQueryUI" : true,
+			"order" : [1, 'asc'], 
+			"bUseColVis" : true
 		});
-		
+
 		/* loadCandidateTable(); 
 		cTable = $('#ctable')
 				.dataTable(
@@ -605,9 +607,7 @@
 		$(".select2-container").select2();
 		$('#datepicker').datepicker();
 		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
-		
-		
-		
+
 		$('#cCheckbox').change(function() {
 			alert("checked");
 			if ($("#cCheckbox:checked").length) {

@@ -7,6 +7,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,8 @@ public class HRMPortlet extends MVCPortlet {
 	private int INITIAL;
 	private int RECORD_SIZE;
 	private String ID_SEARCH, GLOB_SEARCH, VACANCY_SEARCH, FIRST_NAME_SEARCH, MIDDLE_NAME_SEARCH, LAST_NAME_SEARCH, EMAIL_SEARCH;
-
+	
+	
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
@@ -172,6 +175,8 @@ public class HRMPortlet extends MVCPortlet {
 			MIDDLE_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_1");
 			LAST_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_2");
 			EMAIL_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_3");
+			final int sortColumnIndex = ParamUtil.getInteger(resourceRequest, "iSortColumnIndex");
+			final int sortDirection = ParamUtil.getString(resourceRequest, "sSortDirection").equals("asc") ? -1 : 1;
 			 String[] columnNames = { "id", "name", "place", "city", "state","phone" };
 			 
 			  JSONObject jsonResult = new JSONObject();
@@ -182,7 +187,7 @@ public class HRMPortlet extends MVCPortlet {
 			  String pageNo = resourceRequest.getParameter("iDisplayStart");
 			  String pageSize = resourceRequest.getParameter("iDisplayLength");
 			  String colIndex = resourceRequest.getParameter("iSortCol_0");
-			  String sortDirection = resourceRequest.getParameter("sSortDir_0");
+			  //String sortDirection = resourceRequest.getParameter("sSortDir_0");
 			   
 			  if (pageNo != null) {
 				  start = Integer.parseInt(pageNo);
@@ -201,10 +206,10 @@ public class HRMPortlet extends MVCPortlet {
 				  if (column < 0 || column > 5)
 					  column = 0;
 			  }
-			  if (sortDirection != null) {
+/*			  if (sortDirection != null) {
 				  if (!sortDirection.equals("asc"))
 					  dir = "desc";
-			  }
+			  }*/
 			 
 			  String colName = columnNames[column];
 			  int totalRecords= -1;
@@ -223,6 +228,21 @@ public class HRMPortlet extends MVCPortlet {
 					
 				}
 				
+				Collections.sort(candidates, new Comparator<Candidate>(){
+				    @Override
+				    public int compare(Candidate c1, Candidate c2) {    
+				        switch(sortColumnIndex){
+				        case 1:
+				            return c1.getFirst_name().compareTo(c2.getFirst_name()) * sortDirection;
+				        case 2:
+				            return c1.getMiddle_name().compareTo(c2.getMiddle_name()) * sortDirection;
+				        case 3:
+				            return c1.getLast_name().compareTo(c2.getLast_name()) * sortDirection;
+				        }
+				        return 0;
+				    }
+				});
+				
 				iTotalDisplayRecords = candidates.size();
 				
 				if (candidates.size() < start + listDisplayAmount) {
@@ -230,6 +250,9 @@ public class HRMPortlet extends MVCPortlet {
 				} else {
 					candidates = candidates.subList(start, start + listDisplayAmount);
 				}
+				
+	
+				
 				jsonResult.put("iTotalRecords", totalRecords);
 				jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
 				JSONArray array = new JSONArray();

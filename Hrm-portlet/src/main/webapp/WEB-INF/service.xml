@@ -26,11 +26,11 @@
 		<finder name="findCandidates" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
 		</finder>
-        <finder name="C_Search" return-type="Collection">
-            <finder-column name="first_name" comparator="LIKE"></finder-column>
-            <finder-column name="middle_name" comparator="LIKE"></finder-column>
-            <finder-column name="last_name" comparator="LIKE"></finder-column>
-            <finder-column name="email" comparator="LIKE"></finder-column>
+        <finder name="filterCandidate" return-type="Collection">
+            <finder-column name="first_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="last_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="email" comparator="LIKE" arrayable-operator="OR"></finder-column>
         </finder>
         
 	</entity>
