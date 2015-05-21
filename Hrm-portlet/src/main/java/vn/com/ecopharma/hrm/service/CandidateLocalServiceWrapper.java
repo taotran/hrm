@@ -534,6 +534,11 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         return _candidateLocalService.filterCandidates(filterString, start, end);
     }
 
+    @Override
+    public java.lang.Long findVacancyByCandidate(long c_id) {
+        return _candidateLocalService.findVacancyByCandidate(c_id);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

@@ -3,6 +3,7 @@ package vn.com.eco.taotv.portlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
@@ -140,8 +142,8 @@ public class HRMPortlet extends MVCPortlet {
 		 * Auto-generated catch block e.printStackTrace(); }
 		 */
 		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
-//			map.put("aaData", findAllCandidates()); //
-//			JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+			// map.put("aaData", findAllCandidates()); //
+			// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
 			System.out.println("INSIDE GET_ALL_CANDIDATES");
 			int iTotalRecords; // total number of records (unfiltered)
 			int iTotalDisplayRecords;// value will be set when code filters
@@ -161,7 +163,8 @@ public class HRMPortlet extends MVCPortlet {
 					"iSortColumnIndex");
 			final int sortDirection = ParamUtil.getString(resourceRequest,
 					"sSortDirection").equals("asc") ? -1 : 1;
-			String[] columnNames = { "_c_id", "_first_name", "_middle_name", "_last_name" };
+			String[] columnNames = { "_c_id", "_first_name", "_middle_name",
+					"_last_name" };
 
 			JSONObject jsonResult = new JSONObject();
 			int listDisplayAmount = 10;
@@ -215,34 +218,29 @@ public class HRMPortlet extends MVCPortlet {
 
 				}
 
-/*				Collections.sort(candidates, new Comparator<Candidate>() {
-					@Override
-					public int compare(Candidate c1, Candidate c2) {
-						switch (sortColumnIndex) {
-						case 1:
-							return c1.getFirst_name().compareTo(
-									c2.getFirst_name())
-									* sortDirection;
-						case 2:
-							return c1.getMiddle_name().compareTo(
-									c2.getMiddle_name())
-									* sortDirection;
-						case 3:
-							return c1.getLast_name().compareTo(
-									c2.getLast_name())
-									* sortDirection;
-						}
-						return 0;
-					}
-				});*/
+				/*
+				 * Collections.sort(candidates, new Comparator<Candidate>() {
+				 * 
+				 * @Override public int compare(Candidate c1, Candidate c2) {
+				 * switch (sortColumnIndex) { case 1: return
+				 * c1.getFirst_name().compareTo( c2.getFirst_name())
+				 * sortDirection; case 2: return c1.getMiddle_name().compareTo(
+				 * c2.getMiddle_name()) sortDirection; case 3: return
+				 * c1.getLast_name().compareTo( c2.getLast_name())
+				 * sortDirection; } return 0; } });
+				 */
 
 				iTotalDisplayRecords = candidates.size();
 
-/*				System.out.println("FILTER RESULT SIZE: "
-						+ CandidateLocalServiceUtil.filterCandidates(GLOB_SEARCH).size());*/
+				/*
+				 * System.out.println("FILTER RESULT SIZE: " +
+				 * CandidateLocalServiceUtil
+				 * .filterCandidates(GLOB_SEARCH).size());
+				 */
 
-				//System.out.println(CandidateLocalServiceUtil.searchCandidates(0,"", "", "", "",0, 2, null).size());
-				
+				// System.out.println(CandidateLocalServiceUtil.searchCandidates(0,"",
+				// "", "", "",0, 2, null).size());
+
 				if (candidates.size() < start + listDisplayAmount) {
 					candidates = candidates.subList(start, candidates.size());
 				} else {
@@ -253,28 +251,37 @@ public class HRMPortlet extends MVCPortlet {
 				jsonResult.put("iTotalRecords", totalRecords);
 				jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
 				JSONArray array = new JSONArray();
-				for (Candidate c : candidates) {
-					JSONObject object = new JSONObject();
-					object.put("c_id", c.getC_id());
+				try {
+					for (Candidate c : candidates) {
+						JSONObject object = new JSONObject();
+						object.put("c_id", c.getC_id());
+						long v_id = CandidateLocalServiceUtil
+								.findVacancyByCandidate(
+										c.getC_id());
 					
-//					object.put("vacancy", CandidateLocalServiceUtil.getVacanciesByCandidate(c.getC_id()).size());
-					object.put("vacancy", "Tester");
-					object.put("first_name", c.getFirst_name());
-					object.put("middle_name", c.getMiddle_name());
-					object.put("last_name", c.getLast_name());
-					object.put("email", c.getLast_name());
-					object.put("contact_number", c.getContact_number());
-					object.put("date_of_application", c.getDate_of_application());
-					object.put("status", "on doing");
-					object.put("resume", "on doing");
-					
-					System.out.println(object);
-					array.put(object);
+							object.put("vacancy", VacancyLocalServiceUtil.getVacancy(v_id).getName());
+						
+						// object.put("vacancy", "Tester");
+						object.put("first_name", c.getFirst_name());
+						object.put("middle_name", c.getMiddle_name());
+						object.put("last_name", c.getLast_name());
+						object.put("email", c.getLast_name());
+						object.put("contact_number", c.getContact_number());
+						object.put("date_of_application",
+								c.getDate_of_application());
+						object.put("status", "on doing");
+						object.put("resume", "on doing");
+						array.put(object);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PortalException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				System.out.println(array);
 
 				jsonResult.put("aaData", array);
-				System.out.println(jsonResult);
 				resourceResponse.getWriter().print(jsonResult);
 			} catch (SystemException e) {
 				// TODO Auto-generated catch block
@@ -366,7 +373,7 @@ public class HRMPortlet extends MVCPortlet {
 					object.put("first_name", c.getFirst_name());
 					object.put("middle_name", c.getMiddle_name());
 					object.put("last_name", c.getLast_name());
-//					map.put("candidate", candidate);
+					// map.put("candidate", candidate);
 
 					resourceResponse.getWriter().print(object);
 

@@ -1,10 +1,13 @@
 package vn.com.ecopharma.hrm.service.persistence;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import vn.com.ecopharma.hrm.model.Candidate;
+import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.impl.CandidateImpl;
+import vn.com.ecopharma.hrm.model.impl.VacancyImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -56,6 +59,27 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 			QueryPos qPos = QueryPos.getInstance(query);
 			qPos.add(filterString);
 			return (List<Candidate>) QueryUtil.list(query, getDialect(), start, end);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	public Long findVacancyByCandidate(long c_id) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get("getVacanciesByCandidate");
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setCacheable(false);
+			
+			QueryPos qPos = QueryPos.getInstance(query);
+			qPos.add(c_id);
+			
+			return ((BigInteger) query.list().get(0)).longValue();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

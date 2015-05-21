@@ -17,6 +17,10 @@ public class CandidateFinderUtil {
         return getFinder().filterCandidates(filterString, start, end);
     }
 
+    public static java.lang.Long findVacancyByCandidate(long c_id) {
+        return getFinder().findVacancyByCandidate(c_id);
+    }
+
     public static CandidateFinder getFinder() {
         if (_finder == null) {
             _finder = (CandidateFinder) PortletBeanLocatorUtil.locate(vn.com.ecopharma.hrm.service.ClpSerializer.getServletContextName(),

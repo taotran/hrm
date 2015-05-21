@@ -104,6 +104,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     private String[] _methodParameterTypes47;
     private String _methodName48;
     private String[] _methodParameterTypes48;
+    private String _methodName49;
+    private String[] _methodParameterTypes49;
 
     public CandidateLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -348,6 +350,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         _methodName48 = "filterCandidates";
 
         _methodParameterTypes48 = new String[] { "java.lang.String", "int", "int" };
+
+        _methodName49 = "findVacancyByCandidate";
+
+        _methodParameterTypes49 = new String[] { "long" };
     }
 
     @Override
@@ -1713,5 +1719,26 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         }
 
         return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.lang.Long findVacancyByCandidate(long c_id) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName49,
+                    _methodParameterTypes49, new Object[] { c_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.lang.Long) ClpSerializer.translateOutput(returnObj);
     }
 }

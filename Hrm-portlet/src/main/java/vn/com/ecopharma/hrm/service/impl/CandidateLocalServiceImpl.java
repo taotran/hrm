@@ -217,7 +217,6 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		try {
 			return candidatePersistence.countAll();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -230,4 +229,8 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	public List<Candidate> filterCandidates(String filterString, int start, int end) {
 		return CandidateFinderUtil.filterCandidates(filterString, start, end);
 	}
+	public Long findVacancyByCandidate(long c_id) {
+		return CandidateFinderUtil.findVacancyByCandidate(c_id);
+	}
+	
 }

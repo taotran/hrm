@@ -75,13 +75,10 @@
 									<th>Resume</th>
 								</tr>
 							</thead>
-
-							<tbody></tbody>
-
 							<tfoot>
 								<tr>
 									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
-									<th><liferay-ui:message key="candidate.id" /></th>
+									<th></th>
 									<th>Vacancy</th>
 									<th><liferay-ui:message key="candidate.first_name" /></th>
 									<th>Email</th>
@@ -91,6 +88,9 @@
 									<th>Resume</th>
 								</tr>
 							</tfoot>
+							<tbody></tbody>
+
+
 						</table>
 					</form>
 				</div>
@@ -572,49 +572,60 @@
 											"bJQueryUI" : true,
 											"order" : [ 1, 'asc' ],
 											"bUseColVis" : true,
-											'aoColumns' :  [
-															{
-																"mData" : "c_id",
-																"type" : "number",
-																"bSortable" : false,
-																"mRender" : function(data, type, full) {
-																	return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
-																}
-															},
-															{
-																"mData" : "vacancy",
-																"type" : "text"
-															},
+											'aoColumns' : [
+													{
+														"mData" : "c_id",
+														"type" : "number",
+														"bSortable" : false,
+														"mRender" : function(
+																data, type,
+																full) {
+															return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
+														}
+													},
+													{
+														"mData" : "vacancy",
+														"type" : "text"
+													},
 
-															{
-																"mData" : "first_name",
-																"type" : "text",
-																"mRender" : function(data, type, full) {
-																	var fullName = data + " "
-																			+ full.middle_name + " "
-																			+ full.last_name;
-																	return "<a id='"
-																			+ full.c_id
-																			+ "' href='#ctable' onclick='getCandidate("
-																			+ full.c_id + ");'>"
-																			+ fullName + "</a>";
-																}
-															}, {
-																"mData" : "email",
-																"type" : "text"
-															}, {
-																"mData" : "contact_number",
-																"type" : "text"
-															}, {
-																"mData" : "date_of_application",
-																"type" : "text"
-															}, {
-																"mData" : "status",
-																"type" : "text"
-															}, {
-																"mData" : "resume",
-																"type" : "text"
-															} ],
+													{
+														"mData" : "first_name",
+														"type" : "text",
+														"mRender" : function(
+																data, type,
+																full) {
+															var fullName = data
+																	+ " "
+																	+ full.middle_name
+																	+ " "
+																	+ full.last_name;
+															return "<a id='"
+																	+ full.c_id
+																	+ "' href='#ctable' onclick='getCandidate("
+																	+ full.c_id
+																	+ ");'>"
+																	+ fullName
+																	+ "</a>";
+														}
+													},
+													{
+														"mData" : "email",
+														"type" : "text"
+													},
+													{
+														"mData" : "contact_number",
+														"type" : "text"
+													},
+													{
+														"mData" : "date_of_application",
+														"type" : "text"
+													}, {
+														"mData" : "status",
+														"type" : "text"
+													}, {
+														"mData" : "resume",
+														"type" : "text"
+													} ],
 											bColVis : true,
 											colVis : {
 												"align" : "right",
@@ -629,7 +640,26 @@
 											},
 											"dom" : 'Cf<"toolbar"">rtip',
 
-										});
+										}).columnFilter({
+									aoColumns : [ null, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "date-range"
+									}, {
+										type : "select",
+										values : ['STATUS1', 'STATUS2', 'STATUS3', 'STATUS1']
+									}, {
+										type : "text"
+									} ]
+
+								});
+						
 
 						/*cTable = $('#ctable')
 								.dataTable(
@@ -702,8 +732,10 @@
 							cTable.fnStandingRedraw();
 						}); */
 
+								      
 						loadVacancyTable();
 						$(".select2-container").select2();
+						$(".select_filter").select2();
 						$('#datepicker').datepicker();
 						/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
 
@@ -875,3 +907,9 @@ table.dataTable tbody td {
 	padding-left: 20px;
 }
 </style> -->
+
+<style>
+.date_range_filter {
+	width : 90px !important;
+}
+</style>

@@ -501,6 +501,10 @@ public class CandidateLocalServiceUtil {
         return getService().filterCandidates(filterString, start, end);
     }
 
+    public static java.lang.Long findVacancyByCandidate(long c_id) {
+        return getService().findVacancyByCandidate(c_id);
+    }
+
     public static void clearService() {
         _service = null;
     }

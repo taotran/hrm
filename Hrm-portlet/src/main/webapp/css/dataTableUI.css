@@ -22,6 +22,10 @@ table.dataTable tfoot th {
 	font-weight: bold;
 }
 
+tfoot {
+    display: table-header-group;
+}
+
 table.dataTable td {
 	padding: 3px 10px;
 }
@@ -63,11 +67,11 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 /*
  * Filter
  */
-.dataTables_filter {
+/* .dataTables_filter {
 	float: right;
 	text-align: right;
 }
-
+ */
 
 /*
  * Table information
@@ -217,4 +221,17 @@ table.dataTable thead td:active {
 .dataTables_scrollBody {
 	*margin-top: -1px;
 	-webkit-overflow-scrolling: touch;
+}
+
+.ColVis{
+ padding-right:10px;
+ padding-top:5px;
+ 
+}
+
+.dataTables_filter {
+   position: absolute;
+   top: 10px;
+   left: 200px;
+   font-size:15px;
 }
