@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -100,9 +101,10 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
             FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByfindCandidates",
             new String[] { Long.class.getName() });
     private static final String _FINDER_COLUMN_FINDCANDIDATES_C_ID_2 = "candidate.c_id = ?";
-    public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_SEARCH = new FinderPath(CandidateModelImpl.ENTITY_CACHE_ENABLED,
+    public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_FILTERCANDIDATE =
+        new FinderPath(CandidateModelImpl.ENTITY_CACHE_ENABLED,
             CandidateModelImpl.FINDER_CACHE_ENABLED, CandidateImpl.class,
-            FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Search",
+            FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByfilterCandidate",
             new String[] {
                 String.class.getName(), String.class.getName(),
                 String.class.getName(), String.class.getName(),
@@ -110,26 +112,50 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
             Integer.class.getName(), Integer.class.getName(),
                 OrderByComparator.class.getName()
             });
-    public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_SEARCH =
+    public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_FILTERCANDIDATE =
         new FinderPath(CandidateModelImpl.ENTITY_CACHE_ENABLED,
             CandidateModelImpl.FINDER_CACHE_ENABLED, Long.class,
-            FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_Search",
+            FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByfilterCandidate",
             new String[] {
                 String.class.getName(), String.class.getName(),
                 String.class.getName(), String.class.getName()
             });
-    private static final String _FINDER_COLUMN_C_SEARCH_FIRST_NAME_1 = "candidate.first_name LIKE NULL AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_FIRST_NAME_2 = "candidate.first_name LIKE ? AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_FIRST_NAME_3 = "(candidate.first_name IS NULL OR candidate.first_name LIKE '') AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1 = "candidate.middle_name LIKE NULL AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2 = "candidate.middle_name LIKE ? AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3 = "(candidate.middle_name IS NULL OR candidate.middle_name LIKE '') AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_LAST_NAME_1 = "candidate.last_name LIKE NULL AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_LAST_NAME_2 = "candidate.last_name LIKE ? AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_LAST_NAME_3 = "(candidate.last_name IS NULL OR candidate.last_name LIKE '') AND ";
-    private static final String _FINDER_COLUMN_C_SEARCH_EMAIL_1 = "candidate.email LIKE NULL";
-    private static final String _FINDER_COLUMN_C_SEARCH_EMAIL_2 = "candidate.email LIKE ?";
-    private static final String _FINDER_COLUMN_C_SEARCH_EMAIL_3 = "(candidate.email IS NULL OR candidate.email LIKE '')";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1 = "candidate.first_name LIKE NULL AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2 = "candidate.first_name LIKE ? AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3 = "(candidate.first_name IS NULL OR candidate.first_name LIKE '') AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_4 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_5 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_6 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1 = "candidate.middle_name LIKE NULL AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2 = "candidate.middle_name LIKE ? AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3 = "(candidate.middle_name IS NULL OR candidate.middle_name LIKE '') AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_4 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_5 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_6 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1 = "candidate.last_name LIKE NULL AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2 = "candidate.last_name LIKE ? AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3 = "(candidate.last_name IS NULL OR candidate.last_name LIKE '') AND ";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_4 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_5 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_6 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1 = "candidate.email LIKE NULL";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2 = "candidate.email LIKE ?";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3 = "(candidate.email IS NULL OR candidate.email LIKE '')";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_4 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_5 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2) + ")";
+    private static final String _FINDER_COLUMN_FILTERCANDIDATE_EMAIL_6 = "(" +
+        removeConjunction(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3) + ")";
     private static final String _SQL_SELECT_CANDIDATE = "SELECT candidate FROM Candidate candidate";
     private static final String _SQL_SELECT_CANDIDATE_WHERE = "SELECT candidate FROM Candidate candidate WHERE ";
     private static final String _SQL_COUNT_CANDIDATE = "SELECT COUNT(candidate) FROM Candidate candidate";
@@ -671,10 +697,10 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> findByC_Search(String first_name,
+    public List<Candidate> findByfilterCandidate(String first_name,
         String middle_name, String last_name, String email)
         throws SystemException {
-        return findByC_Search(first_name, middle_name, last_name, email,
+        return findByfilterCandidate(first_name, middle_name, last_name, email,
             QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
     }
 
@@ -695,11 +721,11 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> findByC_Search(String first_name,
+    public List<Candidate> findByfilterCandidate(String first_name,
         String middle_name, String last_name, String email, int start, int end)
         throws SystemException {
-        return findByC_Search(first_name, middle_name, last_name, email, start,
-            end, null);
+        return findByfilterCandidate(first_name, middle_name, last_name, email,
+            start, end, null);
     }
 
     /**
@@ -720,14 +746,14 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> findByC_Search(String first_name,
+    public List<Candidate> findByfilterCandidate(String first_name,
         String middle_name, String last_name, String email, int start, int end,
         OrderByComparator orderByComparator) throws SystemException {
         boolean pagination = true;
         FinderPath finderPath = null;
         Object[] finderArgs = null;
 
-        finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_SEARCH;
+        finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_FILTERCANDIDATE;
         finderArgs = new Object[] {
                 first_name, middle_name, last_name, email,
                 
@@ -774,49 +800,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
             boolean bindFirst_name = false;
 
             if (first_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
             } else if (first_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
             } else {
                 bindFirst_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
             }
 
             boolean bindMiddle_name = false;
 
             if (middle_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
             } else if (middle_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
             } else {
                 bindMiddle_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
             }
 
             boolean bindLast_name = false;
 
             if (last_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
             } else if (last_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
             } else {
                 bindLast_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
             }
 
             boolean bindEmail = false;
 
             if (email == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
             } else if (email.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
             } else {
                 bindEmail = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
             }
 
             if (orderByComparator != null) {
@@ -894,12 +920,12 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate findByC_Search_First(String first_name,
+    public Candidate findByfilterCandidate_First(String first_name,
         String middle_name, String last_name, String email,
         OrderByComparator orderByComparator)
         throws NoSuchCandidateException, SystemException {
-        Candidate candidate = fetchByC_Search_First(first_name, middle_name,
-                last_name, email, orderByComparator);
+        Candidate candidate = fetchByfilterCandidate_First(first_name,
+                middle_name, last_name, email, orderByComparator);
 
         if (candidate != null) {
             return candidate;
@@ -938,10 +964,10 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate fetchByC_Search_First(String first_name,
+    public Candidate fetchByfilterCandidate_First(String first_name,
         String middle_name, String last_name, String email,
         OrderByComparator orderByComparator) throws SystemException {
-        List<Candidate> list = findByC_Search(first_name, middle_name,
+        List<Candidate> list = findByfilterCandidate(first_name, middle_name,
                 last_name, email, 0, 1, orderByComparator);
 
         if (!list.isEmpty()) {
@@ -964,11 +990,12 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate findByC_Search_Last(String first_name, String middle_name,
-        String last_name, String email, OrderByComparator orderByComparator)
+    public Candidate findByfilterCandidate_Last(String first_name,
+        String middle_name, String last_name, String email,
+        OrderByComparator orderByComparator)
         throws NoSuchCandidateException, SystemException {
-        Candidate candidate = fetchByC_Search_Last(first_name, middle_name,
-                last_name, email, orderByComparator);
+        Candidate candidate = fetchByfilterCandidate_Last(first_name,
+                middle_name, last_name, email, orderByComparator);
 
         if (candidate != null) {
             return candidate;
@@ -1007,16 +1034,17 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate fetchByC_Search_Last(String first_name,
+    public Candidate fetchByfilterCandidate_Last(String first_name,
         String middle_name, String last_name, String email,
         OrderByComparator orderByComparator) throws SystemException {
-        int count = countByC_Search(first_name, middle_name, last_name, email);
+        int count = countByfilterCandidate(first_name, middle_name, last_name,
+                email);
 
         if (count == 0) {
             return null;
         }
 
-        List<Candidate> list = findByC_Search(first_name, middle_name,
+        List<Candidate> list = findByfilterCandidate(first_name, middle_name,
                 last_name, email, count - 1, count, orderByComparator);
 
         if (!list.isEmpty()) {
@@ -1040,8 +1068,8 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate[] findByC_Search_PrevAndNext(long c_id, String first_name,
-        String middle_name, String last_name, String email,
+    public Candidate[] findByfilterCandidate_PrevAndNext(long c_id,
+        String first_name, String middle_name, String last_name, String email,
         OrderByComparator orderByComparator)
         throws NoSuchCandidateException, SystemException {
         Candidate candidate = findByPrimaryKey(c_id);
@@ -1053,13 +1081,13 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 
             Candidate[] array = new CandidateImpl[3];
 
-            array[0] = getByC_Search_PrevAndNext(session, candidate,
+            array[0] = getByfilterCandidate_PrevAndNext(session, candidate,
                     first_name, middle_name, last_name, email,
                     orderByComparator, true);
 
             array[1] = candidate;
 
-            array[2] = getByC_Search_PrevAndNext(session, candidate,
+            array[2] = getByfilterCandidate_PrevAndNext(session, candidate,
                     first_name, middle_name, last_name, email,
                     orderByComparator, false);
 
@@ -1071,7 +1099,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         }
     }
 
-    protected Candidate getByC_Search_PrevAndNext(Session session,
+    protected Candidate getByfilterCandidate_PrevAndNext(Session session,
         Candidate candidate, String first_name, String middle_name,
         String last_name, String email, OrderByComparator orderByComparator,
         boolean previous) {
@@ -1089,49 +1117,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         boolean bindFirst_name = false;
 
         if (first_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
         } else if (first_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
         } else {
             bindFirst_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
         }
 
         boolean bindMiddle_name = false;
 
         if (middle_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
         } else if (middle_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
         } else {
             bindMiddle_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
         }
 
         boolean bindLast_name = false;
 
         if (last_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
         } else if (last_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
         } else {
             bindLast_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
         }
 
         boolean bindEmail = false;
 
         if (email == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
         } else if (email.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
         } else {
             bindEmail = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
         }
 
         if (orderByComparator != null) {
@@ -1239,11 +1267,11 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> filterFindByC_Search(String first_name,
+    public List<Candidate> filterFindByfilterCandidate(String first_name,
         String middle_name, String last_name, String email)
         throws SystemException {
-        return filterFindByC_Search(first_name, middle_name, last_name, email,
-            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+        return filterFindByfilterCandidate(first_name, middle_name, last_name,
+            email, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
     }
 
     /**
@@ -1263,11 +1291,11 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> filterFindByC_Search(String first_name,
+    public List<Candidate> filterFindByfilterCandidate(String first_name,
         String middle_name, String last_name, String email, int start, int end)
         throws SystemException {
-        return filterFindByC_Search(first_name, middle_name, last_name, email,
-            start, end, null);
+        return filterFindByfilterCandidate(first_name, middle_name, last_name,
+            email, start, end, null);
     }
 
     /**
@@ -1288,12 +1316,12 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public List<Candidate> filterFindByC_Search(String first_name,
+    public List<Candidate> filterFindByfilterCandidate(String first_name,
         String middle_name, String last_name, String email, int start, int end,
         OrderByComparator orderByComparator) throws SystemException {
         if (!InlineSQLHelperUtil.isEnabled()) {
-            return findByC_Search(first_name, middle_name, last_name, email,
-                start, end, orderByComparator);
+            return findByfilterCandidate(first_name, middle_name, last_name,
+                email, start, end, orderByComparator);
         }
 
         StringBundler query = null;
@@ -1314,49 +1342,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         boolean bindFirst_name = false;
 
         if (first_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
         } else if (first_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
         } else {
             bindFirst_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
         }
 
         boolean bindMiddle_name = false;
 
         if (middle_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
         } else if (middle_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
         } else {
             bindMiddle_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
         }
 
         boolean bindLast_name = false;
 
         if (last_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
         } else if (last_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
         } else {
             bindLast_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
         }
 
         boolean bindEmail = false;
 
         if (email == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
         } else if (email.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
         } else {
             bindEmail = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
         }
 
         if (!getDB().isSupportsInlineDistinct()) {
@@ -1435,13 +1463,13 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public Candidate[] filterFindByC_Search_PrevAndNext(long c_id,
+    public Candidate[] filterFindByfilterCandidate_PrevAndNext(long c_id,
         String first_name, String middle_name, String last_name, String email,
         OrderByComparator orderByComparator)
         throws NoSuchCandidateException, SystemException {
         if (!InlineSQLHelperUtil.isEnabled()) {
-            return findByC_Search_PrevAndNext(c_id, first_name, middle_name,
-                last_name, email, orderByComparator);
+            return findByfilterCandidate_PrevAndNext(c_id, first_name,
+                middle_name, last_name, email, orderByComparator);
         }
 
         Candidate candidate = findByPrimaryKey(c_id);
@@ -1453,14 +1481,14 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 
             Candidate[] array = new CandidateImpl[3];
 
-            array[0] = filterGetByC_Search_PrevAndNext(session, candidate,
-                    first_name, middle_name, last_name, email,
+            array[0] = filterGetByfilterCandidate_PrevAndNext(session,
+                    candidate, first_name, middle_name, last_name, email,
                     orderByComparator, true);
 
             array[1] = candidate;
 
-            array[2] = filterGetByC_Search_PrevAndNext(session, candidate,
-                    first_name, middle_name, last_name, email,
+            array[2] = filterGetByfilterCandidate_PrevAndNext(session,
+                    candidate, first_name, middle_name, last_name, email,
                     orderByComparator, false);
 
             return array;
@@ -1471,10 +1499,10 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         }
     }
 
-    protected Candidate filterGetByC_Search_PrevAndNext(Session session,
-        Candidate candidate, String first_name, String middle_name,
-        String last_name, String email, OrderByComparator orderByComparator,
-        boolean previous) {
+    protected Candidate filterGetByfilterCandidate_PrevAndNext(
+        Session session, Candidate candidate, String first_name,
+        String middle_name, String last_name, String email,
+        OrderByComparator orderByComparator, boolean previous) {
         StringBundler query = null;
 
         if (orderByComparator != null) {
@@ -1493,49 +1521,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         boolean bindFirst_name = false;
 
         if (first_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
         } else if (first_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
         } else {
             bindFirst_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
         }
 
         boolean bindMiddle_name = false;
 
         if (middle_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
         } else if (middle_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
         } else {
             bindMiddle_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
         }
 
         boolean bindLast_name = false;
 
         if (last_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
         } else if (last_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
         } else {
             bindLast_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
         }
 
         boolean bindEmail = false;
 
         if (email == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
         } else if (email.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
         } else {
             bindEmail = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
         }
 
         if (!getDB().isSupportsInlineDistinct()) {
@@ -1658,6 +1686,554 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
     }
 
     /**
+     * Returns all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @return the matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails)
+        throws SystemException {
+        return filterFindByfilterCandidate(first_names, middle_names,
+            last_names, emails, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+    }
+
+    /**
+     * Returns a range of all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @return the range of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails, int start,
+        int end) throws SystemException {
+        return filterFindByfilterCandidate(first_names, middle_names,
+            last_names, emails, start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> filterFindByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails, int start,
+        int end, OrderByComparator orderByComparator) throws SystemException {
+        if (!InlineSQLHelperUtil.isEnabled()) {
+            return findByfilterCandidate(first_names, middle_names, last_names,
+                emails, start, end, orderByComparator);
+        }
+
+        StringBundler query = new StringBundler();
+
+        if (getDB().isSupportsInlineDistinct()) {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_WHERE);
+        } else {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_1);
+        }
+
+        boolean conjunctionable = false;
+
+        if ((first_names == null) || (first_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < first_names.length; i++) {
+                String first_name = first_names[i];
+
+                if (first_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_4);
+                } else if (first_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_5);
+                }
+
+                if ((i + 1) < first_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((middle_names == null) || (middle_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < middle_names.length; i++) {
+                String middle_name = middle_names[i];
+
+                if (middle_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_4);
+                } else if (middle_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_5);
+                }
+
+                if ((i + 1) < middle_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((last_names == null) || (last_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < last_names.length; i++) {
+                String last_name = last_names[i];
+
+                if (last_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_4);
+                } else if (last_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_5);
+                }
+
+                if ((i + 1) < last_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((emails == null) || (emails.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < emails.length; i++) {
+                String email = emails[i];
+
+                if (email == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_4);
+                } else if (email.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_5);
+                }
+
+                if ((i + 1) < emails.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if (!getDB().isSupportsInlineDistinct()) {
+            query.append(_FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_2);
+        }
+
+        if (orderByComparator != null) {
+            if (getDB().isSupportsInlineDistinct()) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator, true);
+            } else {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+                    orderByComparator, true);
+            }
+        } else {
+            if (getDB().isSupportsInlineDistinct()) {
+                query.append(CandidateModelImpl.ORDER_BY_JPQL);
+            } else {
+                query.append(CandidateModelImpl.ORDER_BY_SQL);
+            }
+        }
+
+        String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+                Candidate.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            if (getDB().isSupportsInlineDistinct()) {
+                q.addEntity(_FILTER_ENTITY_ALIAS, CandidateImpl.class);
+            } else {
+                q.addEntity(_FILTER_ENTITY_TABLE, CandidateImpl.class);
+            }
+
+            QueryPos qPos = QueryPos.getInstance(q);
+
+            if (first_names != null) {
+                qPos.add(first_names);
+            }
+
+            if (middle_names != null) {
+                qPos.add(middle_names);
+            }
+
+            if (last_names != null) {
+                qPos.add(last_names);
+            }
+
+            if (emails != null) {
+                qPos.add(emails);
+            }
+
+            return (List<Candidate>) QueryUtil.list(q, getDialect(), start, end);
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    /**
+     * Returns all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @return the matching candidates
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> findByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails)
+        throws SystemException {
+        return findByfilterCandidate(first_names, middle_names, last_names,
+            emails, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+    }
+
+    /**
+     * Returns a range of all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @return the range of matching candidates
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> findByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails, int start,
+        int end) throws SystemException {
+        return findByfilterCandidate(first_names, middle_names, last_names,
+            emails, start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @param start the lower bound of the range of candidates
+     * @param end the upper bound of the range of candidates (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching candidates
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<Candidate> findByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails, int start,
+        int end, OrderByComparator orderByComparator) throws SystemException {
+        if ((first_names != null) && (first_names.length == 1) &&
+                (middle_names != null) && (middle_names.length == 1) &&
+                (last_names != null) && (last_names.length == 1) &&
+                (emails != null) && (emails.length == 1)) {
+            return findByfilterCandidate(first_names[0], middle_names[0],
+                last_names[0], emails[0], start, end, orderByComparator);
+        }
+
+        boolean pagination = true;
+        Object[] finderArgs = null;
+
+        if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+                (orderByComparator == null)) {
+            pagination = false;
+            finderArgs = new Object[] {
+                    StringUtil.merge(first_names),
+                    StringUtil.merge(middle_names), StringUtil.merge(last_names),
+                    StringUtil.merge(emails)
+                };
+        } else {
+            finderArgs = new Object[] {
+                    StringUtil.merge(first_names),
+                    StringUtil.merge(middle_names), StringUtil.merge(last_names),
+                    StringUtil.merge(emails),
+                    
+                    start, end, orderByComparator
+                };
+        }
+
+        List<Candidate> list = (List<Candidate>) FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_FILTERCANDIDATE,
+                finderArgs, this);
+
+        if ((list != null) && !list.isEmpty()) {
+            for (Candidate candidate : list) {
+                if (!ArrayUtil.contains(first_names, candidate.getFirst_name()) ||
+                        !ArrayUtil.contains(middle_names,
+                            candidate.getMiddle_name()) ||
+                        !ArrayUtil.contains(last_names, candidate.getLast_name()) ||
+                        !ArrayUtil.contains(emails, candidate.getEmail())) {
+                    list = null;
+
+                    break;
+                }
+            }
+        }
+
+        if (list == null) {
+            StringBundler query = new StringBundler();
+
+            query.append(_SQL_SELECT_CANDIDATE_WHERE);
+
+            boolean conjunctionable = false;
+
+            if ((first_names == null) || (first_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < first_names.length; i++) {
+                    String first_name = first_names[i];
+
+                    if (first_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_4);
+                    } else if (first_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_5);
+                    }
+
+                    if ((i + 1) < first_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((middle_names == null) || (middle_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < middle_names.length; i++) {
+                    String middle_name = middle_names[i];
+
+                    if (middle_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_4);
+                    } else if (middle_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_5);
+                    }
+
+                    if ((i + 1) < middle_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((last_names == null) || (last_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < last_names.length; i++) {
+                    String last_name = last_names[i];
+
+                    if (last_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_4);
+                    } else if (last_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_5);
+                    }
+
+                    if ((i + 1) < last_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((emails == null) || (emails.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < emails.length; i++) {
+                    String email = emails[i];
+
+                    if (email == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_4);
+                    } else if (email.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_5);
+                    }
+
+                    if ((i + 1) < emails.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if (orderByComparator != null) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator);
+            } else
+             if (pagination) {
+                query.append(CandidateModelImpl.ORDER_BY_JPQL);
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                if (first_names != null) {
+                    qPos.add(first_names);
+                }
+
+                if (middle_names != null) {
+                    qPos.add(middle_names);
+                }
+
+                if (last_names != null) {
+                    qPos.add(last_names);
+                }
+
+                if (emails != null) {
+                    qPos.add(emails);
+                }
+
+                if (!pagination) {
+                    list = (List<Candidate>) QueryUtil.list(q, getDialect(),
+                            start, end, false);
+
+                    Collections.sort(list);
+
+                    list = new UnmodifiableList<Candidate>(list);
+                } else {
+                    list = (List<Candidate>) QueryUtil.list(q, getDialect(),
+                            start, end);
+                }
+
+                cacheResult(list);
+
+                FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_FILTERCANDIDATE,
+                    finderArgs, list);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_FILTERCANDIDATE,
+                    finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return list;
+    }
+
+    /**
      * Removes all the candidates where first_name LIKE &#63; and middle_name LIKE &#63; and last_name LIKE &#63; and email LIKE &#63; from the database.
      *
      * @param first_name the first_name
@@ -1667,10 +2243,11 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public void removeByC_Search(String first_name, String middle_name,
+    public void removeByfilterCandidate(String first_name, String middle_name,
         String last_name, String email) throws SystemException {
-        for (Candidate candidate : findByC_Search(first_name, middle_name,
-                last_name, email, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+        for (Candidate candidate : findByfilterCandidate(first_name,
+                middle_name, last_name, email, QueryUtil.ALL_POS,
+                QueryUtil.ALL_POS, null)) {
             remove(candidate);
         }
     }
@@ -1686,9 +2263,9 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public int countByC_Search(String first_name, String middle_name,
+    public int countByfilterCandidate(String first_name, String middle_name,
         String last_name, String email) throws SystemException {
-        FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_SEARCH;
+        FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_FILTERCANDIDATE;
 
         Object[] finderArgs = new Object[] {
                 first_name, middle_name, last_name, email
@@ -1705,49 +2282,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
             boolean bindFirst_name = false;
 
             if (first_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
             } else if (first_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
             } else {
                 bindFirst_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
             }
 
             boolean bindMiddle_name = false;
 
             if (middle_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
             } else if (middle_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
             } else {
                 bindMiddle_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
             }
 
             boolean bindLast_name = false;
 
             if (last_name == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
             } else if (last_name.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
             } else {
                 bindLast_name = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
             }
 
             boolean bindEmail = false;
 
             if (email == null) {
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
             } else if (email.equals(StringPool.BLANK)) {
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
             } else {
                 bindEmail = true;
 
-                query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+                query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
             }
 
             String sql = query.toString();
@@ -1793,6 +2370,191 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
     }
 
     /**
+     * Returns the number of candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @return the number of matching candidates
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int countByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails)
+        throws SystemException {
+        Object[] finderArgs = new Object[] {
+                StringUtil.merge(first_names), StringUtil.merge(middle_names),
+                StringUtil.merge(last_names), StringUtil.merge(emails)
+            };
+
+        Long count = (Long) FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_FILTERCANDIDATE,
+                finderArgs, this);
+
+        if (count == null) {
+            StringBundler query = new StringBundler();
+
+            query.append(_SQL_COUNT_CANDIDATE_WHERE);
+
+            boolean conjunctionable = false;
+
+            if ((first_names == null) || (first_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < first_names.length; i++) {
+                    String first_name = first_names[i];
+
+                    if (first_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_4);
+                    } else if (first_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_5);
+                    }
+
+                    if ((i + 1) < first_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((middle_names == null) || (middle_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < middle_names.length; i++) {
+                    String middle_name = middle_names[i];
+
+                    if (middle_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_4);
+                    } else if (middle_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_5);
+                    }
+
+                    if ((i + 1) < middle_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((last_names == null) || (last_names.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < last_names.length; i++) {
+                    String last_name = last_names[i];
+
+                    if (last_name == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_4);
+                    } else if (last_name.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_5);
+                    }
+
+                    if ((i + 1) < last_names.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            if ((emails == null) || (emails.length > 0)) {
+                if (conjunctionable) {
+                    query.append(WHERE_AND);
+                }
+
+                query.append(StringPool.OPEN_PARENTHESIS);
+
+                for (int i = 0; i < emails.length; i++) {
+                    String email = emails[i];
+
+                    if (email == null) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_4);
+                    } else if (email.equals(StringPool.BLANK)) {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_6);
+                    } else {
+                        query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_5);
+                    }
+
+                    if ((i + 1) < emails.length) {
+                        query.append(WHERE_OR);
+                    }
+                }
+
+                query.append(StringPool.CLOSE_PARENTHESIS);
+
+                conjunctionable = true;
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                if (first_names != null) {
+                    qPos.add(first_names);
+                }
+
+                if (middle_names != null) {
+                    qPos.add(middle_names);
+                }
+
+                if (last_names != null) {
+                    qPos.add(last_names);
+                }
+
+                if (emails != null) {
+                    qPos.add(emails);
+                }
+
+                count = (Long) q.uniqueResult();
+
+                FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_FILTERCANDIDATE,
+                    finderArgs, count);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_FILTERCANDIDATE,
+                    finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return count.intValue();
+    }
+
+    /**
      * Returns the number of candidates that the user has permission to view where first_name LIKE &#63; and middle_name LIKE &#63; and last_name LIKE &#63; and email LIKE &#63;.
      *
      * @param first_name the first_name
@@ -1803,10 +2565,12 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
      * @throws SystemException if a system exception occurred
      */
     @Override
-    public int filterCountByC_Search(String first_name, String middle_name,
-        String last_name, String email) throws SystemException {
+    public int filterCountByfilterCandidate(String first_name,
+        String middle_name, String last_name, String email)
+        throws SystemException {
         if (!InlineSQLHelperUtil.isEnabled()) {
-            return countByC_Search(first_name, middle_name, last_name, email);
+            return countByfilterCandidate(first_name, middle_name, last_name,
+                email);
         }
 
         StringBundler query = new StringBundler(5);
@@ -1816,49 +2580,49 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         boolean bindFirst_name = false;
 
         if (first_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_1);
         } else if (first_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_3);
         } else {
             bindFirst_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_FIRST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_2);
         }
 
         boolean bindMiddle_name = false;
 
         if (middle_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_1);
         } else if (middle_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_3);
         } else {
             bindMiddle_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_MIDDLE_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_2);
         }
 
         boolean bindLast_name = false;
 
         if (last_name == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_1);
         } else if (last_name.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_3);
         } else {
             bindLast_name = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_LAST_NAME_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_2);
         }
 
         boolean bindEmail = false;
 
         if (email == null) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_1);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_1);
         } else if (email.equals(StringPool.BLANK)) {
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_3);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_3);
         } else {
             bindEmail = true;
 
-            query.append(_FINDER_COLUMN_C_SEARCH_EMAIL_2);
+            query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_2);
         }
 
         String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
@@ -1890,6 +2654,184 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 
             if (bindEmail) {
                 qPos.add(email);
+            }
+
+            Long count = (Long) q.uniqueResult();
+
+            return count.intValue();
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    /**
+     * Returns the number of candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+     *
+     * @param first_names the first_names
+     * @param middle_names the middle_names
+     * @param last_names the last_names
+     * @param emails the emails
+     * @return the number of matching candidates that the user has permission to view
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int filterCountByfilterCandidate(String[] first_names,
+        String[] middle_names, String[] last_names, String[] emails)
+        throws SystemException {
+        if (!InlineSQLHelperUtil.isEnabled()) {
+            return countByfilterCandidate(first_names, middle_names,
+                last_names, emails);
+        }
+
+        StringBundler query = new StringBundler();
+
+        query.append(_FILTER_SQL_COUNT_CANDIDATE_WHERE);
+
+        boolean conjunctionable = false;
+
+        if ((first_names == null) || (first_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < first_names.length; i++) {
+                String first_name = first_names[i];
+
+                if (first_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_4);
+                } else if (first_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_FIRST_NAME_5);
+                }
+
+                if ((i + 1) < first_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((middle_names == null) || (middle_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < middle_names.length; i++) {
+                String middle_name = middle_names[i];
+
+                if (middle_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_4);
+                } else if (middle_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_MIDDLE_NAME_5);
+                }
+
+                if ((i + 1) < middle_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((last_names == null) || (last_names.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < last_names.length; i++) {
+                String last_name = last_names[i];
+
+                if (last_name == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_4);
+                } else if (last_name.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_LAST_NAME_5);
+                }
+
+                if ((i + 1) < last_names.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        if ((emails == null) || (emails.length > 0)) {
+            if (conjunctionable) {
+                query.append(WHERE_AND);
+            }
+
+            query.append(StringPool.OPEN_PARENTHESIS);
+
+            for (int i = 0; i < emails.length; i++) {
+                String email = emails[i];
+
+                if (email == null) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_4);
+                } else if (email.equals(StringPool.BLANK)) {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_6);
+                } else {
+                    query.append(_FINDER_COLUMN_FILTERCANDIDATE_EMAIL_5);
+                }
+
+                if ((i + 1) < emails.length) {
+                    query.append(WHERE_OR);
+                }
+            }
+
+            query.append(StringPool.CLOSE_PARENTHESIS);
+
+            conjunctionable = true;
+        }
+
+        String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+                Candidate.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addScalar(COUNT_COLUMN_NAME,
+                com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+            QueryPos qPos = QueryPos.getInstance(q);
+
+            if (first_names != null) {
+                qPos.add(first_names);
+            }
+
+            if (middle_names != null) {
+                qPos.add(middle_names);
+            }
+
+            if (last_names != null) {
+                qPos.add(last_names);
+            }
+
+            if (emails != null) {
+                qPos.add(emails);
             }
 
             Long count = (Long) q.uniqueResult();

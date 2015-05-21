@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="candidateSQLFilter">
+		<![CDATA[
+			SELECT hrm_candidate.* FROM hrm_candidate c WHERE c.first_name LIKE % ? % 
+			OR c.middle_name LIKE % ? % OR c.last_name LIKE % ? % 
+		]]>
+		
+	</sql>
+</custom-sql>

@@ -61,15 +61,18 @@
 
 					<!-- <table id="ctable" class="table table-striped table-bordered"> -->
 					<form>
-						<table id="ctable" width="100%" border="0" margin="0" padding="0"
-							class="row-border tableHeader">
+						<table id="ctable" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 									<th><liferay-ui:message key="candidate.id" /></th>
+									<th>Vacancy</th>
 									<th><liferay-ui:message key="candidate.first_name" /></th>
-									<th><liferay-ui:message key="candidate.middle_name" /></th>
-									<th><liferay-ui:message key="candidate.last_name" /></th>
+									<th>Email</th>
+									<th>Contact Number</th>
+									<th>Date of Application</th>
+									<th>Status</th>
+									<th>Resume</th>
 								</tr>
 							</thead>
 
@@ -79,9 +82,13 @@
 								<tr>
 									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 									<th><liferay-ui:message key="candidate.id" /></th>
+									<th>Vacancy</th>
 									<th><liferay-ui:message key="candidate.first_name" /></th>
-									<th><liferay-ui:message key="candidate.middle_name" /></th>
-									<th><liferay-ui:message key="candidate.last_name" /></th>
+									<th>Email</th>
+									<th>Contact Number</th>
+									<th>Date of Application</th>
+									<th>Status</th>
+									<th>Resume</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -234,7 +241,7 @@
 	</form>
 </div>
 
-<div class="modal" id="modify-vacancy-modal">
+<!-- <div class="modal" id="modify-vacancy-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<h4>Add New Vacancy</h4>
@@ -312,8 +319,8 @@
 			<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
 					key="global.button.cancel" /></a>
 		</div>
-	</div>
-</div>
+	</div> 
+</div>-->
 
 <script type="text/javascript">
 	var cForm = $('#cForm');
@@ -470,35 +477,47 @@
 							'dom' : 'C<"clear">lfrtip',
 							'aoColumns' : [
 									{
-										"mData" : "_c_id",
+										"mData" : "c_id",
 										"type" : "number",
 										"bSortable" : false,
 										"mRender" : function(data, type, full) {
-											return "<input id='cCheckbox' type='checkbox' id='"+full._c_id+"' value='"+full._c_id+"'/>";
+											return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
 										}
 									},
 									{
-										"mData" : "_first_name",
+										"mData" : "vacancy",
+										"type" : "text"
+									},
+
+									{
+										"mData" : "first_name",
 										"type" : "text",
 										"mRender" : function(data, type, full) {
 											var fullName = data + " "
-													+ full._middle_name + " "
-													+ full._last_name;
+													+ full.middle_name + " "
+													+ full.last_name;
 											return "<a id='"
-													+ full._c_id
+													+ full.c_id
 													+ "' href='#ctable' onclick='getCandidate("
-													+ full._c_id + ");'>"
+													+ full.c_id + ");'>"
 													+ fullName + "</a>";
 										}
 									}, {
-										"mData" : "_middle_name",
+										"mData" : "email",
 										"type" : "text"
 									}, {
-										"mData" : "_last_name",
+										"mData" : "contact_number",
 										"type" : "text"
-									} ],
-						/* bUseColVis : true */
-
+									}, {
+										"mData" : "date_of_application",
+										"type" : "text"
+									}, {
+										"mData" : "status",
+										"type" : "text"
+									}, {
+										"mData" : "resume",
+										"type" : "text"
+									} ]
 						});
 	}
 
@@ -539,85 +558,165 @@
 						});
 	}
 
-	jQuery(document).ready(
-	/*	 loadCandidateTable(); */
-	function() {
-		$('#ctable').dataTable({
-			"bServerSide" : true,
-			"sAjaxSource" : '<portlet:resourceURL id="get_all_candidates"/>',
-			"bProcessing" : true,
-			"sPaginationType" : "full_numbers",
-			"bJQueryUI" : true,
-			"order" : [1, 'asc'], 
-			"bUseColVis" : true
-		});
+	jQuery(document)
+			.ready(
+					/*	 loadCandidateTable(); */
+					function() {
+						$('#ctable')
+								.dataTable(
+										{
+											"bServerSide" : true,
+											"sAjaxSource" : '<portlet:resourceURL id="get_all_candidates"/>',
+											"bProcessing" : true,
+											"sPaginationType" : "full_numbers",
+											"bJQueryUI" : true,
+											"order" : [ 1, 'asc' ],
+											"bUseColVis" : true,
+											'aoColumns' :  [
+															{
+																"mData" : "c_id",
+																"type" : "number",
+																"bSortable" : false,
+																"mRender" : function(data, type, full) {
+																	return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
+																}
+															},
+															{
+																"mData" : "vacancy",
+																"type" : "text"
+															},
 
-		/* loadCandidateTable(); 
-		cTable = $('#ctable')
-				.dataTable(
-						{
-							'bPaginate' : true,
-							'order' : [ 0, 'asc' ],
-							'bInfo' : true,
-							'iDisplayStart': 0,
-							'bProcessing' : true,
-							'bServerSide' : true,
-							'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
-							'dom' : 'C<"clear">lfrtip',
-							colVis : {
-								"align" : "right",
-								restore : "Restore",
-								showAll : "Show all",
-								showNone : "Show none",
-								order : 'alpha',
-								"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
-							},
-							"language" : {
-								"infoFiltered" : ""
-							},
-							"dom" : 'Cf<"toolbar"">rtip',
+															{
+																"mData" : "first_name",
+																"type" : "text",
+																"mRender" : function(data, type, full) {
+																	var fullName = data + " "
+																			+ full.middle_name + " "
+																			+ full.last_name;
+																	return "<a id='"
+																			+ full.c_id
+																			+ "' href='#ctable' onclick='getCandidate("
+																			+ full.c_id + ");'>"
+																			+ fullName + "</a>";
+																}
+															}, {
+																"mData" : "email",
+																"type" : "text"
+															}, {
+																"mData" : "contact_number",
+																"type" : "text"
+															}, {
+																"mData" : "date_of_application",
+																"type" : "text"
+															}, {
+																"mData" : "status",
+																"type" : "text"
+															}, {
+																"mData" : "resume",
+																"type" : "text"
+															} ],
+											bColVis : true,
+											colVis : {
+												"align" : "right",
+												restore : "Restore",
+												showAll : "Show all",
+												showNone : "Show none",
+												order : 'alpha',
+												"buttonText" : "Show/Hide Columns"
+											},
+											"language" : {
+												"infoFiltered" : ""
+											},
+											"dom" : 'Cf<"toolbar"">rtip',
 
-						}).columnFilter({
-					aoColumns : 
-					[ {
-						type : "number"
-					}, {
-						type : "text"
-					}, {
-						type : "text"
-					}, {
-						type : "text"
-					}, {
-						type : "text"
-					}, {
-						type : "text"
-					}, ],
-					bUseColVis : true
-				}).fnSetFilteringDelay();
-		$("#ctable_length").hide();
-		$("div.toolbar")
-				.append(
-						'<div class="btn-group" style="padding:5px "><button class="btn btn-default" id="refreshbtn" style="background:none;border:1px solid #ccc;height:30px" type="button"><span class="glyphicon glyphicon-refresh" style="padding:3px"></span></button></div>');
-		$("div.toolbar").css("float", "right");
-		$('#refreshbtn').click(function() {
-			cTable.fnStandingRedraw();
-		}); 
+										});
 
-		loadVacancyTable();
-		$(".select2-container").select2();
-		$('#datepicker').datepicker();
-		/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
+						/*cTable = $('#ctable')
+								.dataTable(
+										{
+											'order' : [ 1, 'asc' ],
+											'bInfo' : true,
+											'bProcessing' : true,
+											'bServerSide' : true,
+											'sPaginationType' : "full_numbers",
+											'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
+											'dom' : 'C<"clear">lfrtip',
+											'aoColumns' : [
+													{
+														"mData" : "c_id",
+														"type" : "number",
+														"bSortable" : false,
+														"mRender" : function(
+																data, type,
+																full) {
+															return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
+														}
+													},
+													{
+														"mData" : "first_name",
+														"type" : "text",
+														"mRender" : function(
+																data, type,
+																full) {
+															var fullName = full.first_name
+																	+ " "
+																	+ full.middle_name
+																	+ " "
+																	+ full.last_name;
+															return "<a id='"
+																	+ full.c_id
+																	+ "' href='#ctable' onclick='getCandidate("
+																	+ full.c_id
+																	+ ");'>"
+																	+ fullName
+																	+ "</a>";
+														}
+													},
+													{
+														"mData" : "middle_name",
+														"type" : "text"
+													}, {
+														"mData" : "last_name",
+														"type" : "text"
+													} ],
+											colVis : {
+												"align" : "right",
+												restore : "Restore",
+												showAll : "Show all",
+												showNone : "Show none",
+												order : 'alpha',
+												"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
+											},
+											"language" : {
+												"infoFiltered" : ""
+											},
+											"dom" : 'Cf<"toolbar"">rtip',
 
-		$('#cCheckbox').change(function() {
-			alert("checked");
-			if ($("#cCheckbox:checked").length) {
-				$("#cDeleteBtn").removeAttr('disabled');
-			} else {
-				$("#cDeleteBtn").attr('disabled', 'disabled');
-			}
+										});
+						$("#ctable_length").hide();
+						$("div.toolbar")
+								.append(
+										'<div class="btn-group" style="padding:5px "><button class="btn btn-default" id="refreshbtn" style="background:none;border:1px solid #ccc;height:30px" type="button"><span class="glyphicon glyphicon-refresh" style="padding:3px"></span></button></div>');
+						$("div.toolbar").css("float", "right");
+						$('#refreshbtn').click(function() {
+							cTable.fnStandingRedraw();
+						}); */
 
-		});
-	});
+						loadVacancyTable();
+						$(".select2-container").select2();
+						$('#datepicker').datepicker();
+						/* var cCheckboxes = $('#ctable tbody tr input[type=checkbox]'); */
+
+						$('#cCheckbox').change(function() {
+							alert("checked");
+							if ($("#cCheckbox:checked").length) {
+								$("#cDeleteBtn").removeAttr('disabled');
+							} else {
+								$("#cDeleteBtn").attr('disabled', 'disabled');
+							}
+
+						});
+					});
 
 	/* 	function vTabClick(){
 	 console.log("inside click");
@@ -649,14 +748,14 @@
 
 			},
 			success : function(response) {
-				var obj = response.candidate;
-				$('#c_id').val(obj._c_id);
-				$('#first_name').val(obj._first_name);
-				$('#middle_name').val(obj._middle_name);
-				$('#last_name').val(obj._last_name);
-				$('#inputEmail').val(obj._email);
-				$('#contact_number').val(obj._contact_number);
-				$('#comment').val(obj._comment);
+				var obj = response;
+				$('#c_id').val(obj.c_id);
+				$('#first_name').val(obj.first_name);
+				$('#middle_name').val(obj.middle_name);
+				$('#last_name').val(obj.last_name);
+				$('#inputEmail').val(obj.email);
+				$('#contact_number').val(obj.contact_number);
+				$('#comment').val(obj.comment);
 				/* Show edit vacancy modal */
 				$('#modify-candidate-modal').modal('show');
 			}
@@ -703,13 +802,13 @@
 			},
 			success : function(response) {
 				var obj = response.candidate;
-				$('#v_id').val(obj._c_id);
-				$('#first_name').val(obj._first_name);
-				$('#middle_name').val(obj._middle_name);
-				$('#last_name').val(obj._last_name);
-				$('#inputEmail').val(obj._email);
-				$('#contact_number').val(obj._contact_number);
-				$('#comment').val(obj._comment);
+				$('#v_id').val(obj.c_id);
+				$('#first_name').val(obj.first_name);
+				$('#middle_name').val(obj.middle_name);
+				$('#last_name').val(obj.last_name);
+				$('#inputEmail').val(obj.email);
+				$('#contact_number').val(obj.contact_number);
+				$('#comment').val(obj.comment);
 				/* Show edit vacancy modal */
 				$('#modify-candidate-modal').modal('show');
 			}
@@ -720,7 +819,7 @@
 	//Util functions
 </script>
 
-<style>
+<!-- <style>
 tfoot input {
 	width: 100%;
 	padding: 3px;
@@ -775,4 +874,4 @@ table.dataTable tbody td {
 	padding: 5px;
 	padding-left: 20px;
 }
-</style>
+</style> -->

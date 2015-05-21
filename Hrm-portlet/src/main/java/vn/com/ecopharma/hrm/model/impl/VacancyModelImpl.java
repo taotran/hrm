@@ -62,7 +62,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
     public static final String TABLE_NAME = "HRM_Vacancy";
     public static final Object[][] TABLE_COLUMNS = {
             { "v_id", Types.BIGINT },
-            { "jtitle_id", Types.BIGINT },
+            { "jobtitleId", Types.BIGINT },
             { "hiring_manager_id", Types.BIGINT },
             { "name", Types.VARCHAR },
             { "description", Types.VARCHAR },
@@ -73,7 +73,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             { "user_id", Types.BIGINT },
             { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Vacancy (v_id LONG not null primary key,jtitle_id LONG,hiring_manager_id LONG,name VARCHAR(75) null,description VARCHAR(75) null,no_of_positions INTEGER,published_in_feed BOOLEAN,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Vacancy (v_id LONG not null primary key,jobtitleId LONG,hiring_manager_id LONG,name VARCHAR(75) null,description VARCHAR(75) null,no_of_positions INTEGER,published_in_feed BOOLEAN,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Vacancy";
     public static final String ORDER_BY_JPQL = " ORDER BY vacancy.v_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Vacancy.v_id ASC";
@@ -105,7 +105,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             Vacancy.class
         };
     private long _v_id;
-    private long _jtitle_id;
+    private long _jobtitleId;
     private long _hiring_manager_id;
     private String _name;
     private String _description;
@@ -134,7 +134,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         Vacancy model = new VacancyImpl();
 
         model.setV_id(soapModel.getV_id());
-        model.setJtitle_id(soapModel.getJtitle_id());
+        model.setJobtitleId(soapModel.getJobtitleId());
         model.setHiring_manager_id(soapModel.getHiring_manager_id());
         model.setName(soapModel.getName());
         model.setDescription(soapModel.getDescription());
@@ -203,7 +203,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("v_id", getV_id());
-        attributes.put("jtitle_id", getJtitle_id());
+        attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
         attributes.put("description", getDescription());
@@ -225,10 +225,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             setV_id(v_id);
         }
 
-        Long jtitle_id = (Long) attributes.get("jtitle_id");
+        Long jobtitleId = (Long) attributes.get("jobtitleId");
 
-        if (jtitle_id != null) {
-            setJtitle_id(jtitle_id);
+        if (jobtitleId != null) {
+            setJobtitleId(jobtitleId);
         }
 
         Long hiring_manager_id = (Long) attributes.get("hiring_manager_id");
@@ -300,13 +300,13 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @JSON
     @Override
-    public long getJtitle_id() {
-        return _jtitle_id;
+    public long getJobtitleId() {
+        return _jobtitleId;
     }
 
     @Override
-    public void setJtitle_id(long jtitle_id) {
-        _jtitle_id = jtitle_id;
+    public void setJobtitleId(long jobtitleId) {
+        _jobtitleId = jobtitleId;
     }
 
     @JSON
@@ -542,7 +542,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         VacancyImpl vacancyImpl = new VacancyImpl();
 
         vacancyImpl.setV_id(getV_id());
-        vacancyImpl.setJtitle_id(getJtitle_id());
+        vacancyImpl.setJobtitleId(getJobtitleId());
         vacancyImpl.setHiring_manager_id(getHiring_manager_id());
         vacancyImpl.setName(getName());
         vacancyImpl.setDescription(getDescription());
@@ -607,7 +607,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         vacancyCacheModel.v_id = getV_id();
 
-        vacancyCacheModel.jtitle_id = getJtitle_id();
+        vacancyCacheModel.jobtitleId = getJobtitleId();
 
         vacancyCacheModel.hiring_manager_id = getHiring_manager_id();
 
@@ -660,8 +660,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         sb.append("{v_id=");
         sb.append(getV_id());
-        sb.append(", jtitle_id=");
-        sb.append(getJtitle_id());
+        sb.append(", jobtitleId=");
+        sb.append(getJobtitleId());
         sb.append(", hiring_manager_id=");
         sb.append(getHiring_manager_id());
         sb.append(", name=");
@@ -698,8 +698,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getV_id());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>jtitle_id</column-name><column-value><![CDATA[");
-        sb.append(getJtitle_id());
+            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
+        sb.append(getJobtitleId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>hiring_manager_id</column-name><column-value><![CDATA[");

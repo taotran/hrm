@@ -450,6 +450,21 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
+        long id, java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator order) {
+        return _candidateLocalService.searchCandidates(id, first_name,
+            middle_name, last_name, email, start, end, order);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
+        long c_id) {
+        return _candidateLocalService.getVacanciesByCandidate(c_id);
+    }
+
+    @Override
     public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
@@ -505,6 +520,18 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     @Override
     public int countAll() {
         return _candidateLocalService.countAll();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString) {
+        return _candidateLocalService.filterCandidates(filterString);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString, int start, int end) {
+        return _candidateLocalService.filterCandidates(filterString, start, end);
     }
 
     /**

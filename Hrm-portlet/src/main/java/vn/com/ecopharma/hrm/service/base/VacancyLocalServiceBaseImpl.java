@@ -19,6 +19,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.VacancyLocalService;
+import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
@@ -50,6 +51,8 @@ public abstract class VacancyLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected vn.com.ecopharma.hrm.service.CandidateService candidateService;
     @BeanReference(type = CandidatePersistence.class)
     protected CandidatePersistence candidatePersistence;
+    @BeanReference(type = CandidateFinder.class)
+    protected CandidateFinder candidateFinder;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentLocalService.class)
     protected vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentService.class)
@@ -497,6 +500,24 @@ public abstract class VacancyLocalServiceBaseImpl extends BaseLocalServiceImpl
     public void setCandidatePersistence(
         CandidatePersistence candidatePersistence) {
         this.candidatePersistence = candidatePersistence;
+    }
+
+    /**
+     * Returns the candidate finder.
+     *
+     * @return the candidate finder
+     */
+    public CandidateFinder getCandidateFinder() {
+        return candidateFinder;
+    }
+
+    /**
+     * Sets the candidate finder.
+     *
+     * @param candidateFinder the candidate finder
+     */
+    public void setCandidateFinder(CandidateFinder candidateFinder) {
+        this.candidateFinder = candidateFinder;
     }
 
     /**

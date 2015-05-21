@@ -60,7 +60,7 @@
 		<id name="v_id" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="jtitle_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="jobtitleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hiring_manager_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />

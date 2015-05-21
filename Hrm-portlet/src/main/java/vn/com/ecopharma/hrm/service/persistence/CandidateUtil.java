@@ -318,12 +318,13 @@ public class CandidateUtil {
     * @return the matching candidates
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .findByC_Search(first_name, middle_name, last_name, email);
+                   .findByfilterCandidate(first_name, middle_name, last_name,
+            email);
     }
 
     /**
@@ -342,13 +343,13 @@ public class CandidateUtil {
     * @return the range of matching candidates
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .findByC_Search(first_name, middle_name, last_name, email,
-            start, end);
+                   .findByfilterCandidate(first_name, middle_name, last_name,
+            email, start, end);
     }
 
     /**
@@ -368,14 +369,14 @@ public class CandidateUtil {
     * @return the ordered range of matching candidates
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .findByC_Search(first_name, middle_name, last_name, email,
-            start, end, orderByComparator);
+                   .findByfilterCandidate(first_name, middle_name, last_name,
+            email, start, end, orderByComparator);
     }
 
     /**
@@ -390,15 +391,15 @@ public class CandidateUtil {
     * @throws vn.com.ecopharma.hrm.NoSuchCandidateException if a matching candidate could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate findByC_Search_First(
+    public static vn.com.ecopharma.hrm.model.Candidate findByfilterCandidate_First(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException {
         return getPersistence()
-                   .findByC_Search_First(first_name, middle_name, last_name,
-            email, orderByComparator);
+                   .findByfilterCandidate_First(first_name, middle_name,
+            last_name, email, orderByComparator);
     }
 
     /**
@@ -412,14 +413,14 @@ public class CandidateUtil {
     * @return the first matching candidate, or <code>null</code> if a matching candidate could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate fetchByC_Search_First(
+    public static vn.com.ecopharma.hrm.model.Candidate fetchByfilterCandidate_First(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .fetchByC_Search_First(first_name, middle_name, last_name,
-            email, orderByComparator);
+                   .fetchByfilterCandidate_First(first_name, middle_name,
+            last_name, email, orderByComparator);
     }
 
     /**
@@ -434,15 +435,15 @@ public class CandidateUtil {
     * @throws vn.com.ecopharma.hrm.NoSuchCandidateException if a matching candidate could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate findByC_Search_Last(
+    public static vn.com.ecopharma.hrm.model.Candidate findByfilterCandidate_Last(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException {
         return getPersistence()
-                   .findByC_Search_Last(first_name, middle_name, last_name,
-            email, orderByComparator);
+                   .findByfilterCandidate_Last(first_name, middle_name,
+            last_name, email, orderByComparator);
     }
 
     /**
@@ -456,14 +457,14 @@ public class CandidateUtil {
     * @return the last matching candidate, or <code>null</code> if a matching candidate could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate fetchByC_Search_Last(
+    public static vn.com.ecopharma.hrm.model.Candidate fetchByfilterCandidate_Last(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .fetchByC_Search_Last(first_name, middle_name, last_name,
-            email, orderByComparator);
+                   .fetchByfilterCandidate_Last(first_name, middle_name,
+            last_name, email, orderByComparator);
     }
 
     /**
@@ -479,15 +480,15 @@ public class CandidateUtil {
     * @throws vn.com.ecopharma.hrm.NoSuchCandidateException if a candidate with the primary key could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate[] findByC_Search_PrevAndNext(
+    public static vn.com.ecopharma.hrm.model.Candidate[] findByfilterCandidate_PrevAndNext(
         long c_id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException {
         return getPersistence()
-                   .findByC_Search_PrevAndNext(c_id, first_name, middle_name,
-            last_name, email, orderByComparator);
+                   .findByfilterCandidate_PrevAndNext(c_id, first_name,
+            middle_name, last_name, email, orderByComparator);
     }
 
     /**
@@ -500,13 +501,13 @@ public class CandidateUtil {
     * @return the matching candidates that the user has permission to view
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .filterFindByC_Search(first_name, middle_name, last_name,
-            email);
+                   .filterFindByfilterCandidate(first_name, middle_name,
+            last_name, email);
     }
 
     /**
@@ -525,13 +526,13 @@ public class CandidateUtil {
     * @return the range of matching candidates that the user has permission to view
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .filterFindByC_Search(first_name, middle_name, last_name,
-            email, start, end);
+                   .filterFindByfilterCandidate(first_name, middle_name,
+            last_name, email, start, end);
     }
 
     /**
@@ -551,14 +552,14 @@ public class CandidateUtil {
     * @return the ordered range of matching candidates that the user has permission to view
     * @throws SystemException if a system exception occurred
     */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByC_Search(
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .filterFindByC_Search(first_name, middle_name, last_name,
-            email, start, end, orderByComparator);
+                   .filterFindByfilterCandidate(first_name, middle_name,
+            last_name, email, start, end, orderByComparator);
     }
 
     /**
@@ -574,15 +575,163 @@ public class CandidateUtil {
     * @throws vn.com.ecopharma.hrm.NoSuchCandidateException if a candidate with the primary key could not be found
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.Candidate[] filterFindByC_Search_PrevAndNext(
+    public static vn.com.ecopharma.hrm.model.Candidate[] filterFindByfilterCandidate_PrevAndNext(
         long c_id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException {
         return getPersistence()
-                   .filterFindByC_Search_PrevAndNext(c_id, first_name,
+                   .filterFindByfilterCandidate_PrevAndNext(c_id, first_name,
             middle_name, last_name, email, orderByComparator);
+    }
+
+    /**
+    * Returns all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @return the matching candidates that the user has permission to view
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .filterFindByfilterCandidate(first_names, middle_names,
+            last_names, emails);
+    }
+
+    /**
+    * Returns a range of all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @param start the lower bound of the range of candidates
+    * @param end the upper bound of the range of candidates (not inclusive)
+    * @return the range of matching candidates that the user has permission to view
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails, int start,
+        int end) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .filterFindByfilterCandidate(first_names, middle_names,
+            last_names, emails, start, end);
+    }
+
+    /**
+    * Returns an ordered range of all the candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @param start the lower bound of the range of candidates
+    * @param end the upper bound of the range of candidates (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching candidates that the user has permission to view
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterFindByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails, int start,
+        int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .filterFindByfilterCandidate(first_names, middle_names,
+            last_names, emails, start, end, orderByComparator);
+    }
+
+    /**
+    * Returns all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @return the matching candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .findByfilterCandidate(first_names, middle_names,
+            last_names, emails);
+    }
+
+    /**
+    * Returns a range of all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @param start the lower bound of the range of candidates
+    * @param end the upper bound of the range of candidates (not inclusive)
+    * @return the range of matching candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails, int start,
+        int end) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .findByfilterCandidate(first_names, middle_names,
+            last_names, emails, start, end);
+    }
+
+    /**
+    * Returns an ordered range of all the candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.CandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @param start the lower bound of the range of candidates
+    * @param end the upper bound of the range of candidates (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails, int start,
+        int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .findByfilterCandidate(first_names, middle_names,
+            last_names, emails, start, end, orderByComparator);
     }
 
     /**
@@ -594,12 +743,12 @@ public class CandidateUtil {
     * @param email the email
     * @throws SystemException if a system exception occurred
     */
-    public static void removeByC_Search(java.lang.String first_name,
+    public static void removeByfilterCandidate(java.lang.String first_name,
         java.lang.String middle_name, java.lang.String last_name,
         java.lang.String email)
         throws com.liferay.portal.kernel.exception.SystemException {
         getPersistence()
-            .removeByC_Search(first_name, middle_name, last_name, email);
+            .removeByfilterCandidate(first_name, middle_name, last_name, email);
     }
 
     /**
@@ -612,12 +761,32 @@ public class CandidateUtil {
     * @return the number of matching candidates
     * @throws SystemException if a system exception occurred
     */
-    public static int countByC_Search(java.lang.String first_name,
+    public static int countByfilterCandidate(java.lang.String first_name,
         java.lang.String middle_name, java.lang.String last_name,
         java.lang.String email)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .countByC_Search(first_name, middle_name, last_name, email);
+                   .countByfilterCandidate(first_name, middle_name, last_name,
+            email);
+    }
+
+    /**
+    * Returns the number of candidates where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @return the number of matching candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static int countByfilterCandidate(java.lang.String[] first_names,
+        java.lang.String[] middle_names, java.lang.String[] last_names,
+        java.lang.String[] emails)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .countByfilterCandidate(first_names, middle_names,
+            last_names, emails);
     }
 
     /**
@@ -630,13 +799,32 @@ public class CandidateUtil {
     * @return the number of matching candidates that the user has permission to view
     * @throws SystemException if a system exception occurred
     */
-    public static int filterCountByC_Search(java.lang.String first_name,
-        java.lang.String middle_name, java.lang.String last_name,
-        java.lang.String email)
+    public static int filterCountByfilterCandidate(
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence()
-                   .filterCountByC_Search(first_name, middle_name, last_name,
-            email);
+                   .filterCountByfilterCandidate(first_name, middle_name,
+            last_name, email);
+    }
+
+    /**
+    * Returns the number of candidates that the user has permission to view where first_name LIKE any &#63; and middle_name LIKE any &#63; and last_name LIKE any &#63; and email LIKE any &#63;.
+    *
+    * @param first_names the first_names
+    * @param middle_names the middle_names
+    * @param last_names the last_names
+    * @param emails the emails
+    * @return the number of matching candidates that the user has permission to view
+    * @throws SystemException if a system exception occurred
+    */
+    public static int filterCountByfilterCandidate(
+        java.lang.String[] first_names, java.lang.String[] middle_names,
+        java.lang.String[] last_names, java.lang.String[] emails)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .filterCountByfilterCandidate(first_names, middle_names,
+            last_names, emails);
     }
 
     /**

@@ -38,7 +38,7 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("v_id", getV_id());
-        attributes.put("jtitle_id", getJtitle_id());
+        attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
         attributes.put("description", getDescription());
@@ -60,10 +60,10 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
             setV_id(v_id);
         }
 
-        Long jtitle_id = (Long) attributes.get("jtitle_id");
+        Long jobtitleId = (Long) attributes.get("jobtitleId");
 
-        if (jtitle_id != null) {
-            setJtitle_id(jtitle_id);
+        if (jobtitleId != null) {
+            setJobtitleId(jobtitleId);
         }
 
         Long hiring_manager_id = (Long) attributes.get("hiring_manager_id");
@@ -163,23 +163,23 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     }
 
     /**
-    * Returns the jtitle_id of this vacancy.
+    * Returns the jobtitle ID of this vacancy.
     *
-    * @return the jtitle_id of this vacancy
+    * @return the jobtitle ID of this vacancy
     */
     @Override
-    public long getJtitle_id() {
-        return _vacancy.getJtitle_id();
+    public long getJobtitleId() {
+        return _vacancy.getJobtitleId();
     }
 
     /**
-    * Sets the jtitle_id of this vacancy.
+    * Sets the jobtitle ID of this vacancy.
     *
-    * @param jtitle_id the jtitle_id of this vacancy
+    * @param jobtitleId the jobtitle ID of this vacancy
     */
     @Override
-    public void setJtitle_id(long jtitle_id) {
-        _vacancy.setJtitle_id(jtitle_id);
+    public void setJobtitleId(long jobtitleId) {
+        _vacancy.setJobtitleId(jobtitleId);
     }
 
     /**

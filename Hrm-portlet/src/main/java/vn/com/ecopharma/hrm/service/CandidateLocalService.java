@@ -361,6 +361,16 @@ public interface CandidateLocalService extends BaseLocalService,
         long id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end);
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
+        long id, java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator order);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
+        long c_id);
+
     public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
@@ -392,4 +402,10 @@ public interface CandidateLocalService extends BaseLocalService,
         java.lang.String last_name, java.lang.String email, int start, int end);
 
     public int countAll();
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString, int start, int end);
 }

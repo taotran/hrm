@@ -76,7 +76,7 @@
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.VacancyModelImpl">
 		<attributes>
 			<id name="v_id" />
-			<basic name="jtitle_id" />
+			<basic name="jobtitleId" />
 			<basic name="hiring_manager_id" />
 			<basic name="name" />
 			<basic name="description" />

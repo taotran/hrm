@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     private long _v_id;
-    private long _jtitle_id;
+    private long _jobtitleId;
     private long _hiring_manager_id;
     private String _name;
     private String _description;
@@ -83,7 +83,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("v_id", getV_id());
-        attributes.put("jtitle_id", getJtitle_id());
+        attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
         attributes.put("description", getDescription());
@@ -105,10 +105,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
             setV_id(v_id);
         }
 
-        Long jtitle_id = (Long) attributes.get("jtitle_id");
+        Long jobtitleId = (Long) attributes.get("jobtitleId");
 
-        if (jtitle_id != null) {
-            setJtitle_id(jtitle_id);
+        if (jobtitleId != null) {
+            setJobtitleId(jobtitleId);
         }
 
         Long hiring_manager_id = (Long) attributes.get("hiring_manager_id");
@@ -190,21 +190,21 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     }
 
     @Override
-    public long getJtitle_id() {
-        return _jtitle_id;
+    public long getJobtitleId() {
+        return _jobtitleId;
     }
 
     @Override
-    public void setJtitle_id(long jtitle_id) {
-        _jtitle_id = jtitle_id;
+    public void setJobtitleId(long jobtitleId) {
+        _jobtitleId = jobtitleId;
 
         if (_vacancyRemoteModel != null) {
             try {
                 Class<?> clazz = _vacancyRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setJtitle_id", long.class);
+                Method method = clazz.getMethod("setJobtitleId", long.class);
 
-                method.invoke(_vacancyRemoteModel, jtitle_id);
+                method.invoke(_vacancyRemoteModel, jobtitleId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -611,7 +611,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         VacancyClp clone = new VacancyClp();
 
         clone.setV_id(getV_id());
-        clone.setJtitle_id(getJtitle_id());
+        clone.setJobtitleId(getJobtitleId());
         clone.setHiring_manager_id(getHiring_manager_id());
         clone.setName(getName());
         clone.setDescription(getDescription());
@@ -674,8 +674,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
         sb.append("{v_id=");
         sb.append(getV_id());
-        sb.append(", jtitle_id=");
-        sb.append(getJtitle_id());
+        sb.append(", jobtitleId=");
+        sb.append(getJobtitleId());
         sb.append(", hiring_manager_id=");
         sb.append(getHiring_manager_id());
         sb.append(", name=");
@@ -712,8 +712,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(getV_id());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>jtitle_id</column-name><column-value><![CDATA[");
-        sb.append(getJtitle_id());
+            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
+        sb.append(getJobtitleId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>hiring_manager_id</column-name><column-value><![CDATA[");

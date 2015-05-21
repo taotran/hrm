@@ -49,7 +49,7 @@ create table HRM_Vacancies_Candidates (
 
 create table HRM_Vacancy (
 	v_id LONG not null primary key,
-	jtitle_id LONG,
+	jobtitleId LONG,
 	hiring_manager_id LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,

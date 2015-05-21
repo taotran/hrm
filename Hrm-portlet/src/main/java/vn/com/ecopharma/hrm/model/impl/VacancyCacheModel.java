@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     public long v_id;
-    public long jtitle_id;
+    public long jobtitleId;
     public long hiring_manager_id;
     public String name;
     public String description;
@@ -39,8 +39,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 
         sb.append("{v_id=");
         sb.append(v_id);
-        sb.append(", jtitle_id=");
-        sb.append(jtitle_id);
+        sb.append(", jobtitleId=");
+        sb.append(jobtitleId);
         sb.append(", hiring_manager_id=");
         sb.append(hiring_manager_id);
         sb.append(", name=");
@@ -69,7 +69,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         VacancyImpl vacancyImpl = new VacancyImpl();
 
         vacancyImpl.setV_id(v_id);
-        vacancyImpl.setJtitle_id(jtitle_id);
+        vacancyImpl.setJobtitleId(jobtitleId);
         vacancyImpl.setHiring_manager_id(hiring_manager_id);
 
         if (name == null) {
@@ -110,7 +110,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     @Override
     public void readExternal(ObjectInput objectInput) throws IOException {
         v_id = objectInput.readLong();
-        jtitle_id = objectInput.readLong();
+        jobtitleId = objectInput.readLong();
         hiring_manager_id = objectInput.readLong();
         name = objectInput.readUTF();
         description = objectInput.readUTF();
@@ -126,7 +126,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     public void writeExternal(ObjectOutput objectOutput)
         throws IOException {
         objectOutput.writeLong(v_id);
-        objectOutput.writeLong(jtitle_id);
+        objectOutput.writeLong(jobtitleId);
         objectOutput.writeLong(hiring_manager_id);
 
         if (name == null) {

@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -17,6 +18,7 @@ import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.base.CandidateLocalServiceBaseImpl;
+import vn.com.ecopharma.hrm.service.persistence.CandidateFinderUtil;
 
 /**
  * The implementation of the candidate local service.
@@ -72,7 +74,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			String middle_name, String last_name, String email, int start,
 			int end) {
 		try {
-			return candidatePersistence.filterFindByC_Search(first_name,
+			return candidatePersistence.filterFindByfilterCandidate(first_name,
 					middle_name, last_name, email, start, end);
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
@@ -81,6 +83,31 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return null;
 
 	}
+	
+	public List<Candidate> searchCandidates(long id, String first_name,
+			String middle_name, String last_name, String email, int start,
+			int end, OrderByComparator order) {
+		try {
+			return candidatePersistence.filterFindByfilterCandidate(first_name,
+					middle_name, last_name, email, start, end, order);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
+	public List<Vacancy> getVacanciesByCandidate(long c_id) {
+		try {
+			return candidatePersistence.getVacancies(c_id);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	public Candidate createCandidate(long user_id, String first_name,
 			String middle_name, String last_name, String email,
@@ -166,7 +193,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			String middle_name, String last_name, String email) {
 
 		try {
-			return candidatePersistence.filterFindByC_Search(first_name,
+			return candidatePersistence.filterFindByfilterCandidate(first_name,
 					middle_name, last_name, email);
 		} catch (SystemException e) {
 			e.printStackTrace();
@@ -179,7 +206,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			int end) {
 
 		try {
-			return candidatePersistence.filterFindByC_Search(first_name, middle_name, last_name, email, start, end);
+			return candidatePersistence.filterFindByfilterCandidate(first_name, middle_name, last_name, email, start, end);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
@@ -194,5 +221,13 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public List<Candidate> filterCandidates(String filterString) {
+		return CandidateFinderUtil.filterCandidates(filterString);
+	}
+	
+	public List<Candidate> filterCandidates(String filterString, int start, int end) {
+		return CandidateFinderUtil.filterCandidates(filterString, start, end);
 	}
 }

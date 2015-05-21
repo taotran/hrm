@@ -334,7 +334,7 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
         vacancyImpl.setPrimaryKey(vacancy.getPrimaryKey());
 
         vacancyImpl.setV_id(vacancy.getV_id());
-        vacancyImpl.setJtitle_id(vacancy.getJtitle_id());
+        vacancyImpl.setJobtitleId(vacancy.getJobtitleId());
         vacancyImpl.setHiring_manager_id(vacancy.getHiring_manager_id());
         vacancyImpl.setName(vacancy.getName());
         vacancyImpl.setDescription(vacancy.getDescription());

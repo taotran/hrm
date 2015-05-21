@@ -421,6 +421,20 @@ public class CandidateLocalServiceUtil {
             email, start, end);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
+        long id, java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator order) {
+        return getService()
+                   .searchCandidates(id, first_name, middle_name, last_name,
+            email, start, end, order);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
+        long c_id) {
+        return getService().getVacanciesByCandidate(c_id);
+    }
+
     public static vn.com.ecopharma.hrm.model.Candidate createCandidate(
         long user_id, java.lang.String first_name,
         java.lang.String middle_name, java.lang.String last_name,
@@ -475,6 +489,16 @@ public class CandidateLocalServiceUtil {
 
     public static int countAll() {
         return getService().countAll();
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString) {
+        return getService().filterCandidates(filterString);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
+        java.lang.String filterString, int start, int end) {
+        return getService().filterCandidates(filterString, start, end);
     }
 
     public static void clearService() {

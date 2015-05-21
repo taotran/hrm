@@ -53,7 +53,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			final long v_id = counterLocalService.increment();
 			final Vacancy v = vacancyPersistence.create(v_id);
 			final Date now = new Date(System.currentTimeMillis());
-			v.setJtitle_id(jTitle_id);
+			v.setJobtitleId(jTitle_id);
 			v.setHiring_manager_id(hiring_mananager_id);
 			v.setName(name);
 			v.setDescription(description);
@@ -85,7 +85,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		Vacancy vacancy;
 		try {
 			vacancy = vacancyPersistence.findByPrimaryKey(id);
-			vacancy.setJtitle_id(jtitle_id);
+			vacancy.setJobtitleId(jtitle_id);
 			vacancy.setHiring_manager_id(hiring_manager_id);
 			vacancy.setName(name);
 			vacancy.setDescription(description);

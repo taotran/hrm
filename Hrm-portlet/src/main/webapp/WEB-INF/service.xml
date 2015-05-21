@@ -21,6 +21,7 @@
 		<column name="added_person" type="int"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
+		
 		<column name="vancancies" type="Collection" entity="Vacancy"
 			mapping-table="Vacancies_Candidates"></column>
 		<finder name="findCandidates" return-type="Collection">
@@ -31,6 +32,7 @@
             <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
             <finder-column name="last_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
             <finder-column name="email" comparator="LIKE" arrayable-operator="OR"></finder-column>
+           
         </finder>
         
 	</entity>
@@ -39,7 +41,7 @@
 	<entity name="Vacancy" local-service="true" trash-enabled="true"
 		remote-service="true">
 		<column name="v_id" type="long" primary="true"></column>
-		<column name="jtitle_id" type="long"></column>
+		<column name="jobtitleId" type="long"></column>
 		<column name="hiring_manager_id" type="long"></column>
 		<column name="name" type="String"></column>
 		<column name="description" type="String"></column>

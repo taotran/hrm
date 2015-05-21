@@ -4,6 +4,7 @@
 	<bean id="vn.com.ecopharma.hrm.service.CandidateLocalService" class="vn.com.ecopharma.hrm.service.impl.CandidateLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.CandidateService" class="vn.com.ecopharma.hrm.service.impl.CandidateServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.CandidatePersistence" class="vn.com.ecopharma.hrm.service.persistence.CandidatePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.CandidateFinder" class="vn.com.ecopharma.hrm.service.persistence.CandidateFinderImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.FileAttachmentLocalService" class="vn.com.ecopharma.hrm.service.impl.FileAttachmentLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.FileAttachmentService" class="vn.com.ecopharma.hrm.service.impl.FileAttachmentServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence" class="vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistenceImpl" parent="basePersistence" />
