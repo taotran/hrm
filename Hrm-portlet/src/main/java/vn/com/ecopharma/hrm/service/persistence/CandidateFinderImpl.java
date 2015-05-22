@@ -48,7 +48,7 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 		return null;
 	}
 	
-	public List<Candidate> filterCandidates(String filterString, int start, int end) {
+	public List<Candidate> filterCandidateByGlobalString(String filterString) {
 		Session session = null;
 		try {
 			session = openSession();
@@ -57,8 +57,9 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 			query.setCacheable(false);
 			query.addEntity("Candidate", CandidateImpl.class);
 			QueryPos qPos = QueryPos.getInstance(query);
-			qPos.add(filterString);
-			return (List<Candidate>) QueryUtil.list(query, getDialect(), start, end);
+			String param = "first_name LIKE '%" + filterString + "%' OR email LIKE '%" + filterString + "%'";
+			qPos.add(param);
+			return (List<Candidate>) query.list();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -3,9 +3,12 @@ package vn.com.eco.taotv.portlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -231,18 +234,24 @@ public class HRMPortlet extends MVCPortlet {
 					}
 
 				}
-
-				/*
-				 * Collections.sort(candidates, new Comparator<Candidate>() {
-				 * 
-				 * @Override public int compare(Candidate c1, Candidate c2) {
-				 * switch (sortColumnIndex) { case 1: return
-				 * c1.getFirst_name().compareTo( c2.getFirst_name())
-				 * sortDirection; case 2: return c1.getMiddle_name().compareTo(
-				 * c2.getMiddle_name()) sortDirection; case 3: return
-				 * c1.getLast_name().compareTo( c2.getLast_name())
-				 * sortDirection; } return 0; } });
-				 */
+				
+				System.out.println("sortColumnIndex " + sortColumnIndex);
+				
+				Collections.sort(filteredCandidates, new Comparator<Candidate>(){
+				    @Override
+				    public int compare(Candidate c1, Candidate c2) {    
+				        switch(sortColumnIndex){
+				        case 2:
+				            return c1.getFirst_name().compareTo(c2.getFirst_name()) * sortDirection;
+				        case 3:
+				            return c1.getEmail().compareTo(c2.getEmail()) * sortDirection;
+				        case 4:
+				            return c1.getContact_number().compareTo(c2.getContact_number()) * sortDirection;
+				        }
+				        return 0;
+				    }
+				});
+				 
 
 				iTotalDisplayRecords = filteredCandidates.size();
 
@@ -256,10 +265,11 @@ public class HRMPortlet extends MVCPortlet {
 				// "", "", "",0, 2, null).size());
 
 				if (filteredCandidates.size() < start + listDisplayAmount) {
-					filteredCandidates = filteredCandidates.subList(start, filteredCandidates.size());
+					filteredCandidates = filteredCandidates.subList(start,
+							filteredCandidates.size());
 				} else {
-					filteredCandidates = filteredCandidates.subList(start, start
-							+ listDisplayAmount);
+					filteredCandidates = filteredCandidates.subList(start,
+							start + listDisplayAmount);
 				}
 
 				jsonResult.put("iTotalRecords", iTotalRecords);
@@ -358,22 +368,21 @@ public class HRMPortlet extends MVCPortlet {
 				JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
 			}
 		} else if (DELETE_CANDIDATES.equalsIgnoreCase(resourceRequestId)) {
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					resourceRequest.getPortletInputStream()));
-			if (br != null) {
-				json = br.readLine();
-				final JsonArray jsonArr = (JsonArray) new JsonParser()
-						.parse(json);
-
-				for (int i = 0; i < jsonArr.size(); i++) {
-					JsonObject jsonObject = (JsonObject) jsonArr.get(i);
-					long id = jsonObject.get("c_id").getAsLong();
-					CandidateLocalServiceUtil.delele(id);
-				}
-			}
-			JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+			/*
+			 * final BufferedReader br = new BufferedReader(new
+			 * InputStreamReader( resourceRequest.getPortletInputStream())); if
+			 * (br != null) { json = br.readLine(); final JsonArray jsonArr =
+			 * (JsonArray) new JsonParser() .parse(json);
+			 * 
+			 * for (int i = 0; i < jsonArr.size(); i++) { JsonObject jsonObject
+			 * = (JsonObject) jsonArr.get(i); long id =
+			 * jsonObject.get("c_id").getAsLong();
+			 * CandidateLocalServiceUtil.delele(id); } }
+			 */
+			deleteEntityServeResource(resourceRequest,
+					resourceResponse.getWriter(), "c_id");
 		} else if (GET_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
+			/*final BufferedReader br = new BufferedReader(new InputStreamReader(
 					resourceRequest.getPortletInputStream()));
 			if (br != null) {
 				json = br.readLine();
@@ -398,7 +407,8 @@ public class HRMPortlet extends MVCPortlet {
 					e.printStackTrace();
 				}
 			}
-
+*/			
+			find_ResponseEntityServeResource(resourceRequest, resourceResponse.getWriter(), "c_id");
 		}
 
 		// ALL VACANCY RESOURCE ACTIONS
@@ -425,7 +435,7 @@ public class HRMPortlet extends MVCPortlet {
 				String pageNo = resourceRequest.getParameter("iDisplayStart");
 				String pageSize = resourceRequest
 						.getParameter("iDisplayLength");
-
+				System.out.println(CandidateLocalServiceUtil.filterCandidateByGlobalString(V_GLOB_SEARCH).size());	
 				if (pageNo != null) {
 					start = Integer.parseInt(pageNo);
 					if (start < 0) {
@@ -528,36 +538,11 @@ public class HRMPortlet extends MVCPortlet {
 			}
 
 		} else if (DELETE_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
-
+			deleteEntityServeResource(resourceRequest,
+					resourceResponse.getWriter(), "v_id");
 		} else if (GET_VACANCY.equalsIgnoreCase(resourceRequestId)) {
 			System.out.println("###INSIDE GET VACANCY");
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					resourceRequest.getPortletInputStream()));
-			if (br != null) {
-				json = br.readLine();
-				JsonObject jsonObject = (JsonObject) new JsonParser()
-						.parse(json);
-				long v_id = jsonObject.get("v_id").getAsLong();
-				try {
-					final Vacancy v = VacancyLocalServiceUtil.getVacancy(v_id);
-					JSONObject object = new JSONObject();
-					System.out.println(v.getV_id());
-					object.put("v_id", v.getV_id());
-					object.put("v_name", v.getName());
-					object.put("hiring_managers", v.getHiring_manager_id());
-					object.put("no_of_pos", v.getNo_of_positions());
-					object.put("published_in_feed", v.getPublished_in_feed());
-					object.put("job_posting", "JOB POSTING....");
-					// map.put("candidate", candidate);
-
-					resourceResponse.getWriter().print(object);
-
-				} catch (PortalException e) {
-					e.printStackTrace();
-				} catch (SystemException e) {
-					e.printStackTrace();
-				}
-			}
+			find_ResponseEntityServeResource(resourceRequest, resourceResponse.getWriter(), "v_id");
 
 		} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
 			System.out.println("###INSIDE UPLOAD FILE");
@@ -640,9 +625,9 @@ public class HRMPortlet extends MVCPortlet {
 				resourceResponse.getWriter().print(jTitleArr);
 			}
 		} else if (DELETE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
-
+			deleteEntityServeResource(resourceRequest, resourceResponse.getWriter(), "j_id");
 		} else if (GET_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
-
+			find_ResponseEntityServeResource(resourceRequest, resourceResponse.getWriter(), "j_id");
 		} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
 			System.out.println("###INSIDE UPLOAD FILE");
 
@@ -706,5 +691,101 @@ public class HRMPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private void deleteEntityServeResource(ResourceRequest resourceRequest,
+			PrintWriter writer, String entityId) {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new InputStreamReader(
+					resourceRequest.getPortletInputStream()));
+
+			if (br != null) {
+				String json = br.readLine();
+				final JsonArray jsonArr = (JsonArray) new JsonParser()
+						.parse(json);
+
+				for (int i = 0; i < jsonArr.size(); i++) {
+					JsonObject jsonObject = (JsonObject) jsonArr.get(i);
+					long id = jsonObject.get(entityId).getAsLong();
+					// Bad!!!
+					// TODO: find a way to generic do this
+					if (entityId.equalsIgnoreCase("c_id")) {
+						CandidateLocalServiceUtil.delele(id);
+					} else if (entityId.equalsIgnoreCase("v_id")) {
+						VacancyLocalServiceUtil.delete(id);
+					} else if (entityId.equalsIgnoreCase("j_id")) {
+						JTitleLocalServiceUtil.delete(id);
+					}
+				}
+				writer.print(new JSONObject());
+				writer.flush();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void find_ResponseEntityServeResource(
+			ResourceRequest resourceRequest, PrintWriter writer, String entityId) {
+		try {
+			final BufferedReader br = new BufferedReader(new InputStreamReader(
+					resourceRequest.getPortletInputStream()));
+			if (br != null) {
+				String json = br.readLine();
+				JsonObject jsonObject = (JsonObject) new JsonParser()
+						.parse(json);
+				long id = jsonObject.get(entityId).getAsLong();
+				JSONObject result = new JSONObject();
+				// Bad!!!
+				// TODO: find a way to generic do this
+				if (entityId.equalsIgnoreCase("c_id")) {
+					result = createCandidateJSONObj(id);
+				} else if (entityId.equalsIgnoreCase("v_id")) {
+					result = createVacancyJSONObj(id);
+				} else if (entityId.equalsIgnoreCase("j_id")) {
+					result = createJTitleJSONObj(id);
+				}
+				writer.print(result);
+				writer.flush();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private JSONObject createCandidateJSONObj(long id) throws PortalException,
+			SystemException {
+		final Candidate c = CandidateLocalServiceUtil.getCandidate(id);
+		JSONObject object = new JSONObject();
+		object.put("c_id", c.getC_id());
+		object.put("first_name", c.getFirst_name());
+		object.put("middle_name", c.getMiddle_name());
+		object.put("last_name", c.getLast_name());
+		return object;
+	}
+
+	private JSONObject createVacancyJSONObj(long id) throws PortalException,
+			SystemException {
+		final Vacancy v = VacancyLocalServiceUtil.getVacancy(id);
+		JSONObject object = new JSONObject();
+		object.put("v_id", v.getV_id());
+		object.put("v_name", v.getName());
+		object.put("hiring_managers", v.getHiring_manager_id());
+		object.put("no_of_pos", v.getNo_of_positions());
+		object.put("published_in_feed", v.getPublished_in_feed());
+		object.put("job_posting", "JOB POSTING....");
+		return object;
+	}
+
+	private JSONObject createJTitleJSONObj(long id) throws PortalException,
+			SystemException {
+		final JTitle j = JTitleLocalServiceUtil.getJTitle(id);
+		JSONObject object = new JSONObject();
+		object.put("jTitleId", j.getJobtitleId());
+		object.put("title", j.getTitle());
+		object.put("description", j.getDescription());
+		object.put("note", j.getNote());
+		return object;
 	}
 }

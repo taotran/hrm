@@ -226,8 +226,8 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return CandidateFinderUtil.filterCandidates(filterString);
 	}
 	
-	public List<Candidate> filterCandidates(String filterString, int start, int end) {
-		return CandidateFinderUtil.filterCandidates(filterString, start, end);
+	public List<Candidate> filterCandidateByGlobalString(String filterString) {
+		return CandidateFinderUtil.filterCandidateByGlobalString(filterString);
 	}
 	public Long findVacancyByCandidate(long c_id) {
 		return CandidateFinderUtil.findVacancyByCandidate(c_id);

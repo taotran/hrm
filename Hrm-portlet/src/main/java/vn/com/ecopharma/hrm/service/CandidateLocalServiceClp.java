@@ -347,9 +347,9 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
         _methodParameterTypes47 = new String[] { "java.lang.String" };
 
-        _methodName48 = "filterCandidates";
+        _methodName48 = "filterCandidateByGlobalString";
 
-        _methodParameterTypes48 = new String[] { "java.lang.String", "int", "int" };
+        _methodParameterTypes48 = new String[] { "java.lang.String" };
 
         _methodName49 = "findVacancyByCandidate";
 
@@ -1693,20 +1693,14 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
-        java.lang.String filterString, int start, int end) {
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateByGlobalString(
+        java.lang.String filterString) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName48,
                     _methodParameterTypes48,
-                    new Object[] {
-                        ClpSerializer.translateInput(filterString),
-                        
-                    start,
-                        
-                    end
-                    });
+                    new Object[] { ClpSerializer.translateInput(filterString) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

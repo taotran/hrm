@@ -12,9 +12,9 @@ public class CandidateFinderUtil {
         return getFinder().filterCandidates(filterString);
     }
 
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
-        java.lang.String filterString, int start, int end) {
-        return getFinder().filterCandidates(filterString, start, end);
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateByGlobalString(
+        java.lang.String filterString) {
+        return getFinder().filterCandidateByGlobalString(filterString);
     }
 
     public static java.lang.Long findVacancyByCandidate(long c_id) {

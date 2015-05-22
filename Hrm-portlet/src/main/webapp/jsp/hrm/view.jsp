@@ -25,9 +25,7 @@
 				<div class="srch-header"></div>
 				<div class="srch-body">
 					<!-- Bootstrap trigger to open modal -->
-					<div class="advancedSearchBox">
-
-					</div>
+					<div class="advancedSearchBox"></div>
 
 					<div class="actionButtons">
 						<div class="buttons">
@@ -110,7 +108,7 @@
 				<tfoot>
 					<tr>
 						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
-						<th><input type="checkbox" id="v_checkAll"/></th>
+						<th><input type="checkbox" id="v_checkAll" /></th>
 						<th><liferay-ui:message key="vacancy.name" /></th>
 						<th>Job Title</th>
 						<th>Hiring Manager</th>
@@ -185,14 +183,23 @@
 				<div class="form-inline">
 					<label for="select2"><liferay-ui:message
 							key="candidate.job_vacancy" /></label>
-					<c:if test="${fn:length(allVacancies) > 0}">
-						<select class="form-control select2-container" id="vacancySelect"
-							class="vacancySelect2">
-							<c:forEach items="${allVacancies}" var="vacancy">
-								<option value="${vacancy.v_id}">${vacancy.name }</option>
-							</c:forEach>
-						</select>
-					</c:if>
+					<c:choose>
+						<c:when test="${fn:length(allVacancies) > 0}">
+							<select class="form-control select2-container" id="vacancySelect"
+								class="vacancySelect2">
+								<c:forEach items="${allVacancies}" var="vacancy">
+									<option value="${vacancy.v_id}">${vacancy.name }</option>
+								</c:forEach>
+							</select>
+						</c:when>
+						<c:otherwise>
+							<select class="form-control select2-container" id="vacancySelect"
+								class="vacancySelect2">
+								<option value="none">No Vacancy</option>
+							</select>
+						</c:otherwise>
+					</c:choose>
+
 				</div>
 			</div>
 
@@ -257,14 +264,22 @@
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="jTitleSelect">Job Title</label>
-				<c:if test="${fn:length(allJTitles) > 0}">
-					<select class="form-control select2-container" id="jTitleSelect"
-						class="jTitleSelect2">
-						<c:forEach items="${allJTitles}" var="jTitle">
-							<option value="${jTitle.jobtitleId}">${jTitle.title }</option>
-						</c:forEach>
-					</select>
-				</c:if>
+				<c:choose>
+					<c:when test="${fn:length(allJTitles) > 0}">
+						<select class="form-control select2-container" id="jTitleSelect"
+							class="jTitleSelect2">
+							<c:forEach items="${allJTitles}" var="jTitle">
+								<option value="${jTitle.jobtitleId}">${jTitle.title }</option>
+							</c:forEach>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select class="form-control select2-container" id="jTitleSelect"
+							class="jTitleSelect2">
+							<option value="none">No Job Title</option>
+						</select>
+					</c:otherwise>
+				</c:choose>
 				<a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
 					<i class="icon-plus"></i>Add
 				</a>
@@ -316,6 +331,13 @@
 			<div class="form-inline">
 				<label for="published_in_feed">Published in feed</label> <input
 					type="checkbox" class="form-control" id="published_in_feed">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="desc">Description</label>
+				<textarea id="desc" rows="5" cols="50"></textarea>
 			</div>
 		</div>
 
@@ -403,7 +425,7 @@
 
 	});
 
-	$("#v_checkAll").click(function(){
+	$("#v_checkAll").click(function() {
 		console.log("clicked");
 		if ($(this).is(':checked')) {
 			console.log("checked");
@@ -413,7 +435,7 @@
 			$('tbody input').attr('checked', false);
 		}
 	})
-	
+
 	var vTabClickCount = 0;
 	var cTable;
 
@@ -458,11 +480,11 @@
 		vacancy.v_id = $("#v_id").val();
 		vacancy.jobtitleId = $('#jTitleSelect').val();
 		vacancy.hiring_manager_id = $('#hiring_managers').val();
-		vacancy.name = $('#v_name').val();
+		vacancy.v_name = $('#v_name').val();
 		vacancy.description = $('#desc').val();
 		vacancy.no_of_positions = $('#no_of_pos').val();
 		vacancy.published_in_feed = $('#published_in_feed').val();
-		vacancy.job_post = $("#job_posting").val();
+		vacancy.job_posting = $("#job_posting").val();
 		// 		candidate.file = $('#addCandidate_resume');
 
 		jQuery.ajax({
@@ -778,36 +800,24 @@
 											},
 											"dom" : 'Cf<"toolbar"">rtip',
 
-										}).columnFilter(
-										{
-											aoColumns : [
-													null,
-													{
-														type : "text"
-													},
-													{
-														type : "text"
-													},
-													{
-														type : "text"
-													},
-													{
-														type : "text"
-													},
-													{
-														type : "date-range"
-													},
-													{
-														type : "select",
-														values : [ 'STATUS1',
-																'STATUS2',
-																'STATUS3',
-																'STATUS1' ]
-													}, {
-														type : "text"
-													} ]
+										}).columnFilter({
+									aoColumns : [ null, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "text"
+									}, {
+										type : "date-range"
+									}, {
+										type : "select"
+									}, {
+										type : "text"
+									} ]
 
-										});
+								});
 
 						/*cTable = $('#ctable')
 								.dataTable(

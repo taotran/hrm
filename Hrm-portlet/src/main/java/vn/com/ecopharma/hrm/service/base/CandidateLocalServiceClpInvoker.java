@@ -346,9 +346,9 @@ public class CandidateLocalServiceClpInvoker {
 
         _methodParameterTypes88 = new String[] { "java.lang.String" };
 
-        _methodName89 = "filterCandidates";
+        _methodName89 = "filterCandidateByGlobalString";
 
-        _methodParameterTypes89 = new String[] { "java.lang.String", "int", "int" };
+        _methodParameterTypes89 = new String[] { "java.lang.String" };
 
         _methodName90 = "findVacancyByCandidate";
 
@@ -687,9 +687,7 @@ public class CandidateLocalServiceClpInvoker {
 
         if (_methodName89.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-            return CandidateLocalServiceUtil.filterCandidates((java.lang.String) arguments[0],
-                ((Integer) arguments[1]).intValue(),
-                ((Integer) arguments[2]).intValue());
+            return CandidateLocalServiceUtil.filterCandidateByGlobalString((java.lang.String) arguments[0]);
         }
 
         if (_methodName90.equals(name) &&
