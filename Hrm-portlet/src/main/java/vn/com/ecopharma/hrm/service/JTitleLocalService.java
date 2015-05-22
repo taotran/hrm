@@ -236,4 +236,25 @@ public interface JTitleLocalService extends BaseLocalService,
     public java.lang.Object invokeMethod(java.lang.String name,
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable;
+
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll();
+
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+    public vn.com.ecopharma.hrm.model.JTitle create(long user_Id,
+        long group_Id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext);
+
+    public vn.com.ecopharma.hrm.model.JTitle edit(long user_Id, long group_Id,
+        long j_id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext);
+
+    public void delete(long jobtitleId);
 }

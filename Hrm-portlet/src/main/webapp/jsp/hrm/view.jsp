@@ -26,32 +26,15 @@
 				<div class="srch-body">
 					<!-- Bootstrap trigger to open modal -->
 					<div class="advancedSearchBox">
-						<div class="searchFields">
-							<label for="jTitle">Job Title</label> <select
-								class="select2-container" id="jTitle">
-								<option value="1">Test 1</option>
-								<option value="2">Test 2</option>
-								<option value="3">Test 3</option>
-								<option value="4">Test 4</option>
-							</select> <label for="vSelect">Vacancy</label> <select
-								class="select2-container" id="vSelect">
-								<option value="1">Test 1</option>
-								<option value="2">Test 2</option>
-								<option value="3">Test 3</option>
-								<option value="4">Test 4</option>
-							</select> <input id="cName" placeholder="Type..." />
-						</div>
-						<div class="searchButtons">
-							<button class="btn btn-primary">Search</button>
-							<button class="btn">Reset</button>
-						</div>
+
 					</div>
 
 					<div class="actionButtons">
 						<div class="buttons">
-							<a data-toggle="modal" class="btn btn-primary"
-								href="#modify-candidate-modal"><liferay-ui:message
-									key="global.button.add" /></a>
+							<a data-toggle="modal" href="#modify-candidate-modal"
+								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
+									key="global.button.add" />
+							</a>
 							<button data-toggle="modal" id="cDeleteBtn" class="btn"
 								onclick="deleteCandidates()">
 								<liferay-ui:message key="global.button.delete" />
@@ -67,7 +50,7 @@
 									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 									<th><liferay-ui:message key="candidate.id" /></th>
 									<th>Vacancy</th>
-									<th><liferay-ui:message key="candidate.first_name" /></th>
+									<th>FullName</th>
 									<th>Email</th>
 									<th>Contact Number</th>
 									<th>Date of Application</th>
@@ -80,7 +63,7 @@
 									<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 									<th></th>
 									<th>Vacancy</th>
-									<th><liferay-ui:message key="candidate.first_name" /></th>
+									<th>FullName</th>
 									<th>Email</th>
 									<th>Contact Number</th>
 									<th>Date of Application</th>
@@ -101,9 +84,10 @@
 		<div id="vTab">
 			<div class="actionButtons">
 				<div class="buttons">
-					<a data-toggle="modal" class="btn btn-primary"
-						href="#modify-vacancy-modal"><liferay-ui:message
-							key="global.button.add" /></a>
+					<a data-toggle="modal" href="#modify-vacancy-modal"
+						class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
+							key="global.button.add" />
+					</a>
 					<button data-toggle="modal" id="vDeleteBtn" class="btn"
 						onclick="deleteVacancies()">
 						<liferay-ui:message key="global.button.delete" />
@@ -117,10 +101,23 @@
 						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 						<th><liferay-ui:message key="vacancy.id" /></th>
 						<th><liferay-ui:message key="vacancy.name" /></th>
-						<th><liferay-ui:message key="vacancy.hiring_manager" /></th>
-						<th><liferay-ui:message key="vacancy.published_in_feed" /></th>
+						<th>Job Title</th>
+						<th>Hiring Manager</th>
+						<th>Location</th>
+						<th>Status</th>
 					</tr>
 				</thead>
+				<tfoot>
+					<tr>
+						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
+						<th><input type="checkbox" id="v_checkAll"/></th>
+						<th><liferay-ui:message key="vacancy.name" /></th>
+						<th>Job Title</th>
+						<th>Hiring Manager</th>
+						<th>Location</th>
+						<th>Status</th>
+					</tr>
+				</tfoot>
 				<tbody></tbody>
 			</table>
 		</div>
@@ -128,14 +125,19 @@
 
 </div>
 
-<div class="modal" id="modify-candidate-modal">
+<!-- ########################################### MODALS ########################################### -->
+
+<div class="modal modal-dialog" id="modify-candidate-modal">
+	<!-- <div class="modal-dialog"> -->
+	<!-- <div class="modal-content"> -->
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<h4>Add New Candidate</h4>
 	</div>
-	<form method="post" action="<%=saveCandidateURL%>>" id="cForm"
-		enctype="multipart/form-data" name="cForm">
-		<div class="modal-body" id="candidateInfo">
+	<%-- <form method="post" action="<%=saveCandidateURL%>>" id="cForm"
+		enctype="multipart/form-data" name="cForm"> --%>
+	<div class="modal-body" id="candidateInfo">
+		<form class="form-horizontal">
 			<input type="hidden" id="c_id" value="-1" />
 			<div class="form-group">
 				<div class="form-inline">
@@ -223,25 +225,28 @@
 						class="datepicker">
 				</div>
 			</div>
-		</div>
+		</form>
+	</div>
 
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal"
-				onclick="saveCandidate()">SUBMIT</button>
-			<!-- <input type="submit" class="btn btn-primary" data-dismiss="modal" /> -->
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveCandidate()">SUBMIT</button>
+		<!-- <input type="submit" class="btn btn-primary" data-dismiss="modal" /> -->
 
 
 
-			<button class="btn" onclick="clearFields()">
-				<liferay-ui:message key="global.button.clear_all" />
-			</button>
-			<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
-					key="global.button.cancel" /></a>
-		</div>
-	</form>
+		<button class="btn" onclick="clearFields()">
+			<liferay-ui:message key="global.button.clear_all" />
+		</button>
+		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+	<!-- </div> -->
+	<!-- </div> -->
+	<!-- </form> -->
 </div>
 
-<!-- <div class="modal" id="modify-vacancy-modal">
+<div class="modal" id="modify-vacancy-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<h4>Add New Vacancy</h4>
@@ -251,33 +256,40 @@
 		<input type="hidden" id="v_id" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="jTitleSelect"><liferay-ui:message
-						key="vacancy.jTitle" /></label> <select id="jTitleSelect">
-					<option value="1">Application Dev</option>
-					<option value="2">Human Resource Manager</option>
-					<option value="3">Quality Assurance</option>
-				</select>
+				<label for="jTitleSelect">Job Title</label>
+				<c:if test="${fn:length(allJTitles) > 0}">
+					<select class="form-control select2-container" id="jTitleSelect"
+						class="jTitleSelect2">
+						<c:forEach items="${allJTitles}" var="jTitle">
+							<option value="${jTitle.jobtitleId}">${jTitle.title }</option>
+						</c:forEach>
+					</select>
+				</c:if>
+				<a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
+					<i class="icon-plus"></i>Add
+				</a>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="name"><liferay-ui:message key="vacancy.name" /></label>
-				<input type="text" class="form-control" id="name" placeholder="Name">
+				<label for="v_name"><liferay-ui:message key="vacancy.name" /></label>
+				<input type="text" class="form-control" id="v_name"
+					placeholder="Name">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="status"><liferay-ui:message key="vacancy.status" /></label>
-				<input type="text" class="form-control" id="status"
-					value="Published" placeholder="Status">
+				<input type="text" class="form-control" id="status" value="Status"
+					placeholder="Status">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="location"><liferay-ui:message
 						key="vacancy.location" /></label> <select id="location">
-					<option value="1">ECO HCM</option>
-					<option value="2">ECO HN</option>
+					<option value="ECO HCM">ECO HCM</option>
+					<option value="ECO HN">ECO HN</option>
 				</select>
 			</div>
 		</div>
@@ -302,6 +314,13 @@
 
 		<div class="form-group">
 			<div class="form-inline">
+				<label for="published_in_feed">Published in feed</label> <input
+					type="checkbox" class="form-control" id="published_in_feed">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
 				<label for="job_posting"><liferay-ui:message
 						key="vacancy.job_posting" /></label>
 				<textarea id="job_posting" rows="5" cols="50"></textarea>
@@ -319,8 +338,54 @@
 			<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
 					key="global.button.cancel" /></a>
 		</div>
-	</div> 
-</div>-->
+	</div>
+</div>
+
+<!-- JOB TITLE MODAL -->
+<div class="modal" id="modify-jtitle-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h4>Add New Job Title</h4>
+	</div>
+
+	<div class="modal-body" id="jobTitleInfo">
+		<input type="hidden" id="jTitleId" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="title">Title</label> <input type="text"
+					value="TestTitle" class="form-control" id="jtitle"
+					placeholder="Title">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="jdesc">Description</label> <input type="text"
+					class="form-control" id="jdesc" value="Test Description"
+					placeholder="Description Here">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="jnote">Note</label> <input type="text"
+					class="form-control" id="jnote" value="Test Note"
+					placeholder="Note Here">
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveJobTitle()">
+			<liferay-ui:message key="global.button.save" />
+		</button>
+		<button class="btn" onclick="clearFields()">
+			<liferay-ui:message key="global.button.clear_all" />
+		</button>
+		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+</div>
+
+<!-- ########################################### END MODALS ########################################### -->
 
 <script type="text/javascript">
 	var cForm = $('#cForm');
@@ -338,6 +403,17 @@
 
 	});
 
+	$("#v_checkAll").click(function(){
+		console.log("clicked");
+		if ($(this).is(':checked')) {
+			console.log("checked");
+			$('tbody input').attr('checked', true);
+		} else {
+			console.log("unchecked");
+			$('tbody input').attr('checked', false);
+		}
+	})
+	
 	var vTabClickCount = 0;
 	var cTable;
 
@@ -345,6 +421,108 @@
 		console.log("aaaaaaaaaaaaaaaa");
 		sendFile(this.files[0]);
 	});
+
+	function getVacancy(id) {
+		var obj = new Object();
+		obj.v_id = id;
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='getVacancy'/>",
+			data : JSON.stringify(obj),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				var obj = response;
+				$('#v_id').val(obj.v_id);
+				//$('#jTitleSelect').val(obj.jTitle);
+				$('#v_name').val(obj.v_name);
+				/* $('#status').val(obj.status); */
+				$('#location').val(obj.location);
+				$('#hiring_managers').val(obj.hiring_managers);
+				$('#no_of_pos').val(obj.no_of_pos);
+				$('#published_in_feed').val(obj.published_in_feed);
+				$('#job_posting').val(obj.job_posting);
+				/* Show edit vacancy modal */
+				$('#modify-vacancy-modal').modal('show');
+			}
+		});
+	}
+
+	function saveVacancy() {
+		var vacancy = new Object();
+
+		vacancy.v_id = $("#v_id").val();
+		vacancy.jobtitleId = $('#jTitleSelect').val();
+		vacancy.hiring_manager_id = $('#hiring_managers').val();
+		vacancy.name = $('#v_name').val();
+		vacancy.description = $('#desc').val();
+		vacancy.no_of_positions = $('#no_of_pos').val();
+		vacancy.published_in_feed = $('#published_in_feed').val();
+		vacancy.job_post = $("#job_posting").val();
+		// 		candidate.file = $('#addCandidate_resume');
+
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveVacancy'/>",
+			data : JSON.stringify(vacancy),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				$('#vtable').dataTable().fnDraw();
+			}
+		});
+
+	};
+
+	function deleleVacancy() {
+		console.log("deleleVacancy");
+	}
+
+	// JOB TITLE FUNC
+
+	function saveJobTitle() {
+		console.log("calling saveJobTitle");
+		var obj = new Object();
+		obj.jTitleId = $("#jTitleId").val();
+		obj.title = $("#jtitle").val();
+		obj.description = $("#jdesc").val();
+		obj.note = $("#jnote").val();
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveJTitle'/>",
+			data : JSON.stringify(obj),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(data) {
+				//$('#ctable').dataTable().fnDraw();
+				console.log("INSIDE RESPONSE");
+				console.log(data);
+				//data = $.parseJSON(data);
+				$.each(data, function(i, item) {
+					console.log(item.jTitleId + " : " + item.jTitle);
+				});
+
+				select = document.getElementById('jTitleSelect');
+
+				select.options.length = 0;
+				$.each(data, function(i, item) {
+					select.options.add(new Option(item.jTitle, item.jTitleId));
+				});
+			}
+		})
+	};
 
 	function sendFile(file) {
 		jQuery
@@ -463,64 +641,6 @@
 	 }); 
 	};*/
 
-	function loadCandidateTable() {
-		$('#ctable')
-				.dataTable(
-						{
-							'bPaginate' : true,
-							'order' : [ 0, 'asc' ],
-							'bInfo' : true,
-							'iDisplayStart' : 0,
-							'bProcessing' : true,
-							'bServerSide' : true,
-							'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
-							'dom' : 'C<"clear">lfrtip',
-							'aoColumns' : [
-									{
-										"mData" : "c_id",
-										"type" : "number",
-										"bSortable" : false,
-										"mRender" : function(data, type, full) {
-											return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
-										}
-									},
-									{
-										"mData" : "vacancy",
-										"type" : "text"
-									},
-
-									{
-										"mData" : "first_name",
-										"type" : "text",
-										"mRender" : function(data, type, full) {
-											var fullName = data + " "
-													+ full.middle_name + " "
-													+ full.last_name;
-											return "<a id='"
-													+ full.c_id
-													+ "' href='#ctable' onclick='getCandidate("
-													+ full.c_id + ");'>"
-													+ fullName + "</a>";
-										}
-									}, {
-										"mData" : "email",
-										"type" : "text"
-									}, {
-										"mData" : "contact_number",
-										"type" : "text"
-									}, {
-										"mData" : "date_of_application",
-										"type" : "text"
-									}, {
-										"mData" : "status",
-										"type" : "text"
-									}, {
-										"mData" : "resume",
-										"type" : "text"
-									} ]
-						});
-	}
-
 	function loadVacancyTable() {
 		$('#vtable')
 				.dataTable(
@@ -528,34 +648,54 @@
 							bProcessing : true,
 							bServerSide : true,
 							bPaginate : true,
-							iDisplayRecords : 20,
 							sPaginationType : "full_numbers",
 							sAjaxSource : '<portlet:resourceURL id="get_all_vacancies"/>',
-							"aoColumns" : [
+							oLanguage : {
+								sLoadingRecords : 'Dang tai, vui long doi...'
+							},
+							aoColumns : [
 									{
-										"mData" : "_v_id",
+										"mData" : "v_id",
 										"bSortable" : false,
 										"mRender" : function(data, type, full) {
-											return "<input id='vCheckbox' type='checkbox' id='"+full._v_id+"' value='"+full._v_id+"'/>";
+											return "<input id='vCheckbox' type='checkbox' id='"+full.v_id+"' value='"+full.v_id+"'/>";
 										}
 									},
 									{
-										"mData" : "_name",
+										"mData" : "vacancy_name",
 										"mRender" : function(data, type, full) {
-											var name = data;
+											var vacancy_name = data;
 											return "<a id='"
-													+ full._v_id
+													+ full.v_id
 													+ "' href='#vtable' onclick='getVacancy("
-													+ full._v_id + ");'>"
-													+ name + "</a>";
+													+ full.v_id + ");'>"
+													+ vacancy_name + "</a>";
 										}
 									}, {
-										"mData" : "_hiring_manager_id"
+										"mData" : "job_title"
 									}, {
-										"mData" : "_published_in_feed"
+										"mData" : "hiring_manager"
+									}, {
+										"mData" : "location"
+									}, {
+										"mData" : "status"
 									} ]
+						}).columnFilter({
+					aoColumns : [ null, {
+						type : "text"
+					}, {
+						type : "select",
+						values : [ "JT1", "JT2", "JT3" ]
+					}, null, {
+						type : "select",
+						values : [ "HCM", "HN" ]
+					}, {
+						type : "select",
+						values : [ 'STATUS1', 'STATUS2', 'STATUS3' ]
+					} ]
 
-						});
+				});
+		;
 	}
 
 	jQuery(document)
@@ -565,14 +705,14 @@
 						$('#ctable')
 								.dataTable(
 										{
-											"bServerSide" : true,
-											"sAjaxSource" : '<portlet:resourceURL id="get_all_candidates"/>',
-											"bProcessing" : true,
-											"sPaginationType" : "full_numbers",
-											"bJQueryUI" : true,
-											"order" : [ 1, 'asc' ],
-											"bUseColVis" : true,
-											'aoColumns' : [
+											bServerSide : true,
+											sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
+											bProcessing : true,
+											bPaginate : true,
+											sPaginationType : "full_numbers",
+											order : [ 1, 'asc' ],
+											bUseColVis : true,
+											aoColumns : [
 													{
 														"mData" : "c_id",
 														"type" : "number",
@@ -589,22 +729,17 @@
 													},
 
 													{
-														"mData" : "first_name",
+														"mData" : "full_name",
 														"type" : "text",
 														"mRender" : function(
 																data, type,
 																full) {
-															var fullName = data
-																	+ " "
-																	+ full.middle_name
-																	+ " "
-																	+ full.last_name;
 															return "<a id='"
 																	+ full.c_id
 																	+ "' href='#ctable' onclick='getCandidate("
 																	+ full.c_id
 																	+ ");'>"
-																	+ fullName
+																	+ data
 																	+ "</a>";
 														}
 													},
@@ -626,6 +761,9 @@
 														"mData" : "resume",
 														"type" : "text"
 													} ],
+											"olanguage" : {
+												sLoadingRecords : 'Dang tai, vui long doi...'
+											},
 											bColVis : true,
 											colVis : {
 												"align" : "right",
@@ -640,26 +778,36 @@
 											},
 											"dom" : 'Cf<"toolbar"">rtip',
 
-										}).columnFilter({
-									aoColumns : [ null, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "date-range"
-									}, {
-										type : "select",
-										values : ['STATUS1', 'STATUS2', 'STATUS3', 'STATUS1']
-									}, {
-										type : "text"
-									} ]
+										}).columnFilter(
+										{
+											aoColumns : [
+													null,
+													{
+														type : "text"
+													},
+													{
+														type : "text"
+													},
+													{
+														type : "text"
+													},
+													{
+														type : "text"
+													},
+													{
+														type : "date-range"
+													},
+													{
+														type : "select",
+														values : [ 'STATUS1',
+																'STATUS2',
+																'STATUS3',
+																'STATUS1' ]
+													}, {
+														type : "text"
+													} ]
 
-								});
-						
+										});
 
 						/*cTable = $('#ctable')
 								.dataTable(
@@ -732,7 +880,6 @@
 							cTable.fnStandingRedraw();
 						}); */
 
-								      
 						loadVacancyTable();
 						$(".select2-container").select2();
 						$(".select_filter").select2();
@@ -818,36 +965,6 @@
 			}
 		});
 	}
-
-	function getVacancy(id) {
-		var obj = new Object();
-		obj.v_id = id;
-		jQuery.ajax({
-			type : 'POST',
-			url : "<portlet:resourceURL id='getVacancy'/>",
-			data : JSON.stringify(obj),
-			dataType : "json",
-			contentType : 'application/json',
-			mimeType : 'application/json',
-			error : function(e) {
-
-			},
-			success : function(response) {
-				var obj = response.candidate;
-				$('#v_id').val(obj.c_id);
-				$('#first_name').val(obj.first_name);
-				$('#middle_name').val(obj.middle_name);
-				$('#last_name').val(obj.last_name);
-				$('#inputEmail').val(obj.email);
-				$('#contact_number').val(obj.contact_number);
-				$('#comment').val(obj.comment);
-				/* Show edit vacancy modal */
-				$('#modify-candidate-modal').modal('show');
-			}
-		});
-
-	}
-
 	//Util functions
 </script>
 
@@ -910,6 +1027,6 @@ table.dataTable tbody td {
 
 <style>
 .date_range_filter {
-	width : 90px !important;
+	width: 90px !important;
 }
 </style>

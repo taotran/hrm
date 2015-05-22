@@ -21,4 +21,6 @@ public interface Candidate extends CandidateModel, PersistedModel {
 
     public void set_vacancies(
         java.util.List<vn.com.ecopharma.hrm.model.Vacancy> _vacancies);
+
+    public java.lang.String getFullName();
 }

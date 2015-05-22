@@ -20,7 +20,7 @@ import vn.com.ecopharma.hrm.model.Vacancy;
 public class CandidateImpl extends CandidateBaseImpl {
 
 	private List<Vacancy> _vacancies;
-
+	
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 * 
@@ -39,4 +39,7 @@ public class CandidateImpl extends CandidateBaseImpl {
 		this._vacancies = _vacancies;
 	}
 
+	public String getFullName() {
+		return this.getFirst_name() + " " + this.getMiddle_name() + " " + this.getLast_name();
+	}
 }

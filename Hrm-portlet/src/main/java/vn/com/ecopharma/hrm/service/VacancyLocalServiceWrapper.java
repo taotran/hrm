@@ -427,26 +427,29 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long user_id,
+    public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
         long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
         boolean published_in_feed,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
-        return _vacancyLocalService.createVacancy(user_id, jTitle_id,
+        return _vacancyLocalService.create(user_id, jTitle_id,
             hiring_mananager_id, name, description, no_of_positions,
-            published_in_feed, candidates, serviceContext);
+            published_in_feed, serviceContext);
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
-        long jtitle_id, long hiring_manager_id, java.lang.String name,
+    public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
+        long hiring_manager_id, java.lang.String name,
         java.lang.String description, int number_of_positions,
-        boolean published_in_feed, java.util.Date update_date) {
-        return _vacancyLocalService.editVacancy(id, jtitle_id,
-            hiring_manager_id, name, description, number_of_positions,
-            published_in_feed, update_date);
+        boolean published_in_feed) {
+        return _vacancyLocalService.edit(id, jtitle_id, hiring_manager_id,
+            name, description, number_of_positions, published_in_feed);
+    }
+
+    @Override
+    public void delete(long v_id) {
+        _vacancyLocalService.delete(v_id);
     }
 
     /**

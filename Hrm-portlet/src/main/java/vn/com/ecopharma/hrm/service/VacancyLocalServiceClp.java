@@ -82,6 +82,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes36;
     private String _methodName37;
     private String[] _methodParameterTypes37;
+    private String _methodName38;
+    private String[] _methodParameterTypes38;
 
     public VacancyLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -251,20 +253,23 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
         _methodParameterTypes35 = new String[] {  };
 
-        _methodName36 = "createVacancy";
+        _methodName36 = "create";
 
         _methodParameterTypes36 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean", "java.util.List",
-                "com.liferay.portal.service.ServiceContext"
+                "int", "boolean", "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName37 = "editVacancy";
+        _methodName37 = "edit";
 
         _methodParameterTypes37 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean", "java.util.Date"
+                "int", "boolean"
             };
+
+        _methodName38 = "delete";
+
+        _methodParameterTypes38 = new String[] { "long" };
     }
 
     @Override
@@ -1203,11 +1208,10 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy createVacancy(long user_id,
+    public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
         long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
         boolean published_in_feed,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> candidates,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
@@ -1230,8 +1234,6 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     published_in_feed,
                         
-                    ClpSerializer.translateInput(candidates),
-                        
                     ClpSerializer.translateInput(serviceContext)
                     });
         } catch (Throwable t) {
@@ -1253,10 +1255,10 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy editVacancy(long id,
-        long jtitle_id, long hiring_manager_id, java.lang.String name,
+    public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
+        long hiring_manager_id, java.lang.String name,
         java.lang.String description, int number_of_positions,
-        boolean published_in_feed, java.util.Date update_date) {
+        boolean published_in_feed) {
         Object returnObj = null;
 
         try {
@@ -1275,9 +1277,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     number_of_positions,
                         
-                    published_in_feed,
-                        
-                    ClpSerializer.translateInput(update_date)
+                    published_in_feed
                     });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1291,5 +1291,22 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         }
 
         return (vn.com.ecopharma.hrm.model.Vacancy) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void delete(long v_id) {
+        try {
+            _invokableLocalService.invokeMethod(_methodName38,
+                _methodParameterTypes38, new Object[] { v_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

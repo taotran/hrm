@@ -67,11 +67,11 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 /*
  * Filter
  */
-/* .dataTables_filter {
+.dataTables_filter {
 	float: right;
 	text-align: right;
 }
- */
+ 
 
 /*
  * Table information
@@ -229,9 +229,9 @@ table.dataTable thead td:active {
  
 }
 
-.dataTables_filter {
+/* .dataTables_filter {
    position: absolute;
    top: 10px;
    left: 200px;
    font-size:15px;
-}
+} */

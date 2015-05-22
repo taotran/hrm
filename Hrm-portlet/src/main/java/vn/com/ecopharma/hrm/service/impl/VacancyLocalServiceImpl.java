@@ -44,10 +44,10 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return vacancyPersistence.findAll();
 	}
 
-	public Vacancy createVacancy(long user_id, long jTitle_id,
+	public Vacancy create(long user_id, long jTitle_id,
 			long hiring_mananager_id, String name, String description,
 			int no_of_positions, boolean published_in_feed,
-			List<Candidate> candidates, ServiceContext serviceContext) throws NoSuchVacancyException {
+			 ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
 			User user = userPersistence.findByPrimaryKey(user_id);
 			final long v_id = counterLocalService.increment();
@@ -61,8 +61,8 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			v.setPublished_in_feed(published_in_feed);
 			v.setInsert_date(now);
 			v.setUpdate_date(now);
-			vacancyPersistence.addCandidates(v_id, candidates);
-			v.set_candidates(candidates);
+//			vacancyPersistence.addCandidates(v_id, candidates);
+//			v.set_candidates(candidates);
 			v.setUser_id(user.getUserId());
 			v.setGroup_id(serviceContext.getScopeGroupId());
 			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(),
@@ -79,9 +79,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return null;
 	}
 
-	public Vacancy editVacancy(long id, long jtitle_id, long hiring_manager_id,
+	public Vacancy edit(long id, long jtitle_id, long hiring_manager_id,
 			String name, String description, int number_of_positions,
-			boolean published_in_feed, Date update_date) {
+			boolean published_in_feed) {
 		Vacancy vacancy;
 		try {
 			vacancy = vacancyPersistence.findByPrimaryKey(id);
@@ -91,7 +91,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			vacancy.setDescription(description);
 			vacancy.setNo_of_positions(number_of_positions);
 			vacancy.setPublished_in_feed(published_in_feed);
-			vacancy.setUpdate_date(update_date);
+			vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
 			vacancyPersistence.update(vacancy);
 			return vacancy;
 		} catch (NoSuchVacancyException e) {
@@ -100,5 +100,15 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void delete(long v_id) {
+		try {
+			vacancyPersistence.remove(v_id);
+		} catch (NoSuchVacancyException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -83,6 +83,8 @@ public class VacancyLocalServiceClpInvoker {
     private String[] _methodParameterTypes77;
     private String _methodName78;
     private String[] _methodParameterTypes78;
+    private String _methodName79;
+    private String[] _methodParameterTypes79;
 
     public VacancyLocalServiceClpInvoker() {
         _methodName0 = "addVacancy";
@@ -250,20 +252,23 @@ public class VacancyLocalServiceClpInvoker {
 
         _methodParameterTypes76 = new String[] {  };
 
-        _methodName77 = "createVacancy";
+        _methodName77 = "create";
 
         _methodParameterTypes77 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean", "java.util.List",
-                "com.liferay.portal.service.ServiceContext"
+                "int", "boolean", "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName78 = "editVacancy";
+        _methodName78 = "edit";
 
         _methodParameterTypes78 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean", "java.util.Date"
+                "int", "boolean"
             };
+
+        _methodName79 = "delete";
+
+        _methodParameterTypes79 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -489,27 +494,32 @@ public class VacancyLocalServiceClpInvoker {
 
         if (_methodName77.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
-            return VacancyLocalServiceUtil.createVacancy(((Long) arguments[0]).longValue(),
+            return VacancyLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
                 (java.lang.String) arguments[3],
                 (java.lang.String) arguments[4],
                 ((Integer) arguments[5]).intValue(),
                 ((Boolean) arguments[6]).booleanValue(),
-                (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) arguments[7],
-                (com.liferay.portal.service.ServiceContext) arguments[8]);
+                (com.liferay.portal.service.ServiceContext) arguments[7]);
         }
 
         if (_methodName78.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
-            return VacancyLocalServiceUtil.editVacancy(((Long) arguments[0]).longValue(),
+            return VacancyLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
                 (java.lang.String) arguments[3],
                 (java.lang.String) arguments[4],
                 ((Integer) arguments[5]).intValue(),
-                ((Boolean) arguments[6]).booleanValue(),
-                (java.util.Date) arguments[7]);
+                ((Boolean) arguments[6]).booleanValue());
+        }
+
+        if (_methodName79.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
+            VacancyLocalServiceUtil.delete(((Long) arguments[0]).longValue());
+
+            return null;
         }
 
         throw new UnsupportedOperationException();

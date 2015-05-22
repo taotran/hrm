@@ -650,6 +650,11 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
     }
 
     @Override
+    public java.lang.String getFullName() {
+        return _candidate.getFullName();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

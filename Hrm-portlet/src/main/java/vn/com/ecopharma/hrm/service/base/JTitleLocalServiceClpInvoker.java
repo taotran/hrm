@@ -45,6 +45,18 @@ public class JTitleLocalServiceClpInvoker {
     private String[] _methodParameterTypes54;
     private String _methodName55;
     private String[] _methodParameterTypes55;
+    private String _methodName60;
+    private String[] _methodParameterTypes60;
+    private String _methodName61;
+    private String[] _methodParameterTypes61;
+    private String _methodName62;
+    private String[] _methodParameterTypes62;
+    private String _methodName63;
+    private String[] _methodParameterTypes63;
+    private String _methodName64;
+    private String[] _methodParameterTypes64;
+    private String _methodName65;
+    private String[] _methodParameterTypes65;
 
     public JTitleLocalServiceClpInvoker() {
         _methodName0 = "addJTitle";
@@ -136,6 +148,40 @@ public class JTitleLocalServiceClpInvoker {
         _methodName55 = "setBeanIdentifier";
 
         _methodParameterTypes55 = new String[] { "java.lang.String" };
+
+        _methodName60 = "findAll";
+
+        _methodParameterTypes60 = new String[] {  };
+
+        _methodName61 = "findAll";
+
+        _methodParameterTypes61 = new String[] { "int", "int" };
+
+        _methodName62 = "findAll";
+
+        _methodParameterTypes62 = new String[] {
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+            };
+
+        _methodName63 = "create";
+
+        _methodParameterTypes63 = new String[] {
+                "long", "long", "java.lang.String", "java.lang.String",
+                "java.lang.String", "boolean",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName64 = "edit";
+
+        _methodParameterTypes64 = new String[] {
+                "long", "long", "long", "java.lang.String", "java.lang.String",
+                "java.lang.String", "boolean",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName65 = "delete";
+
+        _methodParameterTypes65 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -235,6 +281,54 @@ public class JTitleLocalServiceClpInvoker {
         if (_methodName55.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
             JTitleLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
+
+            return null;
+        }
+
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+            return JTitleLocalServiceUtil.findAll();
+        }
+
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+            return JTitleLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName62.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+            return JTitleLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue(),
+                (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
+        }
+
+        if (_methodName63.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+            return JTitleLocalServiceUtil.create(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                (java.lang.String) arguments[2],
+                (java.lang.String) arguments[3],
+                (java.lang.String) arguments[4],
+                ((Boolean) arguments[5]).booleanValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[6]);
+        }
+
+        if (_methodName64.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+            return JTitleLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Long) arguments[2]).longValue(),
+                (java.lang.String) arguments[3],
+                (java.lang.String) arguments[4],
+                (java.lang.String) arguments[5],
+                ((Boolean) arguments[6]).booleanValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[7]);
+        }
+
+        if (_methodName65.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+            JTitleLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;
         }

@@ -44,6 +44,18 @@ public class JTitleLocalServiceClp implements JTitleLocalService {
     private String[] _methodParameterTypes16;
     private String _methodName17;
     private String[] _methodParameterTypes17;
+    private String _methodName19;
+    private String[] _methodParameterTypes19;
+    private String _methodName20;
+    private String[] _methodParameterTypes20;
+    private String _methodName21;
+    private String[] _methodParameterTypes21;
+    private String _methodName22;
+    private String[] _methodParameterTypes22;
+    private String _methodName23;
+    private String[] _methodParameterTypes23;
+    private String _methodName24;
+    private String[] _methodParameterTypes24;
 
     public JTitleLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -137,6 +149,40 @@ public class JTitleLocalServiceClp implements JTitleLocalService {
         _methodName17 = "setBeanIdentifier";
 
         _methodParameterTypes17 = new String[] { "java.lang.String" };
+
+        _methodName19 = "findAll";
+
+        _methodParameterTypes19 = new String[] {  };
+
+        _methodName20 = "findAll";
+
+        _methodParameterTypes20 = new String[] { "int", "int" };
+
+        _methodName21 = "findAll";
+
+        _methodParameterTypes21 = new String[] {
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+            };
+
+        _methodName22 = "create";
+
+        _methodParameterTypes22 = new String[] {
+                "long", "long", "java.lang.String", "java.lang.String",
+                "java.lang.String", "boolean",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName23 = "edit";
+
+        _methodParameterTypes23 = new String[] {
+                "long", "long", "long", "java.lang.String", "java.lang.String",
+                "java.lang.String", "boolean",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName24 = "delete";
+
+        _methodParameterTypes24 = new String[] { "long" };
     }
 
     @Override
@@ -647,5 +693,175 @@ public class JTitleLocalServiceClp implements JTitleLocalService {
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll() {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName19,
+                    _methodParameterTypes19, new Object[] {  });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.JTitle>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName20,
+                    _methodParameterTypes20, new Object[] { start, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.JTitle>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName21,
+                    _methodParameterTypes21,
+                    new Object[] {
+                        start,
+                        
+                    end,
+                        
+                    ClpSerializer.translateInput(orderByComparator)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.JTitle>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.JTitle create(long user_Id,
+        long group_Id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName22,
+                    _methodParameterTypes22,
+                    new Object[] {
+                        user_Id,
+                        
+                    group_Id,
+                        
+                    ClpSerializer.translateInput(title),
+                        
+                    ClpSerializer.translateInput(description),
+                        
+                    ClpSerializer.translateInput(note),
+                        
+                    isDeleted,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.JTitle) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.JTitle edit(long user_Id, long group_Id,
+        long j_id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName23,
+                    _methodParameterTypes23,
+                    new Object[] {
+                        user_Id,
+                        
+                    group_Id,
+                        
+                    j_id,
+                        
+                    ClpSerializer.translateInput(title),
+                        
+                    ClpSerializer.translateInput(description),
+                        
+                    ClpSerializer.translateInput(note),
+                        
+                    isDeleted,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.JTitle) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void delete(long jobtitleId) {
+        try {
+            _invokableLocalService.invokeMethod(_methodName24,
+                _methodParameterTypes24, new Object[] { jobtitleId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

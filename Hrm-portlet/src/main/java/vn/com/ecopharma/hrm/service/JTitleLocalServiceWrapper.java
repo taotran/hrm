@@ -268,6 +268,47 @@ public class JTitleLocalServiceWrapper implements JTitleLocalService,
         return _jTitleLocalService.invokeMethod(name, parameterTypes, arguments);
     }
 
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll() {
+        return _jTitleLocalService.findAll();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end) {
+        return _jTitleLocalService.findAll(start, end);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return _jTitleLocalService.findAll(start, end, orderByComparator);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.JTitle create(long user_Id,
+        long group_Id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return _jTitleLocalService.create(user_Id, group_Id, title,
+            description, note, isDeleted, serviceContext);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.JTitle edit(long user_Id, long group_Id,
+        long j_id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return _jTitleLocalService.edit(user_Id, group_Id, j_id, title,
+            description, note, isDeleted, serviceContext);
+    }
+
+    @Override
+    public void delete(long jobtitleId) {
+        _jTitleLocalService.delete(jobtitleId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

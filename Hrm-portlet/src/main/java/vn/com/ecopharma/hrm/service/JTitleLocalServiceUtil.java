@@ -261,6 +261,43 @@ public class JTitleLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll() {
+        return getService().findAll();
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end) {
+        return getService().findAll(start, end);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.JTitle> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return getService().findAll(start, end, orderByComparator);
+    }
+
+    public static vn.com.ecopharma.hrm.model.JTitle create(long user_Id,
+        long group_Id, java.lang.String title, java.lang.String description,
+        java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return getService()
+                   .create(user_Id, group_Id, title, description, note,
+            isDeleted, serviceContext);
+    }
+
+    public static vn.com.ecopharma.hrm.model.JTitle edit(long user_Id,
+        long group_Id, long j_id, java.lang.String title,
+        java.lang.String description, java.lang.String note, boolean isDeleted,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return getService()
+                   .edit(user_Id, group_Id, j_id, title, description, note,
+            isDeleted, serviceContext);
+    }
+
+    public static void delete(long jobtitleId) {
+        getService().delete(jobtitleId);
+    }
+
     public static void clearService() {
         _service = null;
     }
