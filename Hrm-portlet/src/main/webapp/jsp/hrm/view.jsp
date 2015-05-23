@@ -111,7 +111,7 @@
 						<th><input type="checkbox" id="v_checkAll" /></th>
 						<th><liferay-ui:message key="vacancy.name" /></th>
 						<th>Job Title</th>
-						<th>Hiring Manager</th>
+						<th></th>
 						<th>Location</th>
 						<th>Status</th>
 					</tr>
@@ -313,7 +313,7 @@
 			<div class="form-inline">
 				<label for="hiring_managers"><liferay-ui:message
 						key="vacancy.hiring_managers" /></label> <input type="text"
-					class="form-control" id="hiring_managers" value="TEST"
+					class="form-control" id="hiring_managers" value="1"
 					placeholder="Hiring Manager">
 			</div>
 		</div>
@@ -497,8 +497,22 @@
 			error : function(e) {
 
 			},
-			success : function(response) {
+			success : function(data) {
 				$('#vtable').dataTable().fnDraw();
+				//$('#ctable').dataTable().fnDraw();
+				console.log("INSIDE RESPONSE");
+				console.log(data);
+				//data = $.parseJSON(data);
+				$.each(data, function(i, item) {
+					console.log(item.v_id + " : " + item.v_name);
+				});
+
+				select = document.getElementById('vacancySelect');
+
+				select.options.length = 0;
+				$.each(data, function(i, item) {
+					select.options.add(new Option(item.v_name, item.v_id));
+				});
 			}
 		});
 
@@ -664,7 +678,8 @@
 	};*/
 
 	function loadVacancyTable() {
-		$('#vtable')
+		var jTitleNames;
+		var vtable = $('#vtable')
 				.dataTable(
 						{
 							bProcessing : true,
@@ -672,8 +687,25 @@
 							bPaginate : true,
 							sPaginationType : "full_numbers",
 							sAjaxSource : '<portlet:resourceURL id="get_all_vacancies"/>',
+							"fnServerData": function ( sSource, aoData, fnCallback ) {
+					            $.ajax({
+					                "dataType": 'json',
+					                "contentType": "application/json; charset=utf-8",
+					                "type": "GET",
+					                "url": sSource,
+					                "data": aoData,
+					                "success": function(json){
+					                    /* $('#processingTime').html(json.iProcessingTime); // iProcessingTime is the variable that we added in JSON at the server side
+					                    fnCallback(json); */
+					                    jTitleNames = json.jTitleNames;
+					                    console.log(jTitleNames);
+					                    fnCallback(json);
+					                    $('#vtable').show();
+					                }
+					            });               
+					        },
 							oLanguage : {
-								sLoadingRecords : 'Dang tai, vui long doi...'
+								sProcessing : "<img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><span>Please wait...</span>"
 							},
 							aoColumns : [
 									{
@@ -702,22 +734,22 @@
 									}, {
 										"mData" : "status"
 									} ]
-						}).columnFilter({
-					aoColumns : [ null, {
-						type : "text"
-					}, {
-						type : "select",
-						values : [ "JT1", "JT2", "JT3" ]
-					}, null, {
-						type : "select",
-						values : [ "HCM", "HN" ]
-					}, {
-						type : "select",
-						values : [ 'STATUS1', 'STATUS2', 'STATUS3' ]
-					} ]
+						});
+		vtable.columnFilter({
+			aoColumns : [ null, {
+				type : "text"
+			}, {
+				type : "select",
+				values : jTitleNames
+			}, null, {
+				type : "select",
+				values : [ "HCM", "HN" ]
+			}, {
+				type : "select",
+				values : [ 'STATUS1', 'STATUS2', 'STATUS3' ]
+			} ]
 
-				});
-		;
+		});
 	}
 
 	jQuery(document)
@@ -734,6 +766,9 @@
 											sPaginationType : "full_numbers",
 											order : [ 1, 'asc' ],
 											bUseColVis : true,
+											oLanguage : {
+												sProcessing : "<img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><span>Please wait...</span>"
+											},
 											aoColumns : [
 													{
 														"mData" : "c_id",
@@ -1038,5 +1073,11 @@ table.dataTable tbody td {
 <style>
 .date_range_filter {
 	width: 90px !important;
+}
+select {
+	width : 200px!important;
+}
+select .select2-search__field {
+	width : 175px!important;
 }
 </style>
