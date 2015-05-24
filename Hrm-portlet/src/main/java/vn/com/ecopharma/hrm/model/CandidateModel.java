@@ -269,6 +269,20 @@ public interface CandidateModel extends BaseModel<Candidate>, TrashedModel {
     public void setGroup_id(long group_id);
 
     /**
+     * Returns the interview ID of this candidate.
+     *
+     * @return the interview ID of this candidate
+     */
+    public long getInterviewId();
+
+    /**
+     * Sets the interview ID of this candidate.
+     *
+     * @param interviewId the interview ID of this candidate
+     */
+    public void setInterviewId(long interviewId);
+
+    /**
      * Returns the status of this candidate.
      *
      * @return the status of this candidate

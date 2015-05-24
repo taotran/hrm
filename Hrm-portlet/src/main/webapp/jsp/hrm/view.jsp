@@ -15,7 +15,7 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#cTab"><liferay-ui:message
 					key="tab.candidate.title" /></a></li>
-		<li><a href="#vTab"><liferay-ui:message
+		<li><a href="#vTab" onclick="vacancyTabClick()"><liferay-ui:message
 					key="tab.vacancy.title" /></a></li>
 	</ul>
 
@@ -29,7 +29,11 @@
 
 					<div class="actionButtons">
 						<div class="buttons">
-							<a data-toggle="modal" href="#modify-candidate-modal"
+<%-- 							<a data-toggle="modal" href="#modify-candidate-modal"
+								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
+									key="global.button.add" />
+							</a> --%>
+							<a href="#" onclick="getCandidatesFormData()"
 								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
 									key="global.button.add" />
 							</a>
@@ -407,9 +411,40 @@
 	</div>
 </div>
 
+<!-- JOB TITLE MODAL -->
+<div class="modal" id="modify-interview-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h4>Add New Interview Status</h4>
+	</div>
+
+	<div class="modal-body" id="interviewInfo">
+		<input type="hidden" id="interviewId" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="iname">Interview Name</label> <input type="text"
+					value="Name" class="form-control" id="iname"
+					placeholder="Interview Name">
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveInterview()">
+			<liferay-ui:message key="global.button.save" />
+		</button>
+		<button class="btn" onclick="clearFields()">
+			<liferay-ui:message key="global.button.clear_all" />
+		</button>
+		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+</div>
+
 <!-- ########################################### END MODALS ########################################### -->
 
 <script type="text/javascript">
+	var isVacanciesLoaded = 0;
 	var cForm = $('#cForm');
 	cForm.submit(function(ev) {
 		console.log("SUBMIT");
@@ -560,6 +595,43 @@
 		})
 	};
 
+	// JOB INTERVIEW FUNC
+
+	function saveInterview() {
+		console.log("calling saveInterview");
+		var obj = new Object();
+		obj.name = $("#jname").val();
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveInterview'/>",
+			data : JSON.stringify(obj),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(data) {
+				//$('#ctable').dataTable().fnDraw();
+				console.log("INSIDE RESPONSE");
+				console.log(data);
+				//data = $.parseJSON(data);
+				$.each(data, function(i, item) {
+					console.log(item.jTitleId + " : " + item.jTitle);
+				});
+
+				select = document.getElementById('jTitleSelect');
+
+				select.options.length = 0;
+				$.each(data, function(i, item) {
+					select.options.add(new Option(item.jTitle, item.jTitleId));
+				});
+			}
+		})
+	};
+	
+	
+	
 	function sendFile(file) {
 		jQuery
 				.ajax({
@@ -593,6 +665,7 @@
 			srcNode : '#myTab'
 		}).render();
 	});
+	
 
 	function ajaxCall(url, parameters, successCallback) {
 		jQuery.ajax({
@@ -676,6 +749,30 @@
 	 $(this).val('');
 	 }); 
 	};*/
+	
+	function vacancyTabClick() {
+		console.log("VACANCY CLICK");
+		if (isVacanciesLoaded == 0) {
+			isVacanciesLoaded = 1;
+			loadVacancyTable();
+		}
+	};
+	
+	function getCandidatesFormData() {
+		$.ajax ({
+			type : 'POST',
+			url : "<portlet:resourceURL id='getCandidatesFormDataAJX'/>",
+			cache: false,
+			error : function(e) {
+
+			},
+			success : function(response) {
+				console.log(response);
+				$('#modify-candidate-modal').modal('show');
+			}	
+		})
+		
+	}
 
 	function loadVacancyTable() {
 		var jTitleNames;
@@ -750,172 +847,114 @@
 			} ]
 
 		});
+	};
+	
+	function loadCandidateTable() {
+		$('#ctable')
+		.dataTable(
+				{
+					bServerSide : true,
+					sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
+					bProcessing : true,
+					bPaginate : true,
+					sPaginationType : "full_numbers",
+					order : [ 1, 'asc' ],
+					bUseColVis : true,
+					oLanguage : {
+						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
+					},
+					aoColumns : [
+							{
+								"mData" : "c_id",
+								"type" : "number",
+								"bSortable" : false,
+								"mRender" : function(
+										data, type,
+										full) {
+									return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
+								}
+							},
+							{
+								"mData" : "vacancy",
+								"type" : "text"
+							},
+
+							{
+								"mData" : "full_name",
+								"type" : "text",
+								"mRender" : function(
+										data, type,
+										full) {
+									return "<a id='"
+											+ full.c_id
+											+ "' href='#ctable' onclick='getCandidate("
+											+ full.c_id
+											+ ");'>"
+											+ data
+											+ "</a>";
+								}
+							},
+							{
+								"mData" : "email",
+								"type" : "text"
+							},
+							{
+								"mData" : "contact_number",
+								"type" : "text"
+							},
+							{
+								"mData" : "date_of_application",
+								"type" : "text"
+							}, {
+								"mData" : "status",
+								"type" : "text"
+							}, {
+								"mData" : "resume",
+								"type" : "text"
+							} ],
+					"olanguage" : {
+						sLoadingRecords : 'Dang tai, vui long doi...'
+					},
+					bColVis : true,
+					colVis : {
+						"align" : "right",
+						restore : "Restore",
+						showAll : "Show all",
+						showNone : "Show none",
+						order : 'alpha',
+						"buttonText" : "Show/Hide Columns"
+					},
+					"language" : {
+						"infoFiltered" : ""
+					},
+					"dom" : 'Cf<"toolbar"">rtip',
+
+				}).columnFilter({
+			aoColumns : [ null, {
+				type : "text"
+			}, {
+				type : "text"
+			}, {
+				type : "text"
+			}, {
+				type : "text"
+			}, {
+				type : "date-range"
+			}, {
+				type : "select"
+			}, {
+				type : "text"
+			} ]
+
+		});
 	}
 
 	jQuery(document)
 			.ready(
-					/*	 loadCandidateTable(); */
 					function() {
-						$('#ctable')
-								.dataTable(
-										{
-											bServerSide : true,
-											sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
-											bProcessing : true,
-											bPaginate : true,
-											sPaginationType : "full_numbers",
-											order : [ 1, 'asc' ],
-											bUseColVis : true,
-											oLanguage : {
-												sProcessing : "<img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><span>Please wait...</span>"
-											},
-											aoColumns : [
-													{
-														"mData" : "c_id",
-														"type" : "number",
-														"bSortable" : false,
-														"mRender" : function(
-																data, type,
-																full) {
-															return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
-														}
-													},
-													{
-														"mData" : "vacancy",
-														"type" : "text"
-													},
-
-													{
-														"mData" : "full_name",
-														"type" : "text",
-														"mRender" : function(
-																data, type,
-																full) {
-															return "<a id='"
-																	+ full.c_id
-																	+ "' href='#ctable' onclick='getCandidate("
-																	+ full.c_id
-																	+ ");'>"
-																	+ data
-																	+ "</a>";
-														}
-													},
-													{
-														"mData" : "email",
-														"type" : "text"
-													},
-													{
-														"mData" : "contact_number",
-														"type" : "text"
-													},
-													{
-														"mData" : "date_of_application",
-														"type" : "text"
-													}, {
-														"mData" : "status",
-														"type" : "text"
-													}, {
-														"mData" : "resume",
-														"type" : "text"
-													} ],
-											"olanguage" : {
-												sLoadingRecords : 'Dang tai, vui long doi...'
-											},
-											bColVis : true,
-											colVis : {
-												"align" : "right",
-												restore : "Restore",
-												showAll : "Show all",
-												showNone : "Show none",
-												order : 'alpha',
-												"buttonText" : "Show/Hide Columns"
-											},
-											"language" : {
-												"infoFiltered" : ""
-											},
-											"dom" : 'Cf<"toolbar"">rtip',
-
-										}).columnFilter({
-									aoColumns : [ null, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "text"
-									}, {
-										type : "date-range"
-									}, {
-										type : "select"
-									}, {
-										type : "text"
-									} ]
-
-								});
-
-						/*cTable = $('#ctable')
-								.dataTable(
-										{
-											'order' : [ 1, 'asc' ],
-											'bInfo' : true,
-											'bProcessing' : true,
-											'bServerSide' : true,
-											'sPaginationType' : "full_numbers",
-											'sAjaxSource' : '<portlet:resourceURL id="get_all_candidates"/>',
-											'dom' : 'C<"clear">lfrtip',
-											'aoColumns' : [
-													{
-														"mData" : "c_id",
-														"type" : "number",
-														"bSortable" : false,
-														"mRender" : function(
-																data, type,
-																full) {
-															return "<input id='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
-														}
-													},
-													{
-														"mData" : "first_name",
-														"type" : "text",
-														"mRender" : function(
-																data, type,
-																full) {
-															var fullName = full.first_name
-																	+ " "
-																	+ full.middle_name
-																	+ " "
-																	+ full.last_name;
-															return "<a id='"
-																	+ full.c_id
-																	+ "' href='#ctable' onclick='getCandidate("
-																	+ full.c_id
-																	+ ");'>"
-																	+ fullName
-																	+ "</a>";
-														}
-													},
-													{
-														"mData" : "middle_name",
-														"type" : "text"
-													}, {
-														"mData" : "last_name",
-														"type" : "text"
-													} ],
-											colVis : {
-												"align" : "right",
-												restore : "Restore",
-												showAll : "Show all",
-												showNone : "Show none",
-												order : 'alpha',
-												"buttonText" : "Columns <img src=\"../images/caaret.png\"/>"
-											},
-											"language" : {
-												"infoFiltered" : ""
-											},
-											"dom" : 'Cf<"toolbar"">rtip',
-
-										});
+						
+						loadCandidateTable();
+						/*
 						$("#ctable_length").hide();
 						$("div.toolbar")
 								.append(
@@ -924,8 +963,7 @@
 						$('#refreshbtn').click(function() {
 							cTable.fnStandingRedraw();
 						}); */
-
-						loadVacancyTable();
+						
 						$(".select2-container").select2();
 						$(".select_filter").select2();
 						$('#datepicker').datepicker();

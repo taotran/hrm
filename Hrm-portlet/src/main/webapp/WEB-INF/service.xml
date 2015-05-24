@@ -24,6 +24,7 @@
 		
 		<column name="vancancies" type="Collection" entity="Vacancy"
 			mapping-table="Vacancies_Candidates"></column>
+        <column name="interviewId" type="long"></column>
 		<finder name="findCandidates" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
 		</finder>
@@ -98,5 +99,27 @@
         <column name="content" type="String"></column>
         <column name="attachment_type" type="String"></column>
 	</entity>
+	<entity name="Interview" local-service="true"
+		trash-enabled="true">
+
+
+		<!-- PK fields -->
+
+		<column name="interviewId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <column name="name" type="String"></column>
+	</entity>
+
 </service-builder>
 	

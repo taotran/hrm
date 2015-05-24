@@ -8,6 +8,9 @@
 	<bean id="vn.com.ecopharma.hrm.service.FileAttachmentLocalService" class="vn.com.ecopharma.hrm.service.impl.FileAttachmentLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.FileAttachmentService" class="vn.com.ecopharma.hrm.service.impl.FileAttachmentServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence" class="vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.InterviewLocalService" class="vn.com.ecopharma.hrm.service.impl.InterviewLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.InterviewService" class="vn.com.ecopharma.hrm.service.impl.InterviewServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.InterviewPersistence" class="vn.com.ecopharma.hrm.service.persistence.InterviewPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.JTitleLocalService" class="vn.com.ecopharma.hrm.service.impl.JTitleLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.JTitleService" class="vn.com.ecopharma.hrm.service.impl.JTitleServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.JTitlePersistence" class="vn.com.ecopharma.hrm.service.persistence.JTitlePersistenceImpl" parent="basePersistence" />

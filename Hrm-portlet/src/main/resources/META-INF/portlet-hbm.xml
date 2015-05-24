@@ -4,6 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="vn.com.ecopharma.hrm.model.Candidate" />
 	<import class="vn.com.ecopharma.hrm.model.FileAttachment" />
+	<import class="vn.com.ecopharma.hrm.model.Interview" />
 	<import class="vn.com.ecopharma.hrm.model.JTitle" />
 	<import class="vn.com.ecopharma.hrm.model.Vacancy" />
 	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Candidate">
@@ -25,6 +26,7 @@
 		<property name="added_person" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_FileAttachment">
 		<cache usage="read-write" />
@@ -42,6 +44,19 @@
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="attachment_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.InterviewImpl" table="HRM_Interview">
+		<cache usage="read-write" />
+		<id name="interviewId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.JTitleImpl" table="HRM_JTitle">
 		<cache usage="read-write" />

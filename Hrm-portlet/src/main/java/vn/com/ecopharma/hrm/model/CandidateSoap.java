@@ -29,6 +29,7 @@ public class CandidateSoap implements Serializable {
     private int _added_person;
     private long _user_id;
     private long _group_id;
+    private long _interviewId;
 
     public CandidateSoap() {
     }
@@ -51,6 +52,7 @@ public class CandidateSoap implements Serializable {
         soapModel.setAdded_person(model.getAdded_person());
         soapModel.setUser_id(model.getUser_id());
         soapModel.setGroup_id(model.getGroup_id());
+        soapModel.setInterviewId(model.getInterviewId());
 
         return soapModel;
     }
@@ -217,5 +219,13 @@ public class CandidateSoap implements Serializable {
 
     public void setGroup_id(long group_id) {
         _group_id = group_id;
+    }
+
+    public long getInterviewId() {
+        return _interviewId;
+    }
+
+    public void setInterviewId(long interviewId) {
+        _interviewId = interviewId;
     }
 }

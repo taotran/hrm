@@ -17,6 +17,7 @@
 		<field name="added_person" type="int" />
 		<field name="user_id" type="long" />
 		<field name="group_id" type="long" />
+		<field name="interviewId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.FileAttachment">
 		<field name="f_id" type="long" />
@@ -31,6 +32,16 @@
 		<field name="size" type="long" />
 		<field name="content" type="String" />
 		<field name="attachment_type" type="String" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.Interview">
+		<field name="interviewId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.JTitle">
 		<field name="jobtitleId" type="long" />

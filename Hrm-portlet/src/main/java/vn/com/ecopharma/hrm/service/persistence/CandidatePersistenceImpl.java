@@ -3107,6 +3107,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         candidateImpl.setAdded_person(candidate.getAdded_person());
         candidateImpl.setUser_id(candidate.getUser_id());
         candidateImpl.setGroup_id(candidate.getGroup_id());
+        candidateImpl.setInterviewId(candidate.getInterviewId());
 
         return candidateImpl;
     }

@@ -13,7 +13,8 @@ create table HRM_Candidate (
 	keywords VARCHAR(75) null,
 	added_person INTEGER,
 	user_id LONG,
-	group_id LONG
+	group_id LONG,
+	interviewId LONG
 );
 
 create table HRM_FileAttachment (
@@ -29,6 +30,17 @@ create table HRM_FileAttachment (
 	size_ LONG,
 	content VARCHAR(75) null,
 	attachment_type VARCHAR(75) null
+);
+
+create table HRM_Interview (
+	interviewId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name VARCHAR(75) null
 );
 
 create table HRM_JTitle (

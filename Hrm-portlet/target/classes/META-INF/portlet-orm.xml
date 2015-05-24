@@ -28,6 +28,7 @@
 			<basic name="added_person" />
 			<basic name="user_id" />
 			<basic name="group_id" />
+			<basic name="interviewId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -53,6 +54,26 @@
 			</basic>
 			<basic name="content" />
 			<basic name="attachment_type" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.InterviewModelImpl">
+		<attributes>
+			<id name="interviewId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="name" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -103,6 +124,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">
 		<table name="HRM_FileAttachment" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.InterviewImpl" name="Interview">
+		<table name="HRM_Interview" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">

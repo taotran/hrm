@@ -41,22 +41,22 @@ public class JTitleLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName54;
-    private String[] _methodParameterTypes54;
-    private String _methodName55;
-    private String[] _methodParameterTypes55;
     private String _methodName60;
     private String[] _methodParameterTypes60;
     private String _methodName61;
     private String[] _methodParameterTypes61;
-    private String _methodName62;
-    private String[] _methodParameterTypes62;
-    private String _methodName63;
-    private String[] _methodParameterTypes63;
-    private String _methodName64;
-    private String[] _methodParameterTypes64;
-    private String _methodName65;
-    private String[] _methodParameterTypes65;
+    private String _methodName66;
+    private String[] _methodParameterTypes66;
+    private String _methodName67;
+    private String[] _methodParameterTypes67;
+    private String _methodName68;
+    private String[] _methodParameterTypes68;
+    private String _methodName69;
+    private String[] _methodParameterTypes69;
+    private String _methodName70;
+    private String[] _methodParameterTypes70;
+    private String _methodName71;
+    private String[] _methodParameterTypes71;
 
     public JTitleLocalServiceClpInvoker() {
         _methodName0 = "addJTitle";
@@ -141,47 +141,47 @@ public class JTitleLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.JTitle"
             };
 
-        _methodName54 = "getBeanIdentifier";
-
-        _methodParameterTypes54 = new String[] {  };
-
-        _methodName55 = "setBeanIdentifier";
-
-        _methodParameterTypes55 = new String[] { "java.lang.String" };
-
-        _methodName60 = "findAll";
+        _methodName60 = "getBeanIdentifier";
 
         _methodParameterTypes60 = new String[] {  };
 
-        _methodName61 = "findAll";
+        _methodName61 = "setBeanIdentifier";
 
-        _methodParameterTypes61 = new String[] { "int", "int" };
+        _methodParameterTypes61 = new String[] { "java.lang.String" };
 
-        _methodName62 = "findAll";
+        _methodName66 = "findAll";
 
-        _methodParameterTypes62 = new String[] {
+        _methodParameterTypes66 = new String[] {  };
+
+        _methodName67 = "findAll";
+
+        _methodParameterTypes67 = new String[] { "int", "int" };
+
+        _methodName68 = "findAll";
+
+        _methodParameterTypes68 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName63 = "create";
+        _methodName69 = "create";
 
-        _methodParameterTypes63 = new String[] {
+        _methodParameterTypes69 = new String[] {
                 "long", "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "boolean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName64 = "edit";
+        _methodName70 = "edit";
 
-        _methodParameterTypes64 = new String[] {
+        _methodParameterTypes70 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "boolean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName65 = "delete";
+        _methodName71 = "delete";
 
-        _methodParameterTypes65 = new String[] { "long" };
+        _methodParameterTypes71 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -273,38 +273,38 @@ public class JTitleLocalServiceClpInvoker {
             return JTitleLocalServiceUtil.updateJTitle((vn.com.ecopharma.hrm.model.JTitle) arguments[0]);
         }
 
-        if (_methodName54.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
             return JTitleLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName55.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
             JTitleLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName60.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+        if (_methodName66.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
             return JTitleLocalServiceUtil.findAll();
         }
 
-        if (_methodName61.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+        if (_methodName67.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
             return JTitleLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
-        if (_methodName62.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+        if (_methodName68.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
             return JTitleLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName63.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+        if (_methodName69.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
             return JTitleLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 (java.lang.String) arguments[2],
@@ -314,8 +314,8 @@ public class JTitleLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[6]);
         }
 
-        if (_methodName64.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
             return JTitleLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
@@ -326,8 +326,8 @@ public class JTitleLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[7]);
         }
 
-        if (_methodName65.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+        if (_methodName71.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
             JTitleLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;

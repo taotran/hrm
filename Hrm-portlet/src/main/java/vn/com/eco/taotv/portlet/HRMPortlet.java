@@ -356,7 +356,7 @@ public class HRMPortlet extends MVCPortlet {
 				}
 
 				jsonResult.put("aaData", array);
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 
 				resourceResponse.getWriter().print(jsonResult);
 			} catch (Exception e) {
@@ -514,6 +514,7 @@ public class HRMPortlet extends MVCPortlet {
 
 				jsonResult.put("aaData", array);
 				jsonResult.put("jTitleNames", jTitleNamesArr);
+				Thread.sleep(2000);
 				resourceResponse.getWriter().print(jsonResult);
 			} catch (Exception ex) {
 				ex.printStackTrace();

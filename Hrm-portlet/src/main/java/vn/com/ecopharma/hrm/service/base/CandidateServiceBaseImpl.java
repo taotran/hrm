@@ -13,6 +13,7 @@ import vn.com.ecopharma.hrm.service.CandidateService;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
+import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
@@ -46,6 +47,12 @@ public abstract class CandidateServiceBaseImpl extends BaseServiceImpl
     protected vn.com.ecopharma.hrm.service.FileAttachmentService fileAttachmentService;
     @BeanReference(type = FileAttachmentPersistence.class)
     protected FileAttachmentPersistence fileAttachmentPersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.InterviewLocalService.class)
+    protected vn.com.ecopharma.hrm.service.InterviewLocalService interviewLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.InterviewService.class)
+    protected vn.com.ecopharma.hrm.service.InterviewService interviewService;
+    @BeanReference(type = InterviewPersistence.class)
+    protected InterviewPersistence interviewPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleLocalService.class)
     protected vn.com.ecopharma.hrm.service.JTitleLocalService jTitleLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleService.class)
@@ -208,6 +215,63 @@ public abstract class CandidateServiceBaseImpl extends BaseServiceImpl
     public void setFileAttachmentPersistence(
         FileAttachmentPersistence fileAttachmentPersistence) {
         this.fileAttachmentPersistence = fileAttachmentPersistence;
+    }
+
+    /**
+     * Returns the interview local service.
+     *
+     * @return the interview local service
+     */
+    public vn.com.ecopharma.hrm.service.InterviewLocalService getInterviewLocalService() {
+        return interviewLocalService;
+    }
+
+    /**
+     * Sets the interview local service.
+     *
+     * @param interviewLocalService the interview local service
+     */
+    public void setInterviewLocalService(
+        vn.com.ecopharma.hrm.service.InterviewLocalService interviewLocalService) {
+        this.interviewLocalService = interviewLocalService;
+    }
+
+    /**
+     * Returns the interview remote service.
+     *
+     * @return the interview remote service
+     */
+    public vn.com.ecopharma.hrm.service.InterviewService getInterviewService() {
+        return interviewService;
+    }
+
+    /**
+     * Sets the interview remote service.
+     *
+     * @param interviewService the interview remote service
+     */
+    public void setInterviewService(
+        vn.com.ecopharma.hrm.service.InterviewService interviewService) {
+        this.interviewService = interviewService;
+    }
+
+    /**
+     * Returns the interview persistence.
+     *
+     * @return the interview persistence
+     */
+    public InterviewPersistence getInterviewPersistence() {
+        return interviewPersistence;
+    }
+
+    /**
+     * Sets the interview persistence.
+     *
+     * @param interviewPersistence the interview persistence
+     */
+    public void setInterviewPersistence(
+        InterviewPersistence interviewPersistence) {
+        this.interviewPersistence = interviewPersistence;
     }
 
     /**

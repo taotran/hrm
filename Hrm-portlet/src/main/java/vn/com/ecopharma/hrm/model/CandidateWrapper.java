@@ -52,6 +52,7 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
         attributes.put("added_person", getAdded_person());
         attributes.put("user_id", getUser_id());
         attributes.put("group_id", getGroup_id());
+        attributes.put("interviewId", getInterviewId());
 
         return attributes;
     }
@@ -147,6 +148,12 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 
         if (group_id != null) {
             setGroup_id(group_id);
+        }
+
+        Long interviewId = (Long) attributes.get("interviewId");
+
+        if (interviewId != null) {
+            setInterviewId(interviewId);
         }
     }
 
@@ -468,6 +475,26 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
     @Override
     public void setGroup_id(long group_id) {
         _candidate.setGroup_id(group_id);
+    }
+
+    /**
+    * Returns the interview ID of this candidate.
+    *
+    * @return the interview ID of this candidate
+    */
+    @Override
+    public long getInterviewId() {
+        return _candidate.getInterviewId();
+    }
+
+    /**
+    * Sets the interview ID of this candidate.
+    *
+    * @param interviewId the interview ID of this candidate
+    */
+    @Override
+    public void setInterviewId(long interviewId) {
+        _candidate.setInterviewId(interviewId);
     }
 
     /**

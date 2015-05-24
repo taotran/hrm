@@ -8,6 +8,8 @@ import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.ClpSerializer;
 import vn.com.ecopharma.hrm.service.FileAttachmentLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.FileAttachmentServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
@@ -32,6 +34,9 @@ public class ClpMessageListener extends BaseMessageListener {
             FileAttachmentLocalServiceUtil.clearService();
 
             FileAttachmentServiceUtil.clearService();
+            InterviewLocalServiceUtil.clearService();
+
+            InterviewServiceUtil.clearService();
             JTitleLocalServiceUtil.clearService();
 
             JTitleServiceUtil.clearService();
