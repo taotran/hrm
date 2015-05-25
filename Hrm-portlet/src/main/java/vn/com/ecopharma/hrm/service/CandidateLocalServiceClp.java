@@ -302,7 +302,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
         _methodParameterTypes40 = new String[] { "long" };
 
-        _methodName41 = "createCandidate";
+        _methodName41 = "create";
 
         _methodParameterTypes41 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
@@ -312,7 +312,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName42 = "editCandidate";
+        _methodName42 = "edit";
 
         _methodParameterTypes42 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
@@ -1442,7 +1442,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
+    public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
@@ -1504,13 +1504,12 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Candidate editCandidate(
-        long candidateId, java.lang.String first_name,
-        java.lang.String middle_name, java.lang.String last_name,
-        java.lang.String email, java.lang.String contact_number,
-        java.lang.String comment, int mode_of_application,
-        java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person,
+    public vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String comment,
+        int mode_of_application, java.sql.Date date_of_application,
+        long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;

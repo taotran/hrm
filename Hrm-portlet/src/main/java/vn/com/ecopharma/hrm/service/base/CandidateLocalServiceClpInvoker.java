@@ -301,7 +301,7 @@ public class CandidateLocalServiceClpInvoker {
 
         _methodParameterTypes87 = new String[] { "long" };
 
-        _methodName88 = "createCandidate";
+        _methodName88 = "create";
 
         _methodParameterTypes88 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
@@ -311,7 +311,7 @@ public class CandidateLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName89 = "editCandidate";
+        _methodName89 = "edit";
 
         _methodParameterTypes89 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
@@ -618,7 +618,7 @@ public class CandidateLocalServiceClpInvoker {
 
         if (_methodName88.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-            return CandidateLocalServiceUtil.createCandidate(((Long) arguments[0]).longValue(),
+            return CandidateLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
                 (java.lang.String) arguments[3],
@@ -636,7 +636,7 @@ public class CandidateLocalServiceClpInvoker {
 
         if (_methodName89.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-            return CandidateLocalServiceUtil.editCandidate(((Long) arguments[0]).longValue(),
+            return CandidateLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
                 (java.lang.String) arguments[3],

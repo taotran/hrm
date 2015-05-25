@@ -7,7 +7,7 @@
 	<import class="vn.com.ecopharma.hrm.model.Interview" />
 	<import class="vn.com.ecopharma.hrm.model.JTitle" />
 	<import class="vn.com.ecopharma.hrm.model.Vacancy" />
-	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Candidate">
+	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Recruitment_Candidate">
 		<cache usage="read-write" />
 		<id name="c_id" type="long">
 			<generator class="assigned" />
@@ -24,11 +24,12 @@
 		<property name="cv_text_version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="keywords" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="added_person" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="candidate_status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_FileAttachment">
+	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_Recruitment_FileAttachment">
 		<cache usage="read-write" />
 		<id name="f_id" type="long">
 			<generator class="assigned" />
@@ -45,7 +46,7 @@
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="attachment_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="vn.com.ecopharma.hrm.model.impl.InterviewImpl" table="HRM_Interview">
+	<class name="vn.com.ecopharma.hrm.model.impl.InterviewImpl" table="HRM_Recruitment_Interview">
 		<cache usage="read-write" />
 		<id name="interviewId" type="long">
 			<generator class="assigned" />
@@ -58,7 +59,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="vn.com.ecopharma.hrm.model.impl.JTitleImpl" table="HRM_JTitle">
+	<class name="vn.com.ecopharma.hrm.model.impl.JTitleImpl" table="HRM_Recruitment_JTitle">
 		<cache usage="read-write" />
 		<id name="jobtitleId" type="long">
 			<generator class="assigned" />
@@ -70,7 +71,7 @@
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="vn.com.ecopharma.hrm.model.impl.VacancyImpl" table="HRM_Vacancy">
+	<class name="vn.com.ecopharma.hrm.model.impl.VacancyImpl" table="HRM_Recruitment_Vacancy">
 		<cache usage="read-write" />
 		<id name="v_id" type="long">
 			<generator class="assigned" />

@@ -50,6 +50,7 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
         attributes.put("cv_text_version", getCv_text_version());
         attributes.put("keywords", getKeywords());
         attributes.put("added_person", getAdded_person());
+        attributes.put("candidate_status", getCandidate_status());
         attributes.put("user_id", getUser_id());
         attributes.put("group_id", getGroup_id());
         attributes.put("interviewId", getInterviewId());
@@ -136,6 +137,12 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 
         if (added_person != null) {
             setAdded_person(added_person);
+        }
+
+        String candidate_status = (String) attributes.get("candidate_status");
+
+        if (candidate_status != null) {
+            setCandidate_status(candidate_status);
         }
 
         Long user_id = (Long) attributes.get("user_id");
@@ -435,6 +442,26 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
     @Override
     public void setAdded_person(int added_person) {
         _candidate.setAdded_person(added_person);
+    }
+
+    /**
+    * Returns the candidate_status of this candidate.
+    *
+    * @return the candidate_status of this candidate
+    */
+    @Override
+    public java.lang.String getCandidate_status() {
+        return _candidate.getCandidate_status();
+    }
+
+    /**
+    * Sets the candidate_status of this candidate.
+    *
+    * @param candidate_status the candidate_status of this candidate
+    */
+    @Override
+    public void setCandidate_status(java.lang.String candidate_status) {
+        _candidate.setCandidate_status(candidate_status);
     }
 
     /**

@@ -272,6 +272,31 @@ public class InterviewLocalServiceWrapper implements InterviewLocalService,
             arguments);
     }
 
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll() {
+        return _interviewLocalService.findAll();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end) {
+        return _interviewLocalService.findAll(start, end);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return _interviewLocalService.findAll(start, end, orderByComparator);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Interview create(long userId,
+        java.lang.String name,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return _interviewLocalService.create(userId, name, serviceContext);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

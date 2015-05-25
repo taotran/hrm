@@ -1,6 +1,10 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import vn.com.ecopharma.hrm.model.Interview;
 import vn.com.ecopharma.hrm.service.base.InterviewServiceBaseImpl;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * The implementation of the interview remote service.

@@ -238,4 +238,17 @@ public interface InterviewLocalService extends BaseLocalService,
     public java.lang.Object invokeMethod(java.lang.String name,
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable;
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll();
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+    public vn.com.ecopharma.hrm.model.Interview create(long userId,
+        java.lang.String name,
+        com.liferay.portal.service.ServiceContext serviceContext);
 }

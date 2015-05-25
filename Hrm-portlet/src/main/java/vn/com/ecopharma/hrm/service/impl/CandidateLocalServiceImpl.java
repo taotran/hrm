@@ -15,6 +15,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
+import vn.com.ecopharma.hrm.constant.CandidateStatus;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.base.CandidateLocalServiceBaseImpl;
@@ -109,7 +110,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	}
 	
 
-	public Candidate createCandidate(long user_id, String first_name,
+	public Candidate create(long user_id, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
@@ -131,6 +132,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			c.setCv_text_version(cv_text_version);
 			c.set_vacancies(vacancies);
 			c.setUser_id(user.getUserId());
+			c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED.getLocalizedName());
 			c.setGroup_id(serviceContext.getScopeGroupId());
 			candidatePersistence.update(c);
 			resourceLocalService.addResources(user.getCompanyId(),
@@ -145,7 +147,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return null;
 	}
 
-	public Candidate editCandidate(long candidateId, String first_name,
+	public Candidate edit(long candidateId, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,

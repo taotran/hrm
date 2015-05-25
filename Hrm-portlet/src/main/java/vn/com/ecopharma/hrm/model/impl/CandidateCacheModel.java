@@ -35,13 +35,14 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
     public String cv_text_version;
     public String keywords;
     public int added_person;
+    public String candidate_status;
     public long user_id;
     public long group_id;
     public long interviewId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(33);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{c_id=");
         sb.append(c_id);
@@ -69,6 +70,8 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         sb.append(keywords);
         sb.append(", added_person=");
         sb.append(added_person);
+        sb.append(", candidate_status=");
+        sb.append(candidate_status);
         sb.append(", user_id=");
         sb.append(user_id);
         sb.append(", group_id=");
@@ -145,6 +148,13 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         }
 
         candidateImpl.setAdded_person(added_person);
+
+        if (candidate_status == null) {
+            candidateImpl.setCandidate_status(StringPool.BLANK);
+        } else {
+            candidateImpl.setCandidate_status(candidate_status);
+        }
+
         candidateImpl.setUser_id(user_id);
         candidateImpl.setGroup_id(group_id);
         candidateImpl.setInterviewId(interviewId);
@@ -169,6 +179,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         cv_text_version = objectInput.readUTF();
         keywords = objectInput.readUTF();
         added_person = objectInput.readInt();
+        candidate_status = objectInput.readUTF();
         user_id = objectInput.readLong();
         group_id = objectInput.readLong();
         interviewId = objectInput.readLong();
@@ -232,6 +243,13 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         }
 
         objectOutput.writeInt(added_person);
+
+        if (candidate_status == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(candidate_status);
+        }
+
         objectOutput.writeLong(user_id);
         objectOutput.writeLong(group_id);
         objectOutput.writeLong(interviewId);

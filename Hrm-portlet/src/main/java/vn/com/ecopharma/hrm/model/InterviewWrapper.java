@@ -430,7 +430,7 @@ public class InterviewWrapper implements Interview, ModelWrapper<Interview> {
     }
 
     @Override
-    public int compareTo(Interview interview) {
+    public int compareTo(vn.com.ecopharma.hrm.model.Interview interview) {
         return _interview.compareTo(interview);
     }
 
@@ -440,17 +440,17 @@ public class InterviewWrapper implements Interview, ModelWrapper<Interview> {
     }
 
     @Override
-    public com.liferay.portal.model.CacheModel<Interview> toCacheModel() {
+    public com.liferay.portal.model.CacheModel<vn.com.ecopharma.hrm.model.Interview> toCacheModel() {
         return _interview.toCacheModel();
     }
 
     @Override
-    public Interview toEscapedModel() {
+    public vn.com.ecopharma.hrm.model.Interview toEscapedModel() {
         return new InterviewWrapper(_interview.toEscapedModel());
     }
 
     @Override
-    public Interview toUnescapedModel() {
+    public vn.com.ecopharma.hrm.model.Interview toUnescapedModel() {
         return new InterviewWrapper(_interview.toUnescapedModel());
     }
 

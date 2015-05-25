@@ -1,5 +1,13 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.service.ServiceContext;
+
+import vn.com.ecopharma.hrm.model.Interview;
 import vn.com.ecopharma.hrm.service.base.InterviewLocalServiceBaseImpl;
 
 /**
@@ -22,4 +30,39 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
      *
      * Never reference this interface directly. Always use {@link vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil} to access the interview local service.
      */
+	
+	public List<Interview> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+	
+	public List<Interview> findAll(int start, int end) {
+		return findAll(start, end, null);
+	}
+	
+	public List<Interview> findAll(int start, int end, OrderByComparator orderByComparator) {
+		try {
+			return interviewPersistence.findAll(start, end, orderByComparator);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Interview create(long userId, String name,
+			ServiceContext serviceContext) {
+		try {
+			final Interview itv = interviewPersistence.create(counterLocalService.increment());
+			itv.setName(name);
+			itv.setUserId(userId);
+			itv.setGroupId(serviceContext.getScopeGroupId());
+			itv.setCompanyId(serviceContext.getCompanyId());
+			itv.setCreateDate(new java.util.Date(System.currentTimeMillis()));
+			interviewPersistence.update(itv);
+			return itv;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

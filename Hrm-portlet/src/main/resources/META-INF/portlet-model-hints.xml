@@ -15,6 +15,7 @@
 		<field name="cv_text_version" type="String" />
 		<field name="keywords" type="String" />
 		<field name="added_person" type="int" />
+		<field name="candidate_status" type="String" />
 		<field name="user_id" type="long" />
 		<field name="group_id" type="long" />
 		<field name="interviewId" type="long" />

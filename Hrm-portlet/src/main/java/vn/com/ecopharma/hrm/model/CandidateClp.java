@@ -44,6 +44,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
     private String _cv_text_version;
     private String _keywords;
     private int _added_person;
+    private String _candidate_status;
     private long _user_id;
     private long _group_id;
     private long _interviewId;
@@ -100,6 +101,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         attributes.put("cv_text_version", getCv_text_version());
         attributes.put("keywords", getKeywords());
         attributes.put("added_person", getAdded_person());
+        attributes.put("candidate_status", getCandidate_status());
         attributes.put("user_id", getUser_id());
         attributes.put("group_id", getGroup_id());
         attributes.put("interviewId", getInterviewId());
@@ -186,6 +188,12 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
         if (added_person != null) {
             setAdded_person(added_person);
+        }
+
+        String candidate_status = (String) attributes.get("candidate_status");
+
+        if (candidate_status != null) {
+            setCandidate_status(candidate_status);
         }
 
         Long user_id = (Long) attributes.get("user_id");
@@ -498,6 +506,29 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
     }
 
     @Override
+    public String getCandidate_status() {
+        return _candidate_status;
+    }
+
+    @Override
+    public void setCandidate_status(String candidate_status) {
+        _candidate_status = candidate_status;
+
+        if (_candidateRemoteModel != null) {
+            try {
+                Class<?> clazz = _candidateRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setCandidate_status",
+                        String.class);
+
+                method.invoke(_candidateRemoteModel, candidate_status);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public long getUser_id() {
         return _user_id;
     }
@@ -788,6 +819,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         clone.setCv_text_version(getCv_text_version());
         clone.setKeywords(getKeywords());
         clone.setAdded_person(getAdded_person());
+        clone.setCandidate_status(getCandidate_status());
         clone.setUser_id(getUser_id());
         clone.setGroup_id(getGroup_id());
         clone.setInterviewId(getInterviewId());
@@ -840,7 +872,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(33);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{c_id=");
         sb.append(getC_id());
@@ -868,6 +900,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         sb.append(getKeywords());
         sb.append(", added_person=");
         sb.append(getAdded_person());
+        sb.append(", candidate_status=");
+        sb.append(getCandidate_status());
         sb.append(", user_id=");
         sb.append(getUser_id());
         sb.append(", group_id=");
@@ -881,7 +915,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(52);
+        StringBundler sb = new StringBundler(55);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Candidate");
@@ -938,6 +972,10 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
         sb.append(
             "<column><column-name>added_person</column-name><column-value><![CDATA[");
         sb.append(getAdded_person());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>candidate_status</column-name><column-value><![CDATA[");
+        sb.append(getCandidate_status());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>user_id</column-name><column-value><![CDATA[");

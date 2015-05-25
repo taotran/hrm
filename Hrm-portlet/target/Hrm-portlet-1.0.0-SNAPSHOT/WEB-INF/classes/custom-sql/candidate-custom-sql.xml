@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+	<sql id="candidateSQLFilter">
+		<![CDATA[
+			SELECT * FROM hrm_candidate WHERE ?
+		]]>
+		
+	</sql>
+	
+	<sql id="getVacanciesByCandidate">
+		<![CDATA[
+			SELECT hrm_vacancies_candidates.* FROM hrm_vacancies_candidates vc WHERE vc.c_id=?
+		]]>
+		
+	</sql>
+	
+</custom-sql>

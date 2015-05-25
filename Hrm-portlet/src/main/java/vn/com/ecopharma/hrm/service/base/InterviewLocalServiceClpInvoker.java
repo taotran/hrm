@@ -45,6 +45,14 @@ public class InterviewLocalServiceClpInvoker {
     private String[] _methodParameterTypes60;
     private String _methodName61;
     private String[] _methodParameterTypes61;
+    private String _methodName66;
+    private String[] _methodParameterTypes66;
+    private String _methodName67;
+    private String[] _methodParameterTypes67;
+    private String _methodName68;
+    private String[] _methodParameterTypes68;
+    private String _methodName69;
+    private String[] _methodParameterTypes69;
 
     public InterviewLocalServiceClpInvoker() {
         _methodName0 = "addInterview";
@@ -136,6 +144,27 @@ public class InterviewLocalServiceClpInvoker {
         _methodName61 = "setBeanIdentifier";
 
         _methodParameterTypes61 = new String[] { "java.lang.String" };
+
+        _methodName66 = "findAll";
+
+        _methodParameterTypes66 = new String[] {  };
+
+        _methodName67 = "findAll";
+
+        _methodParameterTypes67 = new String[] { "int", "int" };
+
+        _methodName68 = "findAll";
+
+        _methodParameterTypes68 = new String[] {
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+            };
+
+        _methodName69 = "create";
+
+        _methodParameterTypes69 = new String[] {
+                "long", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -237,6 +266,31 @@ public class InterviewLocalServiceClpInvoker {
             InterviewLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
+        }
+
+        if (_methodName66.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+            return InterviewLocalServiceUtil.findAll();
+        }
+
+        if (_methodName67.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+            return InterviewLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName68.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+            return InterviewLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue(),
+                (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
+        }
+
+        if (_methodName69.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+            return InterviewLocalServiceUtil.create(((Long) arguments[0]).longValue(),
+                (java.lang.String) arguments[1],
+                (com.liferay.portal.service.ServiceContext) arguments[2]);
         }
 
         throw new UnsupportedOperationException();

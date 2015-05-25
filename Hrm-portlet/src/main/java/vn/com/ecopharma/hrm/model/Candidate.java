@@ -3,7 +3,7 @@ package vn.com.ecopharma.hrm.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the Candidate service. Represents a row in the &quot;HRM_Candidate&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Candidate service. Represents a row in the &quot;HRM_Recruitment_Candidate&quot; database table, with each column mapped to a property of this class.
  *
  * @author tvt
  * @see CandidateModel

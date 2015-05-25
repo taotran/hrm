@@ -21,14 +21,13 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.JTitle;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
-import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.util.JSONServiceUtil;
@@ -65,6 +64,11 @@ public class HRMPortlet extends MVCPortlet {
 	private static final String GET_JOB_TITLE = "getJTitle";
 	private static final String DELETE_JOB_TITLE = "deleteJTitles";
 
+	private static final String GET_ALL_INTERVIEWS = "get_all_interviews";
+	private static final String SAVE_INTERVIEW = "saveInterview";
+	private static final String GET_INTERVIEW = "getInterview";
+	private static final String DELETE_INTERVIEW = "deleteInterview";
+
 	private String COLUMN_NAME;
 	private String DIRECTION;
 	private int C_INITIAL, V_INITIAL;
@@ -94,238 +98,209 @@ public class HRMPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void serveResource(ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse) throws IOException,
-			PortletException {
-		final String resourceRequestId = resourceRequest.getResourceID();
+	public void serveResource(ResourceRequest request, ResourceResponse response)
+			throws IOException, PortletException {
+		final String resourceRequestId = request.getResourceID();
+
+		onCandidateServeResourceAction(request, response, resourceRequestId);
+
+		onVacancyServeResourceAction(request, response, resourceRequestId);
+
+		onJTitleServeResourceAction(request, response, resourceRequestId);
+
+		onInterviewServeResourceAction(request, response, resourceRequestId);
+
+		super.serveResource(request, response);
+	}
+
+	private void onCandidateServeResourceAction(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId) {
 		final Map<String, Object> map = new HashMap<String, Object>();
-		String json = "";
-		// All candidate resource actions
-		/*
-		 * if (GET_ALL_CANDIDATES.equals(resourceRequestId)) { //
-		 * map.put("aaData", findAllCandidates()); //
-		 * JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map); //
-		 * while (resourceRequest.getParameterNames().hasMoreElements()) { //
-		 * String param = (String)
-		 * resourceRequest.getAttributeNames().nextElement(); //
-		 * System.out.println(param); // } String[] columnNames = { "id",
-		 * "first_name", "middle_name", "last_name" }; JSONObject result = new
-		 * JSONObject(); JSONArray array = new JSONArray();
-		 * 
-		 * int listDisplayAmount = 10; int start = 0; int column = 0; String
-		 * direction = "asc"; int pageNo = ParamUtil.getInteger(resourceRequest,
-		 * "iDisplayStart"); int pageSize =
-		 * ParamUtil.getInteger(resourceRequest, "iDisplayLength"); int colIndex
-		 * = ParamUtil.getInteger(resourceRequest, "iSortCol_0"); String
-		 * sortDirection = ParamUtil.getString(resourceRequest, "sSortDir_0");
-		 * 
-		 * start = pageNo; if (start < 0) { start = 0; }
-		 * 
-		 * listDisplayAmount = pageSize; if (listDisplayAmount < 10 ||
-		 * listDisplayAmount > 50) { listDisplayAmount = 10; }
-		 * 
-		 * column = colIndex; if (column < 0 || column > 5) column = 0;
-		 * 
-		 * if (sortDirection != null) { if (!sortDirection.equals("asc"))
-		 * direction = "desc"; }
-		 * 
-		 * String colName = columnNames[column]; int totalRecords = -1;
-		 * totalRecords = CandidateLocalServiceUtil.countAll();
-		 * System.out.println("TOTAL RECORDS: " + totalRecords); int
-		 * totalRecordsAfterSearch = totalRecords;
-		 * 
-		 * INITIAL = start; RECORD_SIZE = listDisplayAmount; List<Candidate>
-		 * pagingCandidates; try { pagingCandidates =
-		 * CandidateLocalServiceUtil.findCandidates( INITIAL, RECORD_SIZE);
-		 * COLUMN_NAME = colName; DIRECTION = direction; INITIAL = start;
-		 * RECORD_SIZE = listDisplayAmount; /* for (Candidate c :
-		 * pagingCandidates) { JSONArray ja = new JSONArray();
-		 * ja.put(c.getC_id()); //
-		 * ja.put(VacancyLocalServiceUtil.getCandidateVacancies
-		 * (c.getC_id()).get(0).getName()); ja.put(c.getFirst_name());
-		 * ja.put(c.getMiddle_name()); ja.put(c.getLast_name()); array.put(ja);
-		 * } totalRecordsAfterSearch = pagingCandidates.size();
-		 * result.put("iTotalRecords", totalRecords);
-		 * result.put("iTotalDisplayRecords", totalRecordsAfterSearch);
-		 * result.put("aaData", array);
-		 * 
-		 * resourceResponse.getWriter().print(getCandidates(totalRecords,
-		 * resourceRequest)); } catch (SystemException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
-			// map.put("aaData", findAllCandidates()); //
-			// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
-			System.out.println("INSIDE GET_ALL_CANDIDATES");
-			int iTotalRecords; // total number of records (unfiltered)
-			int iTotalDisplayRecords;// value will be set when code filters
-										// companies by keyword
-			JSONArray data = new JSONArray(); // data that will be shown in the
-												// table
+		try {
+			if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
+				// map.put("aaData", findAllCandidates()); //
+				// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+				System.out.println("INSIDE GET_ALL_CANDIDATES");
+				int iTotalRecords; // total number of records (unfiltered)
+				int iTotalDisplayRecords;// value will be set when code filters
+											// companies by keyword
 
-			C_GLOB_SEARCH = ParamUtil.getString(resourceRequest, "sSearch");
-			System.out.println("GLOB_SEARCH " + C_GLOB_SEARCH);
-			VACANCY_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_1");
-			C_NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_2");
-			EMAIL_SEARCH = ParamUtil.getString(resourceRequest, "sSearch_3");
-			CONTACT_NO_SEARCH = ParamUtil.getString(resourceRequest,
-					"sSearch_4");
-			String startStr = ParamUtil.getString(resourceRequest, "sSearch_5");
-			String endStr = ParamUtil.getString(resourceRequest, "sSearch_6");
+				C_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
+				System.out.println("GLOB_SEARCH " + C_GLOB_SEARCH);
+				VACANCY_SEARCH = ParamUtil.getString(request, "sSearch_1");
+				C_NAME_SEARCH = ParamUtil.getString(request, "sSearch_2");
+				EMAIL_SEARCH = ParamUtil.getString(request, "sSearch_3");
+				CONTACT_NO_SEARCH = ParamUtil.getString(request, "sSearch_4");
+				String startStr = ParamUtil.getString(request, "sSearch_5");
+				String endStr = ParamUtil.getString(request, "sSearch_6");
 
-			System.out.println("DATE RANGE FILTER : " + startStr + "    "
-					+ endStr);
-			final int sortColumnIndex = ParamUtil.getInteger(resourceRequest,
-					"iSortColumnIndex");
-			final int sortDirection = ParamUtil.getString(resourceRequest,
-					"sSortDirection").equals("asc") ? -1 : 1;
-			String[] columnNames = { "_c_id", "_first_name", "_middle_name",
-					"_last_name" };
+				System.out.println("DATE RANGE FILTER : " + startStr + "    "
+						+ endStr);
+				final int sortColumnIndex = ParamUtil.getInteger(request,
+						"iSortColumnIndex");
+				final int sortDirection = ParamUtil.getString(request,
+						"sSortDirection").equals("asc") ? -1 : 1;
+				String[] columnNames = { "_c_id", "_first_name",
+						"_middle_name", "_last_name" };
 
-			JSONObject jsonResult = new JSONObject();
-			int listDisplayAmount = 10;
-			int start = 0;
-			int column = 0;
-			String dir = "asc";
-			String pageNo = resourceRequest.getParameter("iDisplayStart");
-			String pageSize = resourceRequest.getParameter("iDisplayLength");
-			String colIndex = resourceRequest.getParameter("iSortCol_0");
-			// String sortDirection =
-			// resourceRequest.getParameter("sSortDir_0");
+				JSONObject jsonResult = new JSONObject();
+				int listDisplayAmount = 10;
+				int start = 0;
+				int column = 0;
+				String dir = "asc";
+				String pageNo = request.getParameter("iDisplayStart");
+				String pageSize = request.getParameter("iDisplayLength");
+				String colIndex = request.getParameter("iSortCol_0");
+				// String sortDirection =
+				// resourceRequest.getParameter("sSortDir_0");
 
-			if (pageNo != null) {
-				start = Integer.parseInt(pageNo);
-				if (start < 0) {
-					start = 0;
+				if (pageNo != null) {
+					start = Integer.parseInt(pageNo);
+					if (start < 0) {
+						start = 0;
+					}
 				}
-			}
-			if (pageSize != null) {
-				listDisplayAmount = Integer.parseInt(pageSize);
-				if (listDisplayAmount < 10 || listDisplayAmount > 50) {
-					listDisplayAmount = 10;
+				if (pageSize != null) {
+					listDisplayAmount = Integer.parseInt(pageSize);
+					if (listDisplayAmount < 10 || listDisplayAmount > 50) {
+						listDisplayAmount = 10;
+					}
 				}
-			}
-			if (colIndex != null) {
-				column = Integer.parseInt(colIndex);
-				if (column < 0 || column > 5)
-					column = 0;
-			}
-			/*
-			 * if (sortDirection != null) { if (!sortDirection.equals("asc"))
-			 * dir = "desc"; }
-			 */
+				if (colIndex != null) {
+					column = Integer.parseInt(colIndex);
+					if (column < 0 || column > 5)
+						column = 0;
+				}
+				/*
+				 * if (sortDirection != null) { if
+				 * (!sortDirection.equals("asc")) dir = "desc"; }
+				 */
 
-			String colName = columnNames[column];
+				String colName = columnNames[column];
 
-			try {
-				iTotalRecords = CandidateLocalServiceUtil.findAll().size();
-				List<Candidate> filteredCandidates = new ArrayList<Candidate>();
-				for (Candidate c : CandidateLocalServiceUtil.findAll()) {
-					String fullName = c.getFullName();
-					long v_id = CandidateLocalServiceUtil
-							.findVacancyByCandidate(c.getC_id());
+				try {
+					iTotalRecords = CandidateLocalServiceUtil.findAll().size();
+					List<Candidate> filteredCandidates = new ArrayList<Candidate>();
+					for (Candidate c : CandidateLocalServiceUtil.findAll()) {
+						String fullName = c.getFullName();
+						long v_id = CandidateLocalServiceUtil
+								.findVacancyByCandidate(c.getC_id());
 
-					String v_name = VacancyLocalServiceUtil.getVacancy(v_id)
-							.getName();
-					if (fullName.toLowerCase().contains(
-							C_GLOB_SEARCH.toLowerCase())
-							|| c.getEmail().toLowerCase()
-									.contains(C_GLOB_SEARCH.toLowerCase())
-							|| c.getContact_number().toLowerCase()
-									.contains(C_GLOB_SEARCH.toLowerCase())
-							|| v_name.toLowerCase().contains(C_GLOB_SEARCH)) {
-						if (v_name.toLowerCase().contains(
-								VACANCY_SEARCH.toLowerCase())) {
-							if (fullName.toLowerCase().contains(
-									C_NAME_SEARCH.toLowerCase())) {
-								if (c.getEmail().toLowerCase()
-										.contains(EMAIL_SEARCH.toLowerCase())) {
-									if (c.getContact_number()
+						String v_name = VacancyLocalServiceUtil
+								.getVacancy(v_id).getName();
+						if (fullName.toLowerCase().contains(
+								C_GLOB_SEARCH.toLowerCase())
+								|| c.getEmail().toLowerCase()
+										.contains(C_GLOB_SEARCH.toLowerCase())
+								|| c.getContact_number().toLowerCase()
+										.contains(C_GLOB_SEARCH.toLowerCase())
+								|| v_name.toLowerCase().contains(C_GLOB_SEARCH)) {
+							if (v_name.toLowerCase().contains(
+									VACANCY_SEARCH.toLowerCase())) {
+								if (fullName.toLowerCase().contains(
+										C_NAME_SEARCH.toLowerCase())) {
+									if (c.getEmail()
 											.toLowerCase()
 											.contains(
-													CONTACT_NO_SEARCH
-															.toLowerCase())) {
-										SimpleDateFormat sdf = new SimpleDateFormat(
-												"MM/dd/yyyy");
-										String convertedDate = sdf.format(c
-												.getDate_of_application());
-										java.util.Date cDate = sdf
-												.parse(convertedDate);
-										if (startStr != null && !startStr.equalsIgnoreCase("") && !startStr.equalsIgnoreCase("~")) {
-											java.util.Date fDate = sdf
-													.parse(startStr);
-											if (endStr != null && !endStr.equalsIgnoreCase("")) {
-												java.util.Date tDate = sdf
-														.parse(endStr);
-												if (cDate.after(fDate) && cDate.before(tDate)) {
-													filteredCandidates.add(c);
+													EMAIL_SEARCH.toLowerCase())) {
+										if (c.getContact_number()
+												.toLowerCase()
+												.contains(
+														CONTACT_NO_SEARCH
+																.toLowerCase())) {
+											SimpleDateFormat sdf = new SimpleDateFormat(
+													"dd/MM/yyyy");
+											String convertedDate = sdf.format(c
+													.getDate_of_application());
+											java.util.Date cDate = sdf
+													.parse(convertedDate);
+											if (startStr != null
+													&& !startStr
+															.equalsIgnoreCase("")
+													&& !startStr
+															.equalsIgnoreCase("~")) {
+												java.util.Date fDate = sdf
+														.parse(startStr);
+												if (endStr != null
+														&& !endStr
+																.equalsIgnoreCase("")) {
+													java.util.Date tDate = sdf
+															.parse(endStr);
+													if (cDate.after(fDate)
+															&& cDate.before(tDate)) {
+														filteredCandidates
+																.add(c);
+													}
+												} else {
+													if (cDate.after(fDate)) {
+														filteredCandidates
+																.add(c);
+													}
 												}
-											} else {
-												if (cDate.after(fDate)) {
-													filteredCandidates.add(c);
-												}
-											}
-											
-										} else {
-											if (endStr != null && !endStr.equalsIgnoreCase("")) {
-												java.util.Date tDate = sdf
-														.parse(endStr);
-												if (cDate.before(tDate)) {
-													filteredCandidates.add(c);
-												}
-											} else {
-												filteredCandidates.add(c);
-											}
-										}
-										
-									}
 
+											} else {
+												if (endStr != null
+														&& !endStr
+																.equalsIgnoreCase("")) {
+													java.util.Date tDate = sdf
+															.parse(endStr);
+													if (cDate.before(tDate)) {
+														filteredCandidates
+																.add(c);
+													}
+												} else {
+													filteredCandidates.add(c);
+												}
+											}
+
+										}
+
+									}
 								}
 							}
+
 						}
 
 					}
 
-				}
-
-				System.out.println("sortColumnIndex " + sortColumnIndex);
-
-				Collections.sort(filteredCandidates,
-						new Comparator<Candidate>() {
-							@Override
-							public int compare(Candidate c1, Candidate c2) {
-								switch (sortColumnIndex) {
-								case 2:
-									return c1.getFirst_name().compareTo(
-											c2.getFirst_name())
-											* sortDirection;
-								case 3:
-									return c1.getEmail().compareTo(
-											c2.getEmail())
-											* sortDirection;
-								case 4:
-									return c1.getContact_number().compareTo(
-											c2.getContact_number())
-											* sortDirection;
+/*					Collections.sort(filteredCandidates,
+							new Comparator<Candidate>() {
+								@Override
+								public int compare(Candidate c1, Candidate c2) {
+									switch (sortColumnIndex) {
+									case 2:
+										return c1.getFirst_name().compareTo(
+												c2.getFirst_name())
+												* sortDirection;
+									case 3:
+										return c1.getEmail().compareTo(
+												c2.getEmail())
+												* sortDirection;
+									case 4:
+										return c1.getContact_number()
+												.compareTo(
+														c2.getContact_number())
+												* sortDirection;
+									}
+									return 0;
 								}
-								return 0;
-							}
-						});
+							});*/
 
-				iTotalDisplayRecords = filteredCandidates.size();
+					iTotalDisplayRecords = filteredCandidates.size();
 
-				if (filteredCandidates.size() < start + listDisplayAmount) {
-					filteredCandidates = filteredCandidates.subList(start,
-							filteredCandidates.size());
-				} else {
-					filteredCandidates = filteredCandidates.subList(start,
-							start + listDisplayAmount);
-				}
+					if (filteredCandidates.size() < start + listDisplayAmount) {
+						filteredCandidates = filteredCandidates.subList(start,
+								filteredCandidates.size());
+					} else {
+						filteredCandidates = filteredCandidates.subList(start,
+								start + listDisplayAmount);
+					}
 
-				jsonResult.put("iTotalRecords", iTotalRecords);
-				jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
-				JSONArray array = new JSONArray();
-				try {
+					jsonResult.put("iTotalRecords", iTotalRecords);
+					jsonResult
+							.put("iTotalDisplayRecords", iTotalDisplayRecords);
+					JSONArray array = new JSONArray();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					for (Candidate c : filteredCandidates) {
 						JSONObject object = new JSONObject();
 						object.put("c_id", c.getC_id());
@@ -341,93 +316,84 @@ public class HRMPortlet extends MVCPortlet {
 										+ " " + c.getLast_name());
 						object.put("email", c.getEmail());
 						object.put("contact_number", c.getContact_number());
-						object.put("date_of_application",
-								c.getDate_of_application());
-						object.put("status", "on doing");
+						object.put("date_of_application", sdf.format(new Date(c
+								.getDate_of_application().getTime())));
+						object.put("status", c.getCandidate_status());
 						object.put("resume", "on doing");
 						array.put(object);
 					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (PortalException e) {
-					// TODO Auto-generated catch block
+
+					jsonResult.put("aaData", array);
+					Thread.sleep(1000);
+
+					response.getWriter().print(jsonResult);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
-				jsonResult.put("aaData", array);
-				Thread.sleep(2000);
+			} else if (SAVE_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
 
-				resourceResponse.getWriter().print(jsonResult);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		} else if (SAVE_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
-
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					resourceRequest.getPortletInputStream()));
-			if (br != null) {
-				json = br.readLine();
-				final JsonObject jObject = (JsonObject) new JsonParser()
-						.parse(json);
-				final long c_id = jObject.get("c_id").getAsLong();
-				final String first_name = jObject.get("first_name")
-						.getAsString();
-				final String middle_name = jObject.get("middle_name")
-						.getAsString();
-				final String last_name = jObject.get("last_name").getAsString();
-				final String contact_number = jObject.get("contact_number")
-						.getAsString();
-				final String comment = jObject.get("comment").getAsString();
-				final String email = jObject.get("email").getAsString();
-				final long v_id = jObject.get("vacancy").getAsLong();
-				// verify c_id to check create/update action
-				if (c_id == -1) {
-					try {
+				final BufferedReader br = new BufferedReader(
+						new InputStreamReader(request.getPortletInputStream()));
+				if (br != null) {
+					String json = br.readLine();
+					final JsonObject jObject = (JsonObject) new JsonParser()
+							.parse(json);
+					// final long c_id = jObject.get("c_id").getAsLong();
+					final String first_name = jObject.get("first_name")
+							.getAsString();
+					final String middle_name = jObject.get("middle_name")
+							.getAsString();
+					final String last_name = jObject.get("last_name")
+							.getAsString();
+					final String contact_number = jObject.get("contact_number")
+							.getAsString();
+					final String comment = jObject.get("comment").getAsString();
+					final String email = jObject.get("email").getAsString();
+					final long v_id = jObject.get("vacancy").getAsLong();
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					final java.util.Date date_of_application = sdf
+							.parse(jObject.get("date_of_application")
+									.getAsString());
+					// verify c_id to check create/update action
+					if (jObject.get("c_id").getAsLong() == -1) {
 						ServiceContext serviceContext = ServiceContextFactory
-								.getInstance(Candidate.class.getName(),
-										resourceRequest);
-						CandidateLocalServiceUtil.createCandidate(
+								.getInstance(Candidate.class.getName(), request);
+						CandidateLocalServiceUtil.create(
 								serviceContext.getUserId(), first_name,
 								middle_name, last_name, email, contact_number,
 								comment, 1,
-								new Date(System.currentTimeMillis()), 1, "zzz",
-								1, Arrays.asList(VacancyLocalServiceUtil
+								new Date(date_of_application.getTime()), 1,
+								"zzz", 1, Arrays.asList(VacancyLocalServiceUtil
 										.getVacancy(v_id)), serviceContext);
-					} catch (PortalException e) {
-
-					} catch (SystemException e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						CandidateLocalServiceUtil.editCandidate(c_id,
-								first_name, middle_name, last_name, email,
-								contact_number, comment, 1,
-								new Date(System.currentTimeMillis()), 1, "zzz",
-								1, Arrays.asList(VacancyLocalServiceUtil
+					} else {
+						CandidateLocalServiceUtil.edit(
+								jObject.get("c_id").getAsLong(), first_name,
+								middle_name, last_name, email, contact_number,
+								comment, 1,
+								new Date(date_of_application.getTime()), 1,
+								"zzz", 1, Arrays.asList(VacancyLocalServiceUtil
 										.getVacancy(v_id)));
 
-					} catch (PortalException e) {
-						e.printStackTrace();
-					} catch (SystemException e) {
-						e.printStackTrace();
 					}
+					JSONServiceUtil.writeJSON(response.getWriter(), map);
 				}
-				JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+			} else if (DELETE_CANDIDATES.equalsIgnoreCase(resourceRequestId)) {
+				deleteEntityServeResource(request, response.getWriter(), "c_id");
+			} else if (GET_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
+				find_ResponseEntityServeResource(request, response.getWriter(),
+						"c_id");
 			}
-		} else if (DELETE_CANDIDATES.equalsIgnoreCase(resourceRequestId)) {
-			deleteEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "c_id");
-		} else if (GET_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
-			find_ResponseEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "c_id");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
 
-		// ALL VACANCY RESOURCE ACTIONS
-		if (GET_ALL_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
-			try {
+	private void onVacancyServeResourceAction(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId) {
+		try {
+			// ALL VACANCY RESOURCE ACTIONS
+			if (GET_ALL_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
 				int iTotalRecords = 0;
 				int iTotalDisplayRecords = 0;
 				int start = 0;
@@ -438,19 +404,13 @@ public class HRMPortlet extends MVCPortlet {
 				List<Vacancy> vacancies = findAllVacancies();
 				iTotalRecords = vacancies.size();
 
-				V_GLOB_SEARCH = ParamUtil.getString(resourceRequest, "sSearch");
-				NAME_SEARCH = ParamUtil.getString(resourceRequest, "sSearch0");
-				JOB_TITLE_SEARCH = ParamUtil.getString(resourceRequest,
-						"sSearch1");
-				LOCATION_SEARCH = ParamUtil.getString(resourceRequest,
-						"sSearch2");
-				STATUS_SEARCH = ParamUtil
-						.getString(resourceRequest, "sSearch3");
-				String pageNo = resourceRequest.getParameter("iDisplayStart");
-				String pageSize = resourceRequest
-						.getParameter("iDisplayLength");
-				System.out.println(CandidateLocalServiceUtil
-						.filterCandidateByGlobalString(V_GLOB_SEARCH).size());
+				V_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
+				NAME_SEARCH = ParamUtil.getString(request, "sSearch_1");
+				JOB_TITLE_SEARCH = ParamUtil.getString(request, "sSearch_2");
+				LOCATION_SEARCH = ParamUtil.getString(request, "sSearch_4");
+				STATUS_SEARCH = ParamUtil.getString(request, "sSearch_5");
+				String pageNo = request.getParameter("iDisplayStart");
+				String pageSize = request.getParameter("iDisplayLength");
 				if (pageNo != null) {
 					start = Integer.parseInt(pageNo);
 					if (start < 0) {
@@ -465,12 +425,22 @@ public class HRMPortlet extends MVCPortlet {
 					}
 				}
 
+				System.out.println("JOB_TITLE_SEARCH" + JOB_TITLE_SEARCH);
+
 				// filter
 				for (Vacancy v : vacancies) {
-					// String jTitle =
-					// JTitleLocalServiceUtil.getJTitle(v.getJobtitleId()).getTitle();
-					if (v.getName().toLowerCase().contains(V_GLOB_SEARCH)) {
-						filteredVacancies.add(v);
+					final String jTitle = JTitleLocalServiceUtil.getJTitle(
+							v.getJobtitleId()).getTitle();
+					if (v.getName().toLowerCase().contains(V_GLOB_SEARCH)
+							|| jTitle.toLowerCase().contains(V_GLOB_SEARCH)) {
+						if (v.getName().toLowerCase()
+								.contains(NAME_SEARCH.toLowerCase())) {
+							if (JOB_TITLE_SEARCH != null
+									&& jTitle.toLowerCase().contains(
+											JOB_TITLE_SEARCH.toLowerCase())) {
+								filteredVacancies.add(v);
+							}
+						}
 					}
 				}
 				iTotalDisplayRecords = filteredVacancies.size();
@@ -505,7 +475,6 @@ public class HRMPortlet extends MVCPortlet {
 				}
 
 				// get list of JTitle names for JTitleSelect
-				List<String> jTitleNames = new ArrayList<String>();
 				JSONArray jTitleNamesArr = new JSONArray();
 				for (JTitle j : JTitleLocalServiceUtil.findAll()) {
 					jTitleNamesArr.put(j.getTitle());
@@ -514,38 +483,34 @@ public class HRMPortlet extends MVCPortlet {
 
 				jsonResult.put("aaData", array);
 				jsonResult.put("jTitleNames", jTitleNamesArr);
-				Thread.sleep(2000);
-				resourceResponse.getWriter().print(jsonResult);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+				Thread.sleep(1000);
+				response.getWriter().print(jsonResult);
 
-		} else if (SAVE_VACANCY.equalsIgnoreCase(resourceRequestId)) {
+			} else if (SAVE_VACANCY.equalsIgnoreCase(resourceRequestId)) {
 
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					resourceRequest.getPortletInputStream()));
-			if (br != null) {
-				json = br.readLine();
-				final JsonObject jObject = (JsonObject) new JsonParser()
-						.parse(json);
-				final long v_id = jObject.get("v_id").getAsLong();
-				final long jTitleId = jObject.get("jobtitleId").getAsLong();
-				final long hiring_manager_id = jObject.get("hiring_manager_id")
-						.getAsLong();
-				final String name = jObject.get("v_name").getAsString();
-				final String description = jObject.get("description")
-						.getAsString();
-				final int no_of_pos = jObject.get("no_of_positions").getAsInt();
-				final boolean published_in_feed = jObject.get(
-						"published_in_feed").getAsBoolean();
-				final String job_posting = jObject.get("job_posting")
-						.getAsString();
-				// verify c_id to check create/update action
-				try {
+				final BufferedReader br = new BufferedReader(
+						new InputStreamReader(request.getPortletInputStream()));
+				if (br != null) {
+					String json = br.readLine();
+					final JsonObject jObject = (JsonObject) new JsonParser()
+							.parse(json);
+					final long v_id = jObject.get("v_id").getAsLong();
+					final long jTitleId = jObject.get("jobtitleId").getAsLong();
+					final long hiring_manager_id = jObject.get(
+							"hiring_manager_id").getAsLong();
+					final String name = jObject.get("v_name").getAsString();
+					final String description = jObject.get("description")
+							.getAsString();
+					final int no_of_pos = jObject.get("no_of_positions")
+							.getAsInt();
+					final boolean published_in_feed = jObject.get(
+							"published_in_feed").getAsBoolean();
+					final String job_posting = jObject.get("job_posting")
+							.getAsString();
+					// verify c_id to check create/update action
 					if (v_id == -1) {
 						ServiceContext serviceContext = ServiceContextFactory
-								.getInstance(Candidate.class.getName(),
-										resourceRequest);
+								.getInstance(Candidate.class.getName(), request);
 						VacancyLocalServiceUtil.create(
 								serviceContext.getUserId(), jTitleId,
 								hiring_manager_id, name, description,
@@ -563,116 +528,159 @@ public class HRMPortlet extends MVCPortlet {
 						vArr.put(createVacancyJSONObj(v));
 					}
 					System.out.println(vArr);
-					resourceResponse.getWriter().print(vArr);
-				} catch (Exception e) {
-					e.printStackTrace();
+					response.getWriter().print(vArr);
 				}
+
+			} else if (DELETE_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
+				deleteEntityServeResource(request, response.getWriter(), "v_id");
+			} else if (GET_VACANCY.equalsIgnoreCase(resourceRequestId)) {
+				System.out.println("###INSIDE GET VACANCY");
+				find_ResponseEntityServeResource(request, response.getWriter(),
+						"v_id");
+
+			} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
+				System.out.println("###INSIDE UPLOAD FILE");
+
+				UploadPortletRequest uploadRequest = PortalUtil
+						.getUploadPortletRequest(request);
+				String uploadFileName = uploadRequest
+						.getFileName("addCandidate_resume");
+				System.out.println(uploadFileName);
 			}
-
-		} else if (DELETE_VACANCIES.equalsIgnoreCase(resourceRequestId)) {
-			deleteEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "v_id");
-		} else if (GET_VACANCY.equalsIgnoreCase(resourceRequestId)) {
-			System.out.println("###INSIDE GET VACANCY");
-			find_ResponseEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "v_id");
-
-		} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
-			System.out.println("###INSIDE UPLOAD FILE");
-
-			UploadPortletRequest uploadRequest = PortalUtil
-					.getUploadPortletRequest(resourceRequest);
-			String uploadFileName = uploadRequest
-					.getFileName("addCandidate_resume");
-			System.out.println(uploadFileName);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
 
+	private void onJTitleServeResourceAction(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId) {
 		// ALL JOB TITLE RESOURCE ACTIONS
-		if (GET_ALL_JOB_TITLES.equalsIgnoreCase(resourceRequestId)) {
-			List<Vacancy> vacancies = findAllVacancies();
-			// map.put("aaData", vacancies);
-			// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
-			C_GLOB_SEARCH = ParamUtil.getString(resourceRequest, "sSearch");
-			System.out.println("GLOB_SEARCH :" + C_GLOB_SEARCH);
-			JSONObject jsonResult = new JSONObject();
-			JSONArray array = new JSONArray();
-			for (Vacancy v : vacancies) {
-				JSONObject object = new JSONObject();
-				object.put("v_id", v.getV_id());
-				object.put("vacancy_name", v.getName());
-				object.put("job_title", v.getJobtitleId());
-				object.put("hiring_manager", v.getHiring_manager_id());
-				object.put("location", "on doing");
-				object.put("status", "on doing");
-				array.put(object);
-			}
-
-			jsonResult.put("aaData", array);
-			resourceResponse.getWriter().print(jsonResult);
-
-		} else if (SAVE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					resourceRequest.getPortletInputStream()));
-			if (br != null) {
-				json = br.readLine();
-				final JsonObject jObject = (JsonObject) new JsonParser()
-						.parse(json);
-				final long jTitleId = jObject.get("jTitleId").getAsLong();
-				final String title = jObject.get("title").getAsString();
-				final String desc = jObject.get("description").getAsString();
-				final String note = jObject.get("note").getAsString();
-				JSONArray jTitleArr = new JSONArray();
-				try {
-					// verify jTitleId to check create/update action
-					ServiceContext serviceContext = ServiceContextFactory
-							.getInstance(JTitle.class.getName(),
-									resourceRequest);
-					if (jTitleId == -1) {
-
-						JTitleLocalServiceUtil.create(
-								serviceContext.getUserId(),
-								serviceContext.getScopeGroupId(), title, desc,
-								note, false, serviceContext);
-					} else {
-						JTitleLocalServiceUtil.edit(serviceContext.getUserId(),
-								serviceContext.getScopeGroupId(), jTitleId,
-								title, desc, note, false, serviceContext);
-
-					}
-					List<JTitle> jTitles = JTitleLocalServiceUtil.findAll();
-					// JSONObject jTitleResult = new JSONObject();
-
-					for (JTitle j : jTitles) {
-						JSONObject obj = new JSONObject();
-						obj.put("jTitleId", j.getJobtitleId());
-						obj.put("jTitle", j.getTitle());
-						jTitleArr.put(obj);
-					}
-					// jTitleResult.put("jTitles", jTitleArr);
-					System.out.println(jTitleArr);
-				} catch (PortalException e) {
-					e.printStackTrace();
-				} catch (SystemException e) {
-					e.printStackTrace();
+		try {
+			if (GET_ALL_JOB_TITLES.equalsIgnoreCase(resourceRequestId)) {
+				List<Vacancy> vacancies = findAllVacancies();
+				// map.put("aaData", vacancies);
+				// JSONServiceUtil.writeJSON(resourceResponse.getWriter(), map);
+				C_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
+				System.out.println("GLOB_SEARCH :" + C_GLOB_SEARCH);
+				JSONObject jsonResult = new JSONObject();
+				JSONArray array = new JSONArray();
+				for (Vacancy v : vacancies) {
+					JSONObject object = new JSONObject();
+					object.put("v_id", v.getV_id());
+					object.put("vacancy_name", v.getName());
+					object.put("job_title", v.getJobtitleId());
+					object.put("hiring_manager", v.getHiring_manager_id());
+					object.put("location", "on doing");
+					object.put("status", "on doing");
+					array.put(object);
 				}
-				resourceResponse.getWriter().print(jTitleArr);
-			}
-		} else if (DELETE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
-			deleteEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "j_id");
-		} else if (GET_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
-			find_ResponseEntityServeResource(resourceRequest,
-					resourceResponse.getWriter(), "j_id");
-		} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
-			System.out.println("###INSIDE UPLOAD FILE");
 
-			UploadPortletRequest uploadRequest = PortalUtil
-					.getUploadPortletRequest(resourceRequest);
-			String uploadFileName = uploadRequest
-					.getFileName("addCandidate_resume");
-			System.out.println(uploadFileName);
+				jsonResult.put("aaData", array);
+				response.getWriter().print(jsonResult);
+
+			} else if (SAVE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
+				final BufferedReader br = new BufferedReader(
+						new InputStreamReader(request.getPortletInputStream()));
+				if (br != null) {
+					String json = br.readLine();
+					final JsonObject jObject = (JsonObject) new JsonParser()
+							.parse(json);
+					final long jTitleId = jObject.get("jTitleId").getAsLong();
+					final String title = jObject.get("title").getAsString();
+					final String desc = jObject.get("description")
+							.getAsString();
+					final String note = jObject.get("note").getAsString();
+					JSONArray jTitleArr = new JSONArray();
+					try {
+						// verify jTitleId to check create/update action
+						ServiceContext serviceContext = ServiceContextFactory
+								.getInstance(JTitle.class.getName(), request);
+						if (jTitleId == -1) {
+
+							JTitleLocalServiceUtil.create(
+									serviceContext.getUserId(),
+									serviceContext.getScopeGroupId(), title,
+									desc, note, false, serviceContext);
+						} else {
+							JTitleLocalServiceUtil.edit(
+									serviceContext.getUserId(),
+									serviceContext.getScopeGroupId(), jTitleId,
+									title, desc, note, false, serviceContext);
+
+						}
+						List<JTitle> jTitles = JTitleLocalServiceUtil.findAll();
+						// JSONObject jTitleResult = new JSONObject();
+
+						for (JTitle j : jTitles) {
+							JSONObject obj = new JSONObject();
+							obj.put("jTitleId", j.getJobtitleId());
+							obj.put("jTitle", j.getTitle());
+							jTitleArr.put(obj);
+						}
+						// jTitleResult.put("jTitles", jTitleArr);
+						System.out.println(jTitleArr);
+					} catch (PortalException e) {
+						e.printStackTrace();
+					} catch (SystemException e) {
+						e.printStackTrace();
+					}
+					response.getWriter().print(jTitleArr);
+				}
+			} else if (DELETE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
+				deleteEntityServeResource(request, response.getWriter(), "j_id");
+			} else if (GET_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
+				find_ResponseEntityServeResource(request, response.getWriter(),
+						"j_id");
+			} else if ("uploadResume".equalsIgnoreCase(resourceRequestId)) {
+				System.out.println("###INSIDE UPLOAD FILE");
+
+				UploadPortletRequest uploadRequest = PortalUtil
+						.getUploadPortletRequest(request);
+				String uploadFileName = uploadRequest
+						.getFileName("addCandidate_resume");
+				System.out.println(uploadFileName);
+			} else if ("loadJTitles".equalsIgnoreCase(resourceRequestId)) {
+				// get list of JTitle names for JTitleSelect
+				JSONObject jsonResult = new JSONObject();
+				JSONArray jTitleNamesArr = new JSONArray();
+				for (JTitle j : JTitleLocalServiceUtil.findAll()) {
+					jTitleNamesArr.put(j.getTitle());
+				}
+				System.out.println(jTitleNamesArr);
+
+				jsonResult.put("jTitleNames", jTitleNamesArr);
+				response.getWriter().print(jTitleNamesArr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	private void onInterviewServeResourceAction(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId) {
+		if (SAVE_INTERVIEW.equalsIgnoreCase(resourceRequestId)) {
+			System.out.println("SAVE_INTERVIEW");
+			try {
+				final ServiceContext context = ServiceContextFactory
+						.getInstance(request);
+				final BufferedReader br = new BufferedReader(
+						new InputStreamReader(request.getPortletInputStream()));
+				if (br != null) {
+					String json = br.readLine();
+					final JsonObject jObject = (JsonObject) new JsonParser()
+							.parse(json);
+					final String name = jObject.get("name").getAsString();
+					InterviewLocalServiceUtil.create(context.getUserId(), name,
+							context);
+				}
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private List<Vacancy> findAllVacancies() {
@@ -700,7 +708,7 @@ public class HRMPortlet extends MVCPortlet {
 					JsonObject jsonObject = (JsonObject) jsonArr.get(i);
 					long id = jsonObject.get(entityId).getAsLong();
 					// Bad!!!
-					// TODO: find a way to generic do this
+					// TODO: find a way to generic doing this
 					if (entityId.equalsIgnoreCase("c_id")) {
 						CandidateLocalServiceUtil.delele(id);
 					} else if (entityId.equalsIgnoreCase("v_id")) {

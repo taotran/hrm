@@ -161,16 +161,16 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
     private static final String _SQL_COUNT_CANDIDATE = "SELECT COUNT(candidate) FROM Candidate candidate";
     private static final String _SQL_COUNT_CANDIDATE_WHERE = "SELECT COUNT(candidate) FROM Candidate candidate WHERE ";
     private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "candidate.c_id";
-    private static final String _FILTER_SQL_SELECT_CANDIDATE_WHERE = "SELECT DISTINCT {candidate.*} FROM HRM_Candidate candidate WHERE ";
+    private static final String _FILTER_SQL_SELECT_CANDIDATE_WHERE = "SELECT DISTINCT {candidate.*} FROM HRM_Recruitment_Candidate candidate WHERE ";
     private static final String _FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_1 =
-        "SELECT {HRM_Candidate.*} FROM (SELECT DISTINCT candidate.c_id FROM HRM_Candidate candidate WHERE ";
+        "SELECT {HRM_Recruitment_Candidate.*} FROM (SELECT DISTINCT candidate.c_id FROM HRM_Recruitment_Candidate candidate WHERE ";
     private static final String _FILTER_SQL_SELECT_CANDIDATE_NO_INLINE_DISTINCT_WHERE_2 =
-        ") TEMP_TABLE INNER JOIN HRM_Candidate ON TEMP_TABLE.c_id = HRM_Candidate.c_id";
-    private static final String _FILTER_SQL_COUNT_CANDIDATE_WHERE = "SELECT COUNT(DISTINCT candidate.c_id) AS COUNT_VALUE FROM HRM_Candidate candidate WHERE ";
+        ") TEMP_TABLE INNER JOIN HRM_Recruitment_Candidate ON TEMP_TABLE.c_id = HRM_Recruitment_Candidate.c_id";
+    private static final String _FILTER_SQL_COUNT_CANDIDATE_WHERE = "SELECT COUNT(DISTINCT candidate.c_id) AS COUNT_VALUE FROM HRM_Recruitment_Candidate candidate WHERE ";
     private static final String _FILTER_ENTITY_ALIAS = "candidate";
-    private static final String _FILTER_ENTITY_TABLE = "HRM_Candidate";
+    private static final String _FILTER_ENTITY_TABLE = "HRM_Recruitment_Candidate";
     private static final String _ORDER_BY_ENTITY_ALIAS = "candidate.";
-    private static final String _ORDER_BY_ENTITY_TABLE = "HRM_Candidate.";
+    private static final String _ORDER_BY_ENTITY_TABLE = "HRM_Recruitment_Candidate.";
     private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Candidate exists with the primary key ";
     private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Candidate exists with the key {";
     private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
@@ -3105,6 +3105,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         candidateImpl.setCv_text_version(candidate.getCv_text_version());
         candidateImpl.setKeywords(candidate.getKeywords());
         candidateImpl.setAdded_person(candidate.getAdded_person());
+        candidateImpl.setCandidate_status(candidate.getCandidate_status());
         candidateImpl.setUser_id(candidate.getUser_id());
         candidateImpl.setGroup_id(candidate.getGroup_id());
         candidateImpl.setInterviewId(candidate.getInterviewId());
@@ -3653,7 +3654,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
         } catch (Exception e) {
             throw processException(e);
         } finally {
-            FinderCacheUtil.clearCache(CandidateModelImpl.MAPPING_TABLE_HRM_VACANCIES_CANDIDATES_NAME);
+            FinderCacheUtil.clearCache(CandidateModelImpl.MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_NAME);
         }
     }
 
@@ -3685,7 +3686,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
             }
         }
 
-        candidateToVacancyTableMapper = TableMapperFactory.getTableMapper("HRM_Vacancies_Candidates",
+        candidateToVacancyTableMapper = TableMapperFactory.getTableMapper("HRM_Recruitment_Vacancies_Candidates",
                 "c_id", "v_id", this, vacancyPersistence);
     }
 

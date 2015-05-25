@@ -26,6 +26,7 @@
 			<basic name="cv_text_version" />
 			<basic name="keywords" />
 			<basic name="added_person" />
+			<basic name="candidate_status" />
 			<basic name="user_id" />
 			<basic name="group_id" />
 			<basic name="interviewId" />
@@ -117,25 +118,25 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="vn.com.ecopharma.hrm.model.impl.CandidateImpl" name="Candidate">
-		<table name="HRM_Candidate" />
+		<table name="HRM_Recruitment_Candidate" />
 		<attributes>
 			<transient name="_vacancies" />
 		</attributes>
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">
-		<table name="HRM_FileAttachment" />
+		<table name="HRM_Recruitment_FileAttachment" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.InterviewImpl" name="Interview">
-		<table name="HRM_Interview" />
+		<table name="HRM_Recruitment_Interview" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">
-		<table name="HRM_JTitle" />
+		<table name="HRM_Recruitment_JTitle" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.VacancyImpl" name="Vacancy">
-		<table name="HRM_Vacancy" />
+		<table name="HRM_Recruitment_Vacancy" />
 		<attributes>
 			<transient name="_candidates" />
 		</attributes>

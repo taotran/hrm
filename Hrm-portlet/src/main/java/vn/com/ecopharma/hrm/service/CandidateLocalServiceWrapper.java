@@ -465,7 +465,7 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
+    public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
@@ -474,23 +474,22 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
-        return _candidateLocalService.createCandidate(user_id, first_name,
-            middle_name, last_name, email, contact_number, comment,
-            mode_of_application, date_of_application, cv_file_id,
-            cv_text_version, added_person, vacancies, serviceContext);
+        return _candidateLocalService.create(user_id, first_name, middle_name,
+            last_name, email, contact_number, comment, mode_of_application,
+            date_of_application, cv_file_id, cv_text_version, added_person,
+            vacancies, serviceContext);
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Candidate editCandidate(
-        long candidateId, java.lang.String first_name,
-        java.lang.String middle_name, java.lang.String last_name,
-        java.lang.String email, java.lang.String contact_number,
-        java.lang.String comment, int mode_of_application,
-        java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person,
+    public vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String comment,
+        int mode_of_application, java.sql.Date date_of_application,
+        long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
-        return _candidateLocalService.editCandidate(candidateId, first_name,
+        return _candidateLocalService.edit(candidateId, first_name,
             middle_name, last_name, email, contact_number, comment,
             mode_of_application, date_of_application, cv_file_id,
             cv_text_version, added_person, vacancies);

@@ -263,6 +263,27 @@ public class InterviewLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll() {
+        return getService().findAll();
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end) {
+        return getService().findAll(start, end);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Interview> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+        return getService().findAll(start, end, orderByComparator);
+    }
+
+    public static vn.com.ecopharma.hrm.model.Interview create(long userId,
+        java.lang.String name,
+        com.liferay.portal.service.ServiceContext serviceContext) {
+        return getService().create(userId, name, serviceContext);
+    }
+
     public static void clearService() {
         _service = null;
     }

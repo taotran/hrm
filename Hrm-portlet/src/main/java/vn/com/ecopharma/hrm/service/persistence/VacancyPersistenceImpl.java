@@ -892,7 +892,7 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
         } catch (Exception e) {
             throw processException(e);
         } finally {
-            FinderCacheUtil.clearCache(VacancyModelImpl.MAPPING_TABLE_HRM_VACANCIES_CANDIDATES_NAME);
+            FinderCacheUtil.clearCache(VacancyModelImpl.MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_NAME);
         }
     }
 
@@ -919,7 +919,7 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
             }
         }
 
-        vacancyToCandidateTableMapper = TableMapperFactory.getTableMapper("HRM_Vacancies_Candidates",
+        vacancyToCandidateTableMapper = TableMapperFactory.getTableMapper("HRM_Recruitment_Vacancies_Candidates",
                 "v_id", "c_id", this, candidatePersistence);
     }
 

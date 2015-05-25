@@ -371,7 +371,7 @@ public interface CandidateLocalService extends BaseLocalService,
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
         long c_id);
 
-    public vn.com.ecopharma.hrm.model.Candidate createCandidate(long user_id,
+    public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
@@ -381,13 +381,12 @@ public interface CandidateLocalService extends BaseLocalService,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
-    public vn.com.ecopharma.hrm.model.Candidate editCandidate(
-        long candidateId, java.lang.String first_name,
-        java.lang.String middle_name, java.lang.String last_name,
-        java.lang.String email, java.lang.String contact_number,
-        java.lang.String comment, int mode_of_application,
-        java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person,
+    public vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,
+        java.lang.String first_name, java.lang.String middle_name,
+        java.lang.String last_name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String comment,
+        int mode_of_application, java.sql.Date date_of_application,
+        long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
