@@ -22,33 +22,25 @@ public enum CandidateStatus {
 	MARK_INTERVIEW_PASS, // mark pass
 	MARK_INTERVIEW_FAIL; // mark fail
 
-	public List<CandidateStatus> getAvailableStatus(CandidateStatus status) {
+	public static List<CandidateStatus> getAvailableStatus(CandidateStatus status) {
 		switch (status) {
 		case APPLICATION_INITIATED:
-			Arrays.asList(REJECT, SHORTLIST);
-			break;
+			return Arrays.asList(REJECT, SHORTLIST);
 		case INTERVIEW_SCHEDULED:
-			Arrays.asList(REJECT, MARK_INTERVIEW_FAIL, MARK_INTERVIEW_PASS);
-			break;
+			return Arrays.asList(REJECT, MARK_INTERVIEW_FAIL, MARK_INTERVIEW_PASS);
 		case SHORTLIST:
-			Arrays.asList(REJECT, INTERVIEW_SCHEDULED);
-			break;
+			return Arrays.asList(REJECT, INTERVIEW_SCHEDULED);
 		case MARK_INTERVIEW_PASS:
-			Arrays.asList(JOB_OFFERED, INTERVIEW_SCHEDULED, REJECT);
-			break;
+			return Arrays.asList(JOB_OFFERED, INTERVIEW_SCHEDULED, REJECT);
 		case MARK_INTERVIEW_FAIL:
-			Arrays.asList(REJECT);
-			break;
+			return Arrays.asList(REJECT);
 		case JOB_OFFERED:
-			Arrays.asList(DECLINE_OFFERED, HIRE, REJECT);
-			break;
+			return Arrays.asList(DECLINE_OFFERED, HIRE, REJECT);
 		case REJECT:
-			new ArrayList<CandidateStatus>();
-			break;
+			return new ArrayList<CandidateStatus>();
 		default:
-			break;
+			return  new ArrayList<CandidateStatus>();
 		}
-		return null;
 	}
 
 	@Override
@@ -57,7 +49,7 @@ public enum CandidateStatus {
 	}
 
 	public String getLocalizedName() {
-		// TODO: get resource name for status, TEMPORARY using this way
+		// TODO: get localized name for status, TEMPORARY using this way
 		return this.name().toUpperCase();
 	}
 

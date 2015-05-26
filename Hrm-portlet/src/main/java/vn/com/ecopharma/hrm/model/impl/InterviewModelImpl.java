@@ -69,9 +69,11 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
             { "userName", Types.VARCHAR },
             { "createDate", Types.TIMESTAMP },
             { "modifiedDate", Types.TIMESTAMP },
-            { "name", Types.VARCHAR }
+            { "name", Types.VARCHAR },
+            { "interview_date", Types.TIMESTAMP },
+            { "interview_time", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Interview (interviewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Interview (interviewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,interview_date DATE null,interview_time VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Interview";
     public static final String ORDER_BY_JPQL = " ORDER BY interview.interviewId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Interview.interviewId ASC";
@@ -100,6 +102,8 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
     private Date _createDate;
     private Date _modifiedDate;
     private String _name;
+    private Date _interview_date;
+    private String _interview_time;
     private Interview _escapedModel;
 
     public InterviewModelImpl() {
@@ -126,6 +130,8 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
         model.setCreateDate(soapModel.getCreateDate());
         model.setModifiedDate(soapModel.getModifiedDate());
         model.setName(soapModel.getName());
+        model.setInterview_date(soapModel.getInterview_date());
+        model.setInterview_time(soapModel.getInterview_time());
 
         return model;
     }
@@ -192,6 +198,8 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("name", getName());
+        attributes.put("interview_date", getInterview_date());
+        attributes.put("interview_time", getInterview_time());
 
         return attributes;
     }
@@ -244,6 +252,18 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
 
         if (name != null) {
             setName(name);
+        }
+
+        Date interview_date = (Date) attributes.get("interview_date");
+
+        if (interview_date != null) {
+            setInterview_date(interview_date);
+        }
+
+        String interview_time = (String) attributes.get("interview_time");
+
+        if (interview_time != null) {
+            setInterview_time(interview_time);
         }
     }
 
@@ -351,6 +371,32 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
     @Override
     public void setName(String name) {
         _name = name;
+    }
+
+    @JSON
+    @Override
+    public Date getInterview_date() {
+        return _interview_date;
+    }
+
+    @Override
+    public void setInterview_date(Date interview_date) {
+        _interview_date = interview_date;
+    }
+
+    @JSON
+    @Override
+    public String getInterview_time() {
+        if (_interview_time == null) {
+            return StringPool.BLANK;
+        } else {
+            return _interview_time;
+        }
+    }
+
+    @Override
+    public void setInterview_time(String interview_time) {
+        _interview_time = interview_time;
     }
 
     @Override
@@ -481,6 +527,8 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
         interviewImpl.setCreateDate(getCreateDate());
         interviewImpl.setModifiedDate(getModifiedDate());
         interviewImpl.setName(getName());
+        interviewImpl.setInterview_date(getInterview_date());
+        interviewImpl.setInterview_time(getInterview_time());
 
         interviewImpl.resetOriginalValues();
 
@@ -574,12 +622,28 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
             interviewCacheModel.name = null;
         }
 
+        Date interview_date = getInterview_date();
+
+        if (interview_date != null) {
+            interviewCacheModel.interview_date = interview_date.getTime();
+        } else {
+            interviewCacheModel.interview_date = Long.MIN_VALUE;
+        }
+
+        interviewCacheModel.interview_time = getInterview_time();
+
+        String interview_time = interviewCacheModel.interview_time;
+
+        if ((interview_time != null) && (interview_time.length() == 0)) {
+            interviewCacheModel.interview_time = null;
+        }
+
         return interviewCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(21);
 
         sb.append("{interviewId=");
         sb.append(getInterviewId());
@@ -597,6 +661,10 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
         sb.append(getModifiedDate());
         sb.append(", name=");
         sb.append(getName());
+        sb.append(", interview_date=");
+        sb.append(getInterview_date());
+        sb.append(", interview_time=");
+        sb.append(getInterview_time());
         sb.append("}");
 
         return sb.toString();
@@ -604,7 +672,7 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(28);
+        StringBundler sb = new StringBundler(34);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Interview");
@@ -641,6 +709,14 @@ public class InterviewModelImpl extends BaseModelImpl<Interview>
         sb.append(
             "<column><column-name>name</column-name><column-value><![CDATA[");
         sb.append(getName());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>interview_date</column-name><column-value><![CDATA[");
+        sb.append(getInterview_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>interview_time</column-name><column-value><![CDATA[");
+        sb.append(getInterview_time());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

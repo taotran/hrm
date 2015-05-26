@@ -41,6 +41,8 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
     private Date _createDate;
     private Date _modifiedDate;
     private String _name;
+    private Date _interview_date;
+    private String _interview_time;
     private BaseModel<?> _interviewRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -89,6 +91,8 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("name", getName());
+        attributes.put("interview_date", getInterview_date());
+        attributes.put("interview_time", getInterview_time());
 
         return attributes;
     }
@@ -141,6 +145,18 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
 
         if (name != null) {
             setName(name);
+        }
+
+        Date interview_date = (Date) attributes.get("interview_date");
+
+        if (interview_date != null) {
+            setInterview_date(interview_date);
+        }
+
+        String interview_time = (String) attributes.get("interview_time");
+
+        if (interview_time != null) {
+            setInterview_time(interview_time);
         }
     }
 
@@ -331,6 +347,51 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
     }
 
     @Override
+    public Date getInterview_date() {
+        return _interview_date;
+    }
+
+    @Override
+    public void setInterview_date(Date interview_date) {
+        _interview_date = interview_date;
+
+        if (_interviewRemoteModel != null) {
+            try {
+                Class<?> clazz = _interviewRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setInterview_date", Date.class);
+
+                method.invoke(_interviewRemoteModel, interview_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getInterview_time() {
+        return _interview_time;
+    }
+
+    @Override
+    public void setInterview_time(String interview_time) {
+        _interview_time = interview_time;
+
+        if (_interviewRemoteModel != null) {
+            try {
+                Class<?> clazz = _interviewRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setInterview_time",
+                        String.class);
+
+                method.invoke(_interviewRemoteModel, interview_time);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public int getStatus() {
         return 0;
     }
@@ -498,6 +559,8 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
         clone.setCreateDate(getCreateDate());
         clone.setModifiedDate(getModifiedDate());
         clone.setName(getName());
+        clone.setInterview_date(getInterview_date());
+        clone.setInterview_time(getInterview_time());
 
         return clone;
     }
@@ -547,7 +610,7 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(21);
 
         sb.append("{interviewId=");
         sb.append(getInterviewId());
@@ -565,6 +628,10 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
         sb.append(getModifiedDate());
         sb.append(", name=");
         sb.append(getName());
+        sb.append(", interview_date=");
+        sb.append(getInterview_date());
+        sb.append(", interview_time=");
+        sb.append(getInterview_time());
         sb.append("}");
 
         return sb.toString();
@@ -572,7 +639,7 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(28);
+        StringBundler sb = new StringBundler(34);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Interview");
@@ -609,6 +676,14 @@ public class InterviewClp extends BaseModelImpl<Interview> implements Interview 
         sb.append(
             "<column><column-name>name</column-name><column-value><![CDATA[");
         sb.append(getName());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>interview_date</column-name><column-value><![CDATA[");
+        sb.append(getInterview_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>interview_time</column-name><column-value><![CDATA[");
+        sb.append(getInterview_time());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

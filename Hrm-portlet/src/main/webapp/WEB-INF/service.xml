@@ -102,10 +102,8 @@
         <column name="content" type="String"></column>
         <column name="attachment_type" type="String"></column>
 	</entity>
-	<entity name="Interview" local-service="true"
+	<entity name="Interview" local-service="true" remote-service="true"
 		trash-enabled="true">
-
-
 		<!-- PK fields -->
 
 		<column name="interviewId" type="long" primary="true"></column>
@@ -115,13 +113,15 @@
 		<column name="groupId" type="long"></column>
 
 		<!-- Audit fields -->
-
+		
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
         <column name="name" type="String"></column>
+        <column name="interview_date" type="Date"></column>
+        <column name="interview_time" type="String"></column>
 	</entity>
 
 </service-builder>

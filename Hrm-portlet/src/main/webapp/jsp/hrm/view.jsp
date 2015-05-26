@@ -143,7 +143,7 @@
 		enctype="multipart/form-data" name="cForm"> --%>
 	<div class="modal-body" id="candidateInfo">
 		<form class="form-horizontal">
-			<input type="hidden" id="c_id" value="-1" />
+			<input type="hidden" class="entityId" id="c_id" value="-1" />
 			<div class="form-group">
 				<div class="form-inline">
 					<label for="first_name"><liferay-ui:message
@@ -198,7 +198,7 @@
 				<div class="form-inline">
 					<label for="select2"><liferay-ui:message
 							key="candidate.job_vacancy" /></label>
-					<c:choose>
+					<%-- 					<c:choose>
 						<c:when test="${fn:length(allVacancies) > 0}">
 							<select class="form-control select2-container" id="vacancySelect"
 								class="vacancySelect2">
@@ -213,7 +213,12 @@
 								<option value="none">No Vacancy</option>
 							</select>
 						</c:otherwise>
-					</c:choose>
+					</c:choose> --%>
+					<select class="form-control select2-container" id="vacancySelect"
+						class="vacancySelect2">
+						<option value='' disabled selected style='display: none;'>Please
+							Choose</option>
+					</select>
 
 				</div>
 			</div>
@@ -271,7 +276,7 @@
 	</div>
 
 	<div class="modal-body" id="vacancyInfo">
-		<input type="hidden" id="v_id" value="-1" />
+		<input type="hidden" class="entityId" id="v_id" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="jTitleSelect">Job Title</label>
@@ -382,7 +387,7 @@
 	</div>
 
 	<div class="modal-body" id="jobTitleInfo">
-		<input type="hidden" id="jTitleId" value="-1" />
+		<input type="hidden" class="entityId" id="jTitleId" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="title">Title</label> <input type="text"
@@ -418,7 +423,7 @@
 	</div>
 </div>
 
-<!-- JOB TITLE MODAL -->
+<!-- JOB INTERVIEW MODAL -->
 <div class="modal" id="modify-interview-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
@@ -426,7 +431,7 @@
 	</div>
 
 	<div class="modal-body" id="interviewInfo">
-		<input type="hidden" id="interviewId" value="-1" />
+		<input type="hidden" class="entityId" id="interviewId" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="iname">Interview Name</label> <input type="text"
@@ -438,6 +443,65 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-primary" data-dismiss="modal"
 			onclick="saveInterview()">
+			<liferay-ui:message key="global.button.save" />
+		</button>
+		<button class="btn" onclick="clearFields()">
+			<liferay-ui:message key="global.button.clear_all" />
+		</button>
+		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+</div>
+
+<!-- SCHEDULE INTERVIEW MODAL -->
+<div class="modal" id="modify-interviewSchedule-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h4>Schedule Interview</h4>
+	</div>
+
+	<div class="modal-body" id="interviewScheduleInfo">
+		<input type="hidden" class="entityId" id="itvSchedId" value="-1" />
+		<input type="hidden" class="entityId" id="itv_c_id" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="interviewTitleSelect">Title</label> <select
+					id="interviewTitleSelect">
+					<option value='' disabled selected style='display: none;'>Please
+						Choose</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="itvName">Interviewer Name</label> <input type="text"
+					class="form-control" id="itvName" value="Mr. ABC"
+					placeholder="Interviewer name here">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="itvDate">Date</label> <input type="text"
+					data-date-format="dd/mm/yyyy" id="itvDate" class="itvDate">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="itvTime">Time</label>
+				<div id="itvTime">
+					<label class="small70" for="itvTimeFrom">From</label> <input
+						type="text" class="small70" data-date-format="dd/mm/yyyy"
+						id="itvDate" placeholder="HH:MM"> <label class="small70"
+						for="itvTimeTo">To</label> <input class="small70" type="text"
+						data-date-format="dd/mm/yyyy" id="itvDate" placeholder="HH:MM">
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveJobTitle()">
 			<liferay-ui:message key="global.button.save" />
 		</button>
 		<button class="btn" onclick="clearFields()">
@@ -468,9 +532,14 @@
 
 	});
 	
+	
+	$('#modify-interviewSchedule-modal').on('shown.bs.modal', function(){
+		console.log("#modify-interviewSchedule-modal shown!!!")
+	});
+	
 	/* clear modal data on closing */
 	
-/* 	function clearModalDataOnModalHide(modalId) {
+ 	/*function clearModalDataOnModalHide(modalId) {
 		$(modalId).on('hidden.bs.modal', function () {
 			console.log("clear modal");
 		    $(this)
@@ -489,7 +558,7 @@
 	clearModalDataOnModalHide("#modify-interview-modal"); */
 	
 	/* clear modal data on closing */
-	/* $('.modal').each(function(index) {
+	 $('.modal').each(function(index) {
 		$(this).on('hidden.bs.modal', function () {
 			console.log("clear modal");
 		    $(this)
@@ -498,10 +567,12 @@
 		    .end()
 		    .find("input[type=checkbox], input[type=radio]")
 		       .prop("checked", "")
+		       .end()
+		       .find("input[type=hidden]")
+		       .val('-1')
 		       .end();
 		});
-	}); */
-	
+	});
 	
 	$("#v_checkAll").click(function() {
 		console.log("clicked");
@@ -515,7 +586,6 @@
 	})
 
 	$('#addCandidate_resume').change(function() {
-		console.log("aaaaaaaaaaaaaaaa");
 		sendFile(this.files[0]);
 	});
 
@@ -574,18 +644,13 @@
 			},
 			success : function(data) {
 				$('#vtable').dataTable().fnDraw();
-				console.log("INSIDE RESPONSE");
-				console.log(data);
-				$.each(data, function(i, item) {
-					console.log(item.v_id + " : " + item.v_name);
-				});
-
 				select = document.getElementById('vacancySelect');
 
 				select.options.length = 0;
 				$.each(data, function(i, item) {
 					select.options.add(new Option(item.v_name, item.v_id));
 				});
+				/* $('#vacancySelect')[0].selectedIndex = 1; */
 			}
 		});
 
@@ -785,6 +850,7 @@
 	};
 	
 	function getCandidatesFormData() {
+/* 		console.log("getCandidatesFormData()"); */
 		$.ajax ({
 			type : 'POST',
 			url : "<portlet:resourceURL id='getCandidatesFormDataAJX'/>",
@@ -792,8 +858,14 @@
 			error : function(e) {
 
 			},
-			success : function(response) {
-				console.log(response);
+			success : function(data) {
+				console.log(data);
+				select = document.getElementById('vacancySelect');
+
+				select.options.length = 0;
+				$.each($.parseJSON(data), function(i, item) {
+					select.options.add(new Option(item.vacancy_name, item.v_id));
+				});
 				$('#modify-candidate-modal').modal('show');
 			}	
 		})
@@ -891,7 +963,8 @@
 			        	$('td', row).eq(2).addClass('highlight');
 			        },
 					oLanguage : {
-						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
+						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>
+	/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
 							},
 							aoColumns : [
 									{
@@ -917,31 +990,57 @@
 													+ full.c_id + ");'>" + data
 													+ "</a>";
 										}
-									}, {
+									},
+									{
 										"mData" : "email",
 										"type" : "text"
-									}, {
+									},
+									{
 										"mData" : "contact_number",
 										"type" : "text"
-									}, {
+									},
+									{
 										"mData" : "date_of_application",
 										"type" : "text"
-									}, {
+									},
+									{
 										"mData" : "status",
-										"type" : "text"
+										"type" : "text",
+										"mRender" : function(data, type, full) {
+											console.log(full.availableStatuses);
+											var selectorId = "availStatusSelect"
+													+ full.c_id;
+											var s = "<div class='candidateStatus'>"
+													+ data
+													+ "<select onchange='onCandidateStatusChange("
+													+ full.c_id
+													+ ")' id='"
+													+ selectorId
+													+ "' name='availStatusSelect'>";
+											var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>";
+											/* var options = "<option value='" + -1 + "' selected>"
+													+ data + "</option>"; */
+											for (var i = 0; i < full.availableStatuses.length; i++) {
+												options += "<option value='" + full.c_id + "'>"
+														+ full.availableStatuses[i]
+														+ "</option>";
+											}
+											s = s + options + "</select></div>";
+											return s.toString();
+										}
 									}, {
 										"mData" : "resume",
 										"type" : "text"
 									} ],
-							bColVis : true,
-							colVis : {
-								"align" : "right",
-								restore : "Restore",
-								showAll : "Show all",
-								showNone : "Show none",
-								order : 'alpha',
-								"buttonText" : "Show/Hide Columns"
-							},
+							/* 							bColVis : true,
+							 colVis : {
+							 "align" : "right",
+							 restore : "Restore",
+							 showAll : "Show all",
+							 showNone : "Show none",
+							 order : 'alpha',
+							 "buttonText" : "Show/Hide Columns"
+							 }, */
 							"language" : {
 								"infoFiltered" : ""
 							},
@@ -967,12 +1066,54 @@
 				});
 	}
 
+	function onCandidateStatusChange(selectorId) {
+		var object = new Object();
+		object.c_id = selectorId;
+		object.changedStatus = $(
+				"#availStatusSelect" + selectorId + " option:selected").text();
+		if (object.changedStatus == 'INTERVIEW_SCHEDULED') {
+			$.ajax({
+				type : 'GET',
+				url : '<portlet:resourceURL id="get_all_interviews"/>',
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+					console.log(data);
+					select = document.getElementById('interviewTitleSelect');
+					$('#itv_c_id').val(selectorId);
+					select.options.length = 0;
+					$.each($.parseJSON(data), function(i, item) {
+						select.options.add(new Option(item.interviewName,
+								item.interviewId));
+					});
+				},
+			});
+
+			$('#modify-interviewSchedule-modal').modal('show');
+		} else {
+
+			$.ajax({
+				type : 'POST',
+				url : '<portlet:resourceURL id="candidateStatusChange"/>',
+				contentType : "application/json; charset=utf-8",
+				data : JSON.stringify(object),
+				success : function(response) {
+					$('#ctable').dataTable().fnDraw();
+				},
+				error : function(msg) {
+
+				}
+			});
+
+		}
+	}
+
 	$(document).ready(function() {
 		console.log("on document ready");
 		loadCandidateTable();
 		$(".select2-container").select2();
 		$(".select_filter").select2();
 		$('#date_of_application').datepicker();
+		$('#itvDate').datepicker();
 		$('#cCheckbox').change(function() {
 			alert("checked");
 			if ($("#cCheckbox:checked").length) {
@@ -982,23 +1123,23 @@
 			}
 
 		});
-		
+
 		$.ajax({
 			type : 'POST',
 			url : "<portlet:resourceURL id='loadJTitles'/>",
-			contentType: "application/json; charset=utf-8",
-			success: function(data) {
-				
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+
 				List1 = data;
 				console.log("TITLES");
 				console.log(List1);
 			},
-			error: function(msg) {
-				
+			error : function(msg) {
+
 			}
-			
+
 		});
-		
+
 	});
 
 	function clearFields() {
@@ -1136,5 +1277,9 @@ select .select2-search__field {
 label {
 	display: inline-block;
 	width: 120px;
+}
+
+.small70 {
+	width: 70px !important;
 }
 </style>

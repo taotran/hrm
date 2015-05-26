@@ -30,10 +30,12 @@ public class InterviewCacheModel implements CacheModel<Interview>,
     public long createDate;
     public long modifiedDate;
     public String name;
+    public long interview_date;
+    public String interview_time;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(21);
 
         sb.append("{interviewId=");
         sb.append(interviewId);
@@ -51,6 +53,10 @@ public class InterviewCacheModel implements CacheModel<Interview>,
         sb.append(modifiedDate);
         sb.append(", name=");
         sb.append(name);
+        sb.append(", interview_date=");
+        sb.append(interview_date);
+        sb.append(", interview_time=");
+        sb.append(interview_time);
         sb.append("}");
 
         return sb.toString();
@@ -89,6 +95,18 @@ public class InterviewCacheModel implements CacheModel<Interview>,
             interviewImpl.setName(name);
         }
 
+        if (interview_date == Long.MIN_VALUE) {
+            interviewImpl.setInterview_date(null);
+        } else {
+            interviewImpl.setInterview_date(new Date(interview_date));
+        }
+
+        if (interview_time == null) {
+            interviewImpl.setInterview_time(StringPool.BLANK);
+        } else {
+            interviewImpl.setInterview_time(interview_time);
+        }
+
         interviewImpl.resetOriginalValues();
 
         return interviewImpl;
@@ -104,6 +122,8 @@ public class InterviewCacheModel implements CacheModel<Interview>,
         createDate = objectInput.readLong();
         modifiedDate = objectInput.readLong();
         name = objectInput.readUTF();
+        interview_date = objectInput.readLong();
+        interview_time = objectInput.readUTF();
     }
 
     @Override
@@ -127,6 +147,14 @@ public class InterviewCacheModel implements CacheModel<Interview>,
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
             objectOutput.writeUTF(name);
+        }
+
+        objectOutput.writeLong(interview_date);
+
+        if (interview_time == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(interview_time);
         }
     }
 }

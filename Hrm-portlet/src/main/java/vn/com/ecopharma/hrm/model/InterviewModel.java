@@ -196,6 +196,35 @@ public interface InterviewModel extends BaseModel<Interview>, GroupedModel,
     public void setName(String name);
 
     /**
+     * Returns the interview_date of this interview.
+     *
+     * @return the interview_date of this interview
+     */
+    public Date getInterview_date();
+
+    /**
+     * Sets the interview_date of this interview.
+     *
+     * @param interview_date the interview_date of this interview
+     */
+    public void setInterview_date(Date interview_date);
+
+    /**
+     * Returns the interview_time of this interview.
+     *
+     * @return the interview_time of this interview
+     */
+    @AutoEscape
+    public String getInterview_time();
+
+    /**
+     * Sets the interview_time of this interview.
+     *
+     * @param interview_time the interview_time of this interview
+     */
+    public void setInterview_time(String interview_time);
+
+    /**
      * Returns the status of this interview.
      *
      * @return the status of this interview

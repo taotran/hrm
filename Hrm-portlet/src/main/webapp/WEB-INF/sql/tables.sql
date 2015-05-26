@@ -96,7 +96,9 @@ create table HRM_Recruitment_Interview (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	interview_date DATE null,
+	interview_time VARCHAR(75) null
 );
 
 create table HRM_Recruitment_JTitle (

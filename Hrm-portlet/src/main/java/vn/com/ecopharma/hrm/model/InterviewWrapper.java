@@ -45,6 +45,8 @@ public class InterviewWrapper implements Interview, ModelWrapper<Interview> {
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("name", getName());
+        attributes.put("interview_date", getInterview_date());
+        attributes.put("interview_time", getInterview_time());
 
         return attributes;
     }
@@ -97,6 +99,18 @@ public class InterviewWrapper implements Interview, ModelWrapper<Interview> {
 
         if (name != null) {
             setName(name);
+        }
+
+        Date interview_date = (Date) attributes.get("interview_date");
+
+        if (interview_date != null) {
+            setInterview_date(interview_date);
+        }
+
+        String interview_time = (String) attributes.get("interview_time");
+
+        if (interview_time != null) {
+            setInterview_time(interview_time);
         }
     }
 
@@ -300,6 +314,46 @@ public class InterviewWrapper implements Interview, ModelWrapper<Interview> {
     @Override
     public void setName(java.lang.String name) {
         _interview.setName(name);
+    }
+
+    /**
+    * Returns the interview_date of this interview.
+    *
+    * @return the interview_date of this interview
+    */
+    @Override
+    public java.util.Date getInterview_date() {
+        return _interview.getInterview_date();
+    }
+
+    /**
+    * Sets the interview_date of this interview.
+    *
+    * @param interview_date the interview_date of this interview
+    */
+    @Override
+    public void setInterview_date(java.util.Date interview_date) {
+        _interview.setInterview_date(interview_date);
+    }
+
+    /**
+    * Returns the interview_time of this interview.
+    *
+    * @return the interview_time of this interview
+    */
+    @Override
+    public java.lang.String getInterview_time() {
+        return _interview.getInterview_time();
+    }
+
+    /**
+    * Sets the interview_time of this interview.
+    *
+    * @param interview_time the interview_time of this interview
+    */
+    @Override
+    public void setInterview_time(java.lang.String interview_time) {
+        _interview.setInterview_time(interview_time);
     }
 
     /**

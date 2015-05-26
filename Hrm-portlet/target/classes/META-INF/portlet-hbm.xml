@@ -58,6 +58,8 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="interview_date" type="org.hibernate.type.TimestampType" />
+		<property name="interview_time" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.JTitleImpl" table="HRM_Recruitment_JTitle">
 		<cache usage="read-write" />

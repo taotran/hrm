@@ -329,6 +329,8 @@ public class InterviewPersistenceImpl extends BasePersistenceImpl<Interview>
         interviewImpl.setCreateDate(interview.getCreateDate());
         interviewImpl.setModifiedDate(interview.getModifiedDate());
         interviewImpl.setName(interview.getName());
+        interviewImpl.setInterview_date(interview.getInterview_date());
+        interviewImpl.setInterview_time(interview.getInterview_time());
 
         return interviewImpl;
     }

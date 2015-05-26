@@ -43,6 +43,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
+		<field name="interview_date" type="Date" />
+		<field name="interview_time" type="String" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.JTitle">
 		<field name="jobtitleId" type="long" />

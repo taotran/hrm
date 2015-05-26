@@ -75,6 +75,10 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="name" />
+			<basic name="interview_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="interview_time" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

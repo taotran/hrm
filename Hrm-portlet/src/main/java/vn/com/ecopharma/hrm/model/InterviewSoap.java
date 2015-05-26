@@ -22,6 +22,8 @@ public class InterviewSoap implements Serializable {
     private Date _createDate;
     private Date _modifiedDate;
     private String _name;
+    private Date _interview_date;
+    private String _interview_time;
 
     public InterviewSoap() {
     }
@@ -37,6 +39,8 @@ public class InterviewSoap implements Serializable {
         soapModel.setCreateDate(model.getCreateDate());
         soapModel.setModifiedDate(model.getModifiedDate());
         soapModel.setName(model.getName());
+        soapModel.setInterview_date(model.getInterview_date());
+        soapModel.setInterview_time(model.getInterview_time());
 
         return soapModel;
     }
@@ -147,5 +151,21 @@ public class InterviewSoap implements Serializable {
 
     public void setName(String name) {
         _name = name;
+    }
+
+    public Date getInterview_date() {
+        return _interview_date;
+    }
+
+    public void setInterview_date(Date interview_date) {
+        _interview_date = interview_date;
+    }
+
+    public String getInterview_time() {
+        return _interview_time;
+    }
+
+    public void setInterview_time(String interview_time) {
+        _interview_time = interview_time;
     }
 }
