@@ -216,6 +216,8 @@
 					</c:choose> --%>
 					<select class="form-control select2-container" id="vacancySelect"
 						class="vacancySelect2">
+						<option value='' disabled selected style='display: none;'>Please
+							Choose</option>
 					</select>
 
 				</div>
@@ -278,10 +280,22 @@
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="jTitleSelect">Job Title</label>
-				<select class="form-control select2-container" id="jTitleSelect"
-					class="jTitleSelect2">
-					<option value="null">No Job Title</option>
-				</select> 
+				<c:choose>
+					<c:when test="${fn:length(allJTitles) > 0}">
+						<select class="form-control select2-container" id="jTitleSelect"
+							class="jTitleSelect2">
+							<c:forEach items="${allJTitles}" var="jTitle">
+								<option value="${jTitle.jobtitleId}">${jTitle.title }</option>
+							</c:forEach>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select class="form-control select2-container" id="jTitleSelect"
+							class="jTitleSelect2">
+							<option value="none">No Job Title</option>
+						</select>
+					</c:otherwise>
+				</c:choose>
 				<a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
 					<i class="icon-plus"></i>Add
 				</a>
@@ -447,8 +461,8 @@
 	</div>
 
 	<div class="modal-body" id="interviewScheduleInfo">
-		<input type="hidden" class="entityId" id="itvSchedId" value="-1" /> <input
-			type="hidden" class="entityId" id="itv_c_id" value="-1" />
+		<input type="hidden" class="entityId" id="itvSchedId" value="-1" />
+		<input type="hidden" class="entityId" id="itv_c_id" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="interviewTitleSelect">Title</label> <select
@@ -609,17 +623,15 @@
 		var vacancy = new Object();
 
 		vacancy.v_id = $("#v_id").val();
-		vacancy.jTitleId = $('#jTitleSelect').val();
+		vacancy.jobtitleId = $('#jTitleSelect').val();
 		vacancy.hiring_manager_id = $('#hiring_managers').val();
 		vacancy.v_name = $('#v_name').val();
 		vacancy.description = $('#desc').val();
 		vacancy.no_of_positions = $('#no_of_pos').val();
-		vacancy.published_in_feed = $('#published_in_feed').val(); 
+		vacancy.published_in_feed = $('#published_in_feed').val();
 		vacancy.job_posting = $("#job_posting").val();
 		// 		candidate.file = $('#addCandidate_resume');
 
-		console.log(vacancy);
-			
 		jQuery.ajax({
 			type : 'POST',
 			url : "<portlet:resourceURL id='saveVacancy'/>",
@@ -635,7 +647,6 @@
 				select = document.getElementById('vacancySelect');
 
 				select.options.length = 0;
-				select.options.add(new Option("Please select", null));
 				$.each(data, function(i, item) {
 					select.options.add(new Option(item.v_name, item.v_id));
 				});
@@ -669,11 +680,19 @@
 
 			},
 			success : function(data) {
+				//$('#ctable').dataTable().fnDraw();
+				console.log("INSIDE RESPONSE");
+				console.log(data);
+				//data = $.parseJSON(data);
+				$.each(data, function(i, item) {
+					console.log(item.jTitleId + " : " + item.jTitle);
+				});
+
 				select = document.getElementById('jTitleSelect');
 
 				select.options.length = 0;
 				$.each(data, function(i, item) {
-					select.options.add(new Option(item.title, item.jTitleId));
+					select.options.add(new Option(item.jTitle, item.jTitleId));
 				});
 			}
 		})
@@ -854,6 +873,8 @@
 	}
 
 	function loadVacancyTable() {
+		console.log(List1);
+		
 		var vtable = $('#vtable')
 				.dataTable(
 						{
@@ -870,13 +891,10 @@
 					                "url": sSource,
 					                "data": aoData,
 					                "success": function(json){
-					                 	var data = json.jTitles;
-					                    select = document.getElementById('jTitleSelect');
-										select.options.length = 0;
- 										$.each(data, function(i, item) {
-											console.log(item.title);
-											select.options.add(new Option(item.title, item.jTitleId));
-										});
+					                    /* 
+					                    fnCallback(json); */
+					                    /* jTitleNames = json.jTitleNames; */
+					                    /* console.log(jTitleNames); */
 					                    fnCallback(json);
 					                    $('#vtable').show();
 					                }
@@ -931,7 +949,7 @@
 	};
 	
 	function loadCandidateTable() {
-		var cTable = $('#ctable')
+		$('#ctable')
 		.dataTable(
 				{
 					bServerSide : true,
@@ -945,7 +963,8 @@
 			        	$('td', row).eq(2).addClass('highlight');
 			        },
 					oLanguage : {
-						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
+						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>
+	/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
 							},
 							aoColumns : [
 									{
@@ -998,9 +1017,9 @@
 													+ ")' id='"
 													+ selectorId
 													+ "' name='availStatusSelect'>";
-											/* var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>"; */
-											var options = "<option value='" + -1 + "' selected>"
-													+ data + "</option>";
+											var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>";
+											/* var options = "<option value='" + -1 + "' selected>"
+													+ data + "</option>"; */
 											for (var i = 0; i < full.availableStatuses.length; i++) {
 												options += "<option value='" + full.c_id + "'>"
 														+ full.availableStatuses[i]
@@ -1027,64 +1046,24 @@
 							},
 							"dom" : 'Cf<"toolbar"">rtip',
 
-						}).columnFilter(
-						{
-							aoColumns : [
-									null,
-									{
-										type : "text"
-									},
-									{
-										type : "text"
-									},
-									{
-										type : "text"
-									},
-									{
-										type : "text"
-									},
-									{
-										type : "date-range"
-									},
-									{
-										type : "select",
-										values : [ "APPLICATION_INITIATED",
-												"REJECT", "SHORTLIST",
-												"INTERVIEW_SCHEDULED",
-												"JOB_OFFERED",
-												"DECLINE_OFFERED", "HIRE",
-												"INTERVIEW_FAILED",
-												"MARK_INTERVIEW_PASS",
-												"MARK_INTERVIEW_FAIL" ]
-									}, {
-										type : "text"
-									} ]
+						}).columnFilter({
+					aoColumns : [ null, {
+						type : "text"
+					}, {
+						type : "text"
+					}, {
+						type : "text"
+					}, {
+						type : "text"
+					}, {
+						type : "date-range"
+					}, {
+						type : "select"
+					}, {
+						type : "text"
+					} ]
 
-						}).fnSetFilteringDelay();
-
-		/* FILTER DELAYING */
-		/*var searchWait = 0;
-		var searchWaitInterval;
-		$('.dataTables_filter input').unbind('keypress keyup').bind(
-				'keypress keyup', function(e) {
-					var item = $(this);
-					searchWait = 0;
-					console.log("HEREEEE");
-					if (!searchWaitInterval)
-						searchWaitInterval = setInterval(function() {
-							if (searchWait >= 3) {
-								clearInterval(searchWaitInterval);
-								searchWaitInterval = '';
-								searchTerm = $(item).val();
-								cTable.fnFilter(searchTerm);
-								searchWait = 0;
-							}
-							searchWait++;
-						}, 500);
-
-				});*/
-
-		/* */
+				});
 	}
 
 	function onCandidateStatusChange(selectorId) {
@@ -1102,7 +1081,7 @@
 					select = document.getElementById('interviewTitleSelect');
 					$('#itv_c_id').val(selectorId);
 					select.options.length = 0;
-					$.each(data, function(i, item) {
+					$.each($.parseJSON(data), function(i, item) {
 						select.options.add(new Option(item.interviewName,
 								item.interviewId));
 					});
@@ -1131,8 +1110,8 @@
 	$(document).ready(function() {
 		console.log("on document ready");
 		loadCandidateTable();
-/* 		$(".select2-container").select2();
-		$(".select_filter").select2(); */
+		$(".select2-container").select2();
+		$(".select_filter").select2();
 		$('#date_of_application').datepicker();
 		$('#itvDate').datepicker();
 		$('#cCheckbox').change(function() {
@@ -1150,7 +1129,10 @@
 			url : "<portlet:resourceURL id='loadJTitles'/>",
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
+
 				List1 = data;
+				console.log("TITLES");
+				console.log(List1);
 			},
 			error : function(msg) {
 
