@@ -10,6 +10,9 @@ create index IX_96279315 on HRM_Recruitment_Candidate (first_name, middle_name, 
 create index IX_42728746 on HRM_Recruitment_Vacancies_Candidates (c_id);
 create index IX_62DE9B13 on HRM_Recruitment_Vacancies_Candidates (v_id);
 
+create index IX_8405CEF8 on HRM_Recruitment_VacancyCandidate (c_id);
+create index IX_A471E2C5 on HRM_Recruitment_VacancyCandidate (v_id);
+
 create index IX_97306963 on HRM_Vacancies_Candidates (c_id);
 create index IX_FD3316F6 on HRM_Vacancies_Candidates (candidateId);
 create index IX_AA60781C on HRM_Vacancies_Candidates (id_);

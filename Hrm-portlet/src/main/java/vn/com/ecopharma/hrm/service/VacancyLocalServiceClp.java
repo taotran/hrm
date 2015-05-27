@@ -44,8 +44,6 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes16;
     private String _methodName17;
     private String[] _methodParameterTypes17;
-    private String _methodName18;
-    private String[] _methodParameterTypes18;
     private String _methodName19;
     private String[] _methodParameterTypes19;
     private String _methodName20;
@@ -54,36 +52,6 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes21;
     private String _methodName22;
     private String[] _methodParameterTypes22;
-    private String _methodName23;
-    private String[] _methodParameterTypes23;
-    private String _methodName24;
-    private String[] _methodParameterTypes24;
-    private String _methodName25;
-    private String[] _methodParameterTypes25;
-    private String _methodName26;
-    private String[] _methodParameterTypes26;
-    private String _methodName27;
-    private String[] _methodParameterTypes27;
-    private String _methodName28;
-    private String[] _methodParameterTypes28;
-    private String _methodName29;
-    private String[] _methodParameterTypes29;
-    private String _methodName30;
-    private String[] _methodParameterTypes30;
-    private String _methodName31;
-    private String[] _methodParameterTypes31;
-    private String _methodName32;
-    private String[] _methodParameterTypes32;
-    private String _methodName33;
-    private String[] _methodParameterTypes33;
-    private String _methodName35;
-    private String[] _methodParameterTypes35;
-    private String _methodName36;
-    private String[] _methodParameterTypes36;
-    private String _methodName37;
-    private String[] _methodParameterTypes37;
-    private String _methodName38;
-    private String[] _methodParameterTypes38;
 
     public VacancyLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -170,106 +138,35 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                 "vn.com.ecopharma.hrm.model.Vacancy"
             };
 
-        _methodName16 = "addCandidateVacancy";
+        _methodName16 = "getBeanIdentifier";
 
-        _methodParameterTypes16 = new String[] { "long", "long" };
+        _methodParameterTypes16 = new String[] {  };
 
-        _methodName17 = "addCandidateVacancy";
+        _methodName17 = "setBeanIdentifier";
 
-        _methodParameterTypes17 = new String[] {
-                "long", "vn.com.ecopharma.hrm.model.Vacancy"
-            };
+        _methodParameterTypes17 = new String[] { "java.lang.String" };
 
-        _methodName18 = "addCandidateVacancies";
+        _methodName19 = "findAll";
 
-        _methodParameterTypes18 = new String[] { "long", "long[][]" };
+        _methodParameterTypes19 = new String[] {  };
 
-        _methodName19 = "addCandidateVacancies";
+        _methodName20 = "create";
 
-        _methodParameterTypes19 = new String[] { "long", "java.util.List" };
-
-        _methodName20 = "clearCandidateVacancies";
-
-        _methodParameterTypes20 = new String[] { "long" };
-
-        _methodName21 = "deleteCandidateVacancy";
-
-        _methodParameterTypes21 = new String[] { "long", "long" };
-
-        _methodName22 = "deleteCandidateVacancy";
-
-        _methodParameterTypes22 = new String[] {
-                "long", "vn.com.ecopharma.hrm.model.Vacancy"
-            };
-
-        _methodName23 = "deleteCandidateVacancies";
-
-        _methodParameterTypes23 = new String[] { "long", "long[][]" };
-
-        _methodName24 = "deleteCandidateVacancies";
-
-        _methodParameterTypes24 = new String[] { "long", "java.util.List" };
-
-        _methodName25 = "getCandidateVacancies";
-
-        _methodParameterTypes25 = new String[] { "long" };
-
-        _methodName26 = "getCandidateVacancies";
-
-        _methodParameterTypes26 = new String[] { "long", "int", "int" };
-
-        _methodName27 = "getCandidateVacancies";
-
-        _methodParameterTypes27 = new String[] {
-                "long", "int", "int",
-                "com.liferay.portal.kernel.util.OrderByComparator"
-            };
-
-        _methodName28 = "getCandidateVacanciesCount";
-
-        _methodParameterTypes28 = new String[] { "long" };
-
-        _methodName29 = "hasCandidateVacancy";
-
-        _methodParameterTypes29 = new String[] { "long", "long" };
-
-        _methodName30 = "hasCandidateVacancies";
-
-        _methodParameterTypes30 = new String[] { "long" };
-
-        _methodName31 = "setCandidateVacancies";
-
-        _methodParameterTypes31 = new String[] { "long", "long[][]" };
-
-        _methodName32 = "getBeanIdentifier";
-
-        _methodParameterTypes32 = new String[] {  };
-
-        _methodName33 = "setBeanIdentifier";
-
-        _methodParameterTypes33 = new String[] { "java.lang.String" };
-
-        _methodName35 = "findAll";
-
-        _methodParameterTypes35 = new String[] {  };
-
-        _methodName36 = "create";
-
-        _methodParameterTypes36 = new String[] {
+        _methodParameterTypes20 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
                 "int", "boolean", "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName37 = "edit";
+        _methodName21 = "edit";
 
-        _methodParameterTypes37 = new String[] {
+        _methodParameterTypes21 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
                 "int", "boolean"
             };
 
-        _methodName38 = "delete";
+        _methodName22 = "delete";
 
-        _methodParameterTypes38 = new String[] { "long" };
+        _methodParameterTypes22 = new String[] { "long" };
     }
 
     @Override
@@ -737,411 +634,12 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
-    public void addCandidateVacancy(long c_id, long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName16,
-                _methodParameterTypes16, new Object[] { c_id, v_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void addCandidateVacancy(long c_id,
-        vn.com.ecopharma.hrm.model.Vacancy vacancy)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName17,
-                _methodParameterTypes17,
-                new Object[] { c_id, ClpSerializer.translateInput(vacancy) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void addCandidateVacancies(long c_id, long[] v_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName18,
-                _methodParameterTypes18,
-                new Object[] { c_id, ClpSerializer.translateInput(v_ids) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void addCandidateVacancies(long c_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> Vacancies)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName19,
-                _methodParameterTypes19,
-                new Object[] { c_id, ClpSerializer.translateInput(Vacancies) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void clearCandidateVacancies(long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName20,
-                _methodParameterTypes20, new Object[] { c_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void deleteCandidateVacancy(long c_id, long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName21,
-                _methodParameterTypes21, new Object[] { c_id, v_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void deleteCandidateVacancy(long c_id,
-        vn.com.ecopharma.hrm.model.Vacancy vacancy)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName22,
-                _methodParameterTypes22,
-                new Object[] { c_id, ClpSerializer.translateInput(vacancy) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void deleteCandidateVacancies(long c_id, long[] v_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName23,
-                _methodParameterTypes23,
-                new Object[] { c_id, ClpSerializer.translateInput(v_ids) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public void deleteCandidateVacancies(long c_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> Vacancies)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName24,
-                _methodParameterTypes24,
-                new Object[] { c_id, ClpSerializer.translateInput(Vacancies) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getCandidateVacancies(
-        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName25,
-                    _methodParameterTypes25, new Object[] { c_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) ClpSerializer.translateOutput(returnObj);
-    }
-
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getCandidateVacancies(
-        long c_id, int start, int end)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName26,
-                    _methodParameterTypes26, new Object[] { c_id, start, end });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) ClpSerializer.translateOutput(returnObj);
-    }
-
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getCandidateVacancies(
-        long c_id, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName27,
-                    _methodParameterTypes27,
-                    new Object[] {
-                        c_id,
-                        
-                    start,
-                        
-                    end,
-                        
-                    ClpSerializer.translateInput(orderByComparator)
-                    });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) ClpSerializer.translateOutput(returnObj);
-    }
-
-    @Override
-    public int getCandidateVacanciesCount(long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName28,
-                    _methodParameterTypes28, new Object[] { c_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return ((Integer) returnObj).intValue();
-    }
-
-    @Override
-    public boolean hasCandidateVacancy(long c_id, long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName29,
-                    _methodParameterTypes29, new Object[] { c_id, v_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return ((Boolean) returnObj).booleanValue();
-    }
-
-    @Override
-    public boolean hasCandidateVacancies(long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName30,
-                    _methodParameterTypes30, new Object[] { c_id });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return ((Boolean) returnObj).booleanValue();
-    }
-
-    @Override
-    public void setCandidateVacancies(long c_id, long[] v_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        try {
-            _invokableLocalService.invokeMethod(_methodName31,
-                _methodParameterTypes31,
-                new Object[] { c_id, ClpSerializer.translateInput(v_ids) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-    }
-
-    @Override
     public java.lang.String getBeanIdentifier() {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName32,
-                    _methodParameterTypes32, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName16,
+                    _methodParameterTypes16, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1159,8 +657,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     @Override
     public void setBeanIdentifier(java.lang.String beanIdentifier) {
         try {
-            _invokableLocalService.invokeMethod(_methodName33,
-                _methodParameterTypes33,
+            _invokableLocalService.invokeMethod(_methodName17,
+                _methodParameterTypes17,
                 new Object[] { ClpSerializer.translateInput(beanIdentifier) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1187,8 +685,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName35,
-                    _methodParameterTypes35, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName19,
+                    _methodParameterTypes19, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1217,8 +715,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName36,
-                    _methodParameterTypes36,
+            returnObj = _invokableLocalService.invokeMethod(_methodName20,
+                    _methodParameterTypes20,
                     new Object[] {
                         user_id,
                         
@@ -1262,8 +760,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName37,
-                    _methodParameterTypes37,
+            returnObj = _invokableLocalService.invokeMethod(_methodName21,
+                    _methodParameterTypes21,
                     new Object[] {
                         id,
                         
@@ -1296,8 +794,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     @Override
     public void delete(long v_id) {
         try {
-            _invokableLocalService.invokeMethod(_methodName38,
-                _methodParameterTypes38, new Object[] { v_id });
+            _invokableLocalService.invokeMethod(_methodName22,
+                _methodParameterTypes22, new Object[] { v_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

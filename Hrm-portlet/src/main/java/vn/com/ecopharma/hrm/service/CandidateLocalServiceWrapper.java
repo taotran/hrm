@@ -243,158 +243,6 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void addVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.addVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void addVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.addVacancyCandidate(v_id, candidate);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void addVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.addVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void addVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.addVacancyCandidates(v_id, Candidates);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void clearVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.clearVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void deleteVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.deleteVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void deleteVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.deleteVacancyCandidate(v_id, candidate);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void deleteVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.deleteVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void deleteVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.deleteVacancyCandidates(v_id, Candidates);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.getVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.getVacancyCandidates(v_id, start, end);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.getVacancyCandidates(v_id, start, end,
-            orderByComparator);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public int getVacancyCandidatesCount(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.getVacancyCandidatesCount(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public boolean hasVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.hasVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public boolean hasVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.hasVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Override
-    public void setVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        _candidateLocalService.setVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
     * Returns the Spring bean ID for this bean.
     *
     * @return the Spring bean ID for this bean
@@ -459,25 +307,18 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
-        long c_id) {
-        return _candidateLocalService.getVacanciesByCandidate(c_id);
-    }
-
-    @Override
     public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long v_id, com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return _candidateLocalService.create(user_id, first_name, middle_name,
             last_name, email, contact_number, comment, mode_of_application,
             date_of_application, cv_file_id, cv_text_version, added_person,
-            vacancies, serviceContext);
+            v_id, serviceContext);
     }
 
     @Override

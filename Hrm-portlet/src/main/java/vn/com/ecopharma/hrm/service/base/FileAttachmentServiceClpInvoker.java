@@ -9,30 +9,30 @@ import java.util.Arrays;
  * @generated
  */
 public class FileAttachmentServiceClpInvoker {
-    private String _methodName44;
-    private String[] _methodParameterTypes44;
-    private String _methodName45;
-    private String[] _methodParameterTypes45;
+    private String _methodName56;
+    private String[] _methodParameterTypes56;
+    private String _methodName57;
+    private String[] _methodParameterTypes57;
 
     public FileAttachmentServiceClpInvoker() {
-        _methodName44 = "getBeanIdentifier";
+        _methodName56 = "getBeanIdentifier";
 
-        _methodParameterTypes44 = new String[] {  };
+        _methodParameterTypes56 = new String[] {  };
 
-        _methodName45 = "setBeanIdentifier";
+        _methodName57 = "setBeanIdentifier";
 
-        _methodParameterTypes45 = new String[] { "java.lang.String" };
+        _methodParameterTypes57 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName44.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+        if (_methodName56.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
             return FileAttachmentServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName45.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+        if (_methodName57.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
             FileAttachmentServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

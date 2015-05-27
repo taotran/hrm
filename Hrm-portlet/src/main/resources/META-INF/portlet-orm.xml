@@ -85,6 +85,32 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.InterviewScheduleModelImpl">
+		<attributes>
+			<id name="interviewScheduleId" />
+			<basic name="c_id" />
+			<basic name="v_id" />
+			<basic name="interviewId" />
+			<basic name="interviewDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="interviewTime" />
+			<basic name="note" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.JTitleModelImpl">
 		<attributes>
 			<id name="jobtitleId" />
@@ -121,6 +147,26 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.VacancyCandidateModelImpl">
+		<attributes>
+			<id name="vacancyCandidateId" />
+			<basic name="c_id" />
+			<basic name="v_id" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="vn.com.ecopharma.hrm.model.impl.CandidateImpl" name="Candidate">
 		<table name="HRM_Recruitment_Candidate" />
 		<attributes>
@@ -135,6 +181,10 @@
 		<table name="HRM_Recruitment_Interview" />
 		<attributes />
 	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.InterviewScheduleImpl" name="InterviewSchedule">
+		<table name="HRM_Recruitment_InterviewSchedule" />
+		<attributes />
+	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">
 		<table name="HRM_Recruitment_JTitle" />
 		<attributes />
@@ -144,5 +194,9 @@
 		<attributes>
 			<transient name="_candidates" />
 		</attributes>
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.VacancyCandidateImpl" name="VacancyCandidate">
+		<table name="HRM_Recruitment_VacancyCandidate" />
+		<attributes />
 	</entity>
 </entity-mappings>

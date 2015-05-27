@@ -99,7 +99,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 	}
 	
-	public List<Vacancy> getVacanciesByCandidate(long c_id) {
+/*	public List<Vacancy> getVacanciesByCandidate(long c_id) {
 		try {
 			return candidatePersistence.getVacancies(c_id);
 		} catch (SystemException e) {
@@ -107,14 +107,14 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 	
 
 	public Candidate create(long user_id, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
-			int added_person, List<Vacancy> vacancies,
+			int added_person, long v_id,
 			ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
 			User user = userPersistence.findByPrimaryKey(user_id);
@@ -124,16 +124,16 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			c.setMiddle_name(middle_name);
 			c.setLast_name(last_name);
 			c.setEmail(email);
-			candidatePersistence.addVacancies(c_id, vacancies);
+			//candidatePersistence.addVacancies(c_id, vacancies);
 			c.setComment(comment);
 			c.setContact_number(contact_number);
 			c.setDate_of_application(date_of_application);
 			c.setCv_file_id(cv_file_id);
 			c.setCv_text_version(cv_text_version);
-			c.set_vacancies(vacancies);
 			c.setUser_id(user.getUserId());
 			c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED.getLocalizedName());
 			c.setGroup_id(serviceContext.getScopeGroupId());
+			vacancyCandidateLocalService.create(v_id, c_id, user_id, serviceContext);
 			candidatePersistence.update(c);
 			resourceLocalService.addResources(user.getCompanyId(),
 					serviceContext.getScopeGroupId(), user.getUserId(),

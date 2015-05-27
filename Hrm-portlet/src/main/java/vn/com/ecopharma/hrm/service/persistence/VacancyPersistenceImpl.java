@@ -1,6 +1,5 @@
 package vn.com.ecopharma.hrm.service.persistence;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -16,30 +15,24 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.TableMapper;
-import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.impl.VacancyImpl;
 import vn.com.ecopharma.hrm.model.impl.VacancyModelImpl;
-import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the vacancy service.
@@ -99,10 +92,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
                 return _nullVacancy;
             }
         };
-
-    @BeanReference(type = CandidatePersistence.class)
-    protected CandidatePersistence candidatePersistence;
-    protected TableMapper<Vacancy, vn.com.ecopharma.hrm.model.Candidate> vacancyToCandidateTableMapper;
 
     public VacancyPersistenceImpl() {
         setModelClass(Vacancy.class);
@@ -257,8 +246,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
     @Override
     protected Vacancy removeImpl(Vacancy vacancy) throws SystemException {
         vacancy = toUnwrappedModel(vacancy);
-
-        vacancyToCandidateTableMapper.deleteLeftPrimaryKeyTableMappings(vacancy.getPrimaryKey());
 
         Session session = null;
 
@@ -609,294 +596,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
     }
 
     /**
-     * Returns all the candidates associated with the vacancy.
-     *
-     * @param pk the primary key of the vacancy
-     * @return the candidates associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<vn.com.ecopharma.hrm.model.Candidate> getCandidates(long pk)
-        throws SystemException {
-        return getCandidates(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-    }
-
-    /**
-     * Returns a range of all the candidates associated with the vacancy.
-     *
-     * <p>
-     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-     * </p>
-     *
-     * @param pk the primary key of the vacancy
-     * @param start the lower bound of the range of vacancies
-     * @param end the upper bound of the range of vacancies (not inclusive)
-     * @return the range of candidates associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<vn.com.ecopharma.hrm.model.Candidate> getCandidates(long pk,
-        int start, int end) throws SystemException {
-        return getCandidates(pk, start, end, null);
-    }
-
-    /**
-     * Returns an ordered range of all the candidates associated with the vacancy.
-     *
-     * <p>
-     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-     * </p>
-     *
-     * @param pk the primary key of the vacancy
-     * @param start the lower bound of the range of vacancies
-     * @param end the upper bound of the range of vacancies (not inclusive)
-     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-     * @return the ordered range of candidates associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<vn.com.ecopharma.hrm.model.Candidate> getCandidates(long pk,
-        int start, int end, OrderByComparator orderByComparator)
-        throws SystemException {
-        return vacancyToCandidateTableMapper.getRightBaseModels(pk, start, end,
-            orderByComparator);
-    }
-
-    /**
-     * Returns the number of candidates associated with the vacancy.
-     *
-     * @param pk the primary key of the vacancy
-     * @return the number of candidates associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public int getCandidatesSize(long pk) throws SystemException {
-        long[] pks = vacancyToCandidateTableMapper.getRightPrimaryKeys(pk);
-
-        return pks.length;
-    }
-
-    /**
-     * Returns <code>true</code> if the candidate is associated with the vacancy.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePK the primary key of the candidate
-     * @return <code>true</code> if the candidate is associated with the vacancy; <code>false</code> otherwise
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public boolean containsCandidate(long pk, long candidatePK)
-        throws SystemException {
-        return vacancyToCandidateTableMapper.containsTableMapping(pk,
-            candidatePK);
-    }
-
-    /**
-     * Returns <code>true</code> if the vacancy has any candidates associated with it.
-     *
-     * @param pk the primary key of the vacancy to check for associations with candidates
-     * @return <code>true</code> if the vacancy has any candidates associated with it; <code>false</code> otherwise
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public boolean containsCandidates(long pk) throws SystemException {
-        if (getCandidatesSize(pk) > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Adds an association between the vacancy and the candidate. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePK the primary key of the candidate
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addCandidate(long pk, long candidatePK)
-        throws SystemException {
-        vacancyToCandidateTableMapper.addTableMapping(pk, candidatePK);
-    }
-
-    /**
-     * Adds an association between the vacancy and the candidate. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidate the candidate
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addCandidate(long pk,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws SystemException {
-        vacancyToCandidateTableMapper.addTableMapping(pk,
-            candidate.getPrimaryKey());
-    }
-
-    /**
-     * Adds an association between the vacancy and the candidates. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePKs the primary keys of the candidates
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addCandidates(long pk, long[] candidatePKs)
-        throws SystemException {
-        for (long candidatePK : candidatePKs) {
-            vacancyToCandidateTableMapper.addTableMapping(pk, candidatePK);
-        }
-    }
-
-    /**
-     * Adds an association between the vacancy and the candidates. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidates the candidates
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addCandidates(long pk,
-        List<vn.com.ecopharma.hrm.model.Candidate> candidates)
-        throws SystemException {
-        for (vn.com.ecopharma.hrm.model.Candidate candidate : candidates) {
-            vacancyToCandidateTableMapper.addTableMapping(pk,
-                candidate.getPrimaryKey());
-        }
-    }
-
-    /**
-     * Clears all associations between the vacancy and its candidates. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy to clear the associated candidates from
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void clearCandidates(long pk) throws SystemException {
-        vacancyToCandidateTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
-    }
-
-    /**
-     * Removes the association between the vacancy and the candidate. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePK the primary key of the candidate
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void removeCandidate(long pk, long candidatePK)
-        throws SystemException {
-        vacancyToCandidateTableMapper.deleteTableMapping(pk, candidatePK);
-    }
-
-    /**
-     * Removes the association between the vacancy and the candidate. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidate the candidate
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void removeCandidate(long pk,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws SystemException {
-        vacancyToCandidateTableMapper.deleteTableMapping(pk,
-            candidate.getPrimaryKey());
-    }
-
-    /**
-     * Removes the association between the vacancy and the candidates. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePKs the primary keys of the candidates
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void removeCandidates(long pk, long[] candidatePKs)
-        throws SystemException {
-        for (long candidatePK : candidatePKs) {
-            vacancyToCandidateTableMapper.deleteTableMapping(pk, candidatePK);
-        }
-    }
-
-    /**
-     * Removes the association between the vacancy and the candidates. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidates the candidates
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void removeCandidates(long pk,
-        List<vn.com.ecopharma.hrm.model.Candidate> candidates)
-        throws SystemException {
-        for (vn.com.ecopharma.hrm.model.Candidate candidate : candidates) {
-            vacancyToCandidateTableMapper.deleteTableMapping(pk,
-                candidate.getPrimaryKey());
-        }
-    }
-
-    /**
-     * Sets the candidates associated with the vacancy, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidatePKs the primary keys of the candidates to be associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void setCandidates(long pk, long[] candidatePKs)
-        throws SystemException {
-        Set<Long> newCandidatePKsSet = SetUtil.fromArray(candidatePKs);
-        Set<Long> oldCandidatePKsSet = SetUtil.fromArray(vacancyToCandidateTableMapper.getRightPrimaryKeys(
-                    pk));
-
-        Set<Long> removeCandidatePKsSet = new HashSet<Long>(oldCandidatePKsSet);
-
-        removeCandidatePKsSet.removeAll(newCandidatePKsSet);
-
-        for (long removeCandidatePK : removeCandidatePKsSet) {
-            vacancyToCandidateTableMapper.deleteTableMapping(pk,
-                removeCandidatePK);
-        }
-
-        newCandidatePKsSet.removeAll(oldCandidatePKsSet);
-
-        for (long newCandidatePK : newCandidatePKsSet) {
-            vacancyToCandidateTableMapper.addTableMapping(pk, newCandidatePK);
-        }
-    }
-
-    /**
-     * Sets the candidates associated with the vacancy, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-     *
-     * @param pk the primary key of the vacancy
-     * @param candidates the candidates to be associated with the vacancy
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void setCandidates(long pk,
-        List<vn.com.ecopharma.hrm.model.Candidate> candidates)
-        throws SystemException {
-        try {
-            long[] candidatePKs = new long[candidates.size()];
-
-            for (int i = 0; i < candidates.size(); i++) {
-                vn.com.ecopharma.hrm.model.Candidate candidate = candidates.get(i);
-
-                candidatePKs[i] = candidate.getPrimaryKey();
-            }
-
-            setCandidates(pk, candidatePKs);
-        } catch (Exception e) {
-            throw processException(e);
-        } finally {
-            FinderCacheUtil.clearCache(VacancyModelImpl.MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_NAME);
-        }
-    }
-
-    /**
      * Initializes the vacancy persistence.
      */
     public void afterPropertiesSet() {
@@ -918,9 +617,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
                 _log.error(e);
             }
         }
-
-        vacancyToCandidateTableMapper = TableMapperFactory.getTableMapper("HRM_Recruitment_Vacancies_Candidates",
-                "v_id", "c_id", this, candidatePersistence);
     }
 
     public void destroy() {

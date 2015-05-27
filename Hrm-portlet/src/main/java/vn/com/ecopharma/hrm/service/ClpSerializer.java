@@ -14,7 +14,9 @@ import com.liferay.portal.model.BaseModel;
 import vn.com.ecopharma.hrm.model.CandidateClp;
 import vn.com.ecopharma.hrm.model.FileAttachmentClp;
 import vn.com.ecopharma.hrm.model.InterviewClp;
+import vn.com.ecopharma.hrm.model.InterviewScheduleClp;
 import vn.com.ecopharma.hrm.model.JTitleClp;
+import vn.com.ecopharma.hrm.model.VacancyCandidateClp;
 import vn.com.ecopharma.hrm.model.VacancyClp;
 
 import java.io.ObjectInputStream;
@@ -104,12 +106,20 @@ public class ClpSerializer {
             return translateInputInterview(oldModel);
         }
 
+        if (oldModelClassName.equals(InterviewScheduleClp.class.getName())) {
+            return translateInputInterviewSchedule(oldModel);
+        }
+
         if (oldModelClassName.equals(JTitleClp.class.getName())) {
             return translateInputJTitle(oldModel);
         }
 
         if (oldModelClassName.equals(VacancyClp.class.getName())) {
             return translateInputVacancy(oldModel);
+        }
+
+        if (oldModelClassName.equals(VacancyCandidateClp.class.getName())) {
+            return translateInputVacancyCandidate(oldModel);
         }
 
         return oldModel;
@@ -157,6 +167,16 @@ public class ClpSerializer {
         return newModel;
     }
 
+    public static Object translateInputInterviewSchedule(BaseModel<?> oldModel) {
+        InterviewScheduleClp oldClpModel = (InterviewScheduleClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getInterviewScheduleRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
     public static Object translateInputJTitle(BaseModel<?> oldModel) {
         JTitleClp oldClpModel = (JTitleClp) oldModel;
 
@@ -171,6 +191,16 @@ public class ClpSerializer {
         VacancyClp oldClpModel = (VacancyClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getVacancyRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputVacancyCandidate(BaseModel<?> oldModel) {
+        VacancyCandidateClp oldClpModel = (VacancyCandidateClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getVacancyCandidateRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -298,6 +328,41 @@ public class ClpSerializer {
         }
 
         if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.InterviewScheduleImpl")) {
+            return translateOutputInterviewSchedule(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.JTitleImpl")) {
             return translateOutputJTitle(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
@@ -335,6 +400,41 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.VacancyImpl")) {
             return translateOutputVacancy(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.VacancyCandidateImpl")) {
+            return translateOutputVacancyCandidate(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -456,12 +556,22 @@ public class ClpSerializer {
             return new vn.com.ecopharma.hrm.NoSuchInterviewException();
         }
 
+        if (className.equals(
+                    "vn.com.ecopharma.hrm.NoSuchInterviewScheduleException")) {
+            return new vn.com.ecopharma.hrm.NoSuchInterviewScheduleException();
+        }
+
         if (className.equals("vn.com.ecopharma.hrm.NoSuchJTitleException")) {
             return new vn.com.ecopharma.hrm.NoSuchJTitleException();
         }
 
         if (className.equals("vn.com.ecopharma.hrm.NoSuchVacancyException")) {
             return new vn.com.ecopharma.hrm.NoSuchVacancyException();
+        }
+
+        if (className.equals(
+                    "vn.com.ecopharma.hrm.NoSuchVacancyCandidateException")) {
+            return new vn.com.ecopharma.hrm.NoSuchVacancyCandidateException();
         }
 
         return throwable;
@@ -497,6 +607,16 @@ public class ClpSerializer {
         return newModel;
     }
 
+    public static Object translateOutputInterviewSchedule(BaseModel<?> oldModel) {
+        InterviewScheduleClp newModel = new InterviewScheduleClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setInterviewScheduleRemoteModel(oldModel);
+
+        return newModel;
+    }
+
     public static Object translateOutputJTitle(BaseModel<?> oldModel) {
         JTitleClp newModel = new JTitleClp();
 
@@ -513,6 +633,16 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setVacancyRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputVacancyCandidate(BaseModel<?> oldModel) {
+        VacancyCandidateClp newModel = new VacancyCandidateClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setVacancyCandidateRemoteModel(oldModel);
 
         return newModel;
     }

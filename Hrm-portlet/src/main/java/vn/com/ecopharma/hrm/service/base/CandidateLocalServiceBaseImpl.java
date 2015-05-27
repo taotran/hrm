@@ -23,7 +23,9 @@ import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
+import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
+import vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
 import java.io.Serializable;
@@ -66,6 +68,12 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected vn.com.ecopharma.hrm.service.InterviewService interviewService;
     @BeanReference(type = InterviewPersistence.class)
     protected InterviewPersistence interviewPersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.InterviewScheduleLocalService.class)
+    protected vn.com.ecopharma.hrm.service.InterviewScheduleLocalService interviewScheduleLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.InterviewScheduleService.class)
+    protected vn.com.ecopharma.hrm.service.InterviewScheduleService interviewScheduleService;
+    @BeanReference(type = InterviewSchedulePersistence.class)
+    protected InterviewSchedulePersistence interviewSchedulePersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleLocalService.class)
     protected vn.com.ecopharma.hrm.service.JTitleLocalService jTitleLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.JTitleService.class)
@@ -78,6 +86,12 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected vn.com.ecopharma.hrm.service.VacancyService vacancyService;
     @BeanReference(type = VacancyPersistence.class)
     protected VacancyPersistence vacancyPersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyCandidateLocalService.class)
+    protected vn.com.ecopharma.hrm.service.VacancyCandidateLocalService vacancyCandidateLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyCandidateService.class)
+    protected vn.com.ecopharma.hrm.service.VacancyCandidateService vacancyCandidateService;
+    @BeanReference(type = VacancyCandidatePersistence.class)
+    protected VacancyCandidatePersistence vacancyCandidatePersistence;
     @BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
     protected com.liferay.counter.service.CounterLocalService counterLocalService;
     @BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
@@ -316,148 +330,6 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     }
 
     /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addVacancyCandidate(long v_id, long c_id)
-        throws SystemException {
-        vacancyPersistence.addCandidate(v_id, c_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addVacancyCandidate(long v_id, Candidate candidate)
-        throws SystemException {
-        vacancyPersistence.addCandidate(v_id, candidate);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addVacancyCandidates(long v_id, long[] c_ids)
-        throws SystemException {
-        vacancyPersistence.addCandidates(v_id, c_ids);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void addVacancyCandidates(long v_id, List<Candidate> Candidates)
-        throws SystemException {
-        vacancyPersistence.addCandidates(v_id, Candidates);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void clearVacancyCandidates(long v_id) throws SystemException {
-        vacancyPersistence.clearCandidates(v_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void deleteVacancyCandidate(long v_id, long c_id)
-        throws SystemException {
-        vacancyPersistence.removeCandidate(v_id, c_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void deleteVacancyCandidate(long v_id, Candidate candidate)
-        throws SystemException {
-        vacancyPersistence.removeCandidate(v_id, candidate);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void deleteVacancyCandidates(long v_id, long[] c_ids)
-        throws SystemException {
-        vacancyPersistence.removeCandidates(v_id, c_ids);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void deleteVacancyCandidates(long v_id, List<Candidate> Candidates)
-        throws SystemException {
-        vacancyPersistence.removeCandidates(v_id, Candidates);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<Candidate> getVacancyCandidates(long v_id)
-        throws SystemException {
-        return vacancyPersistence.getCandidates(v_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<Candidate> getVacancyCandidates(long v_id, int start, int end)
-        throws SystemException {
-        return vacancyPersistence.getCandidates(v_id, start, end);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<Candidate> getVacancyCandidates(long v_id, int start, int end,
-        OrderByComparator orderByComparator) throws SystemException {
-        return vacancyPersistence.getCandidates(v_id, start, end,
-            orderByComparator);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public int getVacancyCandidatesCount(long v_id) throws SystemException {
-        return vacancyPersistence.getCandidatesSize(v_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public boolean hasVacancyCandidate(long v_id, long c_id)
-        throws SystemException {
-        return vacancyPersistence.containsCandidate(v_id, c_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public boolean hasVacancyCandidates(long v_id) throws SystemException {
-        return vacancyPersistence.containsCandidates(v_id);
-    }
-
-    /**
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public void setVacancyCandidates(long v_id, long[] c_ids)
-        throws SystemException {
-        vacancyPersistence.setCandidates(v_id, c_ids);
-    }
-
-    /**
      * Returns the candidate local service.
      *
      * @return the candidate local service
@@ -647,6 +519,63 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
     }
 
     /**
+     * Returns the interview schedule local service.
+     *
+     * @return the interview schedule local service
+     */
+    public vn.com.ecopharma.hrm.service.InterviewScheduleLocalService getInterviewScheduleLocalService() {
+        return interviewScheduleLocalService;
+    }
+
+    /**
+     * Sets the interview schedule local service.
+     *
+     * @param interviewScheduleLocalService the interview schedule local service
+     */
+    public void setInterviewScheduleLocalService(
+        vn.com.ecopharma.hrm.service.InterviewScheduleLocalService interviewScheduleLocalService) {
+        this.interviewScheduleLocalService = interviewScheduleLocalService;
+    }
+
+    /**
+     * Returns the interview schedule remote service.
+     *
+     * @return the interview schedule remote service
+     */
+    public vn.com.ecopharma.hrm.service.InterviewScheduleService getInterviewScheduleService() {
+        return interviewScheduleService;
+    }
+
+    /**
+     * Sets the interview schedule remote service.
+     *
+     * @param interviewScheduleService the interview schedule remote service
+     */
+    public void setInterviewScheduleService(
+        vn.com.ecopharma.hrm.service.InterviewScheduleService interviewScheduleService) {
+        this.interviewScheduleService = interviewScheduleService;
+    }
+
+    /**
+     * Returns the interview schedule persistence.
+     *
+     * @return the interview schedule persistence
+     */
+    public InterviewSchedulePersistence getInterviewSchedulePersistence() {
+        return interviewSchedulePersistence;
+    }
+
+    /**
+     * Sets the interview schedule persistence.
+     *
+     * @param interviewSchedulePersistence the interview schedule persistence
+     */
+    public void setInterviewSchedulePersistence(
+        InterviewSchedulePersistence interviewSchedulePersistence) {
+        this.interviewSchedulePersistence = interviewSchedulePersistence;
+    }
+
+    /**
      * Returns the j title local service.
      *
      * @return the j title local service
@@ -756,6 +685,63 @@ public abstract class CandidateLocalServiceBaseImpl extends BaseLocalServiceImpl
      */
     public void setVacancyPersistence(VacancyPersistence vacancyPersistence) {
         this.vacancyPersistence = vacancyPersistence;
+    }
+
+    /**
+     * Returns the vacancy candidate local service.
+     *
+     * @return the vacancy candidate local service
+     */
+    public vn.com.ecopharma.hrm.service.VacancyCandidateLocalService getVacancyCandidateLocalService() {
+        return vacancyCandidateLocalService;
+    }
+
+    /**
+     * Sets the vacancy candidate local service.
+     *
+     * @param vacancyCandidateLocalService the vacancy candidate local service
+     */
+    public void setVacancyCandidateLocalService(
+        vn.com.ecopharma.hrm.service.VacancyCandidateLocalService vacancyCandidateLocalService) {
+        this.vacancyCandidateLocalService = vacancyCandidateLocalService;
+    }
+
+    /**
+     * Returns the vacancy candidate remote service.
+     *
+     * @return the vacancy candidate remote service
+     */
+    public vn.com.ecopharma.hrm.service.VacancyCandidateService getVacancyCandidateService() {
+        return vacancyCandidateService;
+    }
+
+    /**
+     * Sets the vacancy candidate remote service.
+     *
+     * @param vacancyCandidateService the vacancy candidate remote service
+     */
+    public void setVacancyCandidateService(
+        vn.com.ecopharma.hrm.service.VacancyCandidateService vacancyCandidateService) {
+        this.vacancyCandidateService = vacancyCandidateService;
+    }
+
+    /**
+     * Returns the vacancy candidate persistence.
+     *
+     * @return the vacancy candidate persistence
+     */
+    public VacancyCandidatePersistence getVacancyCandidatePersistence() {
+        return vacancyCandidatePersistence;
+    }
+
+    /**
+     * Sets the vacancy candidate persistence.
+     *
+     * @param vacancyCandidatePersistence the vacancy candidate persistence
+     */
+    public void setVacancyCandidatePersistence(
+        VacancyCandidatePersistence vacancyCandidatePersistence) {
+        this.vacancyCandidatePersistence = vacancyCandidatePersistence;
     }
 
     /**

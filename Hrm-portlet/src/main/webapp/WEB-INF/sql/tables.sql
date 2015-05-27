@@ -101,6 +101,21 @@ create table HRM_Recruitment_Interview (
 	interview_time VARCHAR(75) null
 );
 
+create table HRM_Recruitment_InterviewSchedule (
+	interviewScheduleId LONG not null primary key,
+	c_id LONG,
+	v_id LONG,
+	interviewId LONG,
+	interviewDate DATE null,
+	interviewTime VARCHAR(75) null,
+	note VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table HRM_Recruitment_JTitle (
 	jobtitleId LONG not null primary key,
 	title VARCHAR(75) null,
@@ -129,6 +144,17 @@ create table HRM_Recruitment_Vacancy (
 	update_date DATE null,
 	user_id LONG,
 	group_id LONG
+);
+
+create table HRM_Recruitment_VacancyCandidate (
+	vacancyCandidateId LONG not null primary key,
+	c_id LONG,
+	v_id LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
 );
 
 create table HRM_Vacancies_Candidates (

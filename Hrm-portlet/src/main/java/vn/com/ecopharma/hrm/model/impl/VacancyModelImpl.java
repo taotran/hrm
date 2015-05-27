@@ -87,19 +87,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
                 "value.object.finder.cache.enabled.vn.com.ecopharma.hrm.model.Vacancy"),
             true);
     public static final boolean COLUMN_BITMASK_ENABLED = false;
-    public static final String MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_NAME =
-        "HRM_Recruitment_Vacancies_Candidates";
-    public static final Object[][] MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_COLUMNS =
-        {
-            { "c_id", Types.BIGINT },
-            { "v_id", Types.BIGINT }
-        };
-    public static final String MAPPING_TABLE_HRM_RECRUITMENT_VACANCIES_CANDIDATES_SQL_CREATE =
-        "create table HRM_Recruitment_Vacancies_Candidates (c_id LONG not null,v_id LONG not null,primary key (c_id, v_id))";
-    public static final boolean FINDER_CACHE_ENABLED_HRM_RECRUITMENT_VACANCIES_CANDIDATES =
-        GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-                "value.object.finder.cache.enabled.HRM_Recruitment_Vacancies_Candidates"),
-            true);
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.vn.com.ecopharma.hrm.model.Vacancy"));
     private static ClassLoader _classLoader = Vacancy.class.getClassLoader();

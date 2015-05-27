@@ -238,142 +238,6 @@ public class CandidateLocalServiceUtil {
     }
 
     /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void addVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().addVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void addVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().addVacancyCandidate(v_id, candidate);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void addVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().addVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void addVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().addVacancyCandidates(v_id, Candidates);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void clearVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().clearVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void deleteVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().deleteVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void deleteVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().deleteVacancyCandidate(v_id, candidate);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void deleteVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().deleteVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void deleteVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().deleteVacancyCandidates(v_id, Candidates);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getVacancyCandidates(v_id, start, end);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService()
-                   .getVacancyCandidates(v_id, start, end, orderByComparator);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static int getVacancyCandidatesCount(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getVacancyCandidatesCount(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static boolean hasVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().hasVacancyCandidate(v_id, c_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static boolean hasVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().hasVacancyCandidates(v_id);
-    }
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public static void setVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException {
-        getService().setVacancyCandidates(v_id, c_ids);
-    }
-
-    /**
     * Returns the Spring bean ID for this bean.
     *
     * @return the Spring bean ID for this bean
@@ -430,24 +294,18 @@ public class CandidateLocalServiceUtil {
             email, start, end, order);
     }
 
-    public static java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
-        long c_id) {
-        return getService().getVacanciesByCandidate(c_id);
-    }
-
     public static vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long v_id, com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()
                    .create(user_id, first_name, middle_name, last_name, email,
             contact_number, comment, mode_of_application, date_of_application,
-            cv_file_id, cv_text_version, added_person, vacancies, serviceContext);
+            cv_file_id, cv_text_version, added_person, v_id, serviceContext);
     }
 
     public static vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,

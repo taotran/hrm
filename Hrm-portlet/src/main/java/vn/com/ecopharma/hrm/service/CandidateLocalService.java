@@ -219,115 +219,6 @@ public interface CandidateLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void addVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void addVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void addVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void addVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void clearVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void deleteVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void deleteVacancyCandidate(long v_id,
-        vn.com.ecopharma.hrm.model.Candidate candidate)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void deleteVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void deleteVacancyCandidates(long v_id,
-        java.util.List<vn.com.ecopharma.hrm.model.Candidate> Candidates)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id) throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> getVacancyCandidates(
-        long v_id, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public int getVacancyCandidatesCount(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public boolean hasVacancyCandidate(long v_id, long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public boolean hasVacancyCandidates(long v_id)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
-    * @throws SystemException if a system exception occurred
-    */
-    public void setVacancyCandidates(long v_id, long[] c_ids)
-        throws com.liferay.portal.kernel.exception.SystemException;
-
-    /**
     * Returns the Spring bean ID for this bean.
     *
     * @return the Spring bean ID for this bean
@@ -367,18 +258,13 @@ public interface CandidateLocalService extends BaseLocalService,
         java.lang.String last_name, java.lang.String email, int start, int end,
         com.liferay.portal.kernel.util.OrderByComparator order);
 
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> getVacanciesByCandidate(
-        long c_id);
-
     public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email,
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long v_id, com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,

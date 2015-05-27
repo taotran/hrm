@@ -22,9 +22,6 @@
 		<column name="candidate_status" type="String"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
-		
-		<column name="vancancies" type="Collection" entity="Vacancy"
-			mapping-table="Vacancies_Candidates"></column>
         <column name="interviewId" type="long"></column>
 		<finder name="findCandidates" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
@@ -52,8 +49,6 @@
 		<column name="update_date" type="Date"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
-		<column name="candidates" type="Collection" entity="Candidate"
-			mapping-table="Vacancies_Candidates"></column>
 	</entity>
 	
 	
@@ -122,6 +117,63 @@
         <column name="name" type="String"></column>
         <column name="interview_date" type="Date"></column>
         <column name="interview_time" type="String"></column>
+	</entity>
+	<entity name="InterviewSchedule" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+
+
+		<!-- PK fields -->
+
+		<column name="interviewScheduleId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="c_id" type="long"></column>
+        <column name="v_id" type="long"></column>
+        <column name="interviewId" type="long"></column>
+        <column name="interviewDate" type="Date"></column>
+        <column name="interviewTime" type="String"></column>
+        <column name="note" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="VacancyCandidate" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="vacancyCandidateId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="c_id" type="long" convert-null="false"></column>
+        <column name="v_id" type="long" convert-null="false"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="C_Id" return-type="Collection">
+        	<finder-column name="c_id"></finder-column>
+        </finder>
+        
+       <finder name="V_Id" return-type="Collection">
+        	<finder-column name="v_id"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

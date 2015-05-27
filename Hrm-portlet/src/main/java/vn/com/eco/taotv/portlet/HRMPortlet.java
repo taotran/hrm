@@ -29,6 +29,7 @@ import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.util.JSONServiceUtil;
 
@@ -198,8 +199,8 @@ public class HRMPortlet extends MVCPortlet {
 			List<Candidate> filteredCandidates = new ArrayList<Candidate>();
 			for (Candidate c : CandidateLocalServiceUtil.findAll()) {
 				String fullName = c.getFullName();
-				long v_id = CandidateLocalServiceUtil.findVacancyByCandidate(c
-						.getC_id());
+				long v_id = VacancyCandidateLocalServiceUtil.findByCandidate(c
+						.getC_id()).getV_id();
 
 				String v_name = VacancyLocalServiceUtil.getVacancy(v_id)
 						.getName();
@@ -306,8 +307,8 @@ public class HRMPortlet extends MVCPortlet {
 			for (Candidate c : filteredCandidates) {
 				JSONObject object = new JSONObject();
 				object.put("c_id", c.getC_id());
-				long v_id = CandidateLocalServiceUtil.findVacancyByCandidate(c
-						.getC_id());
+				long v_id = VacancyCandidateLocalServiceUtil.findByCandidate(c
+						.getC_id()).getV_id();
 
 				object.put("vacancy", VacancyLocalServiceUtil.getVacancy(v_id)
 						.getName());
@@ -371,8 +372,7 @@ public class HRMPortlet extends MVCPortlet {
 							middle_name, last_name, email, contact_number,
 							comment, 1,
 							new Date(date_of_application.getTime()), 1, "zzz",
-							1, Arrays.asList(VacancyLocalServiceUtil
-									.getVacancy(v_id)), serviceContext);
+							1, v_id, serviceContext);
 				} else {
 					CandidateLocalServiceUtil.edit(jObject.get("c_id")
 							.getAsLong(), first_name, middle_name, last_name,
@@ -481,7 +481,7 @@ public class HRMPortlet extends MVCPortlet {
 				jTitles.put(createJTitleJSONObj(j));
 			}
 			jsonResult.put("aaData", array);
-			//load all Job Titles for VacancyDialog
+			// load all Job Titles for VacancyDialog
 			jsonResult.put("jTitles", jTitles);
 			response.getWriter().print(jsonResult);
 
@@ -581,7 +581,7 @@ public class HRMPortlet extends MVCPortlet {
 				final String title = jObject.get("title").getAsString();
 				final String desc = jObject.get("description").getAsString();
 				final String note = jObject.get("note").getAsString();
-				
+
 				try {
 					// verify jTitleId to check create/update action
 					ServiceContext serviceContext = ServiceContextFactory
@@ -604,13 +604,13 @@ public class HRMPortlet extends MVCPortlet {
 					}
 					System.out.println(jTitleArr);
 					response.getWriter().print(jTitleArr);
-					
+
 				} catch (PortalException e) {
 					e.printStackTrace();
 				} catch (SystemException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		} else if (DELETE_JOB_TITLE.equalsIgnoreCase(resourceRequestId)) {
 			deleteEntityServeResource(request, response.getWriter(), "j_id");

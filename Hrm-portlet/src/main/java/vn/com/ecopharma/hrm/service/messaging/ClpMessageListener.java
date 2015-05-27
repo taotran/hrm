@@ -9,9 +9,13 @@ import vn.com.ecopharma.hrm.service.ClpSerializer;
 import vn.com.ecopharma.hrm.service.FileAttachmentLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.FileAttachmentServiceUtil;
 import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewScheduleLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewScheduleServiceUtil;
 import vn.com.ecopharma.hrm.service.InterviewServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleServiceUtil;
+import vn.com.ecopharma.hrm.service.VacancyCandidateLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.VacancyCandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyServiceUtil;
 
@@ -37,12 +41,18 @@ public class ClpMessageListener extends BaseMessageListener {
             InterviewLocalServiceUtil.clearService();
 
             InterviewServiceUtil.clearService();
+            InterviewScheduleLocalServiceUtil.clearService();
+
+            InterviewScheduleServiceUtil.clearService();
             JTitleLocalServiceUtil.clearService();
 
             JTitleServiceUtil.clearService();
             VacancyLocalServiceUtil.clearService();
 
             VacancyServiceUtil.clearService();
+            VacancyCandidateLocalServiceUtil.clearService();
+
+            VacancyCandidateServiceUtil.clearService();
         }
     }
 }
