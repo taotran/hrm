@@ -251,4 +251,11 @@ public interface VacancyCandidateLocalService extends BaseLocalService,
 
     public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy(
         long v_id);
+
+    public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
+        long v_id, long c_id);
+
+    public void deleteByVacancyAndCandidate(long v_id, long c_id);
+
+    public void deleteByVacancy(long v_id);
 }

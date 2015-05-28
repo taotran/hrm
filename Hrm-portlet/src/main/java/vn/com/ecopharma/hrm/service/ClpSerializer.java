@@ -12,10 +12,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import vn.com.ecopharma.hrm.model.CandidateClp;
+import vn.com.ecopharma.hrm.model.EmployeeClp;
 import vn.com.ecopharma.hrm.model.FileAttachmentClp;
 import vn.com.ecopharma.hrm.model.InterviewClp;
 import vn.com.ecopharma.hrm.model.InterviewScheduleClp;
 import vn.com.ecopharma.hrm.model.JTitleClp;
+import vn.com.ecopharma.hrm.model.LocationClp;
 import vn.com.ecopharma.hrm.model.VacancyCandidateClp;
 import vn.com.ecopharma.hrm.model.VacancyClp;
 
@@ -98,6 +100,10 @@ public class ClpSerializer {
             return translateInputCandidate(oldModel);
         }
 
+        if (oldModelClassName.equals(EmployeeClp.class.getName())) {
+            return translateInputEmployee(oldModel);
+        }
+
         if (oldModelClassName.equals(FileAttachmentClp.class.getName())) {
             return translateInputFileAttachment(oldModel);
         }
@@ -112,6 +118,10 @@ public class ClpSerializer {
 
         if (oldModelClassName.equals(JTitleClp.class.getName())) {
             return translateInputJTitle(oldModel);
+        }
+
+        if (oldModelClassName.equals(LocationClp.class.getName())) {
+            return translateInputLocation(oldModel);
         }
 
         if (oldModelClassName.equals(VacancyClp.class.getName())) {
@@ -141,6 +151,16 @@ public class ClpSerializer {
         CandidateClp oldClpModel = (CandidateClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getCandidateRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputEmployee(BaseModel<?> oldModel) {
+        EmployeeClp oldClpModel = (EmployeeClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getEmployeeRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -187,6 +207,16 @@ public class ClpSerializer {
         return newModel;
     }
 
+    public static Object translateInputLocation(BaseModel<?> oldModel) {
+        LocationClp oldClpModel = (LocationClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getLocationRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
     public static Object translateInputVacancy(BaseModel<?> oldModel) {
         VacancyClp oldClpModel = (VacancyClp) oldModel;
 
@@ -225,6 +255,41 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.CandidateImpl")) {
             return translateOutputCandidate(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.EmployeeImpl")) {
+            return translateOutputEmployee(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -365,6 +430,41 @@ public class ClpSerializer {
         if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.JTitleImpl")) {
             return translateOutputJTitle(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.LocationImpl")) {
+            return translateOutputLocation(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
             try {
                 ClassLoader classLoader = ClpSerializer.class.getClassLoader();
@@ -547,6 +647,10 @@ public class ClpSerializer {
             return new vn.com.ecopharma.hrm.NoSuchCandidateException();
         }
 
+        if (className.equals("vn.com.ecopharma.hrm.NoSuchEmployeeException")) {
+            return new vn.com.ecopharma.hrm.NoSuchEmployeeException();
+        }
+
         if (className.equals(
                     "vn.com.ecopharma.hrm.NoSuchFileAttachmentException")) {
             return new vn.com.ecopharma.hrm.NoSuchFileAttachmentException();
@@ -563,6 +667,10 @@ public class ClpSerializer {
 
         if (className.equals("vn.com.ecopharma.hrm.NoSuchJTitleException")) {
             return new vn.com.ecopharma.hrm.NoSuchJTitleException();
+        }
+
+        if (className.equals("vn.com.ecopharma.hrm.NoSuchLocationException")) {
+            return new vn.com.ecopharma.hrm.NoSuchLocationException();
         }
 
         if (className.equals("vn.com.ecopharma.hrm.NoSuchVacancyException")) {
@@ -583,6 +691,16 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setCandidateRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputEmployee(BaseModel<?> oldModel) {
+        EmployeeClp newModel = new EmployeeClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setEmployeeRemoteModel(oldModel);
 
         return newModel;
     }
@@ -623,6 +741,16 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setJTitleRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputLocation(BaseModel<?> oldModel) {
+        LocationClp newModel = new LocationClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setLocationRemoteModel(oldModel);
 
         return newModel;
     }

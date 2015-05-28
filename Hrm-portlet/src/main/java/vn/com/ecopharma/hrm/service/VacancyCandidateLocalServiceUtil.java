@@ -280,6 +280,19 @@ public class VacancyCandidateLocalServiceUtil {
         return getService().findByVacancy(v_id);
     }
 
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
+        long v_id, long c_id) {
+        return getService().findByVacancyAndCandidate(v_id, c_id);
+    }
+
+    public static void deleteByVacancyAndCandidate(long v_id, long c_id) {
+        getService().deleteByVacancyAndCandidate(v_id, c_id);
+    }
+
+    public static void deleteByVacancy(long v_id) {
+        getService().deleteByVacancy(v_id);
+    }
+
     public static void clearService() {
         _service = null;
     }

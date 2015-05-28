@@ -23,9 +23,9 @@ import java.util.Map;
 public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
     implements InterviewSchedule {
     private long _interviewScheduleId;
-    private long _c_id;
-    private long _v_id;
+    private long _vacancyCandidateId;
     private long _interviewId;
+    private long _employeeId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -76,9 +76,9 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("interviewScheduleId", getInterviewScheduleId());
-        attributes.put("c_id", getC_id());
-        attributes.put("v_id", getV_id());
+        attributes.put("vacancyCandidateId", getVacancyCandidateId());
         attributes.put("interviewId", getInterviewId());
+        attributes.put("employeeId", getEmployeeId());
         attributes.put("interviewDate", getInterviewDate());
         attributes.put("interviewTime", getInterviewTime());
         attributes.put("note", getNote());
@@ -99,22 +99,22 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
             setInterviewScheduleId(interviewScheduleId);
         }
 
-        Long c_id = (Long) attributes.get("c_id");
+        Long vacancyCandidateId = (Long) attributes.get("vacancyCandidateId");
 
-        if (c_id != null) {
-            setC_id(c_id);
-        }
-
-        Long v_id = (Long) attributes.get("v_id");
-
-        if (v_id != null) {
-            setV_id(v_id);
+        if (vacancyCandidateId != null) {
+            setVacancyCandidateId(vacancyCandidateId);
         }
 
         Long interviewId = (Long) attributes.get("interviewId");
 
         if (interviewId != null) {
             setInterviewId(interviewId);
+        }
+
+        Long employeeId = (Long) attributes.get("employeeId");
+
+        if (employeeId != null) {
+            setEmployeeId(employeeId);
         }
 
         Date interviewDate = (Date) attributes.get("interviewDate");
@@ -190,43 +190,22 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
     }
 
     @Override
-    public long getC_id() {
-        return _c_id;
+    public long getVacancyCandidateId() {
+        return _vacancyCandidateId;
     }
 
     @Override
-    public void setC_id(long c_id) {
-        _c_id = c_id;
+    public void setVacancyCandidateId(long vacancyCandidateId) {
+        _vacancyCandidateId = vacancyCandidateId;
 
         if (_interviewScheduleRemoteModel != null) {
             try {
                 Class<?> clazz = _interviewScheduleRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setC_id", long.class);
+                Method method = clazz.getMethod("setVacancyCandidateId",
+                        long.class);
 
-                method.invoke(_interviewScheduleRemoteModel, c_id);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public long getV_id() {
-        return _v_id;
-    }
-
-    @Override
-    public void setV_id(long v_id) {
-        _v_id = v_id;
-
-        if (_interviewScheduleRemoteModel != null) {
-            try {
-                Class<?> clazz = _interviewScheduleRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setV_id", long.class);
-
-                method.invoke(_interviewScheduleRemoteModel, v_id);
+                method.invoke(_interviewScheduleRemoteModel, vacancyCandidateId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -249,6 +228,28 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
                 Method method = clazz.getMethod("setInterviewId", long.class);
 
                 method.invoke(_interviewScheduleRemoteModel, interviewId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getEmployeeId() {
+        return _employeeId;
+    }
+
+    @Override
+    public void setEmployeeId(long employeeId) {
+        _employeeId = employeeId;
+
+        if (_interviewScheduleRemoteModel != null) {
+            try {
+                Class<?> clazz = _interviewScheduleRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setEmployeeId", long.class);
+
+                method.invoke(_interviewScheduleRemoteModel, employeeId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -511,9 +512,9 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         InterviewScheduleClp clone = new InterviewScheduleClp();
 
         clone.setInterviewScheduleId(getInterviewScheduleId());
-        clone.setC_id(getC_id());
-        clone.setV_id(getV_id());
+        clone.setVacancyCandidateId(getVacancyCandidateId());
         clone.setInterviewId(getInterviewId());
+        clone.setEmployeeId(getEmployeeId());
         clone.setInterviewDate(getInterviewDate());
         clone.setInterviewTime(getInterviewTime());
         clone.setNote(getNote());
@@ -575,12 +576,12 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
         sb.append("{interviewScheduleId=");
         sb.append(getInterviewScheduleId());
-        sb.append(", c_id=");
-        sb.append(getC_id());
-        sb.append(", v_id=");
-        sb.append(getV_id());
+        sb.append(", vacancyCandidateId=");
+        sb.append(getVacancyCandidateId());
         sb.append(", interviewId=");
         sb.append(getInterviewId());
+        sb.append(", employeeId=");
+        sb.append(getEmployeeId());
         sb.append(", interviewDate=");
         sb.append(getInterviewDate());
         sb.append(", interviewTime=");
@@ -615,16 +616,16 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         sb.append(getInterviewScheduleId());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>c_id</column-name><column-value><![CDATA[");
-        sb.append(getC_id());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>v_id</column-name><column-value><![CDATA[");
-        sb.append(getV_id());
+            "<column><column-name>vacancyCandidateId</column-name><column-value><![CDATA[");
+        sb.append(getVacancyCandidateId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>interviewId</column-name><column-value><![CDATA[");
         sb.append(getInterviewId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>employeeId</column-name><column-value><![CDATA[");
+        sb.append(getEmployeeId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>interviewDate</column-name><column-value><![CDATA[");

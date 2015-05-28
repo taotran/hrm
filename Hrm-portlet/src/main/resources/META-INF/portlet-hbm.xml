@@ -3,10 +3,12 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="vn.com.ecopharma.hrm.model.Candidate" />
+	<import class="vn.com.ecopharma.hrm.model.Employee" />
 	<import class="vn.com.ecopharma.hrm.model.FileAttachment" />
 	<import class="vn.com.ecopharma.hrm.model.Interview" />
 	<import class="vn.com.ecopharma.hrm.model.InterviewSchedule" />
 	<import class="vn.com.ecopharma.hrm.model.JTitle" />
+	<import class="vn.com.ecopharma.hrm.model.Location" />
 	<import class="vn.com.ecopharma.hrm.model.Vacancy" />
 	<import class="vn.com.ecopharma.hrm.model.VacancyCandidate" />
 	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Recruitment_Candidate">
@@ -30,6 +32,30 @@
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" table="HRM_Recruitment_Employee">
+		<cache usage="read-write" />
+		<id name="employeeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="emp_code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="firstname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="middle_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="nickname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="birthday" type="org.hibernate.type.TimestampType" />
+		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="marital_status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jobtitleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="joined_date" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_Recruitment_FileAttachment">
 		<cache usage="read-write" />
@@ -68,9 +94,9 @@
 		<id name="interviewScheduleId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="c_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="v_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="vacancyCandidateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="employeeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewDate" type="org.hibernate.type.TimestampType" />
 		<property name="interviewTime" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -92,6 +118,27 @@
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.LocationImpl" table="HRM_Recruitment_Location">
+		<cache usage="read-write" />
+		<id name="locationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="country_code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="province" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zip_code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.VacancyImpl" table="HRM_Recruitment_Vacancy">
 		<cache usage="read-write" />
 		<id name="v_id" type="long">
@@ -100,9 +147,10 @@
 		<property name="jobtitleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="hiring_manager_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="locationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="no_of_positions" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="published_in_feed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="vacancy_status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="insert_date" type="org.hibernate.type.TimestampType" />
 		<property name="update_date" type="org.hibernate.type.TimestampType" />
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />

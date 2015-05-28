@@ -18,9 +18,10 @@ public class VacancySoap implements Serializable {
     private long _jobtitleId;
     private long _hiring_manager_id;
     private String _name;
+    private long _locationId;
     private String _description;
     private int _no_of_positions;
-    private boolean _published_in_feed;
+    private String _vacancy_status;
     private Date _insert_date;
     private Date _update_date;
     private long _user_id;
@@ -36,9 +37,10 @@ public class VacancySoap implements Serializable {
         soapModel.setJobtitleId(model.getJobtitleId());
         soapModel.setHiring_manager_id(model.getHiring_manager_id());
         soapModel.setName(model.getName());
+        soapModel.setLocationId(model.getLocationId());
         soapModel.setDescription(model.getDescription());
         soapModel.setNo_of_positions(model.getNo_of_positions());
-        soapModel.setPublished_in_feed(model.getPublished_in_feed());
+        soapModel.setVacancy_status(model.getVacancy_status());
         soapModel.setInsert_date(model.getInsert_date());
         soapModel.setUpdate_date(model.getUpdate_date());
         soapModel.setUser_id(model.getUser_id());
@@ -123,6 +125,14 @@ public class VacancySoap implements Serializable {
         _name = name;
     }
 
+    public long getLocationId() {
+        return _locationId;
+    }
+
+    public void setLocationId(long locationId) {
+        _locationId = locationId;
+    }
+
     public String getDescription() {
         return _description;
     }
@@ -139,16 +149,12 @@ public class VacancySoap implements Serializable {
         _no_of_positions = no_of_positions;
     }
 
-    public boolean getPublished_in_feed() {
-        return _published_in_feed;
+    public String getVacancy_status() {
+        return _vacancy_status;
     }
 
-    public boolean isPublished_in_feed() {
-        return _published_in_feed;
-    }
-
-    public void setPublished_in_feed(boolean published_in_feed) {
-        _published_in_feed = published_in_feed;
+    public void setVacancy_status(String vacancy_status) {
+        _vacancy_status = vacancy_status;
     }
 
     public Date getInsert_date() {

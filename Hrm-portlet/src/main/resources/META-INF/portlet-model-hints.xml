@@ -20,6 +20,27 @@
 		<field name="group_id" type="long" />
 		<field name="interviewId" type="long" />
 	</model>
+	<model name="vn.com.ecopharma.hrm.model.Employee">
+		<field name="employeeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="emp_code" type="String" />
+		<field name="firstname" type="String" />
+		<field name="middle_name" type="String" />
+		<field name="lastname" type="String" />
+		<field name="email" type="String" />
+		<field name="nickname" type="String" />
+		<field name="birthday" type="Date" />
+		<field name="gender" type="String" />
+		<field name="marital_status" type="String" />
+		<field name="status" type="String" />
+		<field name="jobtitleId" type="long" />
+		<field name="joined_date" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.hrm.model.FileAttachment">
 		<field name="f_id" type="long" />
 		<field name="groupId" type="long" />
@@ -48,9 +69,9 @@
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.InterviewSchedule">
 		<field name="interviewScheduleId" type="long" />
-		<field name="c_id" type="long" />
-		<field name="v_id" type="long" />
+		<field name="vacancyCandidateId" type="long" />
 		<field name="interviewId" type="long" />
+		<field name="employeeId" type="long" />
 		<field name="interviewDate" type="Date" />
 		<field name="interviewTime" type="String" />
 		<field name="note" type="String" />
@@ -69,14 +90,33 @@
 		<field name="user_id" type="long" />
 		<field name="group_id" type="long" />
 	</model>
+	<model name="vn.com.ecopharma.hrm.model.Location">
+		<field name="locationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="type" type="String" />
+		<field name="name" type="String" />
+		<field name="country_code" type="String" />
+		<field name="province" type="String" />
+		<field name="city" type="String" />
+		<field name="address" type="String" />
+		<field name="zip_code" type="String" />
+		<field name="phone" type="String" />
+		<field name="fax" type="String" />
+		<field name="note" type="String" />
+	</model>
 	<model name="vn.com.ecopharma.hrm.model.Vacancy">
 		<field name="v_id" type="long" />
 		<field name="jobtitleId" type="long" />
 		<field name="hiring_manager_id" type="long" />
 		<field name="name" type="String" />
+		<field name="locationId" type="long" />
 		<field name="description" type="String" />
 		<field name="no_of_positions" type="int" />
-		<field name="published_in_feed" type="boolean" />
+		<field name="vacancy_status" type="String" />
 		<field name="insert_date" type="Date" />
 		<field name="update_date" type="Date" />
 		<field name="user_id" type="long" />

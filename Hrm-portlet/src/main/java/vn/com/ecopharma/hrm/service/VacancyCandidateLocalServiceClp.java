@@ -51,6 +51,12 @@ public class VacancyCandidateLocalServiceClp
     private String[] _methodParameterTypes20;
     private String _methodName21;
     private String[] _methodParameterTypes21;
+    private String _methodName22;
+    private String[] _methodParameterTypes22;
+    private String _methodName23;
+    private String[] _methodParameterTypes23;
+    private String _methodName24;
+    private String[] _methodParameterTypes24;
 
     public VacancyCandidateLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -160,6 +166,18 @@ public class VacancyCandidateLocalServiceClp
         _methodName21 = "findByVacancy";
 
         _methodParameterTypes21 = new String[] { "long" };
+
+        _methodName22 = "findByVacancyAndCandidate";
+
+        _methodParameterTypes22 = new String[] { "long", "long" };
+
+        _methodName23 = "deleteByVacancyAndCandidate";
+
+        _methodParameterTypes23 = new String[] { "long", "long" };
+
+        _methodName24 = "deleteByVacancy";
+
+        _methodParameterTypes24 = new String[] { "long" };
     }
 
     @Override
@@ -758,5 +776,61 @@ public class VacancyCandidateLocalServiceClp
         }
 
         return (java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
+        long v_id, long c_id) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName22,
+                    _methodParameterTypes22, new Object[] { v_id, c_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.VacancyCandidate) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void deleteByVacancyAndCandidate(long v_id, long c_id) {
+        try {
+            _invokableLocalService.invokeMethod(_methodName23,
+                _methodParameterTypes23, new Object[] { v_id, c_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+    }
+
+    @Override
+    public void deleteByVacancy(long v_id) {
+        try {
+            _invokableLocalService.invokeMethod(_methodName24,
+                _methodParameterTypes24, new Object[] { v_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

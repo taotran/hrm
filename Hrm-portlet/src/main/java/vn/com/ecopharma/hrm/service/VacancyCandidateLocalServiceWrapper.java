@@ -298,6 +298,23 @@ public class VacancyCandidateLocalServiceWrapper
         return _vacancyCandidateLocalService.findByVacancy(v_id);
     }
 
+    @Override
+    public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
+        long v_id, long c_id) {
+        return _vacancyCandidateLocalService.findByVacancyAndCandidate(v_id,
+            c_id);
+    }
+
+    @Override
+    public void deleteByVacancyAndCandidate(long v_id, long c_id) {
+        _vacancyCandidateLocalService.deleteByVacancyAndCandidate(v_id, c_id);
+    }
+
+    @Override
+    public void deleteByVacancy(long v_id) {
+        _vacancyCandidateLocalService.deleteByVacancy(v_id);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

@@ -21,10 +21,12 @@ import vn.com.ecopharma.hrm.model.FileAttachment;
 import vn.com.ecopharma.hrm.service.FileAttachmentLocalService;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
+import vn.com.ecopharma.hrm.service.persistence.EmployeePersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
+import vn.com.ecopharma.hrm.service.persistence.LocationPersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
@@ -57,6 +59,12 @@ public abstract class FileAttachmentLocalServiceBaseImpl
     protected CandidatePersistence candidatePersistence;
     @BeanReference(type = CandidateFinder.class)
     protected CandidateFinder candidateFinder;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeLocalService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeLocalService employeeLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeService employeeService;
+    @BeanReference(type = EmployeePersistence.class)
+    protected EmployeePersistence employeePersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentLocalService.class)
     protected vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentService.class)
@@ -81,6 +89,12 @@ public abstract class FileAttachmentLocalServiceBaseImpl
     protected vn.com.ecopharma.hrm.service.JTitleService jTitleService;
     @BeanReference(type = JTitlePersistence.class)
     protected JTitlePersistence jTitlePersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.LocationLocalService.class)
+    protected vn.com.ecopharma.hrm.service.LocationLocalService locationLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.LocationService.class)
+    protected vn.com.ecopharma.hrm.service.LocationService locationService;
+    @BeanReference(type = LocationPersistence.class)
+    protected LocationPersistence locationPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyLocalService.class)
     protected vn.com.ecopharma.hrm.service.VacancyLocalService vacancyLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyService.class)
@@ -407,6 +421,62 @@ public abstract class FileAttachmentLocalServiceBaseImpl
     }
 
     /**
+     * Returns the employee local service.
+     *
+     * @return the employee local service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeLocalService getEmployeeLocalService() {
+        return employeeLocalService;
+    }
+
+    /**
+     * Sets the employee local service.
+     *
+     * @param employeeLocalService the employee local service
+     */
+    public void setEmployeeLocalService(
+        vn.com.ecopharma.hrm.service.EmployeeLocalService employeeLocalService) {
+        this.employeeLocalService = employeeLocalService;
+    }
+
+    /**
+     * Returns the employee remote service.
+     *
+     * @return the employee remote service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    /**
+     * Sets the employee remote service.
+     *
+     * @param employeeService the employee remote service
+     */
+    public void setEmployeeService(
+        vn.com.ecopharma.hrm.service.EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    /**
+     * Returns the employee persistence.
+     *
+     * @return the employee persistence
+     */
+    public EmployeePersistence getEmployeePersistence() {
+        return employeePersistence;
+    }
+
+    /**
+     * Sets the employee persistence.
+     *
+     * @param employeePersistence the employee persistence
+     */
+    public void setEmployeePersistence(EmployeePersistence employeePersistence) {
+        this.employeePersistence = employeePersistence;
+    }
+
+    /**
      * Returns the file attachment local service.
      *
      * @return the file attachment local service
@@ -631,6 +701,62 @@ public abstract class FileAttachmentLocalServiceBaseImpl
      */
     public void setJTitlePersistence(JTitlePersistence jTitlePersistence) {
         this.jTitlePersistence = jTitlePersistence;
+    }
+
+    /**
+     * Returns the location local service.
+     *
+     * @return the location local service
+     */
+    public vn.com.ecopharma.hrm.service.LocationLocalService getLocationLocalService() {
+        return locationLocalService;
+    }
+
+    /**
+     * Sets the location local service.
+     *
+     * @param locationLocalService the location local service
+     */
+    public void setLocationLocalService(
+        vn.com.ecopharma.hrm.service.LocationLocalService locationLocalService) {
+        this.locationLocalService = locationLocalService;
+    }
+
+    /**
+     * Returns the location remote service.
+     *
+     * @return the location remote service
+     */
+    public vn.com.ecopharma.hrm.service.LocationService getLocationService() {
+        return locationService;
+    }
+
+    /**
+     * Sets the location remote service.
+     *
+     * @param locationService the location remote service
+     */
+    public void setLocationService(
+        vn.com.ecopharma.hrm.service.LocationService locationService) {
+        this.locationService = locationService;
+    }
+
+    /**
+     * Returns the location persistence.
+     *
+     * @return the location persistence
+     */
+    public LocationPersistence getLocationPersistence() {
+        return locationPersistence;
+    }
+
+    /**
+     * Sets the location persistence.
+     *
+     * @param locationPersistence the location persistence
+     */
+    public void setLocationPersistence(LocationPersistence locationPersistence) {
+        this.locationPersistence = locationPersistence;
     }
 
     /**

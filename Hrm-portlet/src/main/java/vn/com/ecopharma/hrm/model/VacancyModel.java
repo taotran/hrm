@@ -108,6 +108,20 @@ public interface VacancyModel extends BaseModel<Vacancy>, TrashedModel {
     public void setName(String name);
 
     /**
+     * Returns the location ID of this vacancy.
+     *
+     * @return the location ID of this vacancy
+     */
+    public long getLocationId();
+
+    /**
+     * Sets the location ID of this vacancy.
+     *
+     * @param locationId the location ID of this vacancy
+     */
+    public void setLocationId(long locationId);
+
+    /**
      * Returns the description of this vacancy.
      *
      * @return the description of this vacancy
@@ -137,25 +151,19 @@ public interface VacancyModel extends BaseModel<Vacancy>, TrashedModel {
     public void setNo_of_positions(int no_of_positions);
 
     /**
-     * Returns the published_in_feed of this vacancy.
+     * Returns the vacancy_status of this vacancy.
      *
-     * @return the published_in_feed of this vacancy
+     * @return the vacancy_status of this vacancy
      */
-    public boolean getPublished_in_feed();
+    @AutoEscape
+    public String getVacancy_status();
 
     /**
-     * Returns <code>true</code> if this vacancy is published_in_feed.
+     * Sets the vacancy_status of this vacancy.
      *
-     * @return <code>true</code> if this vacancy is published_in_feed; <code>false</code> otherwise
+     * @param vacancy_status the vacancy_status of this vacancy
      */
-    public boolean isPublished_in_feed();
-
-    /**
-     * Sets whether this vacancy is published_in_feed.
-     *
-     * @param published_in_feed the published_in_feed of this vacancy
-     */
-    public void setPublished_in_feed(boolean published_in_feed);
+    public void setVacancy_status(String vacancy_status);
 
     /**
      * Returns the insert_date of this vacancy.

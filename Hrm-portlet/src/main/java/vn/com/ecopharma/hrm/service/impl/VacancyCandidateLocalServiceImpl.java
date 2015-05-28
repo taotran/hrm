@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.constant.CandidateStatus;
 import vn.com.ecopharma.hrm.model.Candidate;
@@ -60,7 +61,7 @@ public class VacancyCandidateLocalServiceImpl
 	
 	public VacancyCandidate findByCandidate(long c_id) {
 		try {
-			return vacancyCandidatePersistence.findByC_Id(c_id).get(0);
+			return vacancyCandidatePersistence.fetchByC_Id(c_id);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
@@ -74,5 +75,44 @@ public class VacancyCandidateLocalServiceImpl
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public VacancyCandidate findByVacancyAndCandidate(long v_id, long c_id) {
+		try {
+			return vacancyCandidatePersistence.findByV_Id_And_C_Id(v_id, c_id);
+		} catch (NoSuchVacancyCandidateException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void deleteByVacancyAndCandidate(long v_id, long c_id) {
+		VacancyCandidate vc = findByVacancyAndCandidate(v_id, c_id);
+		if (vc != null) {
+			try {
+				vacancyCandidatePersistence.remove(vc.getVacancyCandidateId());
+			} catch (NoSuchVacancyCandidateException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteByVacancy(long v_id) {
+		List<VacancyCandidate> vcList = findByVacancy(v_id);
+		if (vcList != null && vcList.size()>0) {
+			try {
+				for (VacancyCandidate vc: vcList) {
+					vacancyCandidatePersistence.remove(vc.getVacancyCandidateId());
+				}
+			} catch (NoSuchVacancyCandidateException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -278,21 +278,20 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
         long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
-        boolean published_in_feed,
+        java.lang.String vacancy_status,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return _vacancyLocalService.create(user_id, jTitle_id,
             hiring_mananager_id, name, description, no_of_positions,
-            published_in_feed, serviceContext);
+            vacancy_status, serviceContext);
     }
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
         long hiring_manager_id, java.lang.String name,
-        java.lang.String description, int number_of_positions,
-        boolean published_in_feed) {
+        java.lang.String description, int number_of_positions) {
         return _vacancyLocalService.edit(id, jtitle_id, hiring_manager_id,
-            name, description, number_of_positions, published_in_feed);
+            name, description, number_of_positions);
     }
 
     @Override

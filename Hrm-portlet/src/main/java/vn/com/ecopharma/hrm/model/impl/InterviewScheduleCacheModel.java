@@ -23,9 +23,9 @@ import java.util.Date;
 public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule>,
     Externalizable {
     public long interviewScheduleId;
-    public long c_id;
-    public long v_id;
+    public long vacancyCandidateId;
     public long interviewId;
+    public long employeeId;
     public long interviewDate;
     public String interviewTime;
     public String note;
@@ -41,12 +41,12 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 
         sb.append("{interviewScheduleId=");
         sb.append(interviewScheduleId);
-        sb.append(", c_id=");
-        sb.append(c_id);
-        sb.append(", v_id=");
-        sb.append(v_id);
+        sb.append(", vacancyCandidateId=");
+        sb.append(vacancyCandidateId);
         sb.append(", interviewId=");
         sb.append(interviewId);
+        sb.append(", employeeId=");
+        sb.append(employeeId);
         sb.append(", interviewDate=");
         sb.append(interviewDate);
         sb.append(", interviewTime=");
@@ -73,9 +73,9 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
         InterviewScheduleImpl interviewScheduleImpl = new InterviewScheduleImpl();
 
         interviewScheduleImpl.setInterviewScheduleId(interviewScheduleId);
-        interviewScheduleImpl.setC_id(c_id);
-        interviewScheduleImpl.setV_id(v_id);
+        interviewScheduleImpl.setVacancyCandidateId(vacancyCandidateId);
         interviewScheduleImpl.setInterviewId(interviewId);
+        interviewScheduleImpl.setEmployeeId(employeeId);
 
         if (interviewDate == Long.MIN_VALUE) {
             interviewScheduleImpl.setInterviewDate(null);
@@ -119,9 +119,9 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
     @Override
     public void readExternal(ObjectInput objectInput) throws IOException {
         interviewScheduleId = objectInput.readLong();
-        c_id = objectInput.readLong();
-        v_id = objectInput.readLong();
+        vacancyCandidateId = objectInput.readLong();
         interviewId = objectInput.readLong();
+        employeeId = objectInput.readLong();
         interviewDate = objectInput.readLong();
         interviewTime = objectInput.readUTF();
         note = objectInput.readUTF();
@@ -136,9 +136,9 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
     public void writeExternal(ObjectOutput objectOutput)
         throws IOException {
         objectOutput.writeLong(interviewScheduleId);
-        objectOutput.writeLong(c_id);
-        objectOutput.writeLong(v_id);
+        objectOutput.writeLong(vacancyCandidateId);
         objectOutput.writeLong(interviewId);
+        objectOutput.writeLong(employeeId);
         objectOutput.writeLong(interviewDate);
 
         if (interviewTime == null) {

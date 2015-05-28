@@ -35,9 +35,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     private long _jobtitleId;
     private long _hiring_manager_id;
     private String _name;
+    private long _locationId;
     private String _description;
     private int _no_of_positions;
-    private boolean _published_in_feed;
+    private String _vacancy_status;
     private Date _insert_date;
     private Date _update_date;
     private long _user_id;
@@ -86,9 +87,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
+        attributes.put("locationId", getLocationId());
         attributes.put("description", getDescription());
         attributes.put("no_of_positions", getNo_of_positions());
-        attributes.put("published_in_feed", getPublished_in_feed());
+        attributes.put("vacancy_status", getVacancy_status());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
         attributes.put("user_id", getUser_id());
@@ -123,6 +125,12 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
             setName(name);
         }
 
+        Long locationId = (Long) attributes.get("locationId");
+
+        if (locationId != null) {
+            setLocationId(locationId);
+        }
+
         String description = (String) attributes.get("description");
 
         if (description != null) {
@@ -135,11 +143,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
             setNo_of_positions(no_of_positions);
         }
 
-        Boolean published_in_feed = (Boolean) attributes.get(
-                "published_in_feed");
+        String vacancy_status = (String) attributes.get("vacancy_status");
 
-        if (published_in_feed != null) {
-            setPublished_in_feed(published_in_feed);
+        if (vacancy_status != null) {
+            setVacancy_status(vacancy_status);
         }
 
         Date insert_date = (Date) attributes.get("insert_date");
@@ -257,6 +264,28 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     }
 
     @Override
+    public long getLocationId() {
+        return _locationId;
+    }
+
+    @Override
+    public void setLocationId(long locationId) {
+        _locationId = locationId;
+
+        if (_vacancyRemoteModel != null) {
+            try {
+                Class<?> clazz = _vacancyRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setLocationId", long.class);
+
+                method.invoke(_vacancyRemoteModel, locationId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public String getDescription() {
         return _description;
     }
@@ -301,27 +330,22 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     }
 
     @Override
-    public boolean getPublished_in_feed() {
-        return _published_in_feed;
+    public String getVacancy_status() {
+        return _vacancy_status;
     }
 
     @Override
-    public boolean isPublished_in_feed() {
-        return _published_in_feed;
-    }
-
-    @Override
-    public void setPublished_in_feed(boolean published_in_feed) {
-        _published_in_feed = published_in_feed;
+    public void setVacancy_status(String vacancy_status) {
+        _vacancy_status = vacancy_status;
 
         if (_vacancyRemoteModel != null) {
             try {
                 Class<?> clazz = _vacancyRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setPublished_in_feed",
-                        boolean.class);
+                Method method = clazz.getMethod("setVacancy_status",
+                        String.class);
 
-                method.invoke(_vacancyRemoteModel, published_in_feed);
+                method.invoke(_vacancyRemoteModel, vacancy_status);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -614,9 +638,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         clone.setJobtitleId(getJobtitleId());
         clone.setHiring_manager_id(getHiring_manager_id());
         clone.setName(getName());
+        clone.setLocationId(getLocationId());
         clone.setDescription(getDescription());
         clone.setNo_of_positions(getNo_of_positions());
-        clone.setPublished_in_feed(getPublished_in_feed());
+        clone.setVacancy_status(getVacancy_status());
         clone.setInsert_date(getInsert_date());
         clone.setUpdate_date(getUpdate_date());
         clone.setUser_id(getUser_id());
@@ -670,7 +695,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{v_id=");
         sb.append(getV_id());
@@ -680,12 +705,14 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(getHiring_manager_id());
         sb.append(", name=");
         sb.append(getName());
+        sb.append(", locationId=");
+        sb.append(getLocationId());
         sb.append(", description=");
         sb.append(getDescription());
         sb.append(", no_of_positions=");
         sb.append(getNo_of_positions());
-        sb.append(", published_in_feed=");
-        sb.append(getPublished_in_feed());
+        sb.append(", vacancy_status=");
+        sb.append(getVacancy_status());
         sb.append(", insert_date=");
         sb.append(getInsert_date());
         sb.append(", update_date=");
@@ -701,7 +728,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(37);
+        StringBundler sb = new StringBundler(40);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -724,6 +751,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(getName());
         sb.append("]]></column-value></column>");
         sb.append(
+            "<column><column-name>locationId</column-name><column-value><![CDATA[");
+        sb.append(getLocationId());
+        sb.append("]]></column-value></column>");
+        sb.append(
             "<column><column-name>description</column-name><column-value><![CDATA[");
         sb.append(getDescription());
         sb.append("]]></column-value></column>");
@@ -732,8 +763,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(getNo_of_positions());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>published_in_feed</column-name><column-value><![CDATA[");
-        sb.append(getPublished_in_feed());
+            "<column><column-name>vacancy_status</column-name><column-value><![CDATA[");
+        sb.append(getVacancy_status());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>insert_date</column-name><column-value><![CDATA[");

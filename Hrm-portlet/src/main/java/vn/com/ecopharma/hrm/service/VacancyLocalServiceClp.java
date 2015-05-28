@@ -154,14 +154,15 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
         _methodParameterTypes20 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean", "com.liferay.portal.service.ServiceContext"
+                "int", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName21 = "edit";
 
         _methodParameterTypes21 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "boolean"
+                "int"
             };
 
         _methodName22 = "delete";
@@ -709,7 +710,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
         long jTitle_id, long hiring_mananager_id, java.lang.String name,
         java.lang.String description, int no_of_positions,
-        boolean published_in_feed,
+        java.lang.String vacancy_status,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
@@ -730,7 +731,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     no_of_positions,
                         
-                    published_in_feed,
+                    ClpSerializer.translateInput(vacancy_status),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -755,8 +756,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
         long hiring_manager_id, java.lang.String name,
-        java.lang.String description, int number_of_positions,
-        boolean published_in_feed) {
+        java.lang.String description, int number_of_positions) {
         Object returnObj = null;
 
         try {
@@ -773,9 +773,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     ClpSerializer.translateInput(description),
                         
-                    number_of_positions,
-                        
-                    published_in_feed
+                    number_of_positions
                     });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);

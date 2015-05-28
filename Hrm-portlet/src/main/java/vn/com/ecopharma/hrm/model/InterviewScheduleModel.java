@@ -61,32 +61,18 @@ public interface InterviewScheduleModel extends BaseModel<InterviewSchedule> {
     public void setInterviewScheduleId(long interviewScheduleId);
 
     /**
-     * Returns the c_id of this interview schedule.
+     * Returns the vacancy candidate ID of this interview schedule.
      *
-     * @return the c_id of this interview schedule
+     * @return the vacancy candidate ID of this interview schedule
      */
-    public long getC_id();
+    public long getVacancyCandidateId();
 
     /**
-     * Sets the c_id of this interview schedule.
+     * Sets the vacancy candidate ID of this interview schedule.
      *
-     * @param c_id the c_id of this interview schedule
+     * @param vacancyCandidateId the vacancy candidate ID of this interview schedule
      */
-    public void setC_id(long c_id);
-
-    /**
-     * Returns the v_id of this interview schedule.
-     *
-     * @return the v_id of this interview schedule
-     */
-    public long getV_id();
-
-    /**
-     * Sets the v_id of this interview schedule.
-     *
-     * @param v_id the v_id of this interview schedule
-     */
-    public void setV_id(long v_id);
+    public void setVacancyCandidateId(long vacancyCandidateId);
 
     /**
      * Returns the interview ID of this interview schedule.
@@ -101,6 +87,20 @@ public interface InterviewScheduleModel extends BaseModel<InterviewSchedule> {
      * @param interviewId the interview ID of this interview schedule
      */
     public void setInterviewId(long interviewId);
+
+    /**
+     * Returns the employee ID of this interview schedule.
+     *
+     * @return the employee ID of this interview schedule
+     */
+    public long getEmployeeId();
+
+    /**
+     * Sets the employee ID of this interview schedule.
+     *
+     * @param employeeId the employee ID of this interview schedule
+     */
+    public void setEmployeeId(long employeeId);
 
     /**
      * Returns the interview date of this interview schedule.

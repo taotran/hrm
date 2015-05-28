@@ -18,6 +18,7 @@ import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.constant.CandidateStatus;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.Vacancy;
+import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.CandidateLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinderUtil;
 
@@ -147,27 +148,27 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return null;
 	}
 
-	public Candidate edit(long candidateId, String first_name,
+	public Candidate edit(long user_id, long candidateId, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
-			int added_person, List<Vacancy> vacancies)
+			int added_person, long v_id, ServiceContext serviceContext)
 			throws NoSuchVacancyException {
 		try {
 			Candidate c;
 			try {
 				c = candidatePersistence.findByPrimaryKey(candidateId);
+				c.setCandidate_status(c.getCandidate_status() != null ? c.getCandidate_status() : CandidateStatus.APPLICATION_INITIATED.toString());
 				c.setFirst_name(first_name);
 				c.setMiddle_name(middle_name);
 				c.setLast_name(last_name);
 				c.setEmail(email);
-				// candidatePersistence.addVacancies(c_id, vacancies);
 				c.setComment(comment);
 				c.setContact_number(contact_number);
 				c.setDate_of_application(date_of_application);
 				c.setCv_file_id(cv_file_id);
 				c.setCv_text_version(cv_text_version);
-				// c.set_vacancies(vacancies);
+				vacancyCandidateLocalService.create(v_id, candidateId, user_id, serviceContext);
 				candidatePersistence.update(c);
 				return c;
 			} catch (NoSuchCandidateException e) {
@@ -181,6 +182,11 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 	public void delele(long c_id) {
 		try {
+			VacancyCandidate vc = vacancyCandidateLocalService.findByCandidate(c_id);
+			if (vc != null) {
+				long v_id = vc.getV_id();
+				vacancyCandidateLocalService.deleteByVacancyAndCandidate(v_id, c_id);
+			}
 			candidatePersistence.remove(c_id);
 		} catch (NoSuchCandidateException e) {
 			// TODO Auto-generated catch block

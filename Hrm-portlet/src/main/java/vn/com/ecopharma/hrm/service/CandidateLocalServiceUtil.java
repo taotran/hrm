@@ -308,19 +308,20 @@ public class CandidateLocalServiceUtil {
             cv_file_id, cv_text_version, added_person, v_id, serviceContext);
     }
 
-    public static vn.com.ecopharma.hrm.model.Candidate edit(long candidateId,
-        java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email,
-        java.lang.String contact_number, java.lang.String comment,
-        int mode_of_application, java.sql.Date date_of_application,
-        long cv_file_id, java.lang.String cv_text_version, int added_person,
-        java.util.List<vn.com.ecopharma.hrm.model.Vacancy> vacancies)
+    public static vn.com.ecopharma.hrm.model.Candidate edit(long user_id,
+        long candidateId, java.lang.String first_name,
+        java.lang.String middle_name, java.lang.String last_name,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String comment, int mode_of_application,
+        java.sql.Date date_of_application, long cv_file_id,
+        java.lang.String cv_text_version, int added_person, long v_id,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()
-                   .edit(candidateId, first_name, middle_name, last_name,
-            email, contact_number, comment, mode_of_application,
+                   .edit(user_id, candidateId, first_name, middle_name,
+            last_name, email, contact_number, comment, mode_of_application,
             date_of_application, cv_file_id, cv_text_version, added_person,
-            vacancies);
+            v_id, serviceContext);
     }
 
     public static void delele(long c_id) {

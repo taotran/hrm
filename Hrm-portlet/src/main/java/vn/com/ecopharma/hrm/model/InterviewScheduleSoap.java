@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class InterviewScheduleSoap implements Serializable {
     private long _interviewScheduleId;
-    private long _c_id;
-    private long _v_id;
+    private long _vacancyCandidateId;
     private long _interviewId;
+    private long _employeeId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -34,9 +34,9 @@ public class InterviewScheduleSoap implements Serializable {
         InterviewScheduleSoap soapModel = new InterviewScheduleSoap();
 
         soapModel.setInterviewScheduleId(model.getInterviewScheduleId());
-        soapModel.setC_id(model.getC_id());
-        soapModel.setV_id(model.getV_id());
+        soapModel.setVacancyCandidateId(model.getVacancyCandidateId());
         soapModel.setInterviewId(model.getInterviewId());
+        soapModel.setEmployeeId(model.getEmployeeId());
         soapModel.setInterviewDate(model.getInterviewDate());
         soapModel.setInterviewTime(model.getInterviewTime());
         soapModel.setNote(model.getNote());
@@ -104,20 +104,12 @@ public class InterviewScheduleSoap implements Serializable {
         _interviewScheduleId = interviewScheduleId;
     }
 
-    public long getC_id() {
-        return _c_id;
+    public long getVacancyCandidateId() {
+        return _vacancyCandidateId;
     }
 
-    public void setC_id(long c_id) {
-        _c_id = c_id;
-    }
-
-    public long getV_id() {
-        return _v_id;
-    }
-
-    public void setV_id(long v_id) {
-        _v_id = v_id;
+    public void setVacancyCandidateId(long vacancyCandidateId) {
+        _vacancyCandidateId = vacancyCandidateId;
     }
 
     public long getInterviewId() {
@@ -126,6 +118,14 @@ public class InterviewScheduleSoap implements Serializable {
 
     public void setInterviewId(long interviewId) {
         _interviewId = interviewId;
+    }
+
+    public long getEmployeeId() {
+        return _employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        _employeeId = employeeId;
     }
 
     public Date getInterviewDate() {

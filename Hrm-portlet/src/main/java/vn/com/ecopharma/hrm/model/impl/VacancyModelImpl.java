@@ -65,15 +65,16 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             { "jobtitleId", Types.BIGINT },
             { "hiring_manager_id", Types.BIGINT },
             { "name", Types.VARCHAR },
+            { "locationId", Types.BIGINT },
             { "description", Types.VARCHAR },
             { "no_of_positions", Types.INTEGER },
-            { "published_in_feed", Types.BOOLEAN },
+            { "vacancy_status", Types.VARCHAR },
             { "insert_date", Types.TIMESTAMP },
             { "update_date", Types.TIMESTAMP },
             { "user_id", Types.BIGINT },
             { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Vacancy (v_id LONG not null primary key,jobtitleId LONG,hiring_manager_id LONG,name VARCHAR(75) null,description VARCHAR(75) null,no_of_positions INTEGER,published_in_feed BOOLEAN,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Vacancy (v_id LONG not null primary key,jobtitleId LONG,hiring_manager_id LONG,name VARCHAR(75) null,locationId LONG,description VARCHAR(75) null,no_of_positions INTEGER,vacancy_status VARCHAR(75) null,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Vacancy";
     public static final String ORDER_BY_JPQL = " ORDER BY vacancy.v_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Vacancy.v_id ASC";
@@ -97,9 +98,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
     private long _jobtitleId;
     private long _hiring_manager_id;
     private String _name;
+    private long _locationId;
     private String _description;
     private int _no_of_positions;
-    private boolean _published_in_feed;
+    private String _vacancy_status;
     private Date _insert_date;
     private Date _update_date;
     private long _user_id;
@@ -126,9 +128,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         model.setJobtitleId(soapModel.getJobtitleId());
         model.setHiring_manager_id(soapModel.getHiring_manager_id());
         model.setName(soapModel.getName());
+        model.setLocationId(soapModel.getLocationId());
         model.setDescription(soapModel.getDescription());
         model.setNo_of_positions(soapModel.getNo_of_positions());
-        model.setPublished_in_feed(soapModel.getPublished_in_feed());
+        model.setVacancy_status(soapModel.getVacancy_status());
         model.setInsert_date(soapModel.getInsert_date());
         model.setUpdate_date(soapModel.getUpdate_date());
         model.setUser_id(soapModel.getUser_id());
@@ -195,9 +198,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
+        attributes.put("locationId", getLocationId());
         attributes.put("description", getDescription());
         attributes.put("no_of_positions", getNo_of_positions());
-        attributes.put("published_in_feed", getPublished_in_feed());
+        attributes.put("vacancy_status", getVacancy_status());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
         attributes.put("user_id", getUser_id());
@@ -232,6 +236,12 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             setName(name);
         }
 
+        Long locationId = (Long) attributes.get("locationId");
+
+        if (locationId != null) {
+            setLocationId(locationId);
+        }
+
         String description = (String) attributes.get("description");
 
         if (description != null) {
@@ -244,11 +254,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             setNo_of_positions(no_of_positions);
         }
 
-        Boolean published_in_feed = (Boolean) attributes.get(
-                "published_in_feed");
+        String vacancy_status = (String) attributes.get("vacancy_status");
 
-        if (published_in_feed != null) {
-            setPublished_in_feed(published_in_feed);
+        if (vacancy_status != null) {
+            setVacancy_status(vacancy_status);
         }
 
         Date insert_date = (Date) attributes.get("insert_date");
@@ -326,6 +335,17 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @JSON
     @Override
+    public long getLocationId() {
+        return _locationId;
+    }
+
+    @Override
+    public void setLocationId(long locationId) {
+        _locationId = locationId;
+    }
+
+    @JSON
+    @Override
     public String getDescription() {
         if (_description == null) {
             return StringPool.BLANK;
@@ -352,18 +372,17 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @JSON
     @Override
-    public boolean getPublished_in_feed() {
-        return _published_in_feed;
+    public String getVacancy_status() {
+        if (_vacancy_status == null) {
+            return StringPool.BLANK;
+        } else {
+            return _vacancy_status;
+        }
     }
 
     @Override
-    public boolean isPublished_in_feed() {
-        return _published_in_feed;
-    }
-
-    @Override
-    public void setPublished_in_feed(boolean published_in_feed) {
-        _published_in_feed = published_in_feed;
+    public void setVacancy_status(String vacancy_status) {
+        _vacancy_status = vacancy_status;
     }
 
     @JSON
@@ -534,9 +553,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         vacancyImpl.setJobtitleId(getJobtitleId());
         vacancyImpl.setHiring_manager_id(getHiring_manager_id());
         vacancyImpl.setName(getName());
+        vacancyImpl.setLocationId(getLocationId());
         vacancyImpl.setDescription(getDescription());
         vacancyImpl.setNo_of_positions(getNo_of_positions());
-        vacancyImpl.setPublished_in_feed(getPublished_in_feed());
+        vacancyImpl.setVacancy_status(getVacancy_status());
         vacancyImpl.setInsert_date(getInsert_date());
         vacancyImpl.setUpdate_date(getUpdate_date());
         vacancyImpl.setUser_id(getUser_id());
@@ -608,6 +628,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             vacancyCacheModel.name = null;
         }
 
+        vacancyCacheModel.locationId = getLocationId();
+
         vacancyCacheModel.description = getDescription();
 
         String description = vacancyCacheModel.description;
@@ -618,7 +640,13 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         vacancyCacheModel.no_of_positions = getNo_of_positions();
 
-        vacancyCacheModel.published_in_feed = getPublished_in_feed();
+        vacancyCacheModel.vacancy_status = getVacancy_status();
+
+        String vacancy_status = vacancyCacheModel.vacancy_status;
+
+        if ((vacancy_status != null) && (vacancy_status.length() == 0)) {
+            vacancyCacheModel.vacancy_status = null;
+        }
 
         Date insert_date = getInsert_date();
 
@@ -645,7 +673,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{v_id=");
         sb.append(getV_id());
@@ -655,12 +683,14 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getHiring_manager_id());
         sb.append(", name=");
         sb.append(getName());
+        sb.append(", locationId=");
+        sb.append(getLocationId());
         sb.append(", description=");
         sb.append(getDescription());
         sb.append(", no_of_positions=");
         sb.append(getNo_of_positions());
-        sb.append(", published_in_feed=");
-        sb.append(getPublished_in_feed());
+        sb.append(", vacancy_status=");
+        sb.append(getVacancy_status());
         sb.append(", insert_date=");
         sb.append(getInsert_date());
         sb.append(", update_date=");
@@ -676,7 +706,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(37);
+        StringBundler sb = new StringBundler(40);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -699,6 +729,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getName());
         sb.append("]]></column-value></column>");
         sb.append(
+            "<column><column-name>locationId</column-name><column-value><![CDATA[");
+        sb.append(getLocationId());
+        sb.append("]]></column-value></column>");
+        sb.append(
             "<column><column-name>description</column-name><column-value><![CDATA[");
         sb.append(getDescription());
         sb.append("]]></column-value></column>");
@@ -707,8 +741,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getNo_of_positions());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>published_in_feed</column-name><column-value><![CDATA[");
-        sb.append(getPublished_in_feed());
+            "<column><column-name>vacancy_status</column-name><column-value><![CDATA[");
+        sb.append(getVacancy_status());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>insert_date</column-name><column-value><![CDATA[");

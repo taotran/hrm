@@ -46,7 +46,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 	public Vacancy create(long user_id, long jTitle_id,
 			long hiring_mananager_id, String name, String description,
-			int no_of_positions, boolean published_in_feed,
+			int no_of_positions, String vacancy_status,
 			 ServiceContext serviceContext) throws NoSuchVacancyException {
 		try {
 			User user = userPersistence.findByPrimaryKey(user_id);
@@ -58,11 +58,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			v.setName(name);
 			v.setDescription(description);
 			v.setNo_of_positions(no_of_positions);
-			v.setPublished_in_feed(published_in_feed);
+			v.setVacancy_status(vacancy_status);
 			v.setInsert_date(now);
 			v.setUpdate_date(now);
-//			vacancyPersistence.addCandidates(v_id, candidates);
-//			v.set_candidates(candidates);
 			v.setUser_id(user.getUserId());
 			v.setGroup_id(serviceContext.getScopeGroupId());
 			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(),
@@ -80,8 +78,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 	}
 
 	public Vacancy edit(long id, long jtitle_id, long hiring_manager_id,
-			String name, String description, int number_of_positions,
-			boolean published_in_feed) {
+			String name, String description, int number_of_positions) {
 		Vacancy vacancy;
 		try {
 			vacancy = vacancyPersistence.findByPrimaryKey(id);
@@ -90,7 +87,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			vacancy.setName(name);
 			vacancy.setDescription(description);
 			vacancy.setNo_of_positions(number_of_positions);
-			vacancy.setPublished_in_feed(published_in_feed);
+			/*vacancy.setVacancy_status(vacancy_status);*/
 			vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
 			vacancyPersistence.update(vacancy);
 			return vacancy;
@@ -105,6 +102,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 	public void delete(long v_id) {
 		try {
 			vacancyPersistence.remove(v_id);
+			vacancyCandidateLocalService.deleteByVacancy(v_id);
 		} catch (NoSuchVacancyException e) {
 			e.printStackTrace();
 		} catch (SystemException e) {

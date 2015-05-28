@@ -25,9 +25,10 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     public long jobtitleId;
     public long hiring_manager_id;
     public String name;
+    public long locationId;
     public String description;
     public int no_of_positions;
-    public boolean published_in_feed;
+    public String vacancy_status;
     public long insert_date;
     public long update_date;
     public long user_id;
@@ -35,7 +36,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{v_id=");
         sb.append(v_id);
@@ -45,12 +46,14 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         sb.append(hiring_manager_id);
         sb.append(", name=");
         sb.append(name);
+        sb.append(", locationId=");
+        sb.append(locationId);
         sb.append(", description=");
         sb.append(description);
         sb.append(", no_of_positions=");
         sb.append(no_of_positions);
-        sb.append(", published_in_feed=");
-        sb.append(published_in_feed);
+        sb.append(", vacancy_status=");
+        sb.append(vacancy_status);
         sb.append(", insert_date=");
         sb.append(insert_date);
         sb.append(", update_date=");
@@ -78,6 +81,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
             vacancyImpl.setName(name);
         }
 
+        vacancyImpl.setLocationId(locationId);
+
         if (description == null) {
             vacancyImpl.setDescription(StringPool.BLANK);
         } else {
@@ -85,7 +90,12 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         }
 
         vacancyImpl.setNo_of_positions(no_of_positions);
-        vacancyImpl.setPublished_in_feed(published_in_feed);
+
+        if (vacancy_status == null) {
+            vacancyImpl.setVacancy_status(StringPool.BLANK);
+        } else {
+            vacancyImpl.setVacancy_status(vacancy_status);
+        }
 
         if (insert_date == Long.MIN_VALUE) {
             vacancyImpl.setInsert_date(null);
@@ -113,9 +123,10 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         jobtitleId = objectInput.readLong();
         hiring_manager_id = objectInput.readLong();
         name = objectInput.readUTF();
+        locationId = objectInput.readLong();
         description = objectInput.readUTF();
         no_of_positions = objectInput.readInt();
-        published_in_feed = objectInput.readBoolean();
+        vacancy_status = objectInput.readUTF();
         insert_date = objectInput.readLong();
         update_date = objectInput.readLong();
         user_id = objectInput.readLong();
@@ -135,6 +146,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
             objectOutput.writeUTF(name);
         }
 
+        objectOutput.writeLong(locationId);
+
         if (description == null) {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
@@ -142,7 +155,13 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         }
 
         objectOutput.writeInt(no_of_positions);
-        objectOutput.writeBoolean(published_in_feed);
+
+        if (vacancy_status == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(vacancy_status);
+        }
+
         objectOutput.writeLong(insert_date);
         objectOutput.writeLong(update_date);
         objectOutput.writeLong(user_id);

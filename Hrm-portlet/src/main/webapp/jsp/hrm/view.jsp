@@ -29,11 +29,7 @@
 
 					<div class="actionButtons">
 						<div class="buttons">
-							<%-- 							<a data-toggle="modal" href="#modify-candidate-modal"
-								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
-									key="global.button.add" />
-							</a> --%>
-							<a href="#" onclick="getCandidatesFormData()"
+							<a href="#modify-candidate-modal" data-toggle="modal"
 								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
 									key="global.button.add" />
 							</a>
@@ -169,14 +165,6 @@
 			</div>
 
 			<div class="form-group">
-				<%-- 	<div class="form-inline validated">
-					<label for="inputEmail"><liferay-ui:message
-							key="candidate.email" /></label>
-					<div id="email_img"></div>
-					<input type="email" class="form-control" id="inputEmail"
-						value="testValue@eco.com" placeholder="Email">
-					<div id="email_msg"></div>
-				</div> --%>
 				<div class="form-inline">
 					<label for="inputEmail"><liferay-ui:message
 							key="candidate.email" /></label> <input type="email"
@@ -198,22 +186,6 @@
 				<div class="form-inline">
 					<label for="select2"><liferay-ui:message
 							key="candidate.job_vacancy" /></label>
-					<%-- 					<c:choose>
-						<c:when test="${fn:length(allVacancies) > 0}">
-							<select class="form-control select2-container" id="vacancySelect"
-								class="vacancySelect2">
-								<c:forEach items="${allVacancies}" var="vacancy">
-									<option value="${vacancy.v_id}">${vacancy.name }</option>
-								</c:forEach>
-							</select>
-						</c:when>
-						<c:otherwise>
-							<select class="form-control select2-container" id="vacancySelect"
-								class="vacancySelect2">
-								<option value="none">No Vacancy</option>
-							</select>
-						</c:otherwise>
-					</c:choose> --%>
 					<select class="form-control select2-container" id="vacancySelect"
 						class="vacancySelect2">
 					</select>
@@ -277,12 +249,10 @@
 		<input type="hidden" class="entityId" id="v_id" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="jTitleSelect">Job Title</label>
-				<select class="form-control select2-container" id="jTitleSelect"
+				<label for="jTitleSelect">Job Title</label> <select
+					class="form-control select2-container" id="jTitleSelect"
 					class="jTitleSelect2">
-					<option value="null">No Job Title</option>
-				</select> 
-				<a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
+				</select> <a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
 					<i class="icon-plus"></i>Add
 				</a>
 			</div>
@@ -296,9 +266,8 @@
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="status"><liferay-ui:message key="vacancy.status" /></label>
-				<input type="text" class="form-control" id="status" value="Status"
-					placeholder="Status">
+				<label for="vacancy_status"><liferay-ui:message
+						key="vacancy.status" /></label> <label id="vacancy_status">Unpublished</label>
 			</div>
 		</div>
 		<div class="form-group">
@@ -326,13 +295,6 @@
 						key="vacancy.no_positions" /></label> <input type="text"
 					class="form-control" id="no_of_pos" value="3"
 					placeholder="Number of positions">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-inline">
-				<label for="published_in_feed">Published in feed</label> <input
-					type="checkbox" class="form-control" id="published_in_feed">
 			</div>
 		</div>
 
@@ -447,14 +409,12 @@
 	</div>
 
 	<div class="modal-body" id="interviewScheduleInfo">
-		<input type="hidden" class="entityId" id="itvSchedId" value="-1" /> <input
-			type="hidden" class="entityId" id="itv_c_id" value="-1" />
+		<!-- 		<input type="hidden" class="entityId" id="itvSchedId" value="-1" /> <input
+			type="hidden" class="entityId" id="itv_c_id" value="-1" /> -->
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="interviewTitleSelect">Title</label> <select
+				<label for="interviewTitleSelect">Interview Round</label> <select
 					id="interviewTitleSelect">
-					<option value='' disabled selected style='display: none;'>Please
-						Choose</option>
 				</select>
 			</div>
 		</div>
@@ -502,9 +462,11 @@
 
 <script type="text/javascript">
 	var isVacanciesLoaded = 0;
-	var cForm = $('#cForm');
+	
 	var List1;
-	cForm.submit(function(ev) {
+	/* 	
+ 	var cForm = $('#cForm');
+ 	cForm.submit(function(ev) {
 		console.log("SUBMIT");
 		$.ajax({
 			type : cForm.attr('method'),
@@ -516,32 +478,12 @@
 		});
 		ev.preventDefault();
 
-	});
+	}); */
 	
 	
 	$('#modify-interviewSchedule-modal').on('shown.bs.modal', function(){
 		console.log("#modify-interviewSchedule-modal shown!!!")
 	});
-	
-	/* clear modal data on closing */
-	
- 	/*function clearModalDataOnModalHide(modalId) {
-		$(modalId).on('hidden.bs.modal', function () {
-			console.log("clear modal");
-		    $(this)
-		    .find("input,textarea,select")
-		    .val('')
-		    .end()
-		    .find("input[type=checkbox], input[type=radio]")
-		       .prop("checked", "")
-		       .end();
-		});
-	}
-	
-	clearModalDataOnModalHide("#modify-candidate-modal");
-	clearModalDataOnModalHide("#modify-vacancy-modal");
-	clearModalDataOnModalHide("#modify-jtitle-modal");
-	clearModalDataOnModalHide("#modify-interview-modal"); */
 	
 	/* clear modal data on closing */
 	 $('.modal').each(function(index) {
@@ -560,8 +502,9 @@
 		});
 	});
 	
+	
+	/* select/deselect all base on header select/deselect */
 	$("#v_checkAll").click(function() {
-		console.log("clicked");
 		if ($(this).is(':checked')) {
 			console.log("checked");
 			$('tbody input').attr('checked', true);
@@ -578,6 +521,7 @@
 	function getVacancy(id) {
 		var obj = new Object();
 		obj.v_id = id;
+		$('#modify-vacancy-modal').modal('show');
 		jQuery.ajax({
 			type : 'POST',
 			url : "<portlet:resourceURL id='getVacancy'/>",
@@ -591,16 +535,14 @@
 			success : function(response) {
 				var obj = response;
 				$('#v_id').val(obj.v_id);
-				//$('#jTitleSelect').val(obj.jTitle);
 				$('#v_name').val(obj.v_name);
-				/* $('#status').val(obj.status); */
 				$('#location').val(obj.location);
 				$('#hiring_managers').val(obj.hiring_managers);
 				$('#no_of_pos').val(obj.no_of_pos);
-				$('#published_in_feed').val(obj.published_in_feed);
+				$('#vacancy_status').val(obj.vacancy_status);
 				$('#job_posting').val(obj.job_posting);
+				$('#jTitleSelect').val(obj.jTitleId);
 				/* Show edit vacancy modal */
-				$('#modify-vacancy-modal').modal('show');
 			}
 		});
 	}
@@ -616,9 +558,6 @@
 		vacancy.no_of_positions = $('#no_of_pos').val();
 		vacancy.published_in_feed = $('#published_in_feed').val(); 
 		vacancy.job_posting = $("#job_posting").val();
-		// 		candidate.file = $('#addCandidate_resume');
-
-		console.log(vacancy);
 			
 		jQuery.ajax({
 			type : 'POST',
@@ -639,7 +578,6 @@
 				$.each(data, function(i, item) {
 					select.options.add(new Option(item.v_name, item.v_id));
 				});
-				/* $('#vacancySelect')[0].selectedIndex = 1; */
 			}
 		});
 
@@ -830,28 +768,45 @@
 		}
 	};
 	
-	function getCandidatesFormData() {
-/* 		console.log("getCandidatesFormData()"); */
-		$.ajax ({
-			type : 'POST',
-			url : "<portlet:resourceURL id='getCandidatesFormDataAJX'/>",
-			cache: false,
-			error : function(e) {
-
-			},
-			success : function(data) {
-				console.log(data);
-				select = document.getElementById('vacancySelect');
-
-				select.options.length = 0;
-				$.each($.parseJSON(data), function(i, item) {
-					select.options.add(new Option(item.vacancy_name, item.v_id));
-				});
-				$('#modify-candidate-modal').modal('show');
-			}	
-		})
-		
-	}
+	$('#modify-candidate-modal').on('shown.bs.modal', function () {
+		select = document.getElementById('vacancySelect');
+		/* check if vacancySelect is already loaded or not */
+		if (select.options.length == 0) {
+			$.ajax ({
+				type : 'POST',
+				url : "<portlet:resourceURL id='getCandidatesFormDataAJX'/>",
+				cache: false,
+				error : function(e) {
+	
+				},
+				success : function(data) {
+					$.each($.parseJSON(data), function(i, item) {
+						select.options.add(new Option(item.vacancy_name, item.v_id));
+					});
+				}	
+			})
+		} 
+	});
+	
+	$('#modify-vacancy-modal').on('shown.bs.modal', function () {
+		select = document.getElementById('jTitleSelect');
+		/* check if jTitleSelect is already loaded or not */
+		if (select.options.length == 0) {
+			$.ajax ({
+				type : 'POST',
+				url : "<portlet:resourceURL id='getVacanciesFormDataAJX'/>",
+				cache: false,
+				error : function(e) {
+	
+				},
+				success : function(data) {
+					$.each(data, function(i, item) {
+						select.options.add(new Option(item.title, item.jTitleId));
+					});
+				}	
+			})
+		}
+	});
 
 	function loadVacancyTable() {
 		var vtable = $('#vtable')
@@ -910,7 +865,33 @@
 									}, {
 										"mData" : "location"
 									}, {
-										"mData" : "status"
+										"mData" : "status",
+										"mRender" : function(data, type, full) {
+											if (data != null || data != '') {
+												var selectorId = "vAvailStatusSelect"
+													+ full.v_id;
+												var s = "<div class='candidateStatus'>"
+														+ data
+														+ "<select onchange='onVacancyStatusChange("
+														+ full.v_id
+														+ ")' id='"
+														+ selectorId
+														+ "' name='vAvailStatusSelect'>";
+												/* var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>"; */
+												/* 								var options = "<option value='" + -1 + "' selected>"
+																						+ data + "</option>"; */
+												var options = "<option value='" + -1 + "' selected>--Select status--</option>";
+												for (var i = 0; i < full.availableStatuses.length; i++) {
+													options += "<option value='" + full.v_id + "'>"
+															+ full.availableStatuses[i]
+															+ "</option>";
+												}
+												s = s + options + "</select></div>";
+												return s.toString();
+											} else {
+												return data;
+											}
+										}
 									} ]
 						});
 		vtable.columnFilter({
@@ -924,7 +905,7 @@
 				values : [ "HCM", "HN" ]
 			}, {
 				type : "select",
-				values : [ 'STATUS1', 'STATUS2', 'STATUS3' ]
+				values : [ 'NEW', 'PUBLISHED', 'UNPUBLISHED' ]
 			} ]
 
 		});
@@ -988,7 +969,7 @@
 										"mData" : "status",
 										"type" : "text",
 										"mRender" : function(data, type, full) {
-											console.log(full.availableStatuses);
+											/* console.log(full.availableStatuses);
 											var selectorId = "availStatusSelect"
 													+ full.c_id;
 											var s = "<div class='candidateStatus'>"
@@ -997,17 +978,19 @@
 													+ full.c_id
 													+ ")' id='"
 													+ selectorId
-													+ "' name='availStatusSelect'>";
+													+ "' name='availStatusSelect'>"; */
 											/* var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>"; */
-											var options = "<option value='" + -1 + "' selected>"
-													+ data + "</option>";
+											/* 								var options = "<option value='" + -1 + "' selected>"
+																					+ data + "</option>"; */
+											/* var options = "<option value='" + -1 + "' selected>--Select status--</option>";
 											for (var i = 0; i < full.availableStatuses.length; i++) {
 												options += "<option value='" + full.c_id + "'>"
 														+ full.availableStatuses[i]
 														+ "</option>";
 											}
 											s = s + options + "</select></div>";
-											return s.toString();
+											return s.toString(); */
+											return data;
 										}
 									}, {
 										"mData" : "resume",
@@ -1092,47 +1075,70 @@
 		object.c_id = selectorId;
 		object.changedStatus = $(
 				"#availStatusSelect" + selectorId + " option:selected").text();
-		if (object.changedStatus == 'INTERVIEW_SCHEDULED') {
-			$.ajax({
-				type : 'GET',
-				url : '<portlet:resourceURL id="get_all_interviews"/>',
-				contentType : "application/json; charset=utf-8",
-				success : function(data) {
-					console.log(data);
-					select = document.getElementById('interviewTitleSelect');
-					$('#itv_c_id').val(selectorId);
-					select.options.length = 0;
-					$.each(data, function(i, item) {
-						select.options.add(new Option(item.interviewName,
-								item.interviewId));
-					});
-				},
-			});
-
-			$('#modify-interviewSchedule-modal').modal('show');
-		} else {
-
-			$.ajax({
-				type : 'POST',
-				url : '<portlet:resourceURL id="candidateStatusChange"/>',
-				contentType : "application/json; charset=utf-8",
-				data : JSON.stringify(object),
-				success : function(response) {
-					$('#ctable').dataTable().fnDraw();
-				},
-				error : function(msg) {
-
-				}
-			});
-
+		if (selectorId != -1) {
+			if (object.changedStatus == 'INTERVIEW_SCHEDULED') {
+				$.ajax({
+					type : 'GET',
+					url : '<portlet:resourceURL id="get_all_interviews"/>',
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+						console.log(data);
+						select = document.getElementById('interviewTitleSelect');
+						/* $('#itv_c_id').val(selectorId); */
+						select.options.length = 0;
+						$.each($.parseJSON(data), function(i, item) {
+							select.options.add(new Option(item.interviewName,
+									item.interviewId));
+						});
+					},
+				});
+	
+				$('#modify-interviewSchedule-modal').modal('show');
+			} else {
+	
+				$.ajax({
+					type : 'POST',
+					url : '<portlet:resourceURL id="candidateStatusChange"/>',
+					contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(object),
+					success : function(response) {
+						$('#ctable').dataTable().fnDraw();
+					},
+					error : function(msg) {
+	
+					}
+				});
+	
+			}
+		}
+	}
+	
+	function onVacancyStatusChange(selectorId) {
+		var object = new Object();
+		object.v_id = selectorId;
+		object.changedStatus = $(
+				"#vAvailStatusSelect" + selectorId + " option:selected").text();
+		if (selectorId != -1) {
+				$.ajax({
+					type : 'POST',
+					url : '<portlet:resourceURL id="vacancyStatusChange"/>',
+					contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(object),
+					success : function(response) {
+						$('#vtable').dataTable().fnDraw();
+					},
+					error : function(msg) {
+	
+					}
+				});
 		}
 	}
 
 	$(document).ready(function() {
 		console.log("on document ready");
 		loadCandidateTable();
-/* 		$(".select2-container").select2();
-		$(".select_filter").select2(); */
+		/* 		$(".select2-container").select2();
+		 $(".select_filter").select2(); */
 		$('#date_of_application').datepicker();
 		$('#itvDate').datepicker();
 		$('#cCheckbox').change(function() {
@@ -1166,10 +1172,13 @@
 		});
 		$('#c_id').val('-1');
 	};
+	
+	
 
 	function getCandidate(id) {
 		var obj = new Object();
 		obj.c_id = id;
+		$('#modify-candidate-modal').modal('show');
 		jQuery.ajax({
 			type : 'POST',
 			url : "<portlet:resourceURL id='getCandidate'/>",
@@ -1189,8 +1198,8 @@
 				$('#inputEmail').val(obj.email);
 				$('#contact_number').val(obj.contact_number);
 				$('#comment').val(obj.comment);
-				/* Show edit vacancy modal */
-				$('#modify-candidate-modal').modal('show');
+				$('#date_of_application').val(obj.date_of_application);
+				$('#vacancySelect').val(obj.v_id);
 			}
 		});
 
@@ -1218,6 +1227,34 @@
 				$('#ctable').dataTable().fnDraw();
 			}
 		});
+	}
+	
+	function deleteVacancies() {
+		var selectedArr = [];
+		$('#vtable tbody tr input[type=checkbox]:checked').each(function() {
+			var id = $(this).val();
+			selectedArr.push({
+				v_id : id
+			});
+		});
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='deleteVacancies'/>",
+			data : JSON.stringify(selectedArr),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				$('#vtable').dataTable().fnDraw();
+				if (response.isNotified == true) {
+					$('#ctable').dataTable().fnDraw();
+				}
+			}
+		});
+		
 	}
 	//Util functions
 </script>

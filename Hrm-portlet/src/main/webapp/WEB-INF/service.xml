@@ -41,10 +41,11 @@
 		<column name="jobtitleId" type="long"></column>
 		<column name="hiring_manager_id" type="long"></column>
 		<column name="name" type="String"></column>
+		<column name="locationId" type="long"></column>
 		<column name="description" type="String"></column>
 		<column name="no_of_positions" type="int"></column>
-
-		<column name="published_in_feed" type="boolean"></column>
+		
+		<column name="vacancy_status" type="String"></column>
 		<column name="insert_date" type="Date"></column>
 		<column name="update_date" type="Date"></column>
 		<column name="user_id" type="long"></column>
@@ -133,9 +134,9 @@
 		<column name="interviewScheduleId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="c_id" type="long"></column>
-        <column name="v_id" type="long"></column>
+        <column name="vacancyCandidateId" type="long"></column>
         <column name="interviewId" type="long"></column>
+        <column name="employeeId" type="long"></column>
         <column name="interviewDate" type="Date"></column>
         <column name="interviewTime" type="String"></column>
         <column name="note" type="String"></column>
@@ -167,13 +168,74 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="C_Id" return-type="Collection">
+        <finder name="C_Id" return-type="VacancyCandidate">
         	<finder-column name="c_id"></finder-column>
         </finder>
         
        <finder name="V_Id" return-type="Collection">
         	<finder-column name="v_id"></finder-column>
         </finder>
+        <finder name="V_Id_And_C_Id" return-type="VacancyCandidate">
+        	<finder-column name="v_id"></finder-column>
+        	<finder-column name="c_id"></finder-column>
+        </finder>
+	</entity>
+	<entity name="Employee" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="employeeId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <column name="emp_code" type="String"></column>
+        <column name="firstname" type="String"></column>
+        <column name="middle_name" type="String"></column>
+        <column name="lastname" type="String"></column>
+        <column name="email" type="String"></column>
+        <column name="nickname" type="String"></column>
+        <column name="birthday" type="Date"></column>
+        <column name="gender" type="String"></column>
+        <column name="marital_status" type="String"></column>
+        <column name="status" type="String"></column>
+        <column name="jobtitleId"  type="long"></column>
+        <column name="joined_date" type="Date"></column>
+	</entity>
+	<entity name="Location" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="locationId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <column name="type" type="String"></column>
+        <column name="name" type="String"></column>
+        <column name="country_code" type="String"></column>
+        <column name="province" type="String"></column>
+        <column name="city" type="String"></column>
+        <column name="address" type="String"></column>
+        <column name="zip_code" type="String"></column>
+        <column name="phone" type="String"></column>
+        <column name="fax" type="String"></column>
+        <column name="note" type="String"></column>
 	</entity>
 
 </service-builder>

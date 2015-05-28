@@ -41,9 +41,10 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
+        attributes.put("locationId", getLocationId());
         attributes.put("description", getDescription());
         attributes.put("no_of_positions", getNo_of_positions());
-        attributes.put("published_in_feed", getPublished_in_feed());
+        attributes.put("vacancy_status", getVacancy_status());
         attributes.put("insert_date", getInsert_date());
         attributes.put("update_date", getUpdate_date());
         attributes.put("user_id", getUser_id());
@@ -78,6 +79,12 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
             setName(name);
         }
 
+        Long locationId = (Long) attributes.get("locationId");
+
+        if (locationId != null) {
+            setLocationId(locationId);
+        }
+
         String description = (String) attributes.get("description");
 
         if (description != null) {
@@ -90,11 +97,10 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
             setNo_of_positions(no_of_positions);
         }
 
-        Boolean published_in_feed = (Boolean) attributes.get(
-                "published_in_feed");
+        String vacancy_status = (String) attributes.get("vacancy_status");
 
-        if (published_in_feed != null) {
-            setPublished_in_feed(published_in_feed);
+        if (vacancy_status != null) {
+            setVacancy_status(vacancy_status);
         }
 
         Date insert_date = (Date) attributes.get("insert_date");
@@ -223,6 +229,26 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     }
 
     /**
+    * Returns the location ID of this vacancy.
+    *
+    * @return the location ID of this vacancy
+    */
+    @Override
+    public long getLocationId() {
+        return _vacancy.getLocationId();
+    }
+
+    /**
+    * Sets the location ID of this vacancy.
+    *
+    * @param locationId the location ID of this vacancy
+    */
+    @Override
+    public void setLocationId(long locationId) {
+        _vacancy.setLocationId(locationId);
+    }
+
+    /**
     * Returns the description of this vacancy.
     *
     * @return the description of this vacancy
@@ -263,33 +289,23 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     }
 
     /**
-    * Returns the published_in_feed of this vacancy.
+    * Returns the vacancy_status of this vacancy.
     *
-    * @return the published_in_feed of this vacancy
+    * @return the vacancy_status of this vacancy
     */
     @Override
-    public boolean getPublished_in_feed() {
-        return _vacancy.getPublished_in_feed();
+    public java.lang.String getVacancy_status() {
+        return _vacancy.getVacancy_status();
     }
 
     /**
-    * Returns <code>true</code> if this vacancy is published_in_feed.
+    * Sets the vacancy_status of this vacancy.
     *
-    * @return <code>true</code> if this vacancy is published_in_feed; <code>false</code> otherwise
+    * @param vacancy_status the vacancy_status of this vacancy
     */
     @Override
-    public boolean isPublished_in_feed() {
-        return _vacancy.isPublished_in_feed();
-    }
-
-    /**
-    * Sets whether this vacancy is published_in_feed.
-    *
-    * @param published_in_feed the published_in_feed of this vacancy
-    */
-    @Override
-    public void setPublished_in_feed(boolean published_in_feed) {
-        _vacancy.setPublished_in_feed(published_in_feed);
+    public void setVacancy_status(java.lang.String vacancy_status) {
+        _vacancy.setVacancy_status(vacancy_status);
     }
 
     /**

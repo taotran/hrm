@@ -35,6 +35,41 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeModelImpl">
+		<attributes>
+			<id name="employeeId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="emp_code" />
+			<basic name="firstname" />
+			<basic name="middle_name" />
+			<basic name="lastname" />
+			<basic name="email" />
+			<basic name="nickname" />
+			<basic name="birthday">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="gender" />
+			<basic name="marital_status" />
+			<basic name="status" />
+			<basic name="jobtitleId" />
+			<basic name="joined_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.FileAttachmentModelImpl">
 		<attributes>
 			<id name="f_id" />
@@ -88,9 +123,9 @@
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.InterviewScheduleModelImpl">
 		<attributes>
 			<id name="interviewScheduleId" />
-			<basic name="c_id" />
-			<basic name="v_id" />
+			<basic name="vacancyCandidateId" />
 			<basic name="interviewId" />
+			<basic name="employeeId" />
 			<basic name="interviewDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -125,15 +160,46 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.LocationModelImpl">
+		<attributes>
+			<id name="locationId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="name" />
+			<basic name="country_code" />
+			<basic name="province" />
+			<basic name="city" />
+			<basic name="address" />
+			<basic name="zip_code" />
+			<basic name="phone" />
+			<basic name="fax" />
+			<basic name="note" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.VacancyModelImpl">
 		<attributes>
 			<id name="v_id" />
 			<basic name="jobtitleId" />
 			<basic name="hiring_manager_id" />
 			<basic name="name" />
+			<basic name="locationId" />
 			<basic name="description" />
 			<basic name="no_of_positions" />
-			<basic name="published_in_feed" />
+			<basic name="vacancy_status" />
 			<basic name="insert_date">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -173,6 +239,10 @@
 			<transient name="_vacancies" />
 		</attributes>
 	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" name="Employee">
+		<table name="HRM_Recruitment_Employee" />
+		<attributes />
+	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">
 		<table name="HRM_Recruitment_FileAttachment" />
 		<attributes />
@@ -187,6 +257,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">
 		<table name="HRM_Recruitment_JTitle" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.LocationImpl" name="Location">
+		<table name="HRM_Recruitment_Location" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.VacancyImpl" name="Vacancy">
