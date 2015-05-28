@@ -1,6 +1,0 @@
-<custom-sql>
-    <sql id="[fully-qualified class name + method]">
-    SQL query wrapped in <![CDATA[...]]>
-    No terminating semi-colon
-    </sql>
-</custom-sql>

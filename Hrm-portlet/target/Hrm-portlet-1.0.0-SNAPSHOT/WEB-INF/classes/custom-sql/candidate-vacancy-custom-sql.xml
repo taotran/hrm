@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<custom-sql>
-	<sql id="getVacanciesByCandidate">
-		<![CDATA[
-			SELECT vc.v_id FROM hrm_recruitment_Vacancies_Candidates vc WHERE vc.c_id=?
-		]]>
-		
-	</sql>
-</custom-sql>
