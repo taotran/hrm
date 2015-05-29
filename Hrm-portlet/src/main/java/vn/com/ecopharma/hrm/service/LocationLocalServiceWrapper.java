@@ -270,6 +270,57 @@ public class LocationLocalServiceWrapper implements LocationLocalService,
             arguments);
     }
 
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Location> findAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _locationLocalService.findAll();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Location> findAll(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _locationLocalService.findAll(start, end);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Location> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _locationLocalService.findAll(start, end, orderByComparator);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Location create(java.lang.String name,
+        java.lang.String province, java.lang.String city,
+        java.lang.String address, java.lang.String zip_code,
+        java.lang.String phone, java.lang.String fax, java.lang.String note,
+        long userId, com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _locationLocalService.create(name, province, city, address,
+            zip_code, phone, fax, note, userId, serviceContext);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Location edit(long locationId,
+        java.lang.String name, java.lang.String province,
+        java.lang.String city, java.lang.String address,
+        java.lang.String zip_code, java.lang.String phone,
+        java.lang.String fax, java.lang.String note)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchLocationException {
+        return _locationLocalService.edit(locationId, name, province, city,
+            address, zip_code, phone, fax, note);
+    }
+
+    @Override
+    public java.lang.String getLocationNameById(long locationId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchLocationException {
+        return _locationLocalService.getLocationNameById(locationId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

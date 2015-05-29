@@ -41,6 +41,17 @@
 		<field name="jobtitleId" type="long" />
 		<field name="joined_date" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule">
+		<field name="employeeInterviewScheduleId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="interviewScheduleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="note" type="String" />
+	</model>
 	<model name="vn.com.ecopharma.hrm.model.FileAttachment">
 		<field name="f_id" type="long" />
 		<field name="groupId" type="long" />
@@ -71,7 +82,6 @@
 		<field name="interviewScheduleId" type="long" />
 		<field name="vacancyCandidateId" type="long" />
 		<field name="interviewId" type="long" />
-		<field name="employeeId" type="long" />
 		<field name="interviewDate" type="Date" />
 		<field name="interviewTime" type="String" />
 		<field name="note" type="String" />

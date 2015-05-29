@@ -277,6 +277,19 @@ public class InterviewScheduleLocalServiceWrapper
             parameterTypes, arguments);
     }
 
+    @Override
+    public vn.com.ecopharma.hrm.model.InterviewSchedule create(
+        long interviewId, long vacancyId, long candidateId,
+        java.util.List<java.lang.Long> emps, java.sql.Date interviewDate,
+        java.lang.String interviewTime, long userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException {
+        return _interviewScheduleLocalService.create(interviewId, vacancyId,
+            candidateId, emps, interviewDate, interviewTime, userId,
+            serviceContext);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

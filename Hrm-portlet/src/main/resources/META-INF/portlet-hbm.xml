@@ -4,6 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="vn.com.ecopharma.hrm.model.Candidate" />
 	<import class="vn.com.ecopharma.hrm.model.Employee" />
+	<import class="vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule" />
 	<import class="vn.com.ecopharma.hrm.model.FileAttachment" />
 	<import class="vn.com.ecopharma.hrm.model.Interview" />
 	<import class="vn.com.ecopharma.hrm.model.InterviewSchedule" />
@@ -57,6 +58,20 @@
 		<property name="jobtitleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="joined_date" type="org.hibernate.type.TimestampType" />
 	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleImpl" table="HRM_Recruitment_EmployeeInterviewSchedule">
+		<cache usage="read-write" />
+		<id name="employeeInterviewScheduleId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="employeeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="interviewScheduleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" table="HRM_Recruitment_FileAttachment">
 		<cache usage="read-write" />
 		<id name="f_id" type="long">
@@ -96,7 +111,6 @@
 		</id>
 		<property name="vacancyCandidateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="employeeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewDate" type="org.hibernate.type.TimestampType" />
 		<property name="interviewTime" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />

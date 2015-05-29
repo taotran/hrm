@@ -199,7 +199,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
-                "java.lang.String", "int", "long",
+                "java.lang.String", "int", "java.lang.Long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -209,7 +209,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                 "long", "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
-                "java.lang.String", "int", "long",
+                "java.lang.String", "int", "java.lang.Long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -919,7 +919,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        long v_id, com.liferay.portal.service.ServiceContext serviceContext)
+        java.lang.Long v_id,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
 
@@ -951,7 +952,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                         
                     added_person,
                         
-                    v_id,
+                    ClpSerializer.translateInput(v_id),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -980,7 +981,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         java.lang.String email, java.lang.String contact_number,
         java.lang.String comment, int mode_of_application,
         java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person, long v_id,
+        java.lang.String cv_text_version, int added_person,
+        java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
@@ -1015,7 +1017,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                         
                     added_person,
                         
-                    v_id,
+                    ClpSerializer.translateInput(v_id),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });

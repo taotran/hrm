@@ -263,6 +263,24 @@ public class EmployeeLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll();
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll(start, end);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll(start, end, orderByComparator);
+    }
+
     public static void clearService() {
         _service = null;
     }

@@ -41,7 +41,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
         attributes.put("interviewScheduleId", getInterviewScheduleId());
         attributes.put("vacancyCandidateId", getVacancyCandidateId());
         attributes.put("interviewId", getInterviewId());
-        attributes.put("employeeId", getEmployeeId());
         attributes.put("interviewDate", getInterviewDate());
         attributes.put("interviewTime", getInterviewTime());
         attributes.put("note", getNote());
@@ -72,12 +71,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
 
         if (interviewId != null) {
             setInterviewId(interviewId);
-        }
-
-        Long employeeId = (Long) attributes.get("employeeId");
-
-        if (employeeId != null) {
-            setEmployeeId(employeeId);
         }
 
         Date interviewDate = (Date) attributes.get("interviewDate");
@@ -207,26 +200,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
     @Override
     public void setInterviewId(long interviewId) {
         _interviewSchedule.setInterviewId(interviewId);
-    }
-
-    /**
-    * Returns the employee ID of this interview schedule.
-    *
-    * @return the employee ID of this interview schedule
-    */
-    @Override
-    public long getEmployeeId() {
-        return _interviewSchedule.getEmployeeId();
-    }
-
-    /**
-    * Sets the employee ID of this interview schedule.
-    *
-    * @param employeeId the employee ID of this interview schedule
-    */
-    @Override
-    public void setEmployeeId(long employeeId) {
-        _interviewSchedule.setEmployeeId(employeeId);
     }
 
     /**

@@ -300,7 +300,8 @@ public class CandidateLocalServiceUtil {
         java.lang.String contact_number, java.lang.String comment,
         int mode_of_application, java.sql.Date date_of_application,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
-        long v_id, com.liferay.portal.service.ServiceContext serviceContext)
+        java.lang.Long v_id,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()
                    .create(user_id, first_name, middle_name, last_name, email,
@@ -314,7 +315,8 @@ public class CandidateLocalServiceUtil {
         java.lang.String email, java.lang.String contact_number,
         java.lang.String comment, int mode_of_application,
         java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person, long v_id,
+        java.lang.String cv_text_version, int added_person,
+        java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()

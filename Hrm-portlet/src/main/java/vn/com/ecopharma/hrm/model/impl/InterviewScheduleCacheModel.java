@@ -25,7 +25,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
     public long interviewScheduleId;
     public long vacancyCandidateId;
     public long interviewId;
-    public long employeeId;
     public long interviewDate;
     public String interviewTime;
     public String note;
@@ -37,7 +36,7 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{interviewScheduleId=");
         sb.append(interviewScheduleId);
@@ -45,8 +44,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
         sb.append(vacancyCandidateId);
         sb.append(", interviewId=");
         sb.append(interviewId);
-        sb.append(", employeeId=");
-        sb.append(employeeId);
         sb.append(", interviewDate=");
         sb.append(interviewDate);
         sb.append(", interviewTime=");
@@ -75,7 +72,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
         interviewScheduleImpl.setInterviewScheduleId(interviewScheduleId);
         interviewScheduleImpl.setVacancyCandidateId(vacancyCandidateId);
         interviewScheduleImpl.setInterviewId(interviewId);
-        interviewScheduleImpl.setEmployeeId(employeeId);
 
         if (interviewDate == Long.MIN_VALUE) {
             interviewScheduleImpl.setInterviewDate(null);
@@ -121,7 +117,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
         interviewScheduleId = objectInput.readLong();
         vacancyCandidateId = objectInput.readLong();
         interviewId = objectInput.readLong();
-        employeeId = objectInput.readLong();
         interviewDate = objectInput.readLong();
         interviewTime = objectInput.readUTF();
         note = objectInput.readUTF();
@@ -138,7 +133,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
         objectOutput.writeLong(interviewScheduleId);
         objectOutput.writeLong(vacancyCandidateId);
         objectOutput.writeLong(interviewId);
-        objectOutput.writeLong(employeeId);
         objectOutput.writeLong(interviewDate);
 
         if (interviewTime == null) {

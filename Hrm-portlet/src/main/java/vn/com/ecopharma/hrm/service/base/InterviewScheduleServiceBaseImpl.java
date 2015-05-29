@@ -12,6 +12,7 @@ import vn.com.ecopharma.hrm.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.service.InterviewScheduleService;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
+import vn.com.ecopharma.hrm.service.persistence.EmployeeInterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.EmployeePersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
@@ -51,6 +52,12 @@ public abstract class InterviewScheduleServiceBaseImpl extends BaseServiceImpl
     protected vn.com.ecopharma.hrm.service.EmployeeService employeeService;
     @BeanReference(type = EmployeePersistence.class)
     protected EmployeePersistence employeePersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService employeeInterviewScheduleLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService employeeInterviewScheduleService;
+    @BeanReference(type = EmployeeInterviewSchedulePersistence.class)
+    protected EmployeeInterviewSchedulePersistence employeeInterviewSchedulePersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentLocalService.class)
     protected vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentService.class)
@@ -242,6 +249,63 @@ public abstract class InterviewScheduleServiceBaseImpl extends BaseServiceImpl
      */
     public void setEmployeePersistence(EmployeePersistence employeePersistence) {
         this.employeePersistence = employeePersistence;
+    }
+
+    /**
+     * Returns the employee interview schedule local service.
+     *
+     * @return the employee interview schedule local service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService getEmployeeInterviewScheduleLocalService() {
+        return employeeInterviewScheduleLocalService;
+    }
+
+    /**
+     * Sets the employee interview schedule local service.
+     *
+     * @param employeeInterviewScheduleLocalService the employee interview schedule local service
+     */
+    public void setEmployeeInterviewScheduleLocalService(
+        vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService employeeInterviewScheduleLocalService) {
+        this.employeeInterviewScheduleLocalService = employeeInterviewScheduleLocalService;
+    }
+
+    /**
+     * Returns the employee interview schedule remote service.
+     *
+     * @return the employee interview schedule remote service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService getEmployeeInterviewScheduleService() {
+        return employeeInterviewScheduleService;
+    }
+
+    /**
+     * Sets the employee interview schedule remote service.
+     *
+     * @param employeeInterviewScheduleService the employee interview schedule remote service
+     */
+    public void setEmployeeInterviewScheduleService(
+        vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService employeeInterviewScheduleService) {
+        this.employeeInterviewScheduleService = employeeInterviewScheduleService;
+    }
+
+    /**
+     * Returns the employee interview schedule persistence.
+     *
+     * @return the employee interview schedule persistence
+     */
+    public EmployeeInterviewSchedulePersistence getEmployeeInterviewSchedulePersistence() {
+        return employeeInterviewSchedulePersistence;
+    }
+
+    /**
+     * Sets the employee interview schedule persistence.
+     *
+     * @param employeeInterviewSchedulePersistence the employee interview schedule persistence
+     */
+    public void setEmployeeInterviewSchedulePersistence(
+        EmployeeInterviewSchedulePersistence employeeInterviewSchedulePersistence) {
+        this.employeeInterviewSchedulePersistence = employeeInterviewSchedulePersistence;
     }
 
     /**

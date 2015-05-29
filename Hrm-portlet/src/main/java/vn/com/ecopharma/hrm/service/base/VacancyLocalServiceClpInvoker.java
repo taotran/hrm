@@ -41,18 +41,18 @@ public class VacancyLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName84;
-    private String[] _methodParameterTypes84;
-    private String _methodName85;
-    private String[] _methodParameterTypes85;
     private String _methodName90;
     private String[] _methodParameterTypes90;
     private String _methodName91;
     private String[] _methodParameterTypes91;
-    private String _methodName92;
-    private String[] _methodParameterTypes92;
-    private String _methodName93;
-    private String[] _methodParameterTypes93;
+    private String _methodName96;
+    private String[] _methodParameterTypes96;
+    private String _methodName97;
+    private String[] _methodParameterTypes97;
+    private String _methodName98;
+    private String[] _methodParameterTypes98;
+    private String _methodName99;
+    private String[] _methodParameterTypes99;
 
     public VacancyLocalServiceClpInvoker() {
         _methodName0 = "addVacancy";
@@ -137,36 +137,36 @@ public class VacancyLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.Vacancy"
             };
 
-        _methodName84 = "getBeanIdentifier";
-
-        _methodParameterTypes84 = new String[] {  };
-
-        _methodName85 = "setBeanIdentifier";
-
-        _methodParameterTypes85 = new String[] { "java.lang.String" };
-
-        _methodName90 = "findAll";
+        _methodName90 = "getBeanIdentifier";
 
         _methodParameterTypes90 = new String[] {  };
 
-        _methodName91 = "create";
+        _methodName91 = "setBeanIdentifier";
 
-        _methodParameterTypes91 = new String[] {
+        _methodParameterTypes91 = new String[] { "java.lang.String" };
+
+        _methodName96 = "findAll";
+
+        _methodParameterTypes96 = new String[] {  };
+
+        _methodName97 = "create";
+
+        _methodParameterTypes97 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
                 "int", "java.lang.String",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName92 = "edit";
+        _methodName98 = "edit";
 
-        _methodParameterTypes92 = new String[] {
+        _methodParameterTypes98 = new String[] {
                 "long", "long", "long", "java.lang.String", "java.lang.String",
                 "int"
             };
 
-        _methodName93 = "delete";
+        _methodName99 = "delete";
 
-        _methodParameterTypes93 = new String[] { "long" };
+        _methodParameterTypes99 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -258,25 +258,25 @@ public class VacancyLocalServiceClpInvoker {
             return VacancyLocalServiceUtil.updateVacancy((vn.com.ecopharma.hrm.model.Vacancy) arguments[0]);
         }
 
-        if (_methodName84.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+        if (_methodName90.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
             return VacancyLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName85.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+        if (_methodName91.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
             VacancyLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName90.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
+        if (_methodName96.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
             return VacancyLocalServiceUtil.findAll();
         }
 
-        if (_methodName91.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
+        if (_methodName97.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
             return VacancyLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
@@ -287,8 +287,8 @@ public class VacancyLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[7]);
         }
 
-        if (_methodName92.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
+        if (_methodName98.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
             return VacancyLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
@@ -297,8 +297,8 @@ public class VacancyLocalServiceClpInvoker {
                 ((Integer) arguments[5]).intValue());
         }
 
-        if (_methodName93.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
+        if (_methodName99.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
             VacancyLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;

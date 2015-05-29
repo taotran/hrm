@@ -95,6 +95,18 @@ create table HRM_Recruitment_Employee (
 	joined_date DATE null
 );
 
+create table HRM_Recruitment_EmployeeInterviewSchedule (
+	employeeInterviewScheduleId LONG not null primary key,
+	employeeId LONG,
+	interviewScheduleId LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	note VARCHAR(75) null
+);
+
 create table HRM_Recruitment_FileAttachment (
 	f_id LONG not null primary key,
 	groupId LONG,
@@ -127,7 +139,6 @@ create table HRM_Recruitment_InterviewSchedule (
 	interviewScheduleId LONG not null primary key,
 	vacancyCandidateId LONG,
 	interviewId LONG,
-	employeeId LONG,
 	interviewDate DATE null,
 	interviewTime VARCHAR(75) null,
 	note VARCHAR(75) null,

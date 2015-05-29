@@ -93,6 +93,9 @@
 						onclick="deleteVacancies()">
 						<liferay-ui:message key="global.button.delete" />
 					</button>
+
+					<button data-toggle="modal" id="addLocation" class="btn"
+						onclick="addLocation()">Add location</button>
 				</div>
 			</div>
 
@@ -185,8 +188,8 @@
 			<div class="form-group">
 				<div class="form-inline">
 					<label for="select2"><liferay-ui:message
-							key="candidate.job_vacancy" /></label>
-					<select class="form-control select2-container" id="vacancySelect"
+							key="candidate.job_vacancy" /></label> <select
+						class="form-control select2-container" id="vacancySelect"
 						class="vacancySelect2">
 					</select>
 
@@ -267,15 +270,14 @@
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="vacancy_status"><liferay-ui:message
-						key="vacancy.status" /></label> <label id="vacancy_status">Unpublished</label>
+						key="vacancy.status" /></label> <input disabled id="vacancy_status"
+					value="NEW">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="location"><liferay-ui:message
-						key="vacancy.location" /></label> <select id="location">
-					<option value="ECO HCM">ECO HCM</option>
-					<option value="ECO HN">ECO HN</option>
+						key="vacancy.location" /></label> <select id="locationSelect">
 				</select>
 			</div>
 		</div>
@@ -371,6 +373,94 @@
 	</div>
 </div>
 
+<!-- LOCATION MODAL -->
+<div class="modal" id="modify-location-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<h4>Add New Location</h4>
+	</div>
+
+	<div class="modal-body" id="jobTitleInfo">
+		<input type="hidden" class="entityId" id="locationId" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationName">Name</label> <input type="text"
+					value="TestTitle" class="form-control" id="locationName"
+					placeholder="Title">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationProvince">Province</label> <input type="text"
+					class="form-control" id="locationProvince" value="Province"
+					placeholder="Province">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationCity">City</label> <select id="locationCity">
+					<option value="HCM">HCM</option>
+					<option value="HCM">HN</option>
+				</select>
+			</div>
+		</div>
+
+		<input type="hidden" class="entityId" id="locationId" value="-1" />
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationAddress">Address</label> <input type="text"
+					value="Address" class="form-control" id="locationAddress"
+					placeholder="Address">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationZipcode">ZipCode</label> <input type="text"
+					value="Zip Code" class="form-control" id="locationZipcode"
+					placeholder="Zip Code">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationPhone">Phone</label> <input type="text"
+					value="1234" class="form-control" id="locationPhone"
+					placeholder="Phone">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationFax">Fax</label> <input type="text" value="1234"
+					class="form-control" id="locationFax" placeholder="Fax">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="form-inline">
+				<label for="locationNote">Note</label>
+				<!-- <input type="text"
+					value="Note" class="form-control" id="locationNote"
+					placeholder="Note"> -->
+				<textarea rows="5" cols="50" id="locationNote">Note</textarea>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal"
+			onclick="saveLocation()">
+			<liferay-ui:message key="global.button.save" />
+		</button>
+		<button class="btn" onclick="clearFields()">
+			<liferay-ui:message key="global.button.clear_all" />
+		</button>
+		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+</div>
+
 <!-- JOB INTERVIEW MODAL -->
 <div class="modal" id="modify-interview-modal">
 	<div class="modal-header">
@@ -409,21 +499,50 @@
 	</div>
 
 	<div class="modal-body" id="interviewScheduleInfo">
-		<!-- 		<input type="hidden" class="entityId" id="itvSchedId" value="-1" /> <input
-			type="hidden" class="entityId" id="itv_c_id" value="-1" /> -->
+		<input type="hidden" class="entityId" id="itvSchedId" value="-1" /> <input
+			type="hidden" class="entityId" id="vacancyId" value="-1" /> <input
+			type="hidden" class="entityId" id="candidateId" value="-1" />
 		<div class="form-group">
 			<div class="form-inline">
 				<label for="interviewTitleSelect">Interview Round</label> <select
 					id="interviewTitleSelect">
-				</select>
+				</select> <a data-toggle="modal" href="#modify-interview-modal" class="btn">
+					<i class="icon-plus"></i>Add
+				</a>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
-				<label for="itvName">Interviewer Name</label> <input type="text"
+				<label for="itvName">Interviewer Name</label>
+				<!-- <input type="text"
 					class="form-control" id="itvName" value="Mr. ABC"
-					placeholder="Interviewer name here">
+					placeholder="Interviewer name here"> -->
+				<select id="interviewerSelect" onchange="onInterviewSelect()">
+				</select>
 			</div>
+			<ul id="managers" class="options">
+				<li>
+					<div class="edit-buttons">
+						<button type="button">
+							<i class="icon-minus-sign"></i>
+						</button>
+					</div> <span>Manager 1 </span>
+				</li>
+				<li>
+					<div class="edit-buttons">
+						<button type="button">
+							<i class="icon-minus-sign"></i>
+						</button>
+					</div> <span>Manager 1</span>
+				</li>
+				<li>
+					<div class="edit-buttons">
+						<button type="button">
+							<i class="icon-minus-sign"></i>
+						</button>
+					</div> <span>Manager 1</span>
+				</li>
+			</ul>
 		</div>
 		<div class="form-group">
 			<div class="form-inline">
@@ -436,10 +555,9 @@
 				<label for="itvTime">Time</label>
 				<div id="itvTime">
 					<label class="small70" for="itvTimeFrom">From</label> <input
-						type="text" class="small70" data-date-format="dd/mm/yyyy"
-						id="itvDate" placeholder="HH:MM"> <label class="small70"
-						for="itvTimeTo">To</label> <input class="small70" type="text"
-						data-date-format="dd/mm/yyyy" id="itvDate" placeholder="HH:MM">
+						type="text" class="small70" id="itvTimeFrom" placeholder="HH:MM">
+					<label class="small70" for="itvTimeTo">To</label> <input
+						class="small70" type="text" id="itvDate" placeholder="HH:MM">
 				</div>
 
 			</div>
@@ -447,14 +565,15 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-primary" data-dismiss="modal"
-			onclick="saveJobTitle()">
+			onclick="saveInterviewSchedule()">
 			<liferay-ui:message key="global.button.save" />
 		</button>
 		<button class="btn" onclick="clearFields()">
 			<liferay-ui:message key="global.button.clear_all" />
 		</button>
-		<a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
-				key="global.button.cancel" /></a>
+		<button type="button" class="btn" data-dismiss="modal">
+			<liferay-ui:message key="global.button.cancel" />
+		</button>
 	</div>
 </div>
 
@@ -702,10 +821,14 @@
 		candidate.last_name = $('#last_name').val();
 		candidate.email = $('#inputEmail').val();
 		candidate.contact_number = $('#contact_number').val();
-		candidate.vacancy = $('#vacancySelect').val();
+		console.log($('#vacancySelect').val());
+		if ($('#vacancySelect').val() != null) {
+			candidate.vacancy = $('#vacancySelect').val();
+		} else {
+			candidate.vacancy = -1;
+		}
 		candidate.comment = $('#comment').val();
 		candidate.date_of_application = $('#date_of_application').val();
-		// 		candidate.file = $('#addCandidate_resume');
 
 		jQuery.ajax({
 			type : 'POST',
@@ -789,9 +912,13 @@
 	});
 	
 	$('#modify-vacancy-modal').on('shown.bs.modal', function () {
-		select = document.getElementById('jTitleSelect');
+		console.log("Vacancy Model OPENED");
+		jSelect = document.getElementById('jTitleSelect');
+		lSelect = document.getElementById('locationSelect');
+		
 		/* check if jTitleSelect is already loaded or not */
-		if (select.options.length == 0) {
+		/* if (jSelect.options.length == 0 || lSelect.options.length == 0) { */
+			/* if (jSelect.options.length == 0) { */
 			$.ajax ({
 				type : 'POST',
 				url : "<portlet:resourceURL id='getVacanciesFormDataAJX'/>",
@@ -799,14 +926,21 @@
 				error : function(e) {
 	
 				},
-				success : function(data) {
-					$.each(data, function(i, item) {
-						select.options.add(new Option(item.title, item.jTitleId));
+				success : function(response) {
+					jSelect.options.length = 0;
+					lSelect.options.length = 0;
+					var data = $.parseJSON(response);
+					$.each(data.jTitles, function(i, item) {
+						jSelect.options.add(new Option(item.title, item.jTitleId));
 					});
+ 					$.each(data.locations, function(i, item){
+						lSelect.options.add(new Option(item.name, item.locationId));	
+					}); 
 				}	
 			})
-		}
+	/* 	} */
 	});
+	
 
 	function loadVacancyTable() {
 		var vtable = $('#vtable')
@@ -926,7 +1060,8 @@
 			        	$('td', row).eq(2).addClass('highlight');
 			        },
 					oLanguage : {
-						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
+						sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>
+	/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
 							},
 							aoColumns : [
 									{
@@ -969,27 +1104,32 @@
 										"mData" : "status",
 										"type" : "text",
 										"mRender" : function(data, type, full) {
-											/* console.log(full.availableStatuses);
-											var selectorId = "availStatusSelect"
-													+ full.c_id;
-											var s = "<div class='candidateStatus'>"
-													+ data
-													+ "<select onchange='onCandidateStatusChange("
-													+ full.c_id
-													+ ")' id='"
-													+ selectorId
-													+ "' name='availStatusSelect'>"; */
-											/* var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>"; */
-											/* 								var options = "<option value='" + -1 + "' selected>"
-																					+ data + "</option>"; */
-											/* var options = "<option value='" + -1 + "' selected>--Select status--</option>";
-											for (var i = 0; i < full.availableStatuses.length; i++) {
-												options += "<option value='" + full.c_id + "'>"
-														+ full.availableStatuses[i]
-														+ "</option>";
+											if (data != null
+													&& full.availableStatuses != null) {
+												var selectorId = "availStatusSelect"
+														+ full.c_id;
+												var s = "<div class='candidateStatus'>"
+														+ data
+														+ "<select onchange='onCandidateStatusChange("
+														+ full.c_id
+														+ ","
+														+ full.vacancyId
+														+ ")' id='"
+														+ selectorId
+														+ "' name='availStatusSelect'>";
+												/* var options = "<option value='' disabled selected style='display:none;'>Please Choose</option>"; */
+												/* 								var options = "<option value='" + -1 + "' selected>"
+																						+ data + "</option>"; */
+												var options = "<option value='" + -1 + "' selected>--Select status--</option>";
+												for (var i = 0; i < full.availableStatuses.length; i++) {
+													options += "<option value='" + full.c_id + "'>"
+															+ full.availableStatuses[i]
+															+ "</option>";
+												}
+												s = s + options
+														+ "</select></div>";
+												return s.toString();
 											}
-											s = s + options + "</select></div>";
-											return s.toString(); */
 											return data;
 										}
 									}, {
@@ -1070,7 +1210,14 @@
 		/* */
 	}
 
-	function onCandidateStatusChange(selectorId) {
+	/*
+	 *
+	 * selectorId: candidateId - to determine WHICH candidate's status is being CHANGED 
+	 * vacancyId: vacancyId - to pass to Interview Schedule modal incase status -> INTERVIEW_SCHEDULE
+	 *
+	 */
+	function onCandidateStatusChange(selectorId, vacancyId) {
+
 		var object = new Object();
 		object.c_id = selectorId;
 		object.changedStatus = $(
@@ -1079,23 +1226,35 @@
 			if (object.changedStatus == 'INTERVIEW_SCHEDULED') {
 				$.ajax({
 					type : 'GET',
-					url : '<portlet:resourceURL id="get_all_interviews"/>',
+					url : '<portlet:resourceURL id="getInterviewScheduleFormDataAJX"/>',
 					contentType : "application/json; charset=utf-8",
-					success : function(data) {
-						console.log(data);
-						select = document.getElementById('interviewTitleSelect');
+					success : function(response) {
+						var data = $.parseJSON(response);						
+						iSelect = document.getElementById('interviewTitleSelect');
+						eSelect = document.getElementById('interviewerSelect');
 						/* $('#itv_c_id').val(selectorId); */
-						select.options.length = 0;
-						$.each($.parseJSON(data), function(i, item) {
-							select.options.add(new Option(item.interviewName,
+						iSelect.options.length = 0;
+						$.each(data.interviews, function(i, item) {
+							iSelect.options.add(new Option(item.interviewName,
 									item.interviewId));
 						});
+						
+						eSelect.options.length = 0;
+						$.each(data.employees, function(i, item) {
+							eSelect.options.add(new Option(item.employeeName,
+									item.employeeId));
+						});
+						/* clear managers selected list */
+						$('#managers').empty();
 					},
 				});
-	
+				$('#vacancyId').val(vacancyId);
+				$('#candidateId').val(selectorId);
+				
+				
 				$('#modify-interviewSchedule-modal').modal('show');
 			} else {
-	
+
 				$.ajax({
 					type : 'POST',
 					url : '<portlet:resourceURL id="candidateStatusChange"/>',
@@ -1105,32 +1264,44 @@
 						$('#ctable').dataTable().fnDraw();
 					},
 					error : function(msg) {
-	
+
 					}
 				});
-	
+
 			}
 		}
 	}
-	
+	 
+	function onInterviewSelect() {
+		console.log("Selected changed");
+		var employeeId = $('#interviewerSelect').val();
+		var employeeName = $('#interviewerSelect option:selected').text();
+		$('#managers').append("<li><div class='edit-buttons'><button type='button' onclick='onRemoveManager("+ employeeId +")'><i class='icon-minus-sign'></i></button></div> <span>"+ employeeName +"</span></li>");
+	}
+
+	/*
+	 *
+	 * selectorId: candidateId - to determine WHICH vacancy's status is being CHANGED 
+	 *
+	 */
 	function onVacancyStatusChange(selectorId) {
 		var object = new Object();
 		object.v_id = selectorId;
 		object.changedStatus = $(
 				"#vAvailStatusSelect" + selectorId + " option:selected").text();
 		if (selectorId != -1) {
-				$.ajax({
-					type : 'POST',
-					url : '<portlet:resourceURL id="vacancyStatusChange"/>',
-					contentType : "application/json; charset=utf-8",
-					data : JSON.stringify(object),
-					success : function(response) {
-						$('#vtable').dataTable().fnDraw();
-					},
-					error : function(msg) {
-	
-					}
-				});
+			$.ajax({
+				type : 'POST',
+				url : '<portlet:resourceURL id="vacancyStatusChange"/>',
+				contentType : "application/json; charset=utf-8",
+				data : JSON.stringify(object),
+				success : function(response) {
+					$('#vtable').dataTable().fnDraw();
+				},
+				error : function(msg) {
+
+				}
+			});
 		}
 	}
 
@@ -1166,15 +1337,23 @@
 
 	});
 
+	/*
+	 * Usage: clear alll input fields
+	 *  
+	 *
+	 */
 	function clearFields() {
 		$('#candidateInfo :input').each(function() {
 			$(this).val('');
 		});
 		$('#c_id').val('-1');
 	};
-	
-	
 
+	/*
+	 * Usage: call AJAX to get Candidate from Db for editting
+	 * id: candidateId
+	 *
+	 */
 	function getCandidate(id) {
 		var obj = new Object();
 		obj.c_id = id;
@@ -1228,7 +1407,7 @@
 			}
 		});
 	}
-	
+
 	function deleteVacancies() {
 		var selectedArr = [];
 		$('#vtable tbody tr input[type=checkbox]:checked').each(function() {
@@ -1254,8 +1433,67 @@
 				}
 			}
 		});
-		
+
 	}
+
+	function addLocation() {
+		$('#modify-location-modal').modal('show');
+	}
+
+	function saveInterviewSchedule() {
+		console.log("on SAVE INTERVIEW SCHEDULE");
+		var object = new Object();
+		object.interviewId = $('#interviewTitleSelect').val();
+		object.candidateId = $('#candidateId').val();
+		object.vacancyId = $('#vacancyId').val();
+		object.itvDate = $('#itvDate').val();
+		object.itvTimeFrom = $('#itvTimeFrom').val();
+		object.itvTimeTo = $('#itvTimeTo').val();
+
+		jQuery.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveInterviewSchedule'/>",
+			data : JSON.stringify(object),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				console.log("DATA RESPONSE FOR saveInterviewSchedule");
+			}
+		});
+	}
+
+	function saveLocation() {
+		console.log("SAVE LOCATION");
+		var obj = new Object();
+		obj.name = $('#locationName').val();
+		obj.province = $('#locationProvince').val();
+		obj.city = $('#locationCity').val();
+		obj.address = $('#locationAddress').val();
+		obj.zip_code = $('#locationZipcode').val();
+		obj.phone = $('#locationPhone').val();
+		obj.fax = $('#locationFax').val();
+		obj.note = $('#locationNote').val();
+		console.log(obj);
+		$.ajax({
+			type : 'POST',
+			url : "<portlet:resourceURL id='saveLocation'/>",
+			data : JSON.stringify(obj),
+			dataType : "json",
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			error : function(e) {
+
+			},
+			success : function(response) {
+				console.log('SAVED LOCATION');
+			}
+		});
+	}
+
 	//Util functions
 </script>
 
@@ -1336,5 +1574,44 @@ label {
 
 .small70 {
 	width: 70px !important;
+}
+
+ul.options {
+	over-flow: hidden;
+	list-style: none;
+	margin-left: 0;
+	margin-bottom: 0;
+}
+
+ul.options>li {
+	padding: 2px 6px 3px;
+	margin: 0 0 5px;
+	/* 	float: left;
+	
+	display: inline-block; */
+	margin-left: 117px;
+	clear: both;
+}
+
+div.edit-buttons {
+	display: inline-block;
+	float: left;
+	padding: 0 5px 0 0;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.edit-buttons button {
+	width: 16px;
+	height: 16px;
+	position: relative;
+	display: inline-block;
+	overflow: visible;
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	border: none;
+	z-index: 3;
+	text-align: center;
 }
 </style>

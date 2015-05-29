@@ -45,6 +45,8 @@ public class InterviewScheduleLocalServiceClp
     private String[] _methodParameterTypes16;
     private String _methodName17;
     private String[] _methodParameterTypes17;
+    private String _methodName19;
+    private String[] _methodParameterTypes19;
 
     public InterviewScheduleLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -139,6 +141,14 @@ public class InterviewScheduleLocalServiceClp
         _methodName17 = "setBeanIdentifier";
 
         _methodParameterTypes17 = new String[] { "java.lang.String" };
+
+        _methodName19 = "create";
+
+        _methodParameterTypes19 = new String[] {
+                "long", "long", "long", "java.util.List", "java.sql.Date",
+                "java.lang.String", "long",
+                "com.liferay.portal.service.ServiceContext"
+            };
     }
 
     @Override
@@ -658,5 +668,57 @@ public class InterviewScheduleLocalServiceClp
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.InterviewSchedule create(
+        long interviewId, long vacancyId, long candidateId,
+        java.util.List<java.lang.Long> emps, java.sql.Date interviewDate,
+        java.lang.String interviewTime, long userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName19,
+                    _methodParameterTypes19,
+                    new Object[] {
+                        interviewId,
+                        
+                    vacancyId,
+                        
+                    candidateId,
+                        
+                    ClpSerializer.translateInput(emps),
+                        
+                    ClpSerializer.translateInput(interviewDate),
+                        
+                    ClpSerializer.translateInput(interviewTime),
+                        
+                    userId,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException) {
+                throw (vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.InterviewSchedule) ClpSerializer.translateOutput(returnObj);
     }
 }

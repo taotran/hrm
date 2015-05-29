@@ -70,6 +70,27 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleModelImpl">
+		<attributes>
+			<id name="employeeInterviewScheduleId" />
+			<basic name="employeeId" />
+			<basic name="interviewScheduleId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="note" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.FileAttachmentModelImpl">
 		<attributes>
 			<id name="f_id" />
@@ -125,7 +146,6 @@
 			<id name="interviewScheduleId" />
 			<basic name="vacancyCandidateId" />
 			<basic name="interviewId" />
-			<basic name="employeeId" />
 			<basic name="interviewDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -241,6 +261,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" name="Employee">
 		<table name="HRM_Recruitment_Employee" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleImpl" name="EmployeeInterviewSchedule">
+		<table name="HRM_Recruitment_EmployeeInterviewSchedule" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">

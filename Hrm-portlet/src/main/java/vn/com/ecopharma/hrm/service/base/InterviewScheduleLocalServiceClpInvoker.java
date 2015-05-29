@@ -41,10 +41,12 @@ public class InterviewScheduleLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName84;
-    private String[] _methodParameterTypes84;
-    private String _methodName85;
-    private String[] _methodParameterTypes85;
+    private String _methodName90;
+    private String[] _methodParameterTypes90;
+    private String _methodName91;
+    private String[] _methodParameterTypes91;
+    private String _methodName96;
+    private String[] _methodParameterTypes96;
 
     public InterviewScheduleLocalServiceClpInvoker() {
         _methodName0 = "addInterviewSchedule";
@@ -129,13 +131,21 @@ public class InterviewScheduleLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.InterviewSchedule"
             };
 
-        _methodName84 = "getBeanIdentifier";
+        _methodName90 = "getBeanIdentifier";
 
-        _methodParameterTypes84 = new String[] {  };
+        _methodParameterTypes90 = new String[] {  };
 
-        _methodName85 = "setBeanIdentifier";
+        _methodName91 = "setBeanIdentifier";
 
-        _methodParameterTypes85 = new String[] { "java.lang.String" };
+        _methodParameterTypes91 = new String[] { "java.lang.String" };
+
+        _methodName96 = "create";
+
+        _methodParameterTypes96 = new String[] {
+                "long", "long", "long", "java.util.List", "java.sql.Date",
+                "java.lang.String", "long",
+                "com.liferay.portal.service.ServiceContext"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -227,16 +237,27 @@ public class InterviewScheduleLocalServiceClpInvoker {
             return InterviewScheduleLocalServiceUtil.updateInterviewSchedule((vn.com.ecopharma.hrm.model.InterviewSchedule) arguments[0]);
         }
 
-        if (_methodName84.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+        if (_methodName90.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
             return InterviewScheduleLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName85.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+        if (_methodName91.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
             InterviewScheduleLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
+        }
+
+        if (_methodName96.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+            return InterviewScheduleLocalServiceUtil.create(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Long) arguments[2]).longValue(),
+                (java.util.List<java.lang.Long>) arguments[3],
+                (java.sql.Date) arguments[4], (java.lang.String) arguments[5],
+                ((Long) arguments[6]).longValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[7]);
         }
 
         throw new UnsupportedOperationException();

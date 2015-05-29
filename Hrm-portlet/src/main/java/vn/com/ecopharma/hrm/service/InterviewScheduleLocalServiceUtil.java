@@ -263,6 +263,18 @@ public class InterviewScheduleLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
+    public static vn.com.ecopharma.hrm.model.InterviewSchedule create(
+        long interviewId, long vacancyId, long candidateId,
+        java.util.List<java.lang.Long> emps, java.sql.Date interviewDate,
+        java.lang.String interviewTime, long userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException {
+        return getService()
+                   .create(interviewId, vacancyId, candidateId, emps,
+            interviewDate, interviewTime, userId, serviceContext);
+    }
+
     public static void clearService() {
         _service = null;
     }

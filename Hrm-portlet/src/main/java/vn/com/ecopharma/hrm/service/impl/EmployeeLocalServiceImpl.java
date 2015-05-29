@@ -1,5 +1,12 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import vn.com.ecopharma.hrm.model.Employee;
 import vn.com.ecopharma.hrm.service.base.EmployeeLocalServiceBaseImpl;
 
 /**
@@ -22,4 +29,16 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
      *
      * Never reference this interface directly. Always use {@link vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil} to access the employee local service.
      */
+	public List<Employee> findAll() throws SystemException {
+		return employeePersistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+	
+	public List<Employee> findAll(int start, int end) throws SystemException {
+		return employeePersistence.findAll(start, end, null);
+	}
+	
+	public List<Employee> findAll(int start, int end, OrderByComparator orderByComparator) throws SystemException {
+		return employeePersistence.findAll(start, end, orderByComparator);
+	}
+	
 }

@@ -85,7 +85,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return null;
 
 	}
-	
+
 	public List<Candidate> searchCandidates(long id, String first_name,
 			String middle_name, String last_name, String email, int start,
 			int end, OrderByComparator order) {
@@ -99,24 +99,19 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return null;
 
 	}
-	
-/*	public List<Vacancy> getVacanciesByCandidate(long c_id) {
-		try {
-			return candidatePersistence.getVacancies(c_id);
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}*/
-	
+
+	/*
+	 * public List<Vacancy> getVacanciesByCandidate(long c_id) { try { return
+	 * candidatePersistence.getVacancies(c_id); } catch (SystemException e) { //
+	 * TODO Auto-generated catch block e.printStackTrace(); } return null; }
+	 */
 
 	public Candidate create(long user_id, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
-			int added_person, long v_id,
-			ServiceContext serviceContext) throws NoSuchVacancyException {
+			int added_person, Long v_id, ServiceContext serviceContext)
+			throws NoSuchVacancyException {
 		try {
 			User user = userPersistence.findByPrimaryKey(user_id);
 			long c_id = counterLocalService.increment();
@@ -125,16 +120,20 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			c.setMiddle_name(middle_name);
 			c.setLast_name(last_name);
 			c.setEmail(email);
-			//candidatePersistence.addVacancies(c_id, vacancies);
+			// candidatePersistence.addVacancies(c_id, vacancies);
 			c.setComment(comment);
 			c.setContact_number(contact_number);
 			c.setDate_of_application(date_of_application);
 			c.setCv_file_id(cv_file_id);
 			c.setCv_text_version(cv_text_version);
 			c.setUser_id(user.getUserId());
-			c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED.getLocalizedName());
+			c.setCandidate_status(v_id != null ? CandidateStatus.APPLICATION_INITIATED
+					.getLocalizedName() : null);
 			c.setGroup_id(serviceContext.getScopeGroupId());
-			vacancyCandidateLocalService.create(v_id, c_id, user_id, serviceContext);
+			if (v_id != null) {
+				vacancyCandidateLocalService.create(v_id, c_id, user_id,
+						serviceContext);
+			}
 			candidatePersistence.update(c);
 			resourceLocalService.addResources(user.getCompanyId(),
 					serviceContext.getScopeGroupId(), user.getUserId(),
@@ -152,13 +151,15 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
-			int added_person, long v_id, ServiceContext serviceContext)
+			int added_person, Long v_id, ServiceContext serviceContext)
 			throws NoSuchVacancyException {
 		try {
 			Candidate c;
 			try {
 				c = candidatePersistence.findByPrimaryKey(candidateId);
-				c.setCandidate_status(c.getCandidate_status() != null ? c.getCandidate_status() : CandidateStatus.APPLICATION_INITIATED.toString());
+				c.setCandidate_status(c.getCandidate_status() != null ? c
+						.getCandidate_status()
+						: CandidateStatus.APPLICATION_INITIATED.toString());
 				c.setFirst_name(first_name);
 				c.setMiddle_name(middle_name);
 				c.setLast_name(last_name);
@@ -168,7 +169,11 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 				c.setDate_of_application(date_of_application);
 				c.setCv_file_id(cv_file_id);
 				c.setCv_text_version(cv_text_version);
-				vacancyCandidateLocalService.create(v_id, candidateId, user_id, serviceContext);
+				if (v_id != null) {
+					vacancyCandidateLocalService.create(v_id, candidateId, user_id,
+							serviceContext);
+					c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED.toString());
+				}
 				candidatePersistence.update(c);
 				return c;
 			} catch (NoSuchCandidateException e) {
@@ -182,17 +187,17 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 	public void delele(long c_id) {
 		try {
-			VacancyCandidate vc = vacancyCandidateLocalService.findByCandidate(c_id);
+			VacancyCandidate vc = vacancyCandidateLocalService
+					.findByCandidate(c_id);
 			if (vc != null) {
 				long v_id = vc.getV_id();
-				vacancyCandidateLocalService.deleteByVacancyAndCandidate(v_id, c_id);
+				vacancyCandidateLocalService.deleteByVacancyAndCandidate(v_id,
+						c_id);
 			}
 			candidatePersistence.remove(c_id);
 		} catch (NoSuchCandidateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -214,7 +219,8 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			int end) {
 
 		try {
-			return candidatePersistence.filterFindByfilterCandidate(first_name, middle_name, last_name, email, start, end);
+			return candidatePersistence.filterFindByfilterCandidate(first_name,
+					middle_name, last_name, email, start, end);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
@@ -229,16 +235,17 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		}
 		return 0;
 	}
-	
+
 	public List<Candidate> filterCandidates(String filterString) {
 		return CandidateFinderUtil.filterCandidates(filterString);
 	}
-	
+
 	public List<Candidate> filterCandidateByGlobalString(String filterString) {
 		return CandidateFinderUtil.filterCandidateByGlobalString(filterString);
 	}
+
 	public Long findVacancyByCandidate(long c_id) {
 		return CandidateFinderUtil.findVacancyByCandidate(c_id);
 	}
-	
+
 }

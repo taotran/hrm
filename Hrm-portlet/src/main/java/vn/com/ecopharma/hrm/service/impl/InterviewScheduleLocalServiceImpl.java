@@ -1,5 +1,14 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import java.sql.Date;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+
+import vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException;
+import vn.com.ecopharma.hrm.model.InterviewSchedule;
+import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.InterviewScheduleLocalServiceBaseImpl;
 
 /**
@@ -23,4 +32,26 @@ public class InterviewScheduleLocalServiceImpl
      *
      * Never reference this interface directly. Always use {@link vn.com.ecopharma.hrm.service.InterviewScheduleLocalServiceUtil} to access the interview schedule local service.
      */
+	
+	public InterviewSchedule create(long interviewId, long vacancyId, long candidateId, List<Long> emps, Date interviewDate, String interviewTime, long userId, ServiceContext serviceContext) throws SystemException, VacancyCandidateNotFoundException {
+		final InterviewSchedule is = interviewSchedulePersistence.create(counterLocalService.increment());		
+		is.setInterviewId(interviewId);
+		final VacancyCandidate vacancyCandidate = vacancyCandidateLocalService.findByVacancyAndCandidate(vacancyId, candidateId);
+		if (vacancyCandidate == null) {
+			throw new VacancyCandidateNotFoundException();
+		}
+		is.setVacancyCandidateId(vacancyCandidate.getVacancyCandidateId());
+		is.setInterviewDate(interviewDate);
+		is.setInterviewTime(interviewTime);
+		is.setUserId(userId);
+		is.setGroupId(serviceContext.getScopeGroupId());
+		/* Insert data to EmployeeInterviewSchedule */
+		for (Long id: emps) {
+			employeeInterviewScheduleLocalService.create(id, is.getInterviewScheduleId(), userId, serviceContext);
+		}
+		
+		interviewSchedulePersistence.update(is);
+		return is;
+	}
+	
 }

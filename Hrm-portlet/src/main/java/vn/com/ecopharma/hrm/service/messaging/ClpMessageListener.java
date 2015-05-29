@@ -6,6 +6,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.ClpSerializer;
+import vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeServiceUtil;
 import vn.com.ecopharma.hrm.service.FileAttachmentLocalServiceUtil;
@@ -42,6 +44,9 @@ public class ClpMessageListener extends BaseMessageListener {
             EmployeeLocalServiceUtil.clearService();
 
             EmployeeServiceUtil.clearService();
+            EmployeeInterviewScheduleLocalServiceUtil.clearService();
+
+            EmployeeInterviewScheduleServiceUtil.clearService();
             FileAttachmentLocalServiceUtil.clearService();
 
             FileAttachmentServiceUtil.clearService();

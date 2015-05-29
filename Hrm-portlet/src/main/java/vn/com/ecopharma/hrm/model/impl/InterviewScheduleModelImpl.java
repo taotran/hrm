@@ -55,7 +55,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
             { "interviewScheduleId", Types.BIGINT },
             { "vacancyCandidateId", Types.BIGINT },
             { "interviewId", Types.BIGINT },
-            { "employeeId", Types.BIGINT },
             { "interviewDate", Types.TIMESTAMP },
             { "interviewTime", Types.VARCHAR },
             { "note", Types.VARCHAR },
@@ -65,7 +64,7 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
             { "createDate", Types.TIMESTAMP },
             { "modifiedDate", Types.TIMESTAMP }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_InterviewSchedule (interviewScheduleId LONG not null primary key,vacancyCandidateId LONG,interviewId LONG,employeeId LONG,interviewDate DATE null,interviewTime VARCHAR(75) null,note VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_InterviewSchedule (interviewScheduleId LONG not null primary key,vacancyCandidateId LONG,interviewId LONG,interviewDate DATE null,interviewTime VARCHAR(75) null,note VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_InterviewSchedule";
     public static final String ORDER_BY_JPQL = " ORDER BY interviewSchedule.interviewScheduleId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_InterviewSchedule.interviewScheduleId ASC";
@@ -88,7 +87,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
     private long _interviewScheduleId;
     private long _vacancyCandidateId;
     private long _interviewId;
-    private long _employeeId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -119,7 +117,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         model.setInterviewScheduleId(soapModel.getInterviewScheduleId());
         model.setVacancyCandidateId(soapModel.getVacancyCandidateId());
         model.setInterviewId(soapModel.getInterviewId());
-        model.setEmployeeId(soapModel.getEmployeeId());
         model.setInterviewDate(soapModel.getInterviewDate());
         model.setInterviewTime(soapModel.getInterviewTime());
         model.setNote(soapModel.getNote());
@@ -190,7 +187,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         attributes.put("interviewScheduleId", getInterviewScheduleId());
         attributes.put("vacancyCandidateId", getVacancyCandidateId());
         attributes.put("interviewId", getInterviewId());
-        attributes.put("employeeId", getEmployeeId());
         attributes.put("interviewDate", getInterviewDate());
         attributes.put("interviewTime", getInterviewTime());
         attributes.put("note", getNote());
@@ -221,12 +217,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
         if (interviewId != null) {
             setInterviewId(interviewId);
-        }
-
-        Long employeeId = (Long) attributes.get("employeeId");
-
-        if (employeeId != null) {
-            setEmployeeId(employeeId);
         }
 
         Date interviewDate = (Date) attributes.get("interviewDate");
@@ -309,17 +299,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
     @Override
     public void setInterviewId(long interviewId) {
         _interviewId = interviewId;
-    }
-
-    @JSON
-    @Override
-    public long getEmployeeId() {
-        return _employeeId;
-    }
-
-    @Override
-    public void setEmployeeId(long employeeId) {
-        _employeeId = employeeId;
     }
 
     @JSON
@@ -458,7 +437,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         interviewScheduleImpl.setInterviewScheduleId(getInterviewScheduleId());
         interviewScheduleImpl.setVacancyCandidateId(getVacancyCandidateId());
         interviewScheduleImpl.setInterviewId(getInterviewId());
-        interviewScheduleImpl.setEmployeeId(getEmployeeId());
         interviewScheduleImpl.setInterviewDate(getInterviewDate());
         interviewScheduleImpl.setInterviewTime(getInterviewTime());
         interviewScheduleImpl.setNote(getNote());
@@ -526,8 +504,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
         interviewScheduleCacheModel.interviewId = getInterviewId();
 
-        interviewScheduleCacheModel.employeeId = getEmployeeId();
-
         Date interviewDate = getInterviewDate();
 
         if (interviewDate != null) {
@@ -579,7 +555,7 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{interviewScheduleId=");
         sb.append(getInterviewScheduleId());
@@ -587,8 +563,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         sb.append(getVacancyCandidateId());
         sb.append(", interviewId=");
         sb.append(getInterviewId());
-        sb.append(", employeeId=");
-        sb.append(getEmployeeId());
         sb.append(", interviewDate=");
         sb.append(getInterviewDate());
         sb.append(", interviewTime=");
@@ -612,7 +586,7 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.InterviewSchedule");
@@ -629,10 +603,6 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         sb.append(
             "<column><column-name>interviewId</column-name><column-value><![CDATA[");
         sb.append(getInterviewId());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>employeeId</column-name><column-value><![CDATA[");
-        sb.append(getEmployeeId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>interviewDate</column-name><column-value><![CDATA[");

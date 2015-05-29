@@ -17,7 +17,6 @@ public class InterviewScheduleSoap implements Serializable {
     private long _interviewScheduleId;
     private long _vacancyCandidateId;
     private long _interviewId;
-    private long _employeeId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -36,7 +35,6 @@ public class InterviewScheduleSoap implements Serializable {
         soapModel.setInterviewScheduleId(model.getInterviewScheduleId());
         soapModel.setVacancyCandidateId(model.getVacancyCandidateId());
         soapModel.setInterviewId(model.getInterviewId());
-        soapModel.setEmployeeId(model.getEmployeeId());
         soapModel.setInterviewDate(model.getInterviewDate());
         soapModel.setInterviewTime(model.getInterviewTime());
         soapModel.setNote(model.getNote());
@@ -118,14 +116,6 @@ public class InterviewScheduleSoap implements Serializable {
 
     public void setInterviewId(long interviewId) {
         _interviewId = interviewId;
-    }
-
-    public long getEmployeeId() {
-        return _employeeId;
-    }
-
-    public void setEmployeeId(long employeeId) {
-        _employeeId = employeeId;
     }
 
     public Date getInterviewDate() {

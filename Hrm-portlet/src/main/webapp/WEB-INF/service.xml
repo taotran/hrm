@@ -136,7 +136,6 @@
 		<!-- Group instance -->
         <column name="vacancyCandidateId" type="long"></column>
         <column name="interviewId" type="long"></column>
-        <column name="employeeId" type="long"></column>
         <column name="interviewDate" type="Date"></column>
         <column name="interviewTime" type="String"></column>
         <column name="note" type="String"></column>
@@ -235,6 +234,30 @@
         <column name="zip_code" type="String"></column>
         <column name="phone" type="String"></column>
         <column name="fax" type="String"></column>
+        <column name="note" type="String"></column>
+	</entity>
+	<entity name="EmployeeInterviewSchedule" local-service="true"
+		trash-enabled="true">
+
+
+		<!-- PK fields -->
+
+		<column name="employeeInterviewScheduleId" type="long"
+			primary="true">
+		</column>
+
+		<!-- Group instance -->
+        <column name="employeeId" type="long"></column>
+        <column name="interviewScheduleId" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
         <column name="note" type="String"></column>
 	</entity>
 

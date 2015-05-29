@@ -89,20 +89,6 @@ public interface InterviewScheduleModel extends BaseModel<InterviewSchedule> {
     public void setInterviewId(long interviewId);
 
     /**
-     * Returns the employee ID of this interview schedule.
-     *
-     * @return the employee ID of this interview schedule
-     */
-    public long getEmployeeId();
-
-    /**
-     * Sets the employee ID of this interview schedule.
-     *
-     * @param employeeId the employee ID of this interview schedule
-     */
-    public void setEmployeeId(long employeeId);
-
-    /**
      * Returns the interview date of this interview schedule.
      *
      * @return the interview date of this interview schedule

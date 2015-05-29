@@ -25,7 +25,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
     private long _interviewScheduleId;
     private long _vacancyCandidateId;
     private long _interviewId;
-    private long _employeeId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -78,7 +77,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         attributes.put("interviewScheduleId", getInterviewScheduleId());
         attributes.put("vacancyCandidateId", getVacancyCandidateId());
         attributes.put("interviewId", getInterviewId());
-        attributes.put("employeeId", getEmployeeId());
         attributes.put("interviewDate", getInterviewDate());
         attributes.put("interviewTime", getInterviewTime());
         attributes.put("note", getNote());
@@ -109,12 +107,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
         if (interviewId != null) {
             setInterviewId(interviewId);
-        }
-
-        Long employeeId = (Long) attributes.get("employeeId");
-
-        if (employeeId != null) {
-            setEmployeeId(employeeId);
         }
 
         Date interviewDate = (Date) attributes.get("interviewDate");
@@ -228,28 +220,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
                 Method method = clazz.getMethod("setInterviewId", long.class);
 
                 method.invoke(_interviewScheduleRemoteModel, interviewId);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public long getEmployeeId() {
-        return _employeeId;
-    }
-
-    @Override
-    public void setEmployeeId(long employeeId) {
-        _employeeId = employeeId;
-
-        if (_interviewScheduleRemoteModel != null) {
-            try {
-                Class<?> clazz = _interviewScheduleRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setEmployeeId", long.class);
-
-                method.invoke(_interviewScheduleRemoteModel, employeeId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -514,7 +484,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         clone.setInterviewScheduleId(getInterviewScheduleId());
         clone.setVacancyCandidateId(getVacancyCandidateId());
         clone.setInterviewId(getInterviewId());
-        clone.setEmployeeId(getEmployeeId());
         clone.setInterviewDate(getInterviewDate());
         clone.setInterviewTime(getInterviewTime());
         clone.setNote(getNote());
@@ -572,7 +541,7 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{interviewScheduleId=");
         sb.append(getInterviewScheduleId());
@@ -580,8 +549,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         sb.append(getVacancyCandidateId());
         sb.append(", interviewId=");
         sb.append(getInterviewId());
-        sb.append(", employeeId=");
-        sb.append(getEmployeeId());
         sb.append(", interviewDate=");
         sb.append(getInterviewDate());
         sb.append(", interviewTime=");
@@ -605,7 +572,7 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.InterviewSchedule");
@@ -622,10 +589,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
         sb.append(
             "<column><column-name>interviewId</column-name><column-value><![CDATA[");
         sb.append(getInterviewId());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>employeeId</column-name><column-value><![CDATA[");
-        sb.append(getEmployeeId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>interviewDate</column-name><column-value><![CDATA[");

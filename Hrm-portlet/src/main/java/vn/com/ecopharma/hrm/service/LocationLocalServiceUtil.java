@@ -263,6 +263,54 @@ public class LocationLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Location> findAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll();
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Location> findAll(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll(start, end);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Location> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findAll(start, end, orderByComparator);
+    }
+
+    public static vn.com.ecopharma.hrm.model.Location create(
+        java.lang.String name, java.lang.String province,
+        java.lang.String city, java.lang.String address,
+        java.lang.String zip_code, java.lang.String phone,
+        java.lang.String fax, java.lang.String note, long userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .create(name, province, city, address, zip_code, phone, fax,
+            note, userId, serviceContext);
+    }
+
+    public static vn.com.ecopharma.hrm.model.Location edit(long locationId,
+        java.lang.String name, java.lang.String province,
+        java.lang.String city, java.lang.String address,
+        java.lang.String zip_code, java.lang.String phone,
+        java.lang.String fax, java.lang.String note)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchLocationException {
+        return getService()
+                   .edit(locationId, name, province, city, address, zip_code,
+            phone, fax, note);
+    }
+
+    public static java.lang.String getLocationNameById(long locationId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchLocationException {
+        return getService().getLocationNameById(locationId);
+    }
+
     public static void clearService() {
         _service = null;
     }

@@ -270,6 +270,27 @@ public class EmployeeLocalServiceWrapper implements EmployeeLocalService,
             arguments);
     }
 
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.findAll();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.findAll(start, end);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.findAll(start, end, orderByComparator);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

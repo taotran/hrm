@@ -332,7 +332,6 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
         interviewScheduleImpl.setInterviewScheduleId(interviewSchedule.getInterviewScheduleId());
         interviewScheduleImpl.setVacancyCandidateId(interviewSchedule.getVacancyCandidateId());
         interviewScheduleImpl.setInterviewId(interviewSchedule.getInterviewId());
-        interviewScheduleImpl.setEmployeeId(interviewSchedule.getEmployeeId());
         interviewScheduleImpl.setInterviewDate(interviewSchedule.getInterviewDate());
         interviewScheduleImpl.setInterviewTime(interviewSchedule.getInterviewTime());
         interviewScheduleImpl.setNote(interviewSchedule.getNote());
