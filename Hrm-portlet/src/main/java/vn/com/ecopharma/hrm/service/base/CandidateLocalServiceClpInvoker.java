@@ -173,9 +173,11 @@ public class CandidateLocalServiceClpInvoker {
 
         _methodParameterTypes97 = new String[] { "int", "int" };
 
-        _methodName98 = "findCandidates";
+        _methodName98 = "findAll";
 
-        _methodParameterTypes98 = new String[] { "int", "int" };
+        _methodParameterTypes98 = new String[] {
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+            };
 
         _methodName99 = "searchCandidates";
 
@@ -361,8 +363,9 @@ public class CandidateLocalServiceClpInvoker {
 
         if (_methodName98.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
-            return CandidateLocalServiceUtil.findCandidates(((Integer) arguments[0]).intValue(),
-                ((Integer) arguments[1]).intValue());
+            return CandidateLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue(),
+                (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
         if (_methodName99.equals(name) &&

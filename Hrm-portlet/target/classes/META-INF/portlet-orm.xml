@@ -29,7 +29,6 @@
 			<basic name="candidate_status" />
 			<basic name="user_id" />
 			<basic name="group_id" />
-			<basic name="interviewId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

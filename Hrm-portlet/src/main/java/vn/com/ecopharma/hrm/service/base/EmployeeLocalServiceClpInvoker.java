@@ -51,6 +51,8 @@ public class EmployeeLocalServiceClpInvoker {
     private String[] _methodParameterTypes97;
     private String _methodName98;
     private String[] _methodParameterTypes98;
+    private String _methodName99;
+    private String[] _methodParameterTypes99;
 
     public EmployeeLocalServiceClpInvoker() {
         _methodName0 = "addEmployee";
@@ -156,6 +158,10 @@ public class EmployeeLocalServiceClpInvoker {
         _methodParameterTypes98 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
+
+        _methodName99 = "delete";
+
+        _methodParameterTypes99 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -275,6 +281,13 @@ public class EmployeeLocalServiceClpInvoker {
             return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
+        }
+
+        if (_methodName99.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+            EmployeeLocalServiceUtil.delete(((Long) arguments[0]).longValue());
+
+            return null;
         }
 
         throw new UnsupportedOperationException();

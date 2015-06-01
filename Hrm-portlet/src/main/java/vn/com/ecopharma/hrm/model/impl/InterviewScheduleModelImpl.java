@@ -77,7 +77,12 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
     public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.finder.cache.enabled.vn.com.ecopharma.hrm.model.InterviewSchedule"),
             true);
-    public static final boolean COLUMN_BITMASK_ENABLED = false;
+    public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+                "value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.model.InterviewSchedule"),
+            true);
+    public static long INTERVIEWID_COLUMN_BITMASK = 1L;
+    public static long VACANCYCANDIDATEID_COLUMN_BITMASK = 2L;
+    public static long INTERVIEWSCHEDULEID_COLUMN_BITMASK = 4L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.vn.com.ecopharma.hrm.model.InterviewSchedule"));
     private static ClassLoader _classLoader = InterviewSchedule.class.getClassLoader();
@@ -86,7 +91,11 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         };
     private long _interviewScheduleId;
     private long _vacancyCandidateId;
+    private long _originalVacancyCandidateId;
+    private boolean _setOriginalVacancyCandidateId;
     private long _interviewId;
+    private long _originalInterviewId;
+    private boolean _setOriginalInterviewId;
     private Date _interviewDate;
     private String _interviewTime;
     private String _note;
@@ -96,6 +105,7 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
     private String _userUuid;
     private Date _createDate;
     private Date _modifiedDate;
+    private long _columnBitmask;
     private InterviewSchedule _escapedModel;
 
     public InterviewScheduleModelImpl() {
@@ -287,7 +297,19 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public void setVacancyCandidateId(long vacancyCandidateId) {
+        _columnBitmask |= VACANCYCANDIDATEID_COLUMN_BITMASK;
+
+        if (!_setOriginalVacancyCandidateId) {
+            _setOriginalVacancyCandidateId = true;
+
+            _originalVacancyCandidateId = _vacancyCandidateId;
+        }
+
         _vacancyCandidateId = vacancyCandidateId;
+    }
+
+    public long getOriginalVacancyCandidateId() {
+        return _originalVacancyCandidateId;
     }
 
     @JSON
@@ -298,7 +320,19 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public void setInterviewId(long interviewId) {
+        _columnBitmask |= INTERVIEWID_COLUMN_BITMASK;
+
+        if (!_setOriginalInterviewId) {
+            _setOriginalInterviewId = true;
+
+            _originalInterviewId = _interviewId;
+        }
+
         _interviewId = interviewId;
+    }
+
+    public long getOriginalInterviewId() {
+        return _originalInterviewId;
     }
 
     @JSON
@@ -407,6 +441,10 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
         _modifiedDate = modifiedDate;
     }
 
+    public long getColumnBitmask() {
+        return _columnBitmask;
+    }
+
     @Override
     public ExpandoBridge getExpandoBridge() {
         return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -492,6 +530,17 @@ public class InterviewScheduleModelImpl extends BaseModelImpl<InterviewSchedule>
 
     @Override
     public void resetOriginalValues() {
+        InterviewScheduleModelImpl interviewScheduleModelImpl = this;
+
+        interviewScheduleModelImpl._originalVacancyCandidateId = interviewScheduleModelImpl._vacancyCandidateId;
+
+        interviewScheduleModelImpl._setOriginalVacancyCandidateId = false;
+
+        interviewScheduleModelImpl._originalInterviewId = interviewScheduleModelImpl._interviewId;
+
+        interviewScheduleModelImpl._setOriginalInterviewId = false;
+
+        interviewScheduleModelImpl._columnBitmask = 0;
     }
 
     @Override

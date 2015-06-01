@@ -297,6 +297,14 @@ public class InterviewLocalServiceWrapper implements InterviewLocalService,
         return _interviewLocalService.create(userId, name, serviceContext);
     }
 
+    @Override
+    public void delete(long interviewId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        _interviewLocalService.delete(interviewId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

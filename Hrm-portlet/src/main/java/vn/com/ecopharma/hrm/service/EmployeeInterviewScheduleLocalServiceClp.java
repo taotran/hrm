@@ -47,6 +47,8 @@ public class EmployeeInterviewScheduleLocalServiceClp
     private String[] _methodParameterTypes17;
     private String _methodName19;
     private String[] _methodParameterTypes19;
+    private String _methodName20;
+    private String[] _methodParameterTypes20;
 
     public EmployeeInterviewScheduleLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -148,6 +150,10 @@ public class EmployeeInterviewScheduleLocalServiceClp
                 "long", "long", "long",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName20 = "delete";
+
+        _methodParameterTypes20 = new String[] { "long" };
     }
 
     @Override
@@ -709,5 +715,38 @@ public class EmployeeInterviewScheduleLocalServiceClp
         }
 
         return (vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void delete(long employeeInterviewScheduleId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        try {
+            _invokableLocalService.invokeMethod(_methodName20,
+                _methodParameterTypes20,
+                new Object[] { employeeInterviewScheduleId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.NoSuchModelException) {
+                throw (com.liferay.portal.NoSuchModelException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

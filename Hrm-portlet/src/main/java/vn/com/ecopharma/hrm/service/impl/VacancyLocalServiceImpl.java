@@ -3,14 +3,19 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import vn.com.ecopharma.hrm.NoSuchCandidateException;
+import vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
+import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
-import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.Vacancy;
+import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.VacancyLocalServiceBaseImpl;
 
 /**
@@ -41,72 +46,74 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 	 */
 
 	public List<Vacancy> findAll() throws SystemException {
-		return vacancyPersistence.findAll();
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public Vacancy create(long user_id, long jTitle_id,
+	public List<Vacancy> findAll(int start, int end) throws SystemException {
+		return findAll(start, end, null);
+	}
+
+	public List<Vacancy> findAll(int start, int end,
+			OrderByComparator orderByComparator) throws SystemException {
+		return vacancyPersistence.findAll(start, end, orderByComparator);
+	}
+
+	public Vacancy create(long user_id, long jTitle_id, long locationId,
 			long hiring_mananager_id, String name, String description,
-			int no_of_positions, String vacancy_status,
-			 ServiceContext serviceContext) throws NoSuchVacancyException {
-		try {
-			User user = userPersistence.findByPrimaryKey(user_id);
-			final long v_id = counterLocalService.increment();
-			final Vacancy v = vacancyPersistence.create(v_id);
-			final Date now = new Date(System.currentTimeMillis());
-			v.setJobtitleId(jTitle_id);
-			v.setHiring_manager_id(hiring_mananager_id);
-			v.setName(name);
-			v.setDescription(description);
-			v.setNo_of_positions(no_of_positions);
-			v.setVacancy_status(vacancy_status);
-			v.setInsert_date(now);
-			v.setUpdate_date(now);
-			v.setUser_id(user.getUserId());
-			v.setGroup_id(serviceContext.getScopeGroupId());
-			resourceLocalService.addResources(user.getCompanyId(), serviceContext.getScopeGroupId(),
-					user.getUserId(), Vacancy.class.getName(), v_id, false,
-					true, true);
-			vacancyPersistence.update(v);
-			return v;
-		} catch (SystemException e) {
-			e.printStackTrace();
-		} catch (PortalException e) {
-			e.printStackTrace();
-
-		}
-		return null;
+			int no_of_positions, String vacancy_status, String job_posting,
+			ServiceContext serviceContext) throws PortalException,
+			SystemException {
+		User user = userPersistence.findByPrimaryKey(user_id);
+		final long v_id = counterLocalService.increment();
+		final Vacancy v = vacancyPersistence.create(v_id);
+		final Date now = new Date(System.currentTimeMillis());
+		v.setJobtitleId(jTitle_id);
+		v.setLocationId(locationId);
+		v.setHiring_manager_id(hiring_mananager_id);
+		v.setName(name);
+		v.setDescription(description);
+		v.setNo_of_positions(no_of_positions);
+		v.setVacancy_status(vacancy_status);
+		v.setInsert_date(now);
+		v.setUpdate_date(now);
+		v.setUser_id(user.getUserId());
+		v.setGroup_id(serviceContext.getScopeGroupId());
+		resourceLocalService.addResources(user.getCompanyId(),
+				serviceContext.getScopeGroupId(), user.getUserId(),
+				Vacancy.class.getName(), v_id, false, true, true);
+		vacancyPersistence.update(v);
+		return v;
 	}
 
-	public Vacancy edit(long id, long jtitle_id, long hiring_manager_id,
-			String name, String description, int number_of_positions) {
-		Vacancy vacancy;
-		try {
-			vacancy = vacancyPersistence.findByPrimaryKey(id);
-			vacancy.setJobtitleId(jtitle_id);
-			vacancy.setHiring_manager_id(hiring_manager_id);
-			vacancy.setName(name);
-			vacancy.setDescription(description);
-			vacancy.setNo_of_positions(number_of_positions);
-			/*vacancy.setVacancy_status(vacancy_status);*/
-			vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
-			vacancyPersistence.update(vacancy);
-			return vacancy;
-		} catch (NoSuchVacancyException e) {
-			e.printStackTrace();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public Vacancy edit(long id, long jtitle_id, long locationId,
+			long hiring_manager_id, String name, String description,
+			int number_of_positions, String job_posting)
+			throws SystemException, NoSuchVacancyException {
+		Vacancy vacancy = vacancyPersistence.findByPrimaryKey(id);
+		vacancy.setJobtitleId(jtitle_id);
+		vacancy.setLocationId(locationId);
+		vacancy.setHiring_manager_id(hiring_manager_id);
+		vacancy.setName(name);
+		vacancy.setDescription(description);
+		vacancy.setNo_of_positions(number_of_positions);
+		/* vacancy.setVacancy_status(vacancy_status); */
+		vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
+		vacancyPersistence.update(vacancy);
+		return vacancy;
 	}
-	
-	public void delete(long v_id) {
-		try {
-			vacancyPersistence.remove(v_id);
+
+	public void delete(long v_id) throws NoSuchVacancyException,
+			SystemException, NoSuchVacancyCandidateException,
+			NoSuchInterviewScheduleException, NoSuchCandidateException {
+		vacancyPersistence.remove(v_id);
+		final List<VacancyCandidate> vacancyCandidates = vacancyCandidateLocalService
+				.findByVacancy(v_id);
+		if (vacancyCandidates != null && vacancyCandidates.size() > 0) {
+			/* CLEAR associated candidates' status */
+			for (VacancyCandidate vc : vacancyCandidates) {
+				candidatePersistence.findByPrimaryKey(vc.getC_id());
+			}
 			vacancyCandidateLocalService.deleteByVacancy(v_id);
-		} catch (NoSuchVacancyException e) {
-			e.printStackTrace();
-		} catch (SystemException e) {
-			e.printStackTrace();
 		}
 	}
 }

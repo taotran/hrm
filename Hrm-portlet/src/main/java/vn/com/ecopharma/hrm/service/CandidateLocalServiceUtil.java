@@ -267,19 +267,22 @@ public class CandidateLocalServiceUtil {
     }
 
     public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
-        int start, int end) {
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService().findAll(start, end);
     }
 
-    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
-        int start, int end)
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().findCandidates(start, end);
+        return getService().findAll(start, end, orderByComparator);
     }
 
     public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .searchCandidates(id, first_name, middle_name, last_name,
             email, start, end);
@@ -288,7 +291,8 @@ public class CandidateLocalServiceUtil {
     public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator order) {
+        com.liferay.portal.kernel.util.OrderByComparator order)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .searchCandidates(id, first_name, middle_name, last_name,
             email, start, end, order);
@@ -302,7 +306,8 @@ public class CandidateLocalServiceUtil {
         long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .create(user_id, first_name, middle_name, last_name, email,
             contact_number, comment, mode_of_application, date_of_application,
@@ -318,7 +323,10 @@ public class CandidateLocalServiceUtil {
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         return getService()
                    .edit(user_id, candidateId, first_name, middle_name,
             last_name, email, contact_number, comment, mode_of_application,
@@ -326,26 +334,33 @@ public class CandidateLocalServiceUtil {
             v_id, serviceContext);
     }
 
-    public static void delele(long c_id) {
+    public static void delele(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         getService().delele(c_id);
     }
 
     public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email) {
+        java.lang.String last_name, java.lang.String email)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .findCandidates(first_name, middle_name, last_name, email);
     }
 
     public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .findCandidates(first_name, middle_name, last_name, email,
             start, end);
     }
 
-    public static int countAll() {
+    public static int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService().countAll();
     }
 

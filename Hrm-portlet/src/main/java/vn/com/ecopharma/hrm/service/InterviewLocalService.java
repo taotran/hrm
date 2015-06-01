@@ -251,4 +251,9 @@ public interface InterviewLocalService extends BaseLocalService,
     public vn.com.ecopharma.hrm.model.Interview create(long userId,
         java.lang.String name,
         com.liferay.portal.service.ServiceContext serviceContext);
+
+    public void delete(long interviewId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 }

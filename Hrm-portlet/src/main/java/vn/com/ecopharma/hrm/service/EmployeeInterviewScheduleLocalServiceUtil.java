@@ -279,6 +279,13 @@ public class EmployeeInterviewScheduleLocalServiceUtil {
             serviceContext);
     }
 
+    public static void delete(long employeeInterviewScheduleId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        getService().delete(employeeInterviewScheduleId);
+    }
+
     public static void clearService() {
         _service = null;
     }

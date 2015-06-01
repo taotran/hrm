@@ -281,6 +281,13 @@ public class EmployeeLocalServiceUtil {
         return getService().findAll(start, end, orderByComparator);
     }
 
+    public static void delete(long employeeId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        getService().delete(employeeId);
+    }
+
     public static void clearService() {
         _service = null;
     }

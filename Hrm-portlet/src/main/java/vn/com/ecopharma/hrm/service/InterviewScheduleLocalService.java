@@ -246,6 +246,12 @@ public interface InterviewScheduleLocalService extends BaseLocalService,
         java.util.List<java.lang.Long> emps, java.sql.Date interviewDate,
         java.lang.String interviewTime, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws com.liferay.portal.kernel.exception.SystemException,
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException;
+
+    public void delete(long interviewScheduleId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 }

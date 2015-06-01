@@ -53,6 +53,8 @@ public class InterviewLocalServiceClpInvoker {
     private String[] _methodParameterTypes98;
     private String _methodName99;
     private String[] _methodParameterTypes99;
+    private String _methodName100;
+    private String[] _methodParameterTypes100;
 
     public InterviewLocalServiceClpInvoker() {
         _methodName0 = "addInterview";
@@ -165,6 +167,10 @@ public class InterviewLocalServiceClpInvoker {
                 "long", "java.lang.String",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName100 = "delete";
+
+        _methodParameterTypes100 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -291,6 +297,13 @@ public class InterviewLocalServiceClpInvoker {
             return InterviewLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
+        }
+
+        if (_methodName100.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+            InterviewLocalServiceUtil.delete(((Long) arguments[0]).longValue());
+
+            return null;
         }
 
         throw new UnsupportedOperationException();

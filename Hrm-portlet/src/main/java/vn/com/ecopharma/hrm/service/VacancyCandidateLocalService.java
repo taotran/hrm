@@ -244,18 +244,33 @@ public interface VacancyCandidateLocalService extends BaseLocalService,
     public vn.com.ecopharma.hrm.model.VacancyCandidate create(long v_id,
         long c_id, long user_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException;
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
-        long c_id);
+        long c_id) throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy(
-        long v_id);
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
-        long v_id, long c_id);
+        long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 
-    public void deleteByVacancyAndCandidate(long v_id, long c_id);
+    public void deleteByVacancyAndCandidate(long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 
-    public void deleteByVacancy(long v_id);
+    public void deleteByVacancy(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
+
+    public void delete(long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 }

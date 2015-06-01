@@ -241,22 +241,26 @@ public interface CandidateLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
-        int start, int end);
-
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end);
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator order);
+        com.liferay.portal.kernel.util.OrderByComparator order)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.Candidate create(long user_id,
         java.lang.String first_name, java.lang.String middle_name,
@@ -266,7 +270,8 @@ public interface CandidateLocalService extends BaseLocalService,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException;
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.Candidate edit(long user_id,
         long candidateId, java.lang.String first_name,
@@ -277,19 +282,29 @@ public interface CandidateLocalService extends BaseLocalService,
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException;
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException;
 
-    public void delele(long c_id);
+    public void delele(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email);
+        java.lang.String last_name, java.lang.String email)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end);
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
-    public int countAll();
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
         java.lang.String filterString);

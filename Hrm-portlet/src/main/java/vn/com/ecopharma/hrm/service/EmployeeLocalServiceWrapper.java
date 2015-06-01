@@ -291,6 +291,14 @@ public class EmployeeLocalServiceWrapper implements EmployeeLocalService,
         return _employeeLocalService.findAll(start, end, orderByComparator);
     }
 
+    @Override
+    public void delete(long employeeId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        _employeeLocalService.delete(employeeId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

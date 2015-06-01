@@ -53,6 +53,10 @@ public class VacancyLocalServiceClpInvoker {
     private String[] _methodParameterTypes98;
     private String _methodName99;
     private String[] _methodParameterTypes99;
+    private String _methodName100;
+    private String[] _methodParameterTypes100;
+    private String _methodName101;
+    private String[] _methodParameterTypes101;
 
     public VacancyLocalServiceClpInvoker() {
         _methodName0 = "addVacancy";
@@ -149,24 +153,34 @@ public class VacancyLocalServiceClpInvoker {
 
         _methodParameterTypes96 = new String[] {  };
 
-        _methodName97 = "create";
+        _methodName97 = "findAll";
 
-        _methodParameterTypes97 = new String[] {
-                "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int", "java.lang.String",
-                "com.liferay.portal.service.ServiceContext"
-            };
+        _methodParameterTypes97 = new String[] { "int", "int" };
 
-        _methodName98 = "edit";
+        _methodName98 = "findAll";
 
         _methodParameterTypes98 = new String[] {
-                "long", "long", "long", "java.lang.String", "java.lang.String",
-                "int"
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName99 = "delete";
+        _methodName99 = "create";
 
-        _methodParameterTypes99 = new String[] { "long" };
+        _methodParameterTypes99 = new String[] {
+                "long", "long", "long", "long", "java.lang.String",
+                "java.lang.String", "int", "java.lang.String",
+                "java.lang.String", "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName100 = "edit";
+
+        _methodParameterTypes100 = new String[] {
+                "long", "long", "long", "long", "java.lang.String",
+                "java.lang.String", "int", "java.lang.String"
+            };
+
+        _methodName101 = "delete";
+
+        _methodParameterTypes101 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -277,28 +291,45 @@ public class VacancyLocalServiceClpInvoker {
 
         if (_methodName97.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
-            return VacancyLocalServiceUtil.create(((Long) arguments[0]).longValue(),
-                ((Long) arguments[1]).longValue(),
-                ((Long) arguments[2]).longValue(),
-                (java.lang.String) arguments[3],
-                (java.lang.String) arguments[4],
-                ((Integer) arguments[5]).intValue(),
-                (java.lang.String) arguments[6],
-                (com.liferay.portal.service.ServiceContext) arguments[7]);
+            return VacancyLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName98.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
-            return VacancyLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
-                ((Long) arguments[1]).longValue(),
-                ((Long) arguments[2]).longValue(),
-                (java.lang.String) arguments[3],
-                (java.lang.String) arguments[4],
-                ((Integer) arguments[5]).intValue());
+            return VacancyLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue(),
+                (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
         if (_methodName99.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+            return VacancyLocalServiceUtil.create(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Long) arguments[2]).longValue(),
+                ((Long) arguments[3]).longValue(),
+                (java.lang.String) arguments[4],
+                (java.lang.String) arguments[5],
+                ((Integer) arguments[6]).intValue(),
+                (java.lang.String) arguments[7],
+                (java.lang.String) arguments[8],
+                (com.liferay.portal.service.ServiceContext) arguments[9]);
+        }
+
+        if (_methodName100.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+            return VacancyLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Long) arguments[2]).longValue(),
+                ((Long) arguments[3]).longValue(),
+                (java.lang.String) arguments[4],
+                (java.lang.String) arguments[5],
+                ((Integer) arguments[6]).intValue(),
+                (java.lang.String) arguments[7]);
+        }
+
+        if (_methodName101.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
             VacancyLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;

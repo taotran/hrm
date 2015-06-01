@@ -9,12 +9,12 @@
 		<portlet-name>hrm</portlet-name>
 		<icon>/icon.png</icon>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
-		<header-portlet-css>/css/dataTableUI.css</header-portlet-css>
+<!-- 		<header-portlet-css>/css/dataTableUI.css</header-portlet-css>
 		<header-portlet-css>/css/select2-bootstrap.css</header-portlet-css>
 		<header-portlet-css>/css/select2.min.css</header-portlet-css>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<header-portlet-css>/css/bootstrap.min.css</header-portlet-css>
-		<!-- <header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript> -->
+		<header-portlet-javascript>/js/jquery-1.10.2.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/aui-min.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/select2.min.js</header-portlet-javascript>
@@ -28,8 +28,28 @@
 		<footer-portlet-javascript>/js/bootstrap.js</footer-portlet-javascript>
 
 		<footer-portlet-javascript>/js/form_wizard.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/js/jquery.timer.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery.timer.js</footer-portlet-javascript> -->
+		
+		<header-portlet-css>/css/dataTableUI.css</header-portlet-css>
+		<header-portlet-css>/css/select2-bootstrap.css</header-portlet-css>
+		<header-portlet-css>/css/select2.min.css</header-portlet-css>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/bootstrap-modals.css</header-portlet-css>
+		
+		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
+		<footer-portlet-javascript>/js/bootstrap.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery.validate.min.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery.dataTables.min.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery.dataTables.columnFilter.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/select2.min.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/bootstrap-datepicker.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/plugin/fnSetFilteringDelay.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/plugin/fnStandingRedraw.js</footer-portlet-javascript>
+<!-- 		<footer-portlet-javascript>/js/hrm_recruitment.js</footer-portlet-javascript> -->
+		
+		<!-- <footer-portlet-javascript>/js/hrm_recruitment.js</footer-portlet-javascript> -->
 		<css-class-wrapper>hrm-portlet</css-class-wrapper>
+		
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

@@ -245,4 +245,9 @@ public interface EmployeeInterviewScheduleLocalService extends BaseLocalService,
         long employeeId, long interviewScheduleId, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    public void delete(long employeeInterviewScheduleId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 }

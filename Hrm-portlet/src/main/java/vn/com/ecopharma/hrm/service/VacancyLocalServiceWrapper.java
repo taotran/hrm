@@ -275,27 +275,53 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
     }
 
     @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> findAll(
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.findAll(start, end);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.findAll(start, end, orderByComparator);
+    }
+
+    @Override
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long hiring_mananager_id, java.lang.String name,
-        java.lang.String description, int no_of_positions,
-        java.lang.String vacancy_status,
+        long jTitle_id, long locationId, long hiring_mananager_id,
+        java.lang.String name, java.lang.String description,
+        int no_of_positions, java.lang.String vacancy_status,
+        java.lang.String job_posting,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
-        return _vacancyLocalService.create(user_id, jTitle_id,
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.create(user_id, jTitle_id, locationId,
             hiring_mananager_id, name, description, no_of_positions,
-            vacancy_status, serviceContext);
+            vacancy_status, job_posting, serviceContext);
     }
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
-        long hiring_manager_id, java.lang.String name,
-        java.lang.String description, int number_of_positions) {
-        return _vacancyLocalService.edit(id, jtitle_id, hiring_manager_id,
-            name, description, number_of_positions);
+        long locationId, long hiring_manager_id, java.lang.String name,
+        java.lang.String description, int number_of_positions,
+        java.lang.String job_posting)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
+        return _vacancyLocalService.edit(id, jtitle_id, locationId,
+            hiring_manager_id, name, description, number_of_positions,
+            job_posting);
     }
 
     @Override
-    public void delete(long v_id) {
+    public void delete(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         _vacancyLocalService.delete(v_id);
     }
 

@@ -284,6 +284,13 @@ public class InterviewLocalServiceUtil {
         return getService().create(userId, name, serviceContext);
     }
 
+    public static void delete(long interviewId)
+        throws com.liferay.portal.NoSuchModelException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        getService().delete(interviewId);
+    }
+
     public static void clearService() {
         _service = null;
     }

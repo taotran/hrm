@@ -32,7 +32,6 @@
 		<property name="candidate_status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" table="HRM_Recruitment_Employee">
 		<cache usage="read-write" />

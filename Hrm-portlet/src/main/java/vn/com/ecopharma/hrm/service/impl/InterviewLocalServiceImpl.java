@@ -2,12 +2,15 @@ package vn.com.ecopharma.hrm.service.impl;
 
 import java.util.List;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
+import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.model.Interview;
+import vn.com.ecopharma.hrm.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.service.base.InterviewLocalServiceBaseImpl;
 
 /**
@@ -64,5 +67,16 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
 		}
 		
 		return null;
+	}
+	
+	public void delete(long interviewId) throws SystemException, NoSuchVacancyCandidateException, NoSuchModelException {
+		
+		//delete all associated interviewSchedules
+		for (InterviewSchedule is: interviewSchedulePersistence.findByInterviewId(interviewId)){
+			//remove InterviewSchedule
+			interviewScheduleLocalService.delete(is.getInterviewScheduleId());
+		}
+		
+		interviewPersistence.remove(interviewId);
 	}
 }

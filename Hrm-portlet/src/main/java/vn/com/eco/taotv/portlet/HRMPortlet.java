@@ -43,6 +43,7 @@ import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.util.JSONServiceUtil;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,7 +62,6 @@ public class HRMPortlet extends MVCPortlet {
 
 	private static final String FILTER_DATE_FORMAT = "dd/MM/yyyy";
 	private static final String SOURCE_DATE_FORMAT = "MM/dd/yyyy";
-
 	private static final String GET_ALL_CANDIDATES = "get_all_candidates";
 	private static final String SAVE_CANDIDATE = "saveCandidate";
 	private static final String GET_CANDIDATE = "getCandidate";
@@ -107,18 +107,6 @@ public class HRMPortlet extends MVCPortlet {
 	public void render(javax.portlet.RenderRequest request,
 			javax.portlet.RenderResponse response) throws PortletException,
 			IOException {
-		// List<Vacancy> allVacancies = null;
-		// List<JTitle> allJTitles = null;
-		// try {
-		// allVacancies = VacancyLocalServiceUtil.findAll();
-		// allJTitles = JTitleLocalServiceUtil.findAll();
-		// } catch (SystemException e) {
-		// e.printStackTrace();
-		// }
-		// request.setAttribute("allVacancies",
-		// allVacancies != null ? allVacancies : new ArrayList<Vacancy>());
-		// request.setAttribute("allJTitles", allJTitles != null ? allJTitles
-		// : new ArrayList<JTitle>());
 		super.render(request, response);
 	}
 
@@ -144,8 +132,9 @@ public class HRMPortlet extends MVCPortlet {
 			onGetCandidatesFormDataAJX(request, response, resourceRequestId);
 
 			onGetVacanciesFormDataAJX(request, response, resourceRequestId);
-			
-			onGetInterviewScheduleFormDataAJX(request, response, resourceRequestId);
+
+			onGetInterviewScheduleFormDataAJX(request, response,
+					resourceRequestId);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -172,7 +161,6 @@ public class HRMPortlet extends MVCPortlet {
 										// companies by keyword
 
 			C_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
-			System.out.println("GLOB_SEARCH " + C_GLOB_SEARCH);
 			VACANCY_SEARCH = ParamUtil.getString(request, "sSearch_1");
 			C_NAME_SEARCH = ParamUtil.getString(request, "sSearch_2");
 			EMAIL_SEARCH = ParamUtil.getString(request, "sSearch_3");
@@ -254,52 +242,66 @@ public class HRMPortlet extends MVCPortlet {
 										.toLowerCase()
 										.contains(
 												CONTACT_NO_SEARCH.toLowerCase())) {
-									/*
-									 * final SimpleDateFormat sdf = new
-									 * SimpleDateFormat( FILTER_DATE_FORMAT);
-									 * SimpleDateFormat sourceSdf = new
-									 * SimpleDateFormat(SOURCE_DATE_FORMAT);
-									 * 
-									 * String convertedDate = sdf.format(c
-									 * .getDate_of_application());
-									 * java.util.Date cDate = sdf
-									 * .parse(convertedDate); if (START_DATE !=
-									 * null && !START_DATE.equalsIgnoreCase("")
-									 * && !START_DATE.equalsIgnoreCase("~")) {
-									 * StringBuilder sb = new
-									 * StringBuilder(START_DATE);
-									 * sb.deleteCharAt(START_DATE.length()-1);
-									 * START_DATE = sb.toString();
-									 * System.out.println(START_DATE); //String
-									 * s = sourceSdf.format(START_DATE);
-									 * java.util.Date fDate = sdf
-									 * .parse(sdf.format
-									 * (sourceSdf.parse(START_DATE)));
-									 * System.out.println("DATE RANGE FILTER : "
-									 * + fDate + "    " + cDate); if (END_DATE
-									 * != null &&
-									 * !END_DATE.equalsIgnoreCase("")) {
-									 * java.util.Date tDate = sdf
-									 * .parse(sdf.format
-									 * (sourceSdf.parse(END_DATE))); if
-									 * (cDate.after(fDate) &&
-									 * cDate.before(tDate)) {
-									 * filteredCandidates.add(c); } } else { if
-									 * (cDate.after(fDate)) {
-									 * filteredCandidates.add(c); } }
-									 * 
-									 * } else { if (END_DATE != null &&
-									 * !END_DATE.equalsIgnoreCase("")) {
-									 * java.util.Date tDate = sdf
-									 * .parse(END_DATE); if
-									 * (cDate.before(tDate)) {
-									 * filteredCandidates.add(c); } } else {
-									 * filteredCandidates.add(c); } }
-									 */
 									if (c.getCandidate_status().toLowerCase()
 											.contains(C_STATUS)) {
-										filteredCandidates.add(c);
+										/*filteredCandidates.add(c);*/
+										final SimpleDateFormat sdf = new SimpleDateFormat(
+												FILTER_DATE_FORMAT);
+										SimpleDateFormat sourceSdf = new SimpleDateFormat(
+												SOURCE_DATE_FORMAT);
+
+										String convertedDate = sdf.format(c
+												.getDate_of_application());
+										java.util.Date cDate = sdf
+												.parse(convertedDate);
+										if (START_DATE != null
+												&& !START_DATE.equalsIgnoreCase("")
+												&& !START_DATE
+														.equalsIgnoreCase("~")) {
+											StringBuilder sb = new StringBuilder(
+													START_DATE);
+											sb.deleteCharAt(START_DATE.length() - 1);
+											START_DATE = sb.toString();
+											System.out.println(START_DATE);
+											// String s =
+											// sourceSdf.format(START_DATE);
+											java.util.Date fDate = sdf.parse(sdf
+													.format(sourceSdf
+															.parse(START_DATE)));
+											System.out.println("DATE RANGE FILTER : "
+															+ fDate + "    "
+															+ cDate);
+											if (END_DATE != null
+													&& !END_DATE
+															.equalsIgnoreCase("")) {
+												java.util.Date tDate = sdf
+														.parse(sdf.format(sourceSdf
+																.parse(END_DATE)));
+												if (cDate.after(fDate)
+														&& cDate.before(tDate)) {
+													filteredCandidates.add(c);
+												}
+											} else {
+												if (cDate.after(fDate)) {
+													filteredCandidates.add(c);
+												}
+											}
+
+										} else {
+											if (END_DATE != null
+													&& !END_DATE
+															.equalsIgnoreCase("")) {
+												java.util.Date tDate = sdf
+														.parse(END_DATE);
+												if (cDate.before(tDate)) {
+													filteredCandidates.add(c);
+												}
+											} else {
+												filteredCandidates.add(c);
+											}
+										}
 									}
+
 
 								}
 
@@ -476,6 +478,7 @@ public class HRMPortlet extends MVCPortlet {
 			for (Vacancy v : vacancies) {
 				final String jTitle = JTitleLocalServiceUtil.getJTitle(
 						v.getJobtitleId()).getTitle();
+				final String location = LocationLocalServiceUtil.getLocationNameById(v.getLocationId());
 				if (v.getName().toLowerCase().contains(V_GLOB_SEARCH)
 						|| jTitle.toLowerCase().contains(V_GLOB_SEARCH)) {
 					if (v.getName().toLowerCase()
@@ -483,7 +486,9 @@ public class HRMPortlet extends MVCPortlet {
 						if (JOB_TITLE_SEARCH != null
 								&& jTitle.toLowerCase().contains(
 										JOB_TITLE_SEARCH.toLowerCase())) {
-							filteredVacancies.add(v);
+							if (LOCATION_SEARCH != null && location.toLowerCase().contains(LOCATION_SEARCH.toLowerCase())) {
+								filteredVacancies.add(v);
+							}
 						}
 					}
 				}
@@ -543,34 +548,35 @@ public class HRMPortlet extends MVCPortlet {
 			if (br != null) {
 				String json = br.readLine();
 				System.out.println("PARSED OBJ" + json);
-				final JsonObject jObject = (JsonObject) new JsonParser()
+				final JsonObject object = (JsonObject) new JsonParser()
 						.parse(json);
-				final long v_id = jObject.get("v_id").getAsLong();
-				final long jTitleId = jObject.get("jTitleId").getAsLong();
-				final long hiring_manager_id = jObject.get("hiring_manager_id")
+				final long v_id = object.get("v_id").getAsLong();
+				final long jTitleId = object.get("jTitleId").getAsLong();
+				final long locationId = object.get("locationId").getAsLong();
+				final long hiring_manager_id = object.get("hiring_manager_id")
 						.getAsLong();
-				final String name = jObject.get("v_name").getAsString();
-				final String description = jObject.get("description")
+				final String name = object.get("v_name").getAsString();
+				final String description = object.get("description")
 						.getAsString();
-				final int no_of_pos = jObject.get("no_of_positions").getAsInt();
+				final int no_of_pos = object.get("no_of_positions").getAsInt();
 				/*
 				 * final String vacancy_status = jObject.get(
 				 * "vacancy_status").getAsString();
 				 */
-				final String job_posting = jObject.get("job_posting")
+				final String job_posting = object.get("job_posting")
 						.getAsString();
 				// verify c_id to check create/update action
 				if (v_id == -1) {
 					ServiceContext serviceContext = ServiceContextFactory
 							.getInstance(Candidate.class.getName(), request);
 					VacancyLocalServiceUtil.create(serviceContext.getUserId(),
-							jTitleId, hiring_manager_id, name, description,
-							no_of_pos, VacancyStatus.NEW.toString(),
+							jTitleId, locationId, hiring_manager_id, name, description,
+							no_of_pos, VacancyStatus.NEW.toString(), job_posting, 
 							serviceContext);
 
 				} else {
-					VacancyLocalServiceUtil.edit(v_id, jTitleId,
-							hiring_manager_id, name, description, no_of_pos);
+					VacancyLocalServiceUtil.edit(v_id, jTitleId, locationId,
+							hiring_manager_id, name, description, no_of_pos, job_posting);
 
 				}
 				List<Vacancy> vacancies = VacancyLocalServiceUtil.findAll();
@@ -675,14 +681,20 @@ public class HRMPortlet extends MVCPortlet {
 			String uploadFileName = uploadRequest
 					.getFileName("addCandidate_resume");
 			System.out.println(uploadFileName);
-		} else if ("loadJTitles".equalsIgnoreCase(resourceRequestId)) {
+		} else if ("loadDataForFooterFilter".equalsIgnoreCase(resourceRequestId)) {
 			// get list of JTitle names for JTitleSelect
-			JSONArray jTitleNamesArr = new JSONArray();
+			final JSONArray jTitleNamesArr = new JSONArray();
+			final JSONArray locationArr = new JSONArray();
 			for (JTitle j : JTitleLocalServiceUtil.findAll()) {
 				jTitleNamesArr.put(j.getTitle());
 			}
-			System.out.println(jTitleNamesArr);
-			response.getWriter().print(jTitleNamesArr);
+			for (Location l : LocationLocalServiceUtil.findAll()) {
+				locationArr.put(l.getName());
+			}
+			final JSONObject result = new JSONObject();
+			result.put("jTitles", jTitleNamesArr);
+			result.put("locations", locationArr);
+			response.getWriter().print(result);
 		} else if ("candidateStatusChange".equalsIgnoreCase(resourceRequestId)) {
 			final BufferedReader br = new BufferedReader(new InputStreamReader(
 					request.getPortletInputStream()));
@@ -815,6 +827,14 @@ public class HRMPortlet extends MVCPortlet {
 				final String itvTimeTo = object.get("itvTimeTo").getAsString();
 				final String interviewTime = itvTimeFrom + "_" + itvTimeTo;
 				final List<Long> emps = new ArrayList<Long>();
+				final JsonArray selectedInterviewers = object.get(
+						"selectedInterviewers").getAsJsonArray();
+				for (JsonElement je : selectedInterviewers) {
+					String empIdStr = je.getAsString().substring(2,
+							je.getAsString().length());
+					emps.add(Long.valueOf(empIdStr));
+				}
+
 				InterviewScheduleLocalServiceUtil.create(interviewId,
 						vacancyId, candidateId, emps, interviewDate,
 						interviewTime, userId, serviceContext);
@@ -870,7 +890,8 @@ public class HRMPortlet extends MVCPortlet {
 	}
 
 	private void onGetInterviewScheduleFormDataAJX(ResourceRequest request,
-			ResourceResponse response, String resourceRequestId) throws IOException, SystemException, JSONException {
+			ResourceResponse response, String resourceRequestId)
+			throws IOException, SystemException, JSONException {
 		if ("getInterviewScheduleFormDataAJX"
 				.equalsIgnoreCase(resourceRequestId)) {
 			final JSONObject result = new JSONObject();
@@ -882,12 +903,13 @@ public class HRMPortlet extends MVCPortlet {
 				object.put("interviewName", i.getName());
 				iArray.put(object);
 			}
-			
+
 			JSONArray eArray = new JSONArray();
 			for (Employee e : EmployeeLocalServiceUtil.findAll()) {
 				JSONObject object = new JSONObject();
 				object.put("employeeId", e.getEmployeeId());
-				object.put("employeeName", e.getFirstname() + e.getMiddle_name() + e.getLastname());
+				object.put("employeeName",
+						e.getFirstname() + e.getMiddle_name() + e.getLastname());
 				eArray.put(object);
 			}
 			result.put("interviews", iArray);

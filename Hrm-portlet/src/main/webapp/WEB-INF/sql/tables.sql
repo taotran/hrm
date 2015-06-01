@@ -69,8 +69,7 @@ create table HRM_Recruitment_Candidate (
 	added_person INTEGER,
 	candidate_status VARCHAR(75) null,
 	user_id LONG,
-	group_id LONG,
-	interviewId LONG
+	group_id LONG
 );
 
 create table HRM_Recruitment_Employee (

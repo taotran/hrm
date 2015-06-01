@@ -281,38 +281,56 @@ public class VacancyCandidateLocalServiceWrapper
     public vn.com.ecopharma.hrm.model.VacancyCandidate create(long v_id,
         long c_id, long user_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         return _vacancyCandidateLocalService.create(v_id, c_id, user_id,
             serviceContext);
     }
 
     @Override
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
-        long c_id) {
+        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
         return _vacancyCandidateLocalService.findByCandidate(c_id);
     }
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy(
-        long v_id) {
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
         return _vacancyCandidateLocalService.findByVacancy(v_id);
     }
 
     @Override
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
-        long v_id, long c_id) {
+        long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         return _vacancyCandidateLocalService.findByVacancyAndCandidate(v_id,
             c_id);
     }
 
     @Override
-    public void deleteByVacancyAndCandidate(long v_id, long c_id) {
+    public void deleteByVacancyAndCandidate(long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         _vacancyCandidateLocalService.deleteByVacancyAndCandidate(v_id, c_id);
     }
 
     @Override
-    public void deleteByVacancy(long v_id) {
+    public void deleteByVacancy(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         _vacancyCandidateLocalService.deleteByVacancy(v_id);
+    }
+
+    @Override
+    public void delete(long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        _vacancyCandidateLocalService.delete(vacancyCandidateId);
     }
 
     /**

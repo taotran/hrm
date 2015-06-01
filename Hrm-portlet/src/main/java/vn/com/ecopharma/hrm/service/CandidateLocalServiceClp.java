@@ -174,9 +174,11 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
         _methodParameterTypes20 = new String[] { "int", "int" };
 
-        _methodName21 = "findCandidates";
+        _methodName21 = "findAll";
 
-        _methodParameterTypes21 = new String[] { "int", "int" };
+        _methodParameterTypes21 = new String[] {
+                "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+            };
 
         _methodName22 = "searchCandidates";
 
@@ -786,7 +788,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
-        int start, int end) {
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -794,6 +797,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                     _methodParameterTypes20, new Object[] { start, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -807,14 +814,22 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
-        int start, int end)
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName21,
-                    _methodParameterTypes21, new Object[] { start, end });
+                    _methodParameterTypes21,
+                    new Object[] {
+                        start,
+                        
+                    end,
+                        
+                    ClpSerializer.translateInput(orderByComparator)
+                    });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -836,7 +851,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -860,6 +876,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
             } else {
@@ -875,7 +895,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator order) {
+        com.liferay.portal.kernel.util.OrderByComparator order)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -901,6 +922,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
             } else {
@@ -921,7 +946,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -959,8 +985,12 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
-            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
-                throw (vn.com.ecopharma.hrm.NoSuchVacancyException) t;
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
             }
 
             if (t instanceof RuntimeException) {
@@ -984,7 +1014,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
 
         try {
@@ -1024,6 +1057,18 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof com.liferay.portal.NoSuchUserException) {
+                throw (com.liferay.portal.NoSuchUserException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchCandidateException) t;
+            }
+
             if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
                 throw (vn.com.ecopharma.hrm.NoSuchVacancyException) t;
             }
@@ -1040,12 +1085,32 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public void delele(long c_id) {
+    public void delele(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
             _invokableLocalService.invokeMethod(_methodName26,
                 _methodParameterTypes26, new Object[] { c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchCandidateException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) {
+                throw (vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -1059,7 +1124,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email) {
+        java.lang.String last_name, java.lang.String email)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -1077,6 +1143,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
             } else {
@@ -1091,7 +1161,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -1113,6 +1184,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
             } else {
@@ -1125,7 +1200,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public int countAll() {
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -1133,6 +1209,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                     _methodParameterTypes29, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;

@@ -85,7 +85,12 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
     public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.finder.cache.enabled.vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule"),
             true);
-    public static final boolean COLUMN_BITMASK_ENABLED = false;
+    public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+                "value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule"),
+            true);
+    public static long EMPLOYEEID_COLUMN_BITMASK = 1L;
+    public static long INTERVIEWSCHEDULEID_COLUMN_BITMASK = 2L;
+    public static long EMPLOYEEINTERVIEWSCHEDULEID_COLUMN_BITMASK = 4L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule"));
     private static ClassLoader _classLoader = EmployeeInterviewSchedule.class.getClassLoader();
@@ -94,7 +99,11 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
         };
     private long _employeeInterviewScheduleId;
     private long _employeeId;
+    private long _originalEmployeeId;
+    private boolean _setOriginalEmployeeId;
     private long _interviewScheduleId;
+    private long _originalInterviewScheduleId;
+    private boolean _setOriginalInterviewScheduleId;
     private long _groupId;
     private long _companyId;
     private long _userId;
@@ -102,6 +111,7 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
     private Date _createDate;
     private Date _modifiedDate;
     private String _note;
+    private long _columnBitmask;
     private EmployeeInterviewSchedule _escapedModel;
 
     public EmployeeInterviewScheduleModelImpl() {
@@ -280,7 +290,19 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
 
     @Override
     public void setEmployeeId(long employeeId) {
+        _columnBitmask |= EMPLOYEEID_COLUMN_BITMASK;
+
+        if (!_setOriginalEmployeeId) {
+            _setOriginalEmployeeId = true;
+
+            _originalEmployeeId = _employeeId;
+        }
+
         _employeeId = employeeId;
+    }
+
+    public long getOriginalEmployeeId() {
+        return _originalEmployeeId;
     }
 
     @JSON
@@ -291,7 +313,19 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
 
     @Override
     public void setInterviewScheduleId(long interviewScheduleId) {
+        _columnBitmask |= INTERVIEWSCHEDULEID_COLUMN_BITMASK;
+
+        if (!_setOriginalInterviewScheduleId) {
+            _setOriginalInterviewScheduleId = true;
+
+            _originalInterviewScheduleId = _interviewScheduleId;
+        }
+
         _interviewScheduleId = interviewScheduleId;
+    }
+
+    public long getOriginalInterviewScheduleId() {
+        return _originalInterviewScheduleId;
     }
 
     @JSON
@@ -467,6 +501,10 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
         return false;
     }
 
+    public long getColumnBitmask() {
+        return _columnBitmask;
+    }
+
     @Override
     public ExpandoBridge getExpandoBridge() {
         return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -550,6 +588,17 @@ public class EmployeeInterviewScheduleModelImpl extends BaseModelImpl<EmployeeIn
 
     @Override
     public void resetOriginalValues() {
+        EmployeeInterviewScheduleModelImpl employeeInterviewScheduleModelImpl = this;
+
+        employeeInterviewScheduleModelImpl._originalEmployeeId = employeeInterviewScheduleModelImpl._employeeId;
+
+        employeeInterviewScheduleModelImpl._setOriginalEmployeeId = false;
+
+        employeeInterviewScheduleModelImpl._originalInterviewScheduleId = employeeInterviewScheduleModelImpl._interviewScheduleId;
+
+        employeeInterviewScheduleModelImpl._setOriginalInterviewScheduleId = false;
+
+        employeeInterviewScheduleModelImpl._columnBitmask = 0;
     }
 
     @Override

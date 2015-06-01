@@ -1,8 +1,12 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
+import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
+import vn.com.ecopharma.hrm.constant.CandidateStatus;
+import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule;
 import vn.com.ecopharma.hrm.service.base.EmployeeInterviewScheduleLocalServiceBaseImpl;
 
@@ -37,6 +41,19 @@ public class EmployeeInterviewScheduleLocalServiceImpl
 		eis.setGroupId(serviceContext.getScopeGroupId());
 		employeeInterviewSchedulePersistence.update(eis);
 		return eis;
+	}
+	
+	public void delete(long employeeInterviewScheduleId) throws SystemException, NoSuchVacancyCandidateException, NoSuchModelException {
+		
+		/* SET CandidateStatus -> INTERVIEW_SCHEDULE */
+		final long interviewScheduleId = employeeInterviewSchedulePersistence.fetchByPrimaryKey(employeeInterviewScheduleId).getInterviewScheduleId();
+		final long vacancyCandidateId = interviewSchedulePersistence.findByPrimaryKey(interviewScheduleId).getVacancyCandidateId();
+		final Candidate candidate = candidatePersistence.findByPrimaryKey(vacancyCandidatePersistence.fetchByPrimaryKey(vacancyCandidateId).getC_id());
+		candidate.setCandidate_status(CandidateStatus.APPLICATION_INITIATED.toString());
+		candidatePersistence.update(candidate);
+		
+		/* DELETE EmployeeInterviewSchedule */
+		employeeInterviewSchedulePersistence.remove(employeeInterviewScheduleId);
 	}
 	
 }

@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
@@ -71,10 +73,59 @@ public class EmployeeInterviewSchedulePersistenceImpl
             EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
             Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
             new String[0]);
+    public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_EMPID = new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            EmployeeInterviewScheduleImpl.class,
+            FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEmpId",
+            new String[] {
+                Long.class.getName(),
+                
+            Integer.class.getName(), Integer.class.getName(),
+                OrderByComparator.class.getName()
+            });
+    public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPID = new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            EmployeeInterviewScheduleImpl.class,
+            FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEmpId",
+            new String[] { Long.class.getName() },
+            EmployeeInterviewScheduleModelImpl.EMPLOYEEID_COLUMN_BITMASK);
+    public static final FinderPath FINDER_PATH_COUNT_BY_EMPID = new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "countByEmpId", new String[] { Long.class.getName() });
+    private static final String _FINDER_COLUMN_EMPID_EMPLOYEEID_2 = "employeeInterviewSchedule.employeeId = ?";
+    public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID =
+        new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            EmployeeInterviewScheduleImpl.class,
+            FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+            "findByInterviewScheduleId",
+            new String[] {
+                Long.class.getName(),
+                
+            Integer.class.getName(), Integer.class.getName(),
+                OrderByComparator.class.getName()
+            });
+    public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID =
+        new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            EmployeeInterviewScheduleImpl.class,
+            FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "findByInterviewScheduleId", new String[] { Long.class.getName() },
+            EmployeeInterviewScheduleModelImpl.INTERVIEWSCHEDULEID_COLUMN_BITMASK);
+    public static final FinderPath FINDER_PATH_COUNT_BY_INTERVIEWSCHEDULEID = new FinderPath(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            EmployeeInterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "countByInterviewScheduleId", new String[] { Long.class.getName() });
+    private static final String _FINDER_COLUMN_INTERVIEWSCHEDULEID_INTERVIEWSCHEDULEID_2 =
+        "employeeInterviewSchedule.interviewScheduleId = ?";
     private static final String _SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE = "SELECT employeeInterviewSchedule FROM EmployeeInterviewSchedule employeeInterviewSchedule";
+    private static final String _SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE_WHERE = "SELECT employeeInterviewSchedule FROM EmployeeInterviewSchedule employeeInterviewSchedule WHERE ";
     private static final String _SQL_COUNT_EMPLOYEEINTERVIEWSCHEDULE = "SELECT COUNT(employeeInterviewSchedule) FROM EmployeeInterviewSchedule employeeInterviewSchedule";
+    private static final String _SQL_COUNT_EMPLOYEEINTERVIEWSCHEDULE_WHERE = "SELECT COUNT(employeeInterviewSchedule) FROM EmployeeInterviewSchedule employeeInterviewSchedule WHERE ";
     private static final String _ORDER_BY_ENTITY_ALIAS = "employeeInterviewSchedule.";
     private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No EmployeeInterviewSchedule exists with the primary key ";
+    private static final String _NO_SUCH_ENTITY_WITH_KEY = "No EmployeeInterviewSchedule exists with the key {";
     private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
                 PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
     private static Log _log = LogFactoryUtil.getLog(EmployeeInterviewSchedulePersistenceImpl.class);
@@ -100,6 +151,925 @@ public class EmployeeInterviewSchedulePersistenceImpl
 
     public EmployeeInterviewSchedulePersistenceImpl() {
         setModelClass(EmployeeInterviewSchedule.class);
+    }
+
+    /**
+     * Returns all the employee interview schedules where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @return the matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByEmpId(long employeeId)
+        throws SystemException {
+        return findByEmpId(employeeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+            null);
+    }
+
+    /**
+     * Returns a range of all the employee interview schedules where employeeId = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param employeeId the employee ID
+     * @param start the lower bound of the range of employee interview schedules
+     * @param end the upper bound of the range of employee interview schedules (not inclusive)
+     * @return the range of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByEmpId(long employeeId,
+        int start, int end) throws SystemException {
+        return findByEmpId(employeeId, start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the employee interview schedules where employeeId = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param employeeId the employee ID
+     * @param start the lower bound of the range of employee interview schedules
+     * @param end the upper bound of the range of employee interview schedules (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByEmpId(long employeeId,
+        int start, int end, OrderByComparator orderByComparator)
+        throws SystemException {
+        boolean pagination = true;
+        FinderPath finderPath = null;
+        Object[] finderArgs = null;
+
+        if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+                (orderByComparator == null)) {
+            pagination = false;
+            finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPID;
+            finderArgs = new Object[] { employeeId };
+        } else {
+            finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EMPID;
+            finderArgs = new Object[] { employeeId, start, end, orderByComparator };
+        }
+
+        List<EmployeeInterviewSchedule> list = (List<EmployeeInterviewSchedule>) FinderCacheUtil.getResult(finderPath,
+                finderArgs, this);
+
+        if ((list != null) && !list.isEmpty()) {
+            for (EmployeeInterviewSchedule employeeInterviewSchedule : list) {
+                if ((employeeId != employeeInterviewSchedule.getEmployeeId())) {
+                    list = null;
+
+                    break;
+                }
+            }
+        }
+
+        if (list == null) {
+            StringBundler query = null;
+
+            if (orderByComparator != null) {
+                query = new StringBundler(3 +
+                        (orderByComparator.getOrderByFields().length * 3));
+            } else {
+                query = new StringBundler(3);
+            }
+
+            query.append(_SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_EMPID_EMPLOYEEID_2);
+
+            if (orderByComparator != null) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator);
+            } else
+             if (pagination) {
+                query.append(EmployeeInterviewScheduleModelImpl.ORDER_BY_JPQL);
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(employeeId);
+
+                if (!pagination) {
+                    list = (List<EmployeeInterviewSchedule>) QueryUtil.list(q,
+                            getDialect(), start, end, false);
+
+                    Collections.sort(list);
+
+                    list = new UnmodifiableList<EmployeeInterviewSchedule>(list);
+                } else {
+                    list = (List<EmployeeInterviewSchedule>) QueryUtil.list(q,
+                            getDialect(), start, end);
+                }
+
+                cacheResult(list);
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, list);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Returns the first employee interview schedule in the ordered set where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule findByEmpId_First(long employeeId,
+        OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = fetchByEmpId_First(employeeId,
+                orderByComparator);
+
+        if (employeeInterviewSchedule != null) {
+            return employeeInterviewSchedule;
+        }
+
+        StringBundler msg = new StringBundler(4);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("employeeId=");
+        msg.append(employeeId);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchEmployeeInterviewScheduleException(msg.toString());
+    }
+
+    /**
+     * Returns the first employee interview schedule in the ordered set where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching employee interview schedule, or <code>null</code> if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule fetchByEmpId_First(long employeeId,
+        OrderByComparator orderByComparator) throws SystemException {
+        List<EmployeeInterviewSchedule> list = findByEmpId(employeeId, 0, 1,
+                orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the last employee interview schedule in the ordered set where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule findByEmpId_Last(long employeeId,
+        OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = fetchByEmpId_Last(employeeId,
+                orderByComparator);
+
+        if (employeeInterviewSchedule != null) {
+            return employeeInterviewSchedule;
+        }
+
+        StringBundler msg = new StringBundler(4);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("employeeId=");
+        msg.append(employeeId);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchEmployeeInterviewScheduleException(msg.toString());
+    }
+
+    /**
+     * Returns the last employee interview schedule in the ordered set where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching employee interview schedule, or <code>null</code> if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule fetchByEmpId_Last(long employeeId,
+        OrderByComparator orderByComparator) throws SystemException {
+        int count = countByEmpId(employeeId);
+
+        if (count == 0) {
+            return null;
+        }
+
+        List<EmployeeInterviewSchedule> list = findByEmpId(employeeId,
+                count - 1, count, orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the employee interview schedules before and after the current employee interview schedule in the ordered set where employeeId = &#63;.
+     *
+     * @param employeeInterviewScheduleId the primary key of the current employee interview schedule
+     * @param employeeId the employee ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the previous, current, and next employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a employee interview schedule with the primary key could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule[] findByEmpId_PrevAndNext(
+        long employeeInterviewScheduleId, long employeeId,
+        OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = findByPrimaryKey(employeeInterviewScheduleId);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            EmployeeInterviewSchedule[] array = new EmployeeInterviewScheduleImpl[3];
+
+            array[0] = getByEmpId_PrevAndNext(session,
+                    employeeInterviewSchedule, employeeId, orderByComparator,
+                    true);
+
+            array[1] = employeeInterviewSchedule;
+
+            array[2] = getByEmpId_PrevAndNext(session,
+                    employeeInterviewSchedule, employeeId, orderByComparator,
+                    false);
+
+            return array;
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    protected EmployeeInterviewSchedule getByEmpId_PrevAndNext(
+        Session session, EmployeeInterviewSchedule employeeInterviewSchedule,
+        long employeeId, OrderByComparator orderByComparator, boolean previous) {
+        StringBundler query = null;
+
+        if (orderByComparator != null) {
+            query = new StringBundler(6 +
+                    (orderByComparator.getOrderByFields().length * 6));
+        } else {
+            query = new StringBundler(3);
+        }
+
+        query.append(_SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+        query.append(_FINDER_COLUMN_EMPID_EMPLOYEEID_2);
+
+        if (orderByComparator != null) {
+            String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+            if (orderByConditionFields.length > 0) {
+                query.append(WHERE_AND);
+            }
+
+            for (int i = 0; i < orderByConditionFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByConditionFields[i]);
+
+                if ((i + 1) < orderByConditionFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN_HAS_NEXT);
+                    } else {
+                        query.append(WHERE_LESSER_THAN_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN);
+                    } else {
+                        query.append(WHERE_LESSER_THAN);
+                    }
+                }
+            }
+
+            query.append(ORDER_BY_CLAUSE);
+
+            String[] orderByFields = orderByComparator.getOrderByFields();
+
+            for (int i = 0; i < orderByFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByFields[i]);
+
+                if ((i + 1) < orderByFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC_HAS_NEXT);
+                    } else {
+                        query.append(ORDER_BY_DESC_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC);
+                    } else {
+                        query.append(ORDER_BY_DESC);
+                    }
+                }
+            }
+        } else {
+            query.append(EmployeeInterviewScheduleModelImpl.ORDER_BY_JPQL);
+        }
+
+        String sql = query.toString();
+
+        Query q = session.createQuery(sql);
+
+        q.setFirstResult(0);
+        q.setMaxResults(2);
+
+        QueryPos qPos = QueryPos.getInstance(q);
+
+        qPos.add(employeeId);
+
+        if (orderByComparator != null) {
+            Object[] values = orderByComparator.getOrderByConditionValues(employeeInterviewSchedule);
+
+            for (Object value : values) {
+                qPos.add(value);
+            }
+        }
+
+        List<EmployeeInterviewSchedule> list = q.list();
+
+        if (list.size() == 2) {
+            return list.get(1);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Removes all the employee interview schedules where employeeId = &#63; from the database.
+     *
+     * @param employeeId the employee ID
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public void removeByEmpId(long employeeId) throws SystemException {
+        for (EmployeeInterviewSchedule employeeInterviewSchedule : findByEmpId(
+                employeeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+            remove(employeeInterviewSchedule);
+        }
+    }
+
+    /**
+     * Returns the number of employee interview schedules where employeeId = &#63;.
+     *
+     * @param employeeId the employee ID
+     * @return the number of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int countByEmpId(long employeeId) throws SystemException {
+        FinderPath finderPath = FINDER_PATH_COUNT_BY_EMPID;
+
+        Object[] finderArgs = new Object[] { employeeId };
+
+        Long count = (Long) FinderCacheUtil.getResult(finderPath, finderArgs,
+                this);
+
+        if (count == null) {
+            StringBundler query = new StringBundler(2);
+
+            query.append(_SQL_COUNT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_EMPID_EMPLOYEEID_2);
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(employeeId);
+
+                count = (Long) q.uniqueResult();
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, count);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return count.intValue();
+    }
+
+    /**
+     * Returns all the employee interview schedules where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @return the matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByInterviewScheduleId(
+        long interviewScheduleId) throws SystemException {
+        return findByInterviewScheduleId(interviewScheduleId,
+            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+    }
+
+    /**
+     * Returns a range of all the employee interview schedules where interviewScheduleId = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param start the lower bound of the range of employee interview schedules
+     * @param end the upper bound of the range of employee interview schedules (not inclusive)
+     * @return the range of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByInterviewScheduleId(
+        long interviewScheduleId, int start, int end) throws SystemException {
+        return findByInterviewScheduleId(interviewScheduleId, start, end, null);
+    }
+
+    /**
+     * Returns an ordered range of all the employee interview schedules where interviewScheduleId = &#63;.
+     *
+     * <p>
+     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+     * </p>
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param start the lower bound of the range of employee interview schedules
+     * @param end the upper bound of the range of employee interview schedules (not inclusive)
+     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+     * @return the ordered range of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public List<EmployeeInterviewSchedule> findByInterviewScheduleId(
+        long interviewScheduleId, int start, int end,
+        OrderByComparator orderByComparator) throws SystemException {
+        boolean pagination = true;
+        FinderPath finderPath = null;
+        Object[] finderArgs = null;
+
+        if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+                (orderByComparator == null)) {
+            pagination = false;
+            finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID;
+            finderArgs = new Object[] { interviewScheduleId };
+        } else {
+            finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID;
+            finderArgs = new Object[] {
+                    interviewScheduleId,
+                    
+                    start, end, orderByComparator
+                };
+        }
+
+        List<EmployeeInterviewSchedule> list = (List<EmployeeInterviewSchedule>) FinderCacheUtil.getResult(finderPath,
+                finderArgs, this);
+
+        if ((list != null) && !list.isEmpty()) {
+            for (EmployeeInterviewSchedule employeeInterviewSchedule : list) {
+                if ((interviewScheduleId != employeeInterviewSchedule.getInterviewScheduleId())) {
+                    list = null;
+
+                    break;
+                }
+            }
+        }
+
+        if (list == null) {
+            StringBundler query = null;
+
+            if (orderByComparator != null) {
+                query = new StringBundler(3 +
+                        (orderByComparator.getOrderByFields().length * 3));
+            } else {
+                query = new StringBundler(3);
+            }
+
+            query.append(_SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_INTERVIEWSCHEDULEID_INTERVIEWSCHEDULEID_2);
+
+            if (orderByComparator != null) {
+                appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+                    orderByComparator);
+            } else
+             if (pagination) {
+                query.append(EmployeeInterviewScheduleModelImpl.ORDER_BY_JPQL);
+            }
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(interviewScheduleId);
+
+                if (!pagination) {
+                    list = (List<EmployeeInterviewSchedule>) QueryUtil.list(q,
+                            getDialect(), start, end, false);
+
+                    Collections.sort(list);
+
+                    list = new UnmodifiableList<EmployeeInterviewSchedule>(list);
+                } else {
+                    list = (List<EmployeeInterviewSchedule>) QueryUtil.list(q,
+                            getDialect(), start, end);
+                }
+
+                cacheResult(list);
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, list);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Returns the first employee interview schedule in the ordered set where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule findByInterviewScheduleId_First(
+        long interviewScheduleId, OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = fetchByInterviewScheduleId_First(interviewScheduleId,
+                orderByComparator);
+
+        if (employeeInterviewSchedule != null) {
+            return employeeInterviewSchedule;
+        }
+
+        StringBundler msg = new StringBundler(4);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("interviewScheduleId=");
+        msg.append(interviewScheduleId);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchEmployeeInterviewScheduleException(msg.toString());
+    }
+
+    /**
+     * Returns the first employee interview schedule in the ordered set where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the first matching employee interview schedule, or <code>null</code> if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule fetchByInterviewScheduleId_First(
+        long interviewScheduleId, OrderByComparator orderByComparator)
+        throws SystemException {
+        List<EmployeeInterviewSchedule> list = findByInterviewScheduleId(interviewScheduleId,
+                0, 1, orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the last employee interview schedule in the ordered set where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule findByInterviewScheduleId_Last(
+        long interviewScheduleId, OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = fetchByInterviewScheduleId_Last(interviewScheduleId,
+                orderByComparator);
+
+        if (employeeInterviewSchedule != null) {
+            return employeeInterviewSchedule;
+        }
+
+        StringBundler msg = new StringBundler(4);
+
+        msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+        msg.append("interviewScheduleId=");
+        msg.append(interviewScheduleId);
+
+        msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+        throw new NoSuchEmployeeInterviewScheduleException(msg.toString());
+    }
+
+    /**
+     * Returns the last employee interview schedule in the ordered set where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the last matching employee interview schedule, or <code>null</code> if a matching employee interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule fetchByInterviewScheduleId_Last(
+        long interviewScheduleId, OrderByComparator orderByComparator)
+        throws SystemException {
+        int count = countByInterviewScheduleId(interviewScheduleId);
+
+        if (count == 0) {
+            return null;
+        }
+
+        List<EmployeeInterviewSchedule> list = findByInterviewScheduleId(interviewScheduleId,
+                count - 1, count, orderByComparator);
+
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the employee interview schedules before and after the current employee interview schedule in the ordered set where interviewScheduleId = &#63;.
+     *
+     * @param employeeInterviewScheduleId the primary key of the current employee interview schedule
+     * @param interviewScheduleId the interview schedule ID
+     * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+     * @return the previous, current, and next employee interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchEmployeeInterviewScheduleException if a employee interview schedule with the primary key could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public EmployeeInterviewSchedule[] findByInterviewScheduleId_PrevAndNext(
+        long employeeInterviewScheduleId, long interviewScheduleId,
+        OrderByComparator orderByComparator)
+        throws NoSuchEmployeeInterviewScheduleException, SystemException {
+        EmployeeInterviewSchedule employeeInterviewSchedule = findByPrimaryKey(employeeInterviewScheduleId);
+
+        Session session = null;
+
+        try {
+            session = openSession();
+
+            EmployeeInterviewSchedule[] array = new EmployeeInterviewScheduleImpl[3];
+
+            array[0] = getByInterviewScheduleId_PrevAndNext(session,
+                    employeeInterviewSchedule, interviewScheduleId,
+                    orderByComparator, true);
+
+            array[1] = employeeInterviewSchedule;
+
+            array[2] = getByInterviewScheduleId_PrevAndNext(session,
+                    employeeInterviewSchedule, interviewScheduleId,
+                    orderByComparator, false);
+
+            return array;
+        } catch (Exception e) {
+            throw processException(e);
+        } finally {
+            closeSession(session);
+        }
+    }
+
+    protected EmployeeInterviewSchedule getByInterviewScheduleId_PrevAndNext(
+        Session session, EmployeeInterviewSchedule employeeInterviewSchedule,
+        long interviewScheduleId, OrderByComparator orderByComparator,
+        boolean previous) {
+        StringBundler query = null;
+
+        if (orderByComparator != null) {
+            query = new StringBundler(6 +
+                    (orderByComparator.getOrderByFields().length * 6));
+        } else {
+            query = new StringBundler(3);
+        }
+
+        query.append(_SQL_SELECT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+        query.append(_FINDER_COLUMN_INTERVIEWSCHEDULEID_INTERVIEWSCHEDULEID_2);
+
+        if (orderByComparator != null) {
+            String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+            if (orderByConditionFields.length > 0) {
+                query.append(WHERE_AND);
+            }
+
+            for (int i = 0; i < orderByConditionFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByConditionFields[i]);
+
+                if ((i + 1) < orderByConditionFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN_HAS_NEXT);
+                    } else {
+                        query.append(WHERE_LESSER_THAN_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(WHERE_GREATER_THAN);
+                    } else {
+                        query.append(WHERE_LESSER_THAN);
+                    }
+                }
+            }
+
+            query.append(ORDER_BY_CLAUSE);
+
+            String[] orderByFields = orderByComparator.getOrderByFields();
+
+            for (int i = 0; i < orderByFields.length; i++) {
+                query.append(_ORDER_BY_ENTITY_ALIAS);
+                query.append(orderByFields[i]);
+
+                if ((i + 1) < orderByFields.length) {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC_HAS_NEXT);
+                    } else {
+                        query.append(ORDER_BY_DESC_HAS_NEXT);
+                    }
+                } else {
+                    if (orderByComparator.isAscending() ^ previous) {
+                        query.append(ORDER_BY_ASC);
+                    } else {
+                        query.append(ORDER_BY_DESC);
+                    }
+                }
+            }
+        } else {
+            query.append(EmployeeInterviewScheduleModelImpl.ORDER_BY_JPQL);
+        }
+
+        String sql = query.toString();
+
+        Query q = session.createQuery(sql);
+
+        q.setFirstResult(0);
+        q.setMaxResults(2);
+
+        QueryPos qPos = QueryPos.getInstance(q);
+
+        qPos.add(interviewScheduleId);
+
+        if (orderByComparator != null) {
+            Object[] values = orderByComparator.getOrderByConditionValues(employeeInterviewSchedule);
+
+            for (Object value : values) {
+                qPos.add(value);
+            }
+        }
+
+        List<EmployeeInterviewSchedule> list = q.list();
+
+        if (list.size() == 2) {
+            return list.get(1);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Removes all the employee interview schedules where interviewScheduleId = &#63; from the database.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public void removeByInterviewScheduleId(long interviewScheduleId)
+        throws SystemException {
+        for (EmployeeInterviewSchedule employeeInterviewSchedule : findByInterviewScheduleId(
+                interviewScheduleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+            remove(employeeInterviewSchedule);
+        }
+    }
+
+    /**
+     * Returns the number of employee interview schedules where interviewScheduleId = &#63;.
+     *
+     * @param interviewScheduleId the interview schedule ID
+     * @return the number of matching employee interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int countByInterviewScheduleId(long interviewScheduleId)
+        throws SystemException {
+        FinderPath finderPath = FINDER_PATH_COUNT_BY_INTERVIEWSCHEDULEID;
+
+        Object[] finderArgs = new Object[] { interviewScheduleId };
+
+        Long count = (Long) FinderCacheUtil.getResult(finderPath, finderArgs,
+                this);
+
+        if (count == null) {
+            StringBundler query = new StringBundler(2);
+
+            query.append(_SQL_COUNT_EMPLOYEEINTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_INTERVIEWSCHEDULEID_INTERVIEWSCHEDULEID_2);
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(interviewScheduleId);
+
+                count = (Long) q.uniqueResult();
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, count);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return count.intValue();
     }
 
     /**
@@ -294,6 +1264,8 @@ public class EmployeeInterviewSchedulePersistenceImpl
 
         boolean isNew = employeeInterviewSchedule.isNew();
 
+        EmployeeInterviewScheduleModelImpl employeeInterviewScheduleModelImpl = (EmployeeInterviewScheduleModelImpl) employeeInterviewSchedule;
+
         Session session = null;
 
         try {
@@ -314,8 +1286,50 @@ public class EmployeeInterviewSchedulePersistenceImpl
 
         FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-        if (isNew) {
+        if (isNew ||
+                !EmployeeInterviewScheduleModelImpl.COLUMN_BITMASK_ENABLED) {
             FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+        }
+        else {
+            if ((employeeInterviewScheduleModelImpl.getColumnBitmask() &
+                    FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPID.getColumnBitmask()) != 0) {
+                Object[] args = new Object[] {
+                        employeeInterviewScheduleModelImpl.getOriginalEmployeeId()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPID, args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPID,
+                    args);
+
+                args = new Object[] {
+                        employeeInterviewScheduleModelImpl.getEmployeeId()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPID, args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPID,
+                    args);
+            }
+
+            if ((employeeInterviewScheduleModelImpl.getColumnBitmask() &
+                    FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID.getColumnBitmask()) != 0) {
+                Object[] args = new Object[] {
+                        employeeInterviewScheduleModelImpl.getOriginalInterviewScheduleId()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INTERVIEWSCHEDULEID,
+                    args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID,
+                    args);
+
+                args = new Object[] {
+                        employeeInterviewScheduleModelImpl.getInterviewScheduleId()
+                    };
+
+                FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INTERVIEWSCHEDULEID,
+                    args);
+                FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_INTERVIEWSCHEDULEID,
+                    args);
+            }
         }
 
         EntityCacheUtil.putResult(EmployeeInterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,

@@ -57,6 +57,8 @@ public class VacancyCandidateLocalServiceClp
     private String[] _methodParameterTypes23;
     private String _methodName24;
     private String[] _methodParameterTypes24;
+    private String _methodName25;
+    private String[] _methodParameterTypes25;
 
     public VacancyCandidateLocalServiceClp(
         InvokableLocalService invokableLocalService) {
@@ -178,6 +180,10 @@ public class VacancyCandidateLocalServiceClp
         _methodName24 = "deleteByVacancy";
 
         _methodParameterTypes24 = new String[] { "long" };
+
+        _methodName25 = "delete";
+
+        _methodParameterTypes25 = new String[] { "long" };
     }
 
     @Override
@@ -701,7 +707,9 @@ public class VacancyCandidateLocalServiceClp
     public vn.com.ecopharma.hrm.model.VacancyCandidate create(long v_id,
         long c_id, long user_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
 
         try {
@@ -718,6 +726,14 @@ public class VacancyCandidateLocalServiceClp
                     });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.NoSuchUserException) {
+                throw (com.liferay.portal.NoSuchUserException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
 
             if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
                 throw (vn.com.ecopharma.hrm.NoSuchVacancyException) t;
@@ -736,7 +752,7 @@ public class VacancyCandidateLocalServiceClp
 
     @Override
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
-        long c_id) {
+        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -744,6 +760,10 @@ public class VacancyCandidateLocalServiceClp
                     _methodParameterTypes20, new Object[] { c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -758,7 +778,7 @@ public class VacancyCandidateLocalServiceClp
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy(
-        long v_id) {
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -766,6 +786,10 @@ public class VacancyCandidateLocalServiceClp
                     _methodParameterTypes21, new Object[] { v_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -780,7 +804,9 @@ public class VacancyCandidateLocalServiceClp
 
     @Override
     public vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancyAndCandidate(
-        long v_id, long c_id) {
+        long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         Object returnObj = null;
 
         try {
@@ -788,6 +814,14 @@ public class VacancyCandidateLocalServiceClp
                     _methodParameterTypes22, new Object[] { v_id, c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -801,12 +835,27 @@ public class VacancyCandidateLocalServiceClp
     }
 
     @Override
-    public void deleteByVacancyAndCandidate(long v_id, long c_id) {
+    public void deleteByVacancyAndCandidate(long v_id, long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
             _invokableLocalService.invokeMethod(_methodName23,
                 _methodParameterTypes23, new Object[] { v_id, c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) {
+                throw (vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -818,12 +867,59 @@ public class VacancyCandidateLocalServiceClp
     }
 
     @Override
-    public void deleteByVacancy(long v_id) {
+    public void deleteByVacancy(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
             _invokableLocalService.invokeMethod(_methodName24,
                 _methodParameterTypes24, new Object[] { v_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) {
+                throw (vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+    }
+
+    @Override
+    public void delete(long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        try {
+            _invokableLocalService.invokeMethod(_methodName25,
+                _methodParameterTypes25, new Object[] { vacancyCandidateId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) {
+                throw (vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) {
+                throw (vn.com.ecopharma.hrm.NoSuchVacancyCandidateException) t;
+            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;

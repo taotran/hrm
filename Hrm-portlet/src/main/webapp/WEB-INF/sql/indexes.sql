@@ -7,6 +7,12 @@ create index IX_55ACC947 on HRM_Candidate (id_);
 create index IX_E2F3EF95 on HRM_Recruitment_Candidate (c_id);
 create index IX_96279315 on HRM_Recruitment_Candidate (first_name, middle_name, last_name, email);
 
+create index IX_35E32E6E on HRM_Recruitment_EmployeeInterviewSchedule (employeeId);
+create index IX_8C6B2932 on HRM_Recruitment_EmployeeInterviewSchedule (interviewScheduleId);
+
+create index IX_51DD102D on HRM_Recruitment_InterviewSchedule (interviewId);
+create index IX_47DAC296 on HRM_Recruitment_InterviewSchedule (vacancyCandidateId);
+
 create index IX_42728746 on HRM_Recruitment_Vacancies_Candidates (c_id);
 create index IX_62DE9B13 on HRM_Recruitment_Vacancies_Candidates (v_id);
 

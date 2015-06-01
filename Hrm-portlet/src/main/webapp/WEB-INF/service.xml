@@ -22,16 +22,19 @@
 		<column name="candidate_status" type="String"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
-        <column name="interviewId" type="long"></column>
 		<finder name="findCandidates" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
 		</finder>
-        <finder name="filterCandidate" return-type="Collection">
-            <finder-column name="first_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
-            <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
-            <finder-column name="last_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
-            <finder-column name="email" comparator="LIKE" arrayable-operator="OR"></finder-column>
-        </finder>
+		<finder name="filterCandidate" return-type="Collection">
+			<finder-column name="first_name" comparator="LIKE"
+				arrayable-operator="OR"></finder-column>
+			<finder-column name="middle_name" comparator="LIKE"
+				arrayable-operator="OR"></finder-column>
+			<finder-column name="last_name" comparator="LIKE"
+				arrayable-operator="OR"></finder-column>
+			<finder-column name="email" comparator="LIKE"
+				arrayable-operator="OR"></finder-column>
+		</finder>
 	</entity>
 
 
@@ -44,15 +47,15 @@
 		<column name="locationId" type="long"></column>
 		<column name="description" type="String"></column>
 		<column name="no_of_positions" type="int"></column>
-		
+
 		<column name="vacancy_status" type="String"></column>
 		<column name="insert_date" type="Date"></column>
 		<column name="update_date" type="Date"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
 	</entity>
-	
-	
+
+
 
 	<entity name="JTitle" local-service="true" trash-enabled="true"
 		remote-service="true">
@@ -65,8 +68,8 @@
 		<column name="group_id" type="long"></column>
 		<!-- <column name="vacancies" type="Collection" entity="Vacancy" mapping-table="jtittle_id"></column> -->
 	</entity>
-	
-	
+
+
 	<entity name="FileAttachment" local-service="true"
 		trash-enabled="true">
 
@@ -92,11 +95,11 @@
 		<!-- Group instance -->
 
 		<!-- Audit fields -->
-        <column name="name" type="String"></column>
-        <column name="file_type" type="String"></column>
-        <column name="size" type="long"></column>
-        <column name="content" type="String"></column>
-        <column name="attachment_type" type="String"></column>
+		<column name="name" type="String"></column>
+		<column name="file_type" type="String"></column>
+		<column name="size" type="long"></column>
+		<column name="content" type="String"></column>
+		<column name="attachment_type" type="String"></column>
 	</entity>
 	<entity name="Interview" local-service="true" remote-service="true"
 		trash-enabled="true">
@@ -109,15 +112,15 @@
 		<column name="groupId" type="long"></column>
 
 		<!-- Audit fields -->
-		
+
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="name" type="String"></column>
-        <column name="interview_date" type="Date"></column>
-        <column name="interview_time" type="String"></column>
+		<column name="name" type="String"></column>
+		<column name="interview_date" type="Date"></column>
+		<column name="interview_time" type="String"></column>
 	</entity>
 	<entity name="InterviewSchedule" local-service="true">
 
@@ -134,11 +137,11 @@
 		<column name="interviewScheduleId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="vacancyCandidateId" type="long"></column>
-        <column name="interviewId" type="long"></column>
-        <column name="interviewDate" type="Date"></column>
-        <column name="interviewTime" type="String"></column>
-        <column name="note" type="String"></column>
+		<column name="vacancyCandidateId" type="long"></column>
+		<column name="interviewId" type="long"></column>
+		<column name="interviewDate" type="Date"></column>
+		<column name="interviewTime" type="String"></column>
+		<column name="note" type="String"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -148,6 +151,15 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
+		
+		<!-- Finders -->
+		<finder return-type="Collection" name="InterviewId">
+			<finder-column name="interviewId"></finder-column>
+		</finder>
+        <finder name="VacancyCandidate" return-type="InterviewSchedule">
+            <finder-column name="vacancyCandidateId"></finder-column>
+        </finder>
+		
 	</entity>
 	<entity name="VacancyCandidate" local-service="true">
 
@@ -156,8 +168,8 @@
 		<column name="vacancyCandidateId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="c_id" type="long" convert-null="false"></column>
-        <column name="v_id" type="long" convert-null="false"></column>
+		<column name="c_id" type="long" convert-null="false"></column>
+		<column name="v_id" type="long" convert-null="false"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -167,17 +179,17 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="C_Id" return-type="VacancyCandidate">
-        	<finder-column name="c_id"></finder-column>
-        </finder>
-        
-       <finder name="V_Id" return-type="Collection">
-        	<finder-column name="v_id"></finder-column>
-        </finder>
-        <finder name="V_Id_And_C_Id" return-type="VacancyCandidate">
-        	<finder-column name="v_id"></finder-column>
-        	<finder-column name="c_id"></finder-column>
-        </finder>
+		<finder name="C_Id" return-type="VacancyCandidate">
+			<finder-column name="c_id"></finder-column>
+		</finder>
+
+		<finder name="V_Id" return-type="Collection">
+			<finder-column name="v_id"></finder-column>
+		</finder>
+		<finder name="V_Id_And_C_Id" return-type="VacancyCandidate">
+			<finder-column name="v_id"></finder-column>
+			<finder-column name="c_id"></finder-column>
+		</finder>
 	</entity>
 	<entity name="Employee" local-service="true">
 
@@ -196,18 +208,18 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="emp_code" type="String"></column>
-        <column name="firstname" type="String"></column>
-        <column name="middle_name" type="String"></column>
-        <column name="lastname" type="String"></column>
-        <column name="email" type="String"></column>
-        <column name="nickname" type="String"></column>
-        <column name="birthday" type="Date"></column>
-        <column name="gender" type="String"></column>
-        <column name="marital_status" type="String"></column>
-        <column name="status" type="String"></column>
-        <column name="jobtitleId"  type="long"></column>
-        <column name="joined_date" type="Date"></column>
+		<column name="emp_code" type="String"></column>
+		<column name="firstname" type="String"></column>
+		<column name="middle_name" type="String"></column>
+		<column name="lastname" type="String"></column>
+		<column name="email" type="String"></column>
+		<column name="nickname" type="String"></column>
+		<column name="birthday" type="Date"></column>
+		<column name="gender" type="String"></column>
+		<column name="marital_status" type="String"></column>
+		<column name="status" type="String"></column>
+		<column name="jobtitleId" type="long"></column>
+		<column name="joined_date" type="Date"></column>
 	</entity>
 	<entity name="Location" local-service="true">
 
@@ -225,16 +237,16 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="type" type="String"></column>
-        <column name="name" type="String"></column>
-        <column name="country_code" type="String"></column>
-        <column name="province" type="String"></column>
-        <column name="city" type="String"></column>
-        <column name="address" type="String"></column>
-        <column name="zip_code" type="String"></column>
-        <column name="phone" type="String"></column>
-        <column name="fax" type="String"></column>
-        <column name="note" type="String"></column>
+		<column name="type" type="String"></column>
+		<column name="name" type="String"></column>
+		<column name="country_code" type="String"></column>
+		<column name="province" type="String"></column>
+		<column name="city" type="String"></column>
+		<column name="address" type="String"></column>
+		<column name="zip_code" type="String"></column>
+		<column name="phone" type="String"></column>
+		<column name="fax" type="String"></column>
+		<column name="note" type="String"></column>
 	</entity>
 	<entity name="EmployeeInterviewSchedule" local-service="true"
 		trash-enabled="true">
@@ -242,13 +254,12 @@
 
 		<!-- PK fields -->
 
-		<column name="employeeInterviewScheduleId" type="long"
-			primary="true">
+		<column name="employeeInterviewScheduleId" type="long" primary="true">
 		</column>
 
 		<!-- Group instance -->
-        <column name="employeeId" type="long"></column>
-        <column name="interviewScheduleId" type="long"></column>
+		<column name="employeeId" type="long"></column>
+		<column name="interviewScheduleId" type="long"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -258,7 +269,13 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="note" type="String"></column>
+		<column name="note" type="String"></column>
+		<finder name="EmpId" return-type="Collection">
+			<finder-column name="employeeId"></finder-column>
+		</finder>
+		<finder name="InterviewScheduleId" return-type="Collection">
+			<finder-column name="interviewScheduleId"></finder-column>
+		</finder>
 	</entity>
 
 </service-builder>

@@ -57,6 +57,8 @@ public class VacancyCandidateLocalServiceClpInvoker {
     private String[] _methodParameterTypes100;
     private String _methodName101;
     private String[] _methodParameterTypes101;
+    private String _methodName102;
+    private String[] _methodParameterTypes102;
 
     public VacancyCandidateLocalServiceClpInvoker() {
         _methodName0 = "addVacancyCandidate";
@@ -175,6 +177,10 @@ public class VacancyCandidateLocalServiceClpInvoker {
         _methodName101 = "deleteByVacancy";
 
         _methodParameterTypes101 = new String[] { "long" };
+
+        _methodName102 = "delete";
+
+        _methodParameterTypes102 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -313,6 +319,13 @@ public class VacancyCandidateLocalServiceClpInvoker {
         if (_methodName101.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
             VacancyCandidateLocalServiceUtil.deleteByVacancy(((Long) arguments[0]).longValue());
+
+            return null;
+        }
+
+        if (_methodName102.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+            VacancyCandidateLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;
         }

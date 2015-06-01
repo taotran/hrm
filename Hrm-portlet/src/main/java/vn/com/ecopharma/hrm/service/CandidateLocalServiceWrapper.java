@@ -278,21 +278,24 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
-        int start, int end) {
+        int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.findAll(start, end);
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
-        int start, int end)
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findAll(
+        int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return _candidateLocalService.findCandidates(start, end);
+        return _candidateLocalService.findAll(start, end, orderByComparator);
     }
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.searchCandidates(id, first_name,
             middle_name, last_name, email, start, end);
     }
@@ -301,7 +304,8 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> searchCandidates(
         long id, java.lang.String first_name, java.lang.String middle_name,
         java.lang.String last_name, java.lang.String email, int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator order) {
+        com.liferay.portal.kernel.util.OrderByComparator order)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.searchCandidates(id, first_name,
             middle_name, last_name, email, start, end, order);
     }
@@ -315,7 +319,8 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         long cv_file_id, java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.create(user_id, first_name, middle_name,
             last_name, email, contact_number, comment, mode_of_application,
             date_of_application, cv_file_id, cv_text_version, added_person,
@@ -332,7 +337,10 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.NoSuchUserException,
+            com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchVacancyException {
         return _candidateLocalService.edit(user_id, candidateId, first_name,
             middle_name, last_name, email, contact_number, comment,
             mode_of_application, date_of_application, cv_file_id,
@@ -340,14 +348,19 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     }
 
     @Override
-    public void delele(long c_id) {
+    public void delele(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         _candidateLocalService.delele(c_id);
     }
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email) {
+        java.lang.String last_name, java.lang.String email)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.findCandidates(first_name, middle_name,
             last_name, email);
     }
@@ -355,13 +368,15 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> findCandidates(
         java.lang.String first_name, java.lang.String middle_name,
-        java.lang.String last_name, java.lang.String email, int start, int end) {
+        java.lang.String last_name, java.lang.String email, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.findCandidates(first_name, middle_name,
             last_name, email, start, end);
     }
 
     @Override
-    public int countAll() {
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.countAll();
     }
 

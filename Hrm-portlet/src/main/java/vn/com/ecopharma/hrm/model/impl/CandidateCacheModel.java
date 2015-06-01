@@ -38,11 +38,10 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
     public String candidate_status;
     public long user_id;
     public long group_id;
-    public long interviewId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(35);
+        StringBundler sb = new StringBundler(33);
 
         sb.append("{c_id=");
         sb.append(c_id);
@@ -76,8 +75,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         sb.append(user_id);
         sb.append(", group_id=");
         sb.append(group_id);
-        sb.append(", interviewId=");
-        sb.append(interviewId);
         sb.append("}");
 
         return sb.toString();
@@ -157,7 +154,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 
         candidateImpl.setUser_id(user_id);
         candidateImpl.setGroup_id(group_id);
-        candidateImpl.setInterviewId(interviewId);
 
         candidateImpl.resetOriginalValues();
 
@@ -182,7 +178,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
         candidate_status = objectInput.readUTF();
         user_id = objectInput.readLong();
         group_id = objectInput.readLong();
-        interviewId = objectInput.readLong();
     }
 
     @Override
@@ -252,6 +247,5 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 
         objectOutput.writeLong(user_id);
         objectOutput.writeLong(group_id);
-        objectOutput.writeLong(interviewId);
     }
 }
