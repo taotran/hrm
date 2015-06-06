@@ -55,7 +55,7 @@ create table HRM_JTitle (
 
 create table HRM_Recruitment_Candidate (
 	c_id LONG not null primary key,
-	first_name VARCHAR(75) null,
+	first_name VARCHAR(200) null,
 	middle_name VARCHAR(75) null,
 	last_name VARCHAR(75) null,
 	email VARCHAR(75) null,
@@ -70,6 +70,21 @@ create table HRM_Recruitment_Candidate (
 	candidate_status VARCHAR(75) null,
 	user_id LONG,
 	group_id LONG
+);
+
+create table HRM_Recruitment_CandidateHistory (
+	candidateHistoryId LONG not null primary key,
+	c_id LONG,
+	v_id LONG,
+	interviewId LONG,
+	performed_by LONG,
+	note VARCHAR(75) null,
+	interviewers VARCHAR(75) null,
+	action VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null
 );
 
 create table HRM_Recruitment_Employee (
@@ -104,6 +119,17 @@ create table HRM_Recruitment_EmployeeInterviewSchedule (
 	createDate DATE null,
 	modifiedDate DATE null,
 	note VARCHAR(75) null
+);
+
+create table HRM_Recruitment_EmployeeVacancy (
+	employeeVacancyId LONG not null primary key,
+	employeeId LONG,
+	v_id LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
 );
 
 create table HRM_Recruitment_FileAttachment (
@@ -186,7 +212,6 @@ create table HRM_Recruitment_Vacancies_Candidates (
 create table HRM_Recruitment_Vacancy (
 	v_id LONG not null primary key,
 	jobtitleId LONG,
-	hiring_manager_id LONG,
 	name VARCHAR(75) null,
 	locationId LONG,
 	description VARCHAR(75) null,

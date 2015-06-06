@@ -167,7 +167,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodName22 = "create";
 
         _methodParameterTypes22 = new String[] {
-                "long", "long", "long", "long", "java.lang.String",
+                "long", "long", "long", "java.util.List", "java.lang.String",
                 "java.lang.String", "int", "java.lang.String",
                 "java.lang.String", "com.liferay.portal.service.ServiceContext"
             };
@@ -175,8 +175,9 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodName23 = "edit";
 
         _methodParameterTypes23 = new String[] {
-                "long", "long", "long", "long", "java.lang.String",
-                "java.lang.String", "int", "java.lang.String"
+                "long", "long", "long", "java.util.List", "java.lang.String",
+                "java.lang.String", "int", "java.lang.String",
+                "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName24 = "delete";
@@ -784,7 +785,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long locationId, long hiring_mananager_id,
+        long jTitle_id, long locationId, java.util.List<java.lang.Long> emps,
         java.lang.String name, java.lang.String description,
         int no_of_positions, java.lang.String vacancy_status,
         java.lang.String job_posting,
@@ -803,7 +804,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     locationId,
                         
-                    hiring_mananager_id,
+                    ClpSerializer.translateInput(emps),
                         
                     ClpSerializer.translateInput(name),
                         
@@ -840,10 +841,11 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
-        long locationId, long hiring_manager_id, java.lang.String name,
-        java.lang.String description, int number_of_positions,
-        java.lang.String job_posting)
+    public vn.com.ecopharma.hrm.model.Vacancy edit(long v_id, long jtitle_id,
+        long locationId, java.util.List<java.lang.Long> emps,
+        java.lang.String name, java.lang.String description,
+        int number_of_positions, java.lang.String job_posting,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
@@ -852,13 +854,13 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
             returnObj = _invokableLocalService.invokeMethod(_methodName23,
                     _methodParameterTypes23,
                     new Object[] {
-                        id,
+                        v_id,
                         
                     jtitle_id,
                         
                     locationId,
                         
-                    hiring_manager_id,
+                    ClpSerializer.translateInput(emps),
                         
                     ClpSerializer.translateInput(name),
                         
@@ -866,7 +868,9 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     number_of_positions,
                         
-                    ClpSerializer.translateInput(job_posting)
+                    ClpSerializer.translateInput(job_posting),
+                        
+                    ClpSerializer.translateInput(serviceContext)
                     });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -894,6 +898,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     public void delete(long v_id)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException,
             vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException,
             vn.com.ecopharma.hrm.NoSuchVacancyException {
@@ -909,6 +914,10 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
             if (t instanceof vn.com.ecopharma.hrm.NoSuchCandidateException) {
                 throw (vn.com.ecopharma.hrm.NoSuchCandidateException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException) {
+                throw (vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException) t;
             }
 
             if (t instanceof vn.com.ecopharma.hrm.NoSuchInterviewScheduleException) {

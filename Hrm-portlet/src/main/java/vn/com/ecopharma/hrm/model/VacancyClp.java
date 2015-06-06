@@ -33,7 +33,6 @@ import java.util.Map;
 public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
     private long _v_id;
     private long _jobtitleId;
-    private long _hiring_manager_id;
     private String _name;
     private long _locationId;
     private String _description;
@@ -85,7 +84,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
         attributes.put("v_id", getV_id());
         attributes.put("jobtitleId", getJobtitleId());
-        attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
         attributes.put("locationId", getLocationId());
         attributes.put("description", getDescription());
@@ -111,12 +109,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
         if (jobtitleId != null) {
             setJobtitleId(jobtitleId);
-        }
-
-        Long hiring_manager_id = (Long) attributes.get("hiring_manager_id");
-
-        if (hiring_manager_id != null) {
-            setHiring_manager_id(hiring_manager_id);
         }
 
         String name = (String) attributes.get("name");
@@ -212,29 +204,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
                 Method method = clazz.getMethod("setJobtitleId", long.class);
 
                 method.invoke(_vacancyRemoteModel, jobtitleId);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public long getHiring_manager_id() {
-        return _hiring_manager_id;
-    }
-
-    @Override
-    public void setHiring_manager_id(long hiring_manager_id) {
-        _hiring_manager_id = hiring_manager_id;
-
-        if (_vacancyRemoteModel != null) {
-            try {
-                Class<?> clazz = _vacancyRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setHiring_manager_id",
-                        long.class);
-
-                method.invoke(_vacancyRemoteModel, hiring_manager_id);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -636,7 +605,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
         clone.setV_id(getV_id());
         clone.setJobtitleId(getJobtitleId());
-        clone.setHiring_manager_id(getHiring_manager_id());
         clone.setName(getName());
         clone.setLocationId(getLocationId());
         clone.setDescription(getDescription());
@@ -695,14 +663,12 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(23);
 
         sb.append("{v_id=");
         sb.append(getV_id());
         sb.append(", jobtitleId=");
         sb.append(getJobtitleId());
-        sb.append(", hiring_manager_id=");
-        sb.append(getHiring_manager_id());
         sb.append(", name=");
         sb.append(getName());
         sb.append(", locationId=");
@@ -728,7 +694,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(37);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -741,10 +707,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
         sb.append(
             "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
         sb.append(getJobtitleId());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>hiring_manager_id</column-name><column-value><![CDATA[");
-        sb.append(getHiring_manager_id());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>name</column-name><column-value><![CDATA[");

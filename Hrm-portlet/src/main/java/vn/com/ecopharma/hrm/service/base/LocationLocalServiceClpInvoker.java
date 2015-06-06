@@ -41,22 +41,22 @@ public class LocationLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName90;
-    private String[] _methodParameterTypes90;
-    private String _methodName91;
-    private String[] _methodParameterTypes91;
-    private String _methodName96;
-    private String[] _methodParameterTypes96;
-    private String _methodName97;
-    private String[] _methodParameterTypes97;
-    private String _methodName98;
-    private String[] _methodParameterTypes98;
-    private String _methodName99;
-    private String[] _methodParameterTypes99;
-    private String _methodName100;
-    private String[] _methodParameterTypes100;
-    private String _methodName101;
-    private String[] _methodParameterTypes101;
+    private String _methodName102;
+    private String[] _methodParameterTypes102;
+    private String _methodName103;
+    private String[] _methodParameterTypes103;
+    private String _methodName108;
+    private String[] _methodParameterTypes108;
+    private String _methodName109;
+    private String[] _methodParameterTypes109;
+    private String _methodName110;
+    private String[] _methodParameterTypes110;
+    private String _methodName111;
+    private String[] _methodParameterTypes111;
+    private String _methodName112;
+    private String[] _methodParameterTypes112;
+    private String _methodName113;
+    private String[] _methodParameterTypes113;
 
     public LocationLocalServiceClpInvoker() {
         _methodName0 = "addLocation";
@@ -141,48 +141,48 @@ public class LocationLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.Location"
             };
 
-        _methodName90 = "getBeanIdentifier";
+        _methodName102 = "getBeanIdentifier";
 
-        _methodParameterTypes90 = new String[] {  };
+        _methodParameterTypes102 = new String[] {  };
 
-        _methodName91 = "setBeanIdentifier";
+        _methodName103 = "setBeanIdentifier";
 
-        _methodParameterTypes91 = new String[] { "java.lang.String" };
+        _methodParameterTypes103 = new String[] { "java.lang.String" };
 
-        _methodName96 = "findAll";
+        _methodName108 = "findAll";
 
-        _methodParameterTypes96 = new String[] {  };
+        _methodParameterTypes108 = new String[] {  };
 
-        _methodName97 = "findAll";
+        _methodName109 = "findAll";
 
-        _methodParameterTypes97 = new String[] { "int", "int" };
+        _methodParameterTypes109 = new String[] { "int", "int" };
 
-        _methodName98 = "findAll";
+        _methodName110 = "findAll";
 
-        _methodParameterTypes98 = new String[] {
+        _methodParameterTypes110 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName99 = "create";
+        _methodName111 = "create";
 
-        _methodParameterTypes99 = new String[] {
+        _methodParameterTypes111 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName100 = "edit";
+        _methodName112 = "edit";
 
-        _methodParameterTypes100 = new String[] {
+        _methodParameterTypes112 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String"
             };
 
-        _methodName101 = "getLocationNameById";
+        _methodName113 = "getLocationNameById";
 
-        _methodParameterTypes101 = new String[] { "long" };
+        _methodParameterTypes113 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -274,38 +274,38 @@ public class LocationLocalServiceClpInvoker {
             return LocationLocalServiceUtil.updateLocation((vn.com.ecopharma.hrm.model.Location) arguments[0]);
         }
 
-        if (_methodName90.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
+        if (_methodName102.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
             return LocationLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName91.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
+        if (_methodName103.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
             LocationLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName96.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+        if (_methodName108.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
             return LocationLocalServiceUtil.findAll();
         }
 
-        if (_methodName97.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
+        if (_methodName109.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
             return LocationLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
-        if (_methodName98.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
+        if (_methodName110.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
             return LocationLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName99.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+        if (_methodName111.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
             return LocationLocalServiceUtil.create((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -318,8 +318,8 @@ public class LocationLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[9]);
         }
 
-        if (_methodName100.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+        if (_methodName112.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
             return LocationLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -330,8 +330,8 @@ public class LocationLocalServiceClpInvoker {
                 (java.lang.String) arguments[7], (java.lang.String) arguments[8]);
         }
 
-        if (_methodName101.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
+        if (_methodName113.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
             return LocationLocalServiceUtil.getLocationNameById(((Long) arguments[0]).longValue());
         }
 

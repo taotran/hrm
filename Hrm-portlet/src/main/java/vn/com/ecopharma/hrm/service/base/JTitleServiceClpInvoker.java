@@ -9,30 +9,30 @@ import java.util.Arrays;
  * @generated
  */
 public class JTitleServiceClpInvoker {
-    private String _methodName74;
-    private String[] _methodParameterTypes74;
-    private String _methodName75;
-    private String[] _methodParameterTypes75;
+    private String _methodName86;
+    private String[] _methodParameterTypes86;
+    private String _methodName87;
+    private String[] _methodParameterTypes87;
 
     public JTitleServiceClpInvoker() {
-        _methodName74 = "getBeanIdentifier";
+        _methodName86 = "getBeanIdentifier";
 
-        _methodParameterTypes74 = new String[] {  };
+        _methodParameterTypes86 = new String[] {  };
 
-        _methodName75 = "setBeanIdentifier";
+        _methodName87 = "setBeanIdentifier";
 
-        _methodParameterTypes75 = new String[] { "java.lang.String" };
+        _methodParameterTypes87 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName74.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+        if (_methodName86.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
             return JTitleServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName75.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
+        if (_methodName87.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
             JTitleServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

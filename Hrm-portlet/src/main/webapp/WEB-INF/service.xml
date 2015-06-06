@@ -42,7 +42,6 @@
 		remote-service="true">
 		<column name="v_id" type="long" primary="true"></column>
 		<column name="jobtitleId" type="long"></column>
-		<column name="hiring_manager_id" type="long"></column>
 		<column name="name" type="String"></column>
 		<column name="locationId" type="long"></column>
 		<column name="description" type="String"></column>
@@ -157,6 +156,10 @@
 			<finder-column name="interviewId"></finder-column>
 		</finder>
         <finder name="VacancyCandidate" return-type="InterviewSchedule">
+            <finder-column name="vacancyCandidateId"></finder-column>
+        </finder>
+        <finder name="Interview_And_VacancyCandidate" return-type="InterviewSchedule">
+            <finder-column name="interviewId"></finder-column>
             <finder-column name="vacancyCandidateId"></finder-column>
         </finder>
 		
@@ -277,6 +280,71 @@
 			<finder-column name="interviewScheduleId"></finder-column>
 		</finder>
 	</entity>
+	<entity name="EmployeeVacancy" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="employeeVacancyId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="employeeId" type="long" convert-null="false"></column>
+        <column name="v_id" type="long" convert-null="false"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="VacancyId_EmployeeId" return-type="EmployeeVacancy">
+            <finder-column name="v_id"></finder-column>
+            <finder-column name="employeeId"></finder-column>
+        </finder>
+        <finder name="EmployeeId" return-type="Collection">
+            <finder-column name="employeeId"></finder-column>
+        </finder>
+        <finder name="VacancyId" return-type="Collection">
+            <finder-column name="v_id"></finder-column>
+        </finder>
+	</entity>
+	<entity name="CandidateHistory" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+
+
+		<!-- PK fields -->
+
+		<column name="candidateHistoryId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="c_id" type="long"></column>
+        <column name="v_id" type="long"></column>
+        <column name="interviewId" type="long"></column>
+        <column name="performed_by" type="long"></column>
+        <column name="note" type="String"></column>
+        <column name="interviewers" type="String"></column>
+        <column name="action" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+        <finder name="C_Id" return-type="Collection">
+            <finder-column name="c_id"></finder-column>
+        </finder>
+	</entity>
+
+
 
 </service-builder>
 	

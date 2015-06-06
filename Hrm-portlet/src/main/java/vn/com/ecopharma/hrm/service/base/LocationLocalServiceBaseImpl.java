@@ -20,9 +20,11 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import vn.com.ecopharma.hrm.model.Location;
 import vn.com.ecopharma.hrm.service.LocationLocalService;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
+import vn.com.ecopharma.hrm.service.persistence.CandidateHistoryPersistence;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.EmployeeInterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.EmployeePersistence;
+import vn.com.ecopharma.hrm.service.persistence.EmployeeVacancyPersistence;
 import vn.com.ecopharma.hrm.service.persistence.FileAttachmentPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
@@ -59,6 +61,12 @@ public abstract class LocationLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected CandidatePersistence candidatePersistence;
     @BeanReference(type = CandidateFinder.class)
     protected CandidateFinder candidateFinder;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.CandidateHistoryLocalService.class)
+    protected vn.com.ecopharma.hrm.service.CandidateHistoryLocalService candidateHistoryLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.CandidateHistoryService.class)
+    protected vn.com.ecopharma.hrm.service.CandidateHistoryService candidateHistoryService;
+    @BeanReference(type = CandidateHistoryPersistence.class)
+    protected CandidateHistoryPersistence candidateHistoryPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeLocalService.class)
     protected vn.com.ecopharma.hrm.service.EmployeeLocalService employeeLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeService.class)
@@ -71,6 +79,12 @@ public abstract class LocationLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService employeeInterviewScheduleService;
     @BeanReference(type = EmployeeInterviewSchedulePersistence.class)
     protected EmployeeInterviewSchedulePersistence employeeInterviewSchedulePersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeVacancyLocalService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeVacancyLocalService employeeVacancyLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeVacancyService.class)
+    protected vn.com.ecopharma.hrm.service.EmployeeVacancyService employeeVacancyService;
+    @BeanReference(type = EmployeeVacancyPersistence.class)
+    protected EmployeeVacancyPersistence employeeVacancyPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentLocalService.class)
     protected vn.com.ecopharma.hrm.service.FileAttachmentLocalService fileAttachmentLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.FileAttachmentService.class)
@@ -422,6 +436,63 @@ public abstract class LocationLocalServiceBaseImpl extends BaseLocalServiceImpl
     }
 
     /**
+     * Returns the candidate history local service.
+     *
+     * @return the candidate history local service
+     */
+    public vn.com.ecopharma.hrm.service.CandidateHistoryLocalService getCandidateHistoryLocalService() {
+        return candidateHistoryLocalService;
+    }
+
+    /**
+     * Sets the candidate history local service.
+     *
+     * @param candidateHistoryLocalService the candidate history local service
+     */
+    public void setCandidateHistoryLocalService(
+        vn.com.ecopharma.hrm.service.CandidateHistoryLocalService candidateHistoryLocalService) {
+        this.candidateHistoryLocalService = candidateHistoryLocalService;
+    }
+
+    /**
+     * Returns the candidate history remote service.
+     *
+     * @return the candidate history remote service
+     */
+    public vn.com.ecopharma.hrm.service.CandidateHistoryService getCandidateHistoryService() {
+        return candidateHistoryService;
+    }
+
+    /**
+     * Sets the candidate history remote service.
+     *
+     * @param candidateHistoryService the candidate history remote service
+     */
+    public void setCandidateHistoryService(
+        vn.com.ecopharma.hrm.service.CandidateHistoryService candidateHistoryService) {
+        this.candidateHistoryService = candidateHistoryService;
+    }
+
+    /**
+     * Returns the candidate history persistence.
+     *
+     * @return the candidate history persistence
+     */
+    public CandidateHistoryPersistence getCandidateHistoryPersistence() {
+        return candidateHistoryPersistence;
+    }
+
+    /**
+     * Sets the candidate history persistence.
+     *
+     * @param candidateHistoryPersistence the candidate history persistence
+     */
+    public void setCandidateHistoryPersistence(
+        CandidateHistoryPersistence candidateHistoryPersistence) {
+        this.candidateHistoryPersistence = candidateHistoryPersistence;
+    }
+
+    /**
      * Returns the employee local service.
      *
      * @return the employee local service
@@ -532,6 +603,63 @@ public abstract class LocationLocalServiceBaseImpl extends BaseLocalServiceImpl
     public void setEmployeeInterviewSchedulePersistence(
         EmployeeInterviewSchedulePersistence employeeInterviewSchedulePersistence) {
         this.employeeInterviewSchedulePersistence = employeeInterviewSchedulePersistence;
+    }
+
+    /**
+     * Returns the employee vacancy local service.
+     *
+     * @return the employee vacancy local service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeVacancyLocalService getEmployeeVacancyLocalService() {
+        return employeeVacancyLocalService;
+    }
+
+    /**
+     * Sets the employee vacancy local service.
+     *
+     * @param employeeVacancyLocalService the employee vacancy local service
+     */
+    public void setEmployeeVacancyLocalService(
+        vn.com.ecopharma.hrm.service.EmployeeVacancyLocalService employeeVacancyLocalService) {
+        this.employeeVacancyLocalService = employeeVacancyLocalService;
+    }
+
+    /**
+     * Returns the employee vacancy remote service.
+     *
+     * @return the employee vacancy remote service
+     */
+    public vn.com.ecopharma.hrm.service.EmployeeVacancyService getEmployeeVacancyService() {
+        return employeeVacancyService;
+    }
+
+    /**
+     * Sets the employee vacancy remote service.
+     *
+     * @param employeeVacancyService the employee vacancy remote service
+     */
+    public void setEmployeeVacancyService(
+        vn.com.ecopharma.hrm.service.EmployeeVacancyService employeeVacancyService) {
+        this.employeeVacancyService = employeeVacancyService;
+    }
+
+    /**
+     * Returns the employee vacancy persistence.
+     *
+     * @return the employee vacancy persistence
+     */
+    public EmployeeVacancyPersistence getEmployeeVacancyPersistence() {
+        return employeeVacancyPersistence;
+    }
+
+    /**
+     * Sets the employee vacancy persistence.
+     *
+     * @param employeeVacancyPersistence the employee vacancy persistence
+     */
+    public void setEmployeeVacancyPersistence(
+        EmployeeVacancyPersistence employeeVacancyPersistence) {
+        this.employeeVacancyPersistence = employeeVacancyPersistence;
     }
 
     /**

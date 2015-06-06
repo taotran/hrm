@@ -248,6 +248,7 @@ public interface InterviewScheduleLocalService extends BaseLocalService,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException,
             vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException;
 
     public void delete(long interviewScheduleId)

@@ -34,6 +34,26 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.CandidateHistoryModelImpl">
+		<attributes>
+			<id name="candidateHistoryId" />
+			<basic name="c_id" />
+			<basic name="v_id" />
+			<basic name="interviewId" />
+			<basic name="performed_by" />
+			<basic name="note" />
+			<basic name="interviewers" />
+			<basic name="action" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeModelImpl">
 		<attributes>
 			<id name="employeeId" />
@@ -84,6 +104,26 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="note" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeVacancyModelImpl">
+		<attributes>
+			<id name="employeeVacancyId" />
+			<basic name="employeeId" />
+			<basic name="v_id" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -213,7 +253,6 @@
 		<attributes>
 			<id name="v_id" />
 			<basic name="jobtitleId" />
-			<basic name="hiring_manager_id" />
 			<basic name="name" />
 			<basic name="locationId" />
 			<basic name="description" />
@@ -258,12 +297,20 @@
 			<transient name="_vacancies" />
 		</attributes>
 	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.CandidateHistoryImpl" name="CandidateHistory">
+		<table name="HRM_Recruitment_CandidateHistory" />
+		<attributes />
+	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" name="Employee">
 		<table name="HRM_Recruitment_Employee" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleImpl" name="EmployeeInterviewSchedule">
 		<table name="HRM_Recruitment_EmployeeInterviewSchedule" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeVacancyImpl" name="EmployeeVacancy">
+		<table name="HRM_Recruitment_EmployeeVacancy" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.FileAttachmentImpl" name="FileAttachment">

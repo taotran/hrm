@@ -3,6 +3,8 @@ package vn.com.ecopharma.hrm.service.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
+import vn.com.ecopharma.hrm.service.CandidateHistoryLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.CandidateHistoryServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.ClpSerializer;
@@ -10,6 +12,8 @@ import vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeServiceUtil;
+import vn.com.ecopharma.hrm.service.EmployeeVacancyLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.EmployeeVacancyServiceUtil;
 import vn.com.ecopharma.hrm.service.FileAttachmentLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.FileAttachmentServiceUtil;
 import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
@@ -41,12 +45,18 @@ public class ClpMessageListener extends BaseMessageListener {
             CandidateLocalServiceUtil.clearService();
 
             CandidateServiceUtil.clearService();
+            CandidateHistoryLocalServiceUtil.clearService();
+
+            CandidateHistoryServiceUtil.clearService();
             EmployeeLocalServiceUtil.clearService();
 
             EmployeeServiceUtil.clearService();
             EmployeeInterviewScheduleLocalServiceUtil.clearService();
 
             EmployeeInterviewScheduleServiceUtil.clearService();
+            EmployeeVacancyLocalServiceUtil.clearService();
+
+            EmployeeVacancyServiceUtil.clearService();
             FileAttachmentLocalServiceUtil.clearService();
 
             FileAttachmentServiceUtil.clearService();

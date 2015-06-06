@@ -11,9 +11,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
+import vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException;
 import vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
 import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
+import vn.com.ecopharma.hrm.model.EmployeeVacancy;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.VacancyLocalServiceBaseImpl;
@@ -58,8 +60,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return vacancyPersistence.findAll(start, end, orderByComparator);
 	}
 
-	public Vacancy create(long user_id, long jTitle_id, long locationId,
-			long hiring_mananager_id, String name, String description,
+	public Vacancy create(long user_id, long jTitle_id, long locationId, List<Long> emps, String name, String description,
 			int no_of_positions, String vacancy_status, String job_posting,
 			ServiceContext serviceContext) throws PortalException,
 			SystemException {
@@ -69,7 +70,6 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		final Date now = new Date(System.currentTimeMillis());
 		v.setJobtitleId(jTitle_id);
 		v.setLocationId(locationId);
-		v.setHiring_manager_id(hiring_mananager_id);
 		v.setName(name);
 		v.setDescription(description);
 		v.setNo_of_positions(no_of_positions);
@@ -78,6 +78,10 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		v.setUpdate_date(now);
 		v.setUser_id(user.getUserId());
 		v.setGroup_id(serviceContext.getScopeGroupId());
+		/* update new vacancy managers */
+		for (long id: emps) {
+			employeeVacancyLocalService.create(id, v_id, user.getUserId(), serviceContext);
+		}
 		resourceLocalService.addResources(user.getCompanyId(),
 				serviceContext.getScopeGroupId(), user.getUserId(),
 				Vacancy.class.getName(), v_id, false, true, true);
@@ -85,26 +89,29 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return v;
 	}
 
-	public Vacancy edit(long id, long jtitle_id, long locationId,
-			long hiring_manager_id, String name, String description,
-			int number_of_positions, String job_posting)
+	public Vacancy edit(long v_id, long jtitle_id, long locationId, List<Long> emps, String name, String description,
+			int number_of_positions, String job_posting, ServiceContext serviceContext)
 			throws SystemException, NoSuchVacancyException {
-		Vacancy vacancy = vacancyPersistence.findByPrimaryKey(id);
+		Vacancy vacancy = vacancyPersistence.findByPrimaryKey(v_id);
 		vacancy.setJobtitleId(jtitle_id);
 		vacancy.setLocationId(locationId);
-		vacancy.setHiring_manager_id(hiring_manager_id);
 		vacancy.setName(name);
 		vacancy.setDescription(description);
 		vacancy.setNo_of_positions(number_of_positions);
-		/* vacancy.setVacancy_status(vacancy_status); */
 		vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
+		/* update new vacancy managers */
+		for (long employeeId: emps) {
+			if (employeeVacancyPersistence.fetchByVacancyId_EmployeeId(v_id, employeeId) == null) {
+				employeeVacancyLocalService.create(employeeId, v_id, serviceContext.getUserId(), serviceContext);
+			}
+		}
 		vacancyPersistence.update(vacancy);
 		return vacancy;
 	}
 
 	public void delete(long v_id) throws NoSuchVacancyException,
 			SystemException, NoSuchVacancyCandidateException,
-			NoSuchInterviewScheduleException, NoSuchCandidateException {
+			NoSuchInterviewScheduleException, NoSuchCandidateException, NoSuchEmployeeVacancyException {
 		vacancyPersistence.remove(v_id);
 		final List<VacancyCandidate> vacancyCandidates = vacancyCandidateLocalService
 				.findByVacancy(v_id);
@@ -115,5 +122,14 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			}
 			vacancyCandidateLocalService.deleteByVacancy(v_id);
 		}
+		
+		/* DELETE associated EmployeeVacancy */
+		final List<EmployeeVacancy> employeeVacancies = employeeVacancyPersistence.findByVacancyId(v_id);
+		if (employeeVacancies != null && employeeVacancies.size() > 0) {
+			for (EmployeeVacancy ev: employeeVacancies) {
+				employeeVacancyPersistence.remove(ev.getEmployeeVacancyId());
+			}
+		}
+		
 	}
 }

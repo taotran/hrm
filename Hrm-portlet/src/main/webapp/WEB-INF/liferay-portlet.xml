@@ -29,25 +29,28 @@
 
 		<footer-portlet-javascript>/js/form_wizard.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/jquery.timer.js</footer-portlet-javascript> -->
-		
+		<!-- <header-portal-css>/css/bootstrap-modals.css</header-portal-css> -->
 		<header-portlet-css>/css/dataTableUI.css</header-portlet-css>
 		<header-portlet-css>/css/select2-bootstrap.css</header-portlet-css>
 		<header-portlet-css>/css/select2.min.css</header-portlet-css>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<header-portlet-css>/css/bootstrap-modals.css</header-portlet-css>
-		
+		<header-portlet-css>/css/font-awesome.min.css</header-portlet-css>
 		<header-portlet-javascript>/js/jquery-2.1.4.min.js</header-portlet-javascript>
+		<footer-portlet-css>/css/summernote.css</footer-portlet-css>
+		<footer-portlet-css>/css/jquery.timepicker.css</footer-portlet-css>
+		
 		<footer-portlet-javascript>/js/bootstrap.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/jquery.validate.min.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/jquery.dataTables.min.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/jquery.dataTables.columnFilter.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/select2.min.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/js/bootstrap-datepicker.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/jquery.timepicker.min.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/plugin/fnSetFilteringDelay.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/plugin/fnStandingRedraw.js</footer-portlet-javascript>
-<!-- 		<footer-portlet-javascript>/js/hrm_recruitment.js</footer-portlet-javascript> -->
-		
-		<!-- <footer-portlet-javascript>/js/hrm_recruitment.js</footer-portlet-javascript> -->
+		<footer-portlet-javascript>/js/summernote.min.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/js/bootstrap-notify.min.js</footer-portlet-javascript>
 		<css-class-wrapper>hrm-portlet</css-class-wrapper>
 		
 	</portlet>

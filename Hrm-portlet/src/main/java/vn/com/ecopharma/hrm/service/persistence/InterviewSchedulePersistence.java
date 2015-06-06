@@ -220,6 +220,70 @@ public interface InterviewSchedulePersistence extends BasePersistence<InterviewS
         throws com.liferay.portal.kernel.exception.SystemException;
 
     /**
+    * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or throws a {@link vn.com.ecopharma.hrm.NoSuchInterviewScheduleException} if it could not be found.
+    *
+    * @param interviewId the interview ID
+    * @param vacancyCandidateId the vacancy candidate ID
+    * @return the matching interview schedule
+    * @throws vn.com.ecopharma.hrm.NoSuchInterviewScheduleException if a matching interview schedule could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public vn.com.ecopharma.hrm.model.InterviewSchedule findByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
+
+    /**
+    * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+    *
+    * @param interviewId the interview ID
+    * @param vacancyCandidateId the vacancy candidate ID
+    * @return the matching interview schedule, or <code>null</code> if a matching interview schedule could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public vn.com.ecopharma.hrm.model.InterviewSchedule fetchByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    /**
+    * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+    *
+    * @param interviewId the interview ID
+    * @param vacancyCandidateId the vacancy candidate ID
+    * @param retrieveFromCache whether to use the finder cache
+    * @return the matching interview schedule, or <code>null</code> if a matching interview schedule could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public vn.com.ecopharma.hrm.model.InterviewSchedule fetchByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId, boolean retrieveFromCache)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    /**
+    * Removes the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; from the database.
+    *
+    * @param interviewId the interview ID
+    * @param vacancyCandidateId the vacancy candidate ID
+    * @return the interview schedule that was removed
+    * @throws SystemException if a system exception occurred
+    */
+    public vn.com.ecopharma.hrm.model.InterviewSchedule removeByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
+
+    /**
+    * Returns the number of interview schedules where interviewId = &#63; and vacancyCandidateId = &#63;.
+    *
+    * @param interviewId the interview ID
+    * @param vacancyCandidateId the vacancy candidate ID
+    * @return the number of matching interview schedules
+    * @throws SystemException if a system exception occurred
+    */
+    public int countByInterview_And_VacancyCandidate(long interviewId,
+        long vacancyCandidateId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    /**
     * Caches the interview schedule in the entity cache if it is enabled.
     *
     * @param interviewSchedule the interview schedule

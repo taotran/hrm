@@ -16,7 +16,6 @@ import java.util.List;
 public class VacancySoap implements Serializable {
     private long _v_id;
     private long _jobtitleId;
-    private long _hiring_manager_id;
     private String _name;
     private long _locationId;
     private String _description;
@@ -35,7 +34,6 @@ public class VacancySoap implements Serializable {
 
         soapModel.setV_id(model.getV_id());
         soapModel.setJobtitleId(model.getJobtitleId());
-        soapModel.setHiring_manager_id(model.getHiring_manager_id());
         soapModel.setName(model.getName());
         soapModel.setLocationId(model.getLocationId());
         soapModel.setDescription(model.getDescription());
@@ -107,14 +105,6 @@ public class VacancySoap implements Serializable {
 
     public void setJobtitleId(long jobtitleId) {
         _jobtitleId = jobtitleId;
-    }
-
-    public long getHiring_manager_id() {
-        return _hiring_manager_id;
-    }
-
-    public void setHiring_manager_id(long hiring_manager_id) {
-        _hiring_manager_id = hiring_manager_id;
     }
 
     public String getName() {

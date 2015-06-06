@@ -78,7 +78,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
             { "user_id", Types.BIGINT },
             { "group_id", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Candidate (c_id LONG not null primary key,first_name VARCHAR(75) null,middle_name VARCHAR(75) null,last_name VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,comment_ VARCHAR(75) null,mode_of_application INTEGER,date_of_application DATE null,cv_file_id LONG,cv_text_version VARCHAR(75) null,keywords VARCHAR(75) null,added_person INTEGER,candidate_status VARCHAR(75) null,user_id LONG,group_id LONG)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Candidate (c_id LONG not null primary key,first_name VARCHAR(200) null,middle_name VARCHAR(75) null,last_name VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,comment_ VARCHAR(75) null,mode_of_application INTEGER,date_of_application DATE null,cv_file_id LONG,cv_text_version VARCHAR(75) null,keywords VARCHAR(75) null,added_person INTEGER,candidate_status VARCHAR(75) null,user_id LONG,group_id LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Candidate";
     public static final String ORDER_BY_JPQL = " ORDER BY candidate.c_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Candidate.c_id ASC";

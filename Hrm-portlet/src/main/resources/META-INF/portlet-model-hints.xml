@@ -3,7 +3,9 @@
 <model-hints>
 	<model name="vn.com.ecopharma.hrm.model.Candidate">
 		<field name="c_id" type="long" />
-		<field name="first_name" type="String" />
+		<field name="first_name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="middle_name" type="String" />
 		<field name="last_name" type="String" />
 		<field name="email" type="String" />
@@ -18,6 +20,20 @@
 		<field name="candidate_status" type="String" />
 		<field name="user_id" type="long" />
 		<field name="group_id" type="long" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.CandidateHistory">
+		<field name="candidateHistoryId" type="long" />
+		<field name="c_id" type="long" />
+		<field name="v_id" type="long" />
+		<field name="interviewId" type="long" />
+		<field name="performed_by" type="long" />
+		<field name="note" type="String" />
+		<field name="interviewers" type="String" />
+		<field name="action" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.Employee">
 		<field name="employeeId" type="long" />
@@ -50,6 +66,16 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="note" type="String" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.EmployeeVacancy">
+		<field name="employeeVacancyId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="v_id" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.FileAttachment">
 		<field name="f_id" type="long" />
@@ -120,7 +146,6 @@
 	<model name="vn.com.ecopharma.hrm.model.Vacancy">
 		<field name="v_id" type="long" />
 		<field name="jobtitleId" type="long" />
-		<field name="hiring_manager_id" type="long" />
 		<field name="name" type="String" />
 		<field name="locationId" type="long" />
 		<field name="description" type="String" />

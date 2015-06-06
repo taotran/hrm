@@ -684,6 +684,7 @@ public class InterviewScheduleLocalServiceClp
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException,
             vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException {
         Object returnObj = null;
 
@@ -716,6 +717,10 @@ public class InterviewScheduleLocalServiceClp
 
             if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
                 throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException) {
+                throw (vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException) t;
             }
 
             if (t instanceof vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException) {

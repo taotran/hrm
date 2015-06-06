@@ -250,7 +250,7 @@ public interface VacancyLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long locationId, long hiring_mananager_id,
+        long jTitle_id, long locationId, java.util.List<java.lang.Long> emps,
         java.lang.String name, java.lang.String description,
         int no_of_positions, java.lang.String vacancy_status,
         java.lang.String job_posting,
@@ -258,16 +258,18 @@ public interface VacancyLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
 
-    public vn.com.ecopharma.hrm.model.Vacancy edit(long id, long jtitle_id,
-        long locationId, long hiring_manager_id, java.lang.String name,
-        java.lang.String description, int number_of_positions,
-        java.lang.String job_posting)
+    public vn.com.ecopharma.hrm.model.Vacancy edit(long v_id, long jtitle_id,
+        long locationId, java.util.List<java.lang.Long> emps,
+        java.lang.String name, java.lang.String description,
+        int number_of_positions, java.lang.String job_posting,
+        com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public void delete(long v_id)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateException,
+            vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException,
             vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException,
             vn.com.ecopharma.hrm.NoSuchVacancyException;

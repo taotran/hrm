@@ -105,13 +105,13 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		c.setCv_file_id(cv_file_id);
 		c.setCv_text_version(cv_text_version);
 		c.setUser_id(user.getUserId());
-		c.setCandidate_status(v_id != null ? CandidateStatus.APPLICATION_INITIATED
-				.getLocalizedName() : null);
+		c.setCandidate_status(v_id != null ? CandidateStatus.APPLICATION_INITIATED.toString() : null);
 		c.setGroup_id(serviceContext.getScopeGroupId());
 		if (v_id != null) {
 			vacancyCandidateLocalService.create(v_id, c_id, user_id,
 					serviceContext);
 		}
+		candidateHistoryLocalService.create(c_id, v_id, -1, user.getUserId(), "Candidate is INITIATED by " + user.getLastName(), "", CandidateStatus.APPLICATION_INITIATED.toString(), user.getUserId(), serviceContext);
 		candidatePersistence.update(c);
 		resourceLocalService.addResources(user.getCompanyId(),
 				serviceContext.getScopeGroupId(), user.getUserId(),

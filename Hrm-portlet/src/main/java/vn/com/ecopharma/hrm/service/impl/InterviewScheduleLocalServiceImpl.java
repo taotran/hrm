@@ -10,6 +10,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.constant.CandidateStatus;
+import vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException;
 import vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule;
@@ -49,15 +50,19 @@ public class InterviewScheduleLocalServiceImpl extends
 			long candidateId, List<Long> emps, Date interviewDate,
 			String interviewTime, long userId, ServiceContext serviceContext)
 			throws SystemException, VacancyCandidateNotFoundException,
-			PortalException {
-		final InterviewSchedule is = interviewSchedulePersistence
-				.create(counterLocalService.increment());
-		is.setInterviewId(interviewId);
+			PortalException, InterviewScheduleExistedException {
 		final VacancyCandidate vacancyCandidate = vacancyCandidateLocalService
 				.findByVacancyAndCandidate(vacancyId, candidateId);
 		if (vacancyCandidate == null) {
 			throw new VacancyCandidateNotFoundException();
 		}
+		if (interviewSchedulePersistence.fetchByInterview_And_VacancyCandidate(interviewId, vacancyCandidate.getVacancyCandidateId(), true) != null) {
+			throw new InterviewScheduleExistedException();
+		}
+		final InterviewSchedule is = interviewSchedulePersistence
+				.create(counterLocalService.increment());
+		is.setInterviewId(interviewId);
+	
 		is.setVacancyCandidateId(vacancyCandidate.getVacancyCandidateId());
 		is.setInterviewDate(interviewDate);
 		is.setInterviewTime(interviewTime);

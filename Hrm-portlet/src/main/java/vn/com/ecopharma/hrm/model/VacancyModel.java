@@ -79,20 +79,6 @@ public interface VacancyModel extends BaseModel<Vacancy>, TrashedModel {
     public void setJobtitleId(long jobtitleId);
 
     /**
-     * Returns the hiring_manager_id of this vacancy.
-     *
-     * @return the hiring_manager_id of this vacancy
-     */
-    public long getHiring_manager_id();
-
-    /**
-     * Sets the hiring_manager_id of this vacancy.
-     *
-     * @param hiring_manager_id the hiring_manager_id of this vacancy
-     */
-    public void setHiring_manager_id(long hiring_manager_id);
-
-    /**
      * Returns the name of this vacancy.
      *
      * @return the name of this vacancy

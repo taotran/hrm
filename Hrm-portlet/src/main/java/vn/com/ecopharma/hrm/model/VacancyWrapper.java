@@ -39,7 +39,6 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
         attributes.put("v_id", getV_id());
         attributes.put("jobtitleId", getJobtitleId());
-        attributes.put("hiring_manager_id", getHiring_manager_id());
         attributes.put("name", getName());
         attributes.put("locationId", getLocationId());
         attributes.put("description", getDescription());
@@ -65,12 +64,6 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
         if (jobtitleId != null) {
             setJobtitleId(jobtitleId);
-        }
-
-        Long hiring_manager_id = (Long) attributes.get("hiring_manager_id");
-
-        if (hiring_manager_id != null) {
-            setHiring_manager_id(hiring_manager_id);
         }
 
         String name = (String) attributes.get("name");
@@ -186,26 +179,6 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     @Override
     public void setJobtitleId(long jobtitleId) {
         _vacancy.setJobtitleId(jobtitleId);
-    }
-
-    /**
-    * Returns the hiring_manager_id of this vacancy.
-    *
-    * @return the hiring_manager_id of this vacancy
-    */
-    @Override
-    public long getHiring_manager_id() {
-        return _vacancy.getHiring_manager_id();
-    }
-
-    /**
-    * Sets the hiring_manager_id of this vacancy.
-    *
-    * @param hiring_manager_id the hiring_manager_id of this vacancy
-    */
-    @Override
-    public void setHiring_manager_id(long hiring_manager_id) {
-        _vacancy.setHiring_manager_id(hiring_manager_id);
     }
 
     /**

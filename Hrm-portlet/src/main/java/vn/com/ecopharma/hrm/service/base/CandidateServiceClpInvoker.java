@@ -9,43 +9,43 @@ import java.util.Arrays;
  * @generated
  */
 public class CandidateServiceClpInvoker {
-    private String _methodName74;
-    private String[] _methodParameterTypes74;
-    private String _methodName75;
-    private String[] _methodParameterTypes75;
-    private String _methodName80;
-    private String[] _methodParameterTypes80;
+    private String _methodName86;
+    private String[] _methodParameterTypes86;
+    private String _methodName87;
+    private String[] _methodParameterTypes87;
+    private String _methodName92;
+    private String[] _methodParameterTypes92;
 
     public CandidateServiceClpInvoker() {
-        _methodName74 = "getBeanIdentifier";
+        _methodName86 = "getBeanIdentifier";
 
-        _methodParameterTypes74 = new String[] {  };
+        _methodParameterTypes86 = new String[] {  };
 
-        _methodName75 = "setBeanIdentifier";
+        _methodName87 = "setBeanIdentifier";
 
-        _methodParameterTypes75 = new String[] { "java.lang.String" };
+        _methodParameterTypes87 = new String[] { "java.lang.String" };
 
-        _methodName80 = "findAll";
+        _methodName92 = "findAll";
 
-        _methodParameterTypes80 = new String[] {  };
+        _methodParameterTypes92 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName74.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+        if (_methodName86.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
             return CandidateServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName75.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
+        if (_methodName87.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
             CandidateServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName80.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
+        if (_methodName92.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
             return CandidateServiceUtil.findAll();
         }
 

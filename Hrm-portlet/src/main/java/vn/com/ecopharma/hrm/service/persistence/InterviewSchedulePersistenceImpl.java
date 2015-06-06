@@ -105,6 +105,24 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
             "countByVacancyCandidate", new String[] { Long.class.getName() });
     private static final String _FINDER_COLUMN_VACANCYCANDIDATE_VACANCYCANDIDATEID_2 =
         "interviewSchedule.vacancyCandidateId = ?";
+    public static final FinderPath FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE =
+        new FinderPath(InterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            InterviewScheduleModelImpl.FINDER_CACHE_ENABLED,
+            InterviewScheduleImpl.class, FINDER_CLASS_NAME_ENTITY,
+            "fetchByInterview_And_VacancyCandidate",
+            new String[] { Long.class.getName(), Long.class.getName() },
+            InterviewScheduleModelImpl.INTERVIEWID_COLUMN_BITMASK |
+            InterviewScheduleModelImpl.VACANCYCANDIDATEID_COLUMN_BITMASK);
+    public static final FinderPath FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE =
+        new FinderPath(InterviewScheduleModelImpl.ENTITY_CACHE_ENABLED,
+            InterviewScheduleModelImpl.FINDER_CACHE_ENABLED, Long.class,
+            FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+            "countByInterview_And_VacancyCandidate",
+            new String[] { Long.class.getName(), Long.class.getName() });
+    private static final String _FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_INTERVIEWID_2 =
+        "interviewSchedule.interviewId = ? AND ";
+    private static final String _FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_VACANCYCANDIDATEID_2 =
+        "interviewSchedule.vacancyCandidateId = ?";
     private static final String _SQL_SELECT_INTERVIEWSCHEDULE = "SELECT interviewSchedule FROM InterviewSchedule interviewSchedule";
     private static final String _SQL_SELECT_INTERVIEWSCHEDULE_WHERE = "SELECT interviewSchedule FROM InterviewSchedule interviewSchedule WHERE ";
     private static final String _SQL_COUNT_INTERVIEWSCHEDULE = "SELECT COUNT(interviewSchedule) FROM InterviewSchedule interviewSchedule";
@@ -795,6 +813,232 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
     }
 
     /**
+     * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or throws a {@link vn.com.ecopharma.hrm.NoSuchInterviewScheduleException} if it could not be found.
+     *
+     * @param interviewId the interview ID
+     * @param vacancyCandidateId the vacancy candidate ID
+     * @return the matching interview schedule
+     * @throws vn.com.ecopharma.hrm.NoSuchInterviewScheduleException if a matching interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public InterviewSchedule findByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId)
+        throws NoSuchInterviewScheduleException, SystemException {
+        InterviewSchedule interviewSchedule = fetchByInterview_And_VacancyCandidate(interviewId,
+                vacancyCandidateId);
+
+        if (interviewSchedule == null) {
+            StringBundler msg = new StringBundler(6);
+
+            msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+            msg.append("interviewId=");
+            msg.append(interviewId);
+
+            msg.append(", vacancyCandidateId=");
+            msg.append(vacancyCandidateId);
+
+            msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+            if (_log.isWarnEnabled()) {
+                _log.warn(msg.toString());
+            }
+
+            throw new NoSuchInterviewScheduleException(msg.toString());
+        }
+
+        return interviewSchedule;
+    }
+
+    /**
+     * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+     *
+     * @param interviewId the interview ID
+     * @param vacancyCandidateId the vacancy candidate ID
+     * @return the matching interview schedule, or <code>null</code> if a matching interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public InterviewSchedule fetchByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId) throws SystemException {
+        return fetchByInterview_And_VacancyCandidate(interviewId,
+            vacancyCandidateId, true);
+    }
+
+    /**
+     * Returns the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+     *
+     * @param interviewId the interview ID
+     * @param vacancyCandidateId the vacancy candidate ID
+     * @param retrieveFromCache whether to use the finder cache
+     * @return the matching interview schedule, or <code>null</code> if a matching interview schedule could not be found
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public InterviewSchedule fetchByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId, boolean retrieveFromCache)
+        throws SystemException {
+        Object[] finderArgs = new Object[] { interviewId, vacancyCandidateId };
+
+        Object result = null;
+
+        if (retrieveFromCache) {
+            result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                    finderArgs, this);
+        }
+
+        if (result instanceof InterviewSchedule) {
+            InterviewSchedule interviewSchedule = (InterviewSchedule) result;
+
+            if ((interviewId != interviewSchedule.getInterviewId()) ||
+                    (vacancyCandidateId != interviewSchedule.getVacancyCandidateId())) {
+                result = null;
+            }
+        }
+
+        if (result == null) {
+            StringBundler query = new StringBundler(4);
+
+            query.append(_SQL_SELECT_INTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_INTERVIEWID_2);
+
+            query.append(_FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_VACANCYCANDIDATEID_2);
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(interviewId);
+
+                qPos.add(vacancyCandidateId);
+
+                List<InterviewSchedule> list = q.list();
+
+                if (list.isEmpty()) {
+                    FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                        finderArgs, list);
+                } else {
+                    if ((list.size() > 1) && _log.isWarnEnabled()) {
+                        _log.warn(
+                            "InterviewSchedulePersistenceImpl.fetchByInterview_And_VacancyCandidate(long, long, boolean) with parameters (" +
+                            StringUtil.merge(finderArgs) +
+                            ") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+                    }
+
+                    InterviewSchedule interviewSchedule = list.get(0);
+
+                    result = interviewSchedule;
+
+                    cacheResult(interviewSchedule);
+
+                    if ((interviewSchedule.getInterviewId() != interviewId) ||
+                            (interviewSchedule.getVacancyCandidateId() != vacancyCandidateId)) {
+                        FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                            finderArgs, interviewSchedule);
+                    }
+                }
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                    finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        if (result instanceof List<?>) {
+            return null;
+        } else {
+            return (InterviewSchedule) result;
+        }
+    }
+
+    /**
+     * Removes the interview schedule where interviewId = &#63; and vacancyCandidateId = &#63; from the database.
+     *
+     * @param interviewId the interview ID
+     * @param vacancyCandidateId the vacancy candidate ID
+     * @return the interview schedule that was removed
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public InterviewSchedule removeByInterview_And_VacancyCandidate(
+        long interviewId, long vacancyCandidateId)
+        throws NoSuchInterviewScheduleException, SystemException {
+        InterviewSchedule interviewSchedule = findByInterview_And_VacancyCandidate(interviewId,
+                vacancyCandidateId);
+
+        return remove(interviewSchedule);
+    }
+
+    /**
+     * Returns the number of interview schedules where interviewId = &#63; and vacancyCandidateId = &#63;.
+     *
+     * @param interviewId the interview ID
+     * @param vacancyCandidateId the vacancy candidate ID
+     * @return the number of matching interview schedules
+     * @throws SystemException if a system exception occurred
+     */
+    @Override
+    public int countByInterview_And_VacancyCandidate(long interviewId,
+        long vacancyCandidateId) throws SystemException {
+        FinderPath finderPath = FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE;
+
+        Object[] finderArgs = new Object[] { interviewId, vacancyCandidateId };
+
+        Long count = (Long) FinderCacheUtil.getResult(finderPath, finderArgs,
+                this);
+
+        if (count == null) {
+            StringBundler query = new StringBundler(3);
+
+            query.append(_SQL_COUNT_INTERVIEWSCHEDULE_WHERE);
+
+            query.append(_FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_INTERVIEWID_2);
+
+            query.append(_FINDER_COLUMN_INTERVIEW_AND_VACANCYCANDIDATE_VACANCYCANDIDATEID_2);
+
+            String sql = query.toString();
+
+            Session session = null;
+
+            try {
+                session = openSession();
+
+                Query q = session.createQuery(sql);
+
+                QueryPos qPos = QueryPos.getInstance(q);
+
+                qPos.add(interviewId);
+
+                qPos.add(vacancyCandidateId);
+
+                count = (Long) q.uniqueResult();
+
+                FinderCacheUtil.putResult(finderPath, finderArgs, count);
+            } catch (Exception e) {
+                FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+                throw processException(e);
+            } finally {
+                closeSession(session);
+            }
+        }
+
+        return count.intValue();
+    }
+
+    /**
      * Caches the interview schedule in the entity cache if it is enabled.
      *
      * @param interviewSchedule the interview schedule
@@ -808,6 +1052,12 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
         FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VACANCYCANDIDATE,
             new Object[] { interviewSchedule.getVacancyCandidateId() },
             interviewSchedule);
+
+        FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+            new Object[] {
+                interviewSchedule.getInterviewId(),
+                interviewSchedule.getVacancyCandidateId()
+            }, interviewSchedule);
 
         interviewSchedule.resetOriginalValues();
     }
@@ -892,6 +1142,16 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
                 args, Long.valueOf(1));
             FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VACANCYCANDIDATE,
                 args, interviewSchedule);
+
+            args = new Object[] {
+                    interviewSchedule.getInterviewId(),
+                    interviewSchedule.getVacancyCandidateId()
+                };
+
+            FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                args, Long.valueOf(1));
+            FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                args, interviewSchedule);
         } else {
             InterviewScheduleModelImpl interviewScheduleModelImpl = (InterviewScheduleModelImpl) interviewSchedule;
 
@@ -904,6 +1164,19 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
                 FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VACANCYCANDIDATE,
                     args, Long.valueOf(1));
                 FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VACANCYCANDIDATE,
+                    args, interviewSchedule);
+            }
+
+            if ((interviewScheduleModelImpl.getColumnBitmask() &
+                    FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE.getColumnBitmask()) != 0) {
+                Object[] args = new Object[] {
+                        interviewSchedule.getInterviewId(),
+                        interviewSchedule.getVacancyCandidateId()
+                    };
+
+                FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                    args, Long.valueOf(1));
+                FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
                     args, interviewSchedule);
             }
         }
@@ -926,6 +1199,29 @@ public class InterviewSchedulePersistenceImpl extends BasePersistenceImpl<Interv
             FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VACANCYCANDIDATE,
                 args);
             FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VACANCYCANDIDATE,
+                args);
+        }
+
+        args = new Object[] {
+                interviewSchedule.getInterviewId(),
+                interviewSchedule.getVacancyCandidateId()
+            };
+
+        FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+            args);
+        FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+            args);
+
+        if ((interviewScheduleModelImpl.getColumnBitmask() &
+                FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE.getColumnBitmask()) != 0) {
+            args = new Object[] {
+                    interviewScheduleModelImpl.getOriginalInterviewId(),
+                    interviewScheduleModelImpl.getOriginalVacancyCandidateId()
+                };
+
+            FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_INTERVIEW_AND_VACANCYCANDIDATE,
+                args);
+            FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_INTERVIEW_AND_VACANCYCANDIDATE,
                 args);
         }
     }

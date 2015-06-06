@@ -285,6 +285,7 @@ public class InterviewScheduleLocalServiceWrapper
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException,
             vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException {
         return _interviewScheduleLocalService.create(interviewId, vacancyId,
             candidateId, emps, interviewDate, interviewTime, userId,

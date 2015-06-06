@@ -17,7 +17,6 @@ public enum CandidateStatus {
 	JOB_OFFERED, // offer job
 	DECLINE_OFFERED, // decline
 	HIRE, // hire
-	INTERVIEW_FAILED, // failed interview
 	MARK_INTERVIEW_PASS, // mark pass
 	MARK_INTERVIEW_FAIL; // mark fail
 
