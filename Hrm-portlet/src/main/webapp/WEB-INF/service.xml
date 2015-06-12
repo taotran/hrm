@@ -150,19 +150,19 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-		
+
 		<!-- Finders -->
 		<finder return-type="Collection" name="InterviewId">
 			<finder-column name="interviewId"></finder-column>
 		</finder>
-        <finder name="VacancyCandidate" return-type="InterviewSchedule">
-            <finder-column name="vacancyCandidateId"></finder-column>
-        </finder>
-        <finder name="Interview_And_VacancyCandidate" return-type="InterviewSchedule">
-            <finder-column name="interviewId"></finder-column>
-            <finder-column name="vacancyCandidateId"></finder-column>
-        </finder>
-		
+		<finder name="VacancyCandidate" return-type="InterviewSchedule">
+			<finder-column name="vacancyCandidateId"></finder-column>
+		</finder>
+		<finder name="Interview_And_VacancyCandidate" return-type="InterviewSchedule">
+			<finder-column name="interviewId"></finder-column>
+			<finder-column name="vacancyCandidateId"></finder-column>
+		</finder>
+
 	</entity>
 	<entity name="VacancyCandidate" local-service="true">
 
@@ -182,7 +182,8 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-		<finder name="C_Id" return-type="VacancyCandidate">
+		<column name="vc_status" type="String" primary="false"></column>
+		<finder name="C_Id" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
 		</finder>
 
@@ -192,6 +193,16 @@
 		<finder name="V_Id_And_C_Id" return-type="VacancyCandidate">
 			<finder-column name="v_id"></finder-column>
 			<finder-column name="c_id"></finder-column>
+		</finder>
+
+		<finder name="Candidate_And_VALID_Status" return-type="VacancyCandidate"
+			where="vc_status = 'VALID'">
+			<finder-column name="c_id"></finder-column>
+		</finder>
+		
+		<finder name="Vacancy_And_VALID_Status" return-type="Collection"
+			where="vc_status = 'VALID'">
+			<finder-column name="v_id"></finder-column>
 		</finder>
 	</entity>
 	<entity name="Employee" local-service="true">
@@ -216,6 +227,7 @@
 		<column name="middle_name" type="String"></column>
 		<column name="lastname" type="String"></column>
 		<column name="email" type="String"></column>
+		<column name="contact_number" type="String"></column>
 		<column name="nickname" type="String"></column>
 		<column name="birthday" type="Date"></column>
 		<column name="gender" type="String"></column>
@@ -223,6 +235,11 @@
 		<column name="status" type="String"></column>
 		<column name="jobtitleId" type="long"></column>
 		<column name="joined_date" type="Date"></column>
+        <finder name="Name" return-type="Collection">
+            <finder-column name="firstname" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
+            <finder-column name="lastname" comparator="LIKE"></finder-column>
+        </finder>
 	</entity>
 	<entity name="Location" local-service="true">
 
@@ -287,8 +304,8 @@
 		<column name="employeeVacancyId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="employeeId" type="long" convert-null="false"></column>
-        <column name="v_id" type="long" convert-null="false"></column>
+		<column name="employeeId" type="long" convert-null="false"></column>
+		<column name="v_id" type="long" convert-null="false"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -298,16 +315,16 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="VacancyId_EmployeeId" return-type="EmployeeVacancy">
-            <finder-column name="v_id"></finder-column>
-            <finder-column name="employeeId"></finder-column>
-        </finder>
-        <finder name="EmployeeId" return-type="Collection">
-            <finder-column name="employeeId"></finder-column>
-        </finder>
-        <finder name="VacancyId" return-type="Collection">
-            <finder-column name="v_id"></finder-column>
-        </finder>
+		<finder name="VacancyId_EmployeeId" return-type="EmployeeVacancy">
+			<finder-column name="v_id"></finder-column>
+			<finder-column name="employeeId"></finder-column>
+		</finder>
+		<finder name="EmployeeId" return-type="Collection">
+			<finder-column name="employeeId"></finder-column>
+		</finder>
+		<finder name="VacancyId" return-type="Collection">
+			<finder-column name="v_id"></finder-column>
+		</finder>
 	</entity>
 	<entity name="CandidateHistory" local-service="true">
 
@@ -324,13 +341,14 @@
 		<column name="candidateHistoryId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="c_id" type="long"></column>
-        <column name="v_id" type="long"></column>
-        <column name="interviewId" type="long"></column>
-        <column name="performed_by" type="long"></column>
-        <column name="note" type="String"></column>
-        <column name="interviewers" type="String"></column>
-        <column name="action" type="String"></column>
+		<column name="c_id" type="long"></column>
+		<column name="v_id" type="long"></column>
+		<column name="interviewId" type="long"></column>
+		<column name="performed_by" type="long"></column>
+		<column name="performedDate" type="Date"></column>
+		<column name="note" type="String"></column>
+		<column name="interviewers" type="String"></column>
+		<column name="action" type="String"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -339,9 +357,9 @@
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
 		<column name="userName" type="String"></column>
-        <finder name="C_Id" return-type="Collection">
-            <finder-column name="c_id"></finder-column>
-        </finder>
+		<finder name="C_Id" return-type="Collection">
+			<finder-column name="c_id"></finder-column>
+		</finder>
 	</entity>
 
 

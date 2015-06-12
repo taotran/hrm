@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.service.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,7 +47,7 @@ public class CandidateHistoryLocalServiceImpl
 	}
 	
 	public CandidateHistory create(long c_id, long v_id, long interviewId, long performer_id, 
-			String note, String interviewers, String action, long userId, ServiceContext serviceContext) throws SystemException{
+			String note, Date performedDate, String interviewers, String action, long userId, ServiceContext serviceContext) throws SystemException{
 		final CandidateHistory candidateHistory = candidateHistoryPersistence.create(counterLocalService.increment());
 		candidateHistory.setC_id(c_id);
 		candidateHistory.setV_id(v_id);
@@ -56,13 +57,15 @@ public class CandidateHistoryLocalServiceImpl
 		candidateHistory.setInterviewers(interviewers);
 		candidateHistory.setUserId(userId);
 		candidateHistory.setNote(note);
+		candidateHistory.setPerformedDate(performedDate);
+		
 		candidateHistory.setGroupId(serviceContext.getScopeGroupId());
 		candidateHistoryPersistence.update(candidateHistory);
 		return candidateHistory;
 	}
 	
 	public CandidateHistory edit(long candidateHistoryId, long c_id, long v_id, long interviewId, long performer_id, 
-			String note, String interviewers, String action, long userId, ServiceContext serviceContext) throws SystemException, NoSuchCandidateHistoryException{
+			String note, Date performedDate, String interviewers, String action, long userId, ServiceContext serviceContext) throws SystemException, NoSuchCandidateHistoryException{
 		final CandidateHistory candidateHistory = candidateHistoryPersistence.fetchByPrimaryKey(candidateHistoryId);
 		candidateHistory.setV_id(v_id);
 		candidateHistory.setInterviewId(interviewId);
@@ -72,6 +75,7 @@ public class CandidateHistoryLocalServiceImpl
 		candidateHistory.setUserId(userId);
 		candidateHistory.setGroupId(serviceContext.getScopeGroupId());
 		candidateHistory.setNote(note);
+		candidateHistory.setPerformedDate(performedDate);
 		candidateHistoryPersistence.update(candidateHistory);
 		return candidateHistory;
 	}

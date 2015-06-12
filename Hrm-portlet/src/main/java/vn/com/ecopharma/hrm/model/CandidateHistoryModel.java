@@ -10,6 +10,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the CandidateHistory service. Represents a row in the &quot;HRM_Recruitment_CandidateHistory&quot; database table, with each column mapped to a property of this class.
  *
@@ -113,6 +115,20 @@ public interface CandidateHistoryModel extends BaseModel<CandidateHistory> {
      * @param performed_by the performed_by of this candidate history
      */
     public void setPerformed_by(long performed_by);
+
+    /**
+     * Returns the performed date of this candidate history.
+     *
+     * @return the performed date of this candidate history
+     */
+    public Date getPerformedDate();
+
+    /**
+     * Sets the performed date of this candidate history.
+     *
+     * @param performedDate the performed date of this candidate history
+     */
+    public void setPerformedDate(Date performedDate);
 
     /**
      * Returns the note of this candidate history.

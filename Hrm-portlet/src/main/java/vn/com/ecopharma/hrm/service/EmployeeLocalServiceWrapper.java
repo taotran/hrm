@@ -292,11 +292,64 @@ public class EmployeeLocalServiceWrapper implements EmployeeLocalService,
     }
 
     @Override
+    public vn.com.ecopharma.hrm.model.Employee create(
+        java.lang.String emp_code, java.lang.String firstname,
+        java.lang.String middle_name, java.lang.String lastname,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String nickname, java.util.Date birthday,
+        java.lang.String gender, long jobTitleId, java.util.Date joined_date,
+        long userId, com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.create(emp_code, firstname, middle_name,
+            lastname, email, contact_number, nickname, birthday, gender,
+            jobTitleId, joined_date, userId, serviceContext);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Employee tranferCandidate(
+        vn.com.ecopharma.hrm.model.Candidate candidate,
+        java.lang.String emp_code, java.lang.String nickname,
+        java.util.Date birthday, long jobTitleId, java.util.Date joined_date)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.tranferCandidate(candidate, emp_code,
+            nickname, birthday, jobTitleId, joined_date);
+    }
+
+    @Override
     public void delete(long employeeId)
         throws com.liferay.portal.NoSuchModelException,
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         _employeeLocalService.delete(employeeId);
+    }
+
+    @Override
+    public java.lang.String getListInterviewersStringByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.getListInterviewersStringByIds(ids);
+    }
+
+    @Override
+    public java.lang.String getListInterviewersStringByEmps(
+        java.util.List<vn.com.ecopharma.hrm.model.Employee> emps) {
+        return _employeeLocalService.getListInterviewersStringByEmps(emps);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.findByIds(ids);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
+        java.lang.String term)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _employeeLocalService.filterByName(term);
     }
 
     /**

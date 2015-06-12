@@ -64,6 +64,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             { "middle_name", Types.VARCHAR },
             { "lastname", Types.VARCHAR },
             { "email", Types.VARCHAR },
+            { "contact_number", Types.VARCHAR },
             { "nickname", Types.VARCHAR },
             { "birthday", Types.TIMESTAMP },
             { "gender", Types.VARCHAR },
@@ -72,7 +73,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             { "jobtitleId", Types.BIGINT },
             { "joined_date", Types.TIMESTAMP }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,emp_code VARCHAR(75) null,firstname VARCHAR(75) null,middle_name VARCHAR(75) null,lastname VARCHAR(75) null,email VARCHAR(75) null,nickname VARCHAR(75) null,birthday DATE null,gender VARCHAR(75) null,marital_status VARCHAR(75) null,status VARCHAR(75) null,jobtitleId LONG,joined_date DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,emp_code VARCHAR(75) null,firstname VARCHAR(75) null,middle_name VARCHAR(75) null,lastname VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,nickname VARCHAR(75) null,birthday DATE null,gender VARCHAR(75) null,marital_status VARCHAR(75) null,status VARCHAR(75) null,jobtitleId LONG,joined_date DATE null)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Employee";
     public static final String ORDER_BY_JPQL = " ORDER BY employee.employeeId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Employee.employeeId ASC";
@@ -85,7 +86,13 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.finder.cache.enabled.vn.com.ecopharma.hrm.model.Employee"),
             true);
-    public static final boolean COLUMN_BITMASK_ENABLED = false;
+    public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+                "value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.model.Employee"),
+            true);
+    public static long FIRSTNAME_COLUMN_BITMASK = 1L;
+    public static long LASTNAME_COLUMN_BITMASK = 2L;
+    public static long MIDDLE_NAME_COLUMN_BITMASK = 4L;
+    public static long EMPLOYEEID_COLUMN_BITMASK = 8L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.vn.com.ecopharma.hrm.model.Employee"));
     private static ClassLoader _classLoader = Employee.class.getClassLoader();
@@ -102,9 +109,13 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     private Date _modifiedDate;
     private String _emp_code;
     private String _firstname;
+    private String _originalFirstname;
     private String _middle_name;
+    private String _originalMiddle_name;
     private String _lastname;
+    private String _originalLastname;
     private String _email;
+    private String _contact_number;
     private String _nickname;
     private Date _birthday;
     private String _gender;
@@ -112,6 +123,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     private String _status;
     private long _jobtitleId;
     private Date _joined_date;
+    private long _columnBitmask;
     private Employee _escapedModel;
 
     public EmployeeModelImpl() {
@@ -142,6 +154,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         model.setMiddle_name(soapModel.getMiddle_name());
         model.setLastname(soapModel.getLastname());
         model.setEmail(soapModel.getEmail());
+        model.setContact_number(soapModel.getContact_number());
         model.setNickname(soapModel.getNickname());
         model.setBirthday(soapModel.getBirthday());
         model.setGender(soapModel.getGender());
@@ -219,6 +232,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         attributes.put("middle_name", getMiddle_name());
         attributes.put("lastname", getLastname());
         attributes.put("email", getEmail());
+        attributes.put("contact_number", getContact_number());
         attributes.put("nickname", getNickname());
         attributes.put("birthday", getBirthday());
         attributes.put("gender", getGender());
@@ -302,6 +316,12 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
         if (email != null) {
             setEmail(email);
+        }
+
+        String contact_number = (String) attributes.get("contact_number");
+
+        if (contact_number != null) {
+            setContact_number(contact_number);
         }
 
         String nickname = (String) attributes.get("nickname");
@@ -465,7 +485,17 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public void setFirstname(String firstname) {
+        _columnBitmask |= FIRSTNAME_COLUMN_BITMASK;
+
+        if (_originalFirstname == null) {
+            _originalFirstname = _firstname;
+        }
+
         _firstname = firstname;
+    }
+
+    public String getOriginalFirstname() {
+        return GetterUtil.getString(_originalFirstname);
     }
 
     @JSON
@@ -480,7 +510,17 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public void setMiddle_name(String middle_name) {
+        _columnBitmask |= MIDDLE_NAME_COLUMN_BITMASK;
+
+        if (_originalMiddle_name == null) {
+            _originalMiddle_name = _middle_name;
+        }
+
         _middle_name = middle_name;
+    }
+
+    public String getOriginalMiddle_name() {
+        return GetterUtil.getString(_originalMiddle_name);
     }
 
     @JSON
@@ -495,7 +535,17 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public void setLastname(String lastname) {
+        _columnBitmask |= LASTNAME_COLUMN_BITMASK;
+
+        if (_originalLastname == null) {
+            _originalLastname = _lastname;
+        }
+
         _lastname = lastname;
+    }
+
+    public String getOriginalLastname() {
+        return GetterUtil.getString(_originalLastname);
     }
 
     @JSON
@@ -511,6 +561,21 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     @Override
     public void setEmail(String email) {
         _email = email;
+    }
+
+    @JSON
+    @Override
+    public String getContact_number() {
+        if (_contact_number == null) {
+            return StringPool.BLANK;
+        } else {
+            return _contact_number;
+        }
+    }
+
+    @Override
+    public void setContact_number(String contact_number) {
+        _contact_number = contact_number;
     }
 
     @JSON
@@ -606,6 +671,10 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         _joined_date = joined_date;
     }
 
+    public long getColumnBitmask() {
+        return _columnBitmask;
+    }
+
     @Override
     public ExpandoBridge getExpandoBridge() {
         return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -645,6 +714,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         employeeImpl.setMiddle_name(getMiddle_name());
         employeeImpl.setLastname(getLastname());
         employeeImpl.setEmail(getEmail());
+        employeeImpl.setContact_number(getContact_number());
         employeeImpl.setNickname(getNickname());
         employeeImpl.setBirthday(getBirthday());
         employeeImpl.setGender(getGender());
@@ -699,6 +769,15 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public void resetOriginalValues() {
+        EmployeeModelImpl employeeModelImpl = this;
+
+        employeeModelImpl._originalFirstname = employeeModelImpl._firstname;
+
+        employeeModelImpl._originalMiddle_name = employeeModelImpl._middle_name;
+
+        employeeModelImpl._originalLastname = employeeModelImpl._lastname;
+
+        employeeModelImpl._columnBitmask = 0;
     }
 
     @Override
@@ -777,6 +856,14 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             employeeCacheModel.email = null;
         }
 
+        employeeCacheModel.contact_number = getContact_number();
+
+        String contact_number = employeeCacheModel.contact_number;
+
+        if ((contact_number != null) && (contact_number.length() == 0)) {
+            employeeCacheModel.contact_number = null;
+        }
+
         employeeCacheModel.nickname = getNickname();
 
         String nickname = employeeCacheModel.nickname;
@@ -832,7 +919,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(39);
+        StringBundler sb = new StringBundler(41);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
@@ -858,6 +945,8 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(getLastname());
         sb.append(", email=");
         sb.append(getEmail());
+        sb.append(", contact_number=");
+        sb.append(getContact_number());
         sb.append(", nickname=");
         sb.append(getNickname());
         sb.append(", birthday=");
@@ -879,7 +968,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(61);
+        StringBundler sb = new StringBundler(64);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -932,6 +1021,10 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(
             "<column><column-name>email</column-name><column-value><![CDATA[");
         sb.append(getEmail());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
+        sb.append(getContact_number());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>nickname</column-name><column-value><![CDATA[");

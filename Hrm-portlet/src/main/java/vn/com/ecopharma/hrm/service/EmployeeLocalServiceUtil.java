@@ -281,11 +281,60 @@ public class EmployeeLocalServiceUtil {
         return getService().findAll(start, end, orderByComparator);
     }
 
+    public static vn.com.ecopharma.hrm.model.Employee create(
+        java.lang.String emp_code, java.lang.String firstname,
+        java.lang.String middle_name, java.lang.String lastname,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String nickname, java.util.Date birthday,
+        java.lang.String gender, long jobTitleId, java.util.Date joined_date,
+        long userId, com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .create(emp_code, firstname, middle_name, lastname, email,
+            contact_number, nickname, birthday, gender, jobTitleId,
+            joined_date, userId, serviceContext);
+    }
+
+    public static vn.com.ecopharma.hrm.model.Employee tranferCandidate(
+        vn.com.ecopharma.hrm.model.Candidate candidate,
+        java.lang.String emp_code, java.lang.String nickname,
+        java.util.Date birthday, long jobTitleId, java.util.Date joined_date)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .tranferCandidate(candidate, emp_code, nickname, birthday,
+            jobTitleId, joined_date);
+    }
+
     public static void delete(long employeeId)
         throws com.liferay.portal.NoSuchModelException,
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         getService().delete(employeeId);
+    }
+
+    public static java.lang.String getListInterviewersStringByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getListInterviewersStringByIds(ids);
+    }
+
+    public static java.lang.String getListInterviewersStringByEmps(
+        java.util.List<vn.com.ecopharma.hrm.model.Employee> emps) {
+        return getService().getListInterviewersStringByEmps(emps);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().findByIds(ids);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
+        java.lang.String term)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().filterByName(term);
     }
 
     public static void clearService() {

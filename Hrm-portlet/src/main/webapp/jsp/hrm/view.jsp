@@ -32,15 +32,13 @@
 								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
 									key="global.button.add" />
 							</a>
-							<button data-toggle="modal" id="cDeleteBtn" disabled
+							<button data-toggle="modal" id="cDeleteBtn"
 								class="btn btn-danger" onclick="deleteCandidates()">
 								<liferay-ui:message key="global.button.delete" />
 							</button>
 
-							<button data-toggle="modal" id="cExport" disabled class="btn"
-								onclick="exportCSV()">Export CSV</button>
-
-							<a data-toggle="modal" id="iAddBtn" class="btn"
+							<a data-toggle="modal" class="btn" href="#export-modal">Export
+								CSV</a> <a data-toggle="modal" id="iAddBtn" class="btn"
 								href="#modify-interview-modal"> Add Interview </a>
 						</div>
 					</div>
@@ -54,7 +52,7 @@
 									<th>FullName</th>
 									<th>Email</th>
 									<th>Phone</th>
-									<th>Date of Application</th>
+									<th>Application Date</th>
 									<th>Status</th>
 									<th>Resume</th>
 								</tr>
@@ -102,22 +100,22 @@
 			<table id="vtable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 						<th><liferay-ui:message key="vacancy.id" /></th>
 						<th><liferay-ui:message key="vacancy.name" /></th>
 						<th>Job Title</th>
 						<th>Location</th>
 						<th>Status</th>
+						<th>Applicants / Positions</th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<!-- <th><input type="checkbox" id="select_all_candidates"/>Id</th> -->
 						<th><input type="checkbox" id="v_checkAll" /></th>
 						<th><liferay-ui:message key="vacancy.name" /></th>
 						<th>Job Title</th>
 						<th>Location</th>
 						<th>Status</th>
+						<th></th>
 					</tr>
 				</tfoot>
 				<tbody></tbody>
@@ -135,7 +133,7 @@
 		id="modify-candidate-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
-			<h4>Add New Candidate</h4>
+			<span class="modal-title">Add New Candidate</span>
 		</div>
 		<div class="modal-body" id="candidateInfo">
 
@@ -180,8 +178,8 @@
 				<label class="control-label" for="contact_number"><liferay-ui:message
 						key="candidate.contact_number" /></label>
 				<div class="controls">
-					<input type="text" class="form-control" id="contact_number"
-						value="123-456-789" placeholder="Contact Number">
+					<input type="text" id="contact_number" value="123-456-789"
+						placeholder="Contact Number">
 				</div>
 			</div>
 
@@ -189,7 +187,7 @@
 				<label class="control-label" for="select2"><liferay-ui:message
 						key="candidate.job_vacancy" /></label>
 				<div class="controls">
-					<select class="form-control select2-container" id="vacancySelect"
+					<select class="select2-container" id="vacancySelect"
 						class="vacancySelect2">
 					</select> <a href="javascript:void(0);" id="unpublish-vacancy-warn"
 						class="unpublish-vacancy-warn" data-toggle="tooltip"
@@ -212,7 +210,8 @@
 						key="candidate.comment" /></label>
 				<!-- 				<textarea rows="5" cols="50" class="form-control" id="comment">Test Test</textarea> -->
 				<div class="controls">
-					<input id="comment" value="Ghi chú" placeholder="Comment..." />
+					<input type="text" id="comment" value="Ghi chú"
+						placeholder="Comment..." />
 				</div>
 			</div>
 
@@ -226,42 +225,23 @@
 					<button type="button"></button>
 				</div>
 			</div>
-			<div class="modal-container">
+			<div id="modal-container" class="modal-container">
 				<div class="header">
 					<span>Expand</span>
 
 				</div>
 				<div class="content">
-					<table class="table table-striped table-bordered">
-						<thead>
+					<table id="candidateHistoryTable"
+						class="table table-striped table-bordered">
+				<!-- 		<thead>
 							<tr>
-								<th>Vacancy</th>
-								<th>Date</th>
-								<th>Executed Action</th>
-								<th>Performed By</th>
+								<th>Performed Date</th>
+								<th>Description</th>
+								<th>Details</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Test</td>
-								<td>15/04/2015</td>
-								<td>APPLICATION_INITIATED -> SHORTLIST</td>
-								<td>Admin1</td>
-							</tr>
-							<tr>
-								<td>Test1</td>
-								<td>15/04/2015</td>
-								<td>APPLICATION_INITIATED -> SHORTLIST</td>
-								<td>Admin2</td>
-							</tr>
-							<tr>
-								<td>Test2</td>
-								<td>15/04/2015</td>
-								<td>APPLICATION_INITIATED -> SHORTLIST</td>
-								<td>Admin3</td>
-							</tr>
-						</tbody>
-						<tfoot></tfoot>
+						</tbody> -->
 					</table>
 				</div>
 			</div>
@@ -269,8 +249,6 @@
 		</div>
 
 		<div class="modal-footer">
-			<!-- 				<button type="button" class="btn btn-primary" data-dismiss="modal"
-					onclick="saveCandidate()">SUBMIT</button> -->
 			<button type="button" class="btn btn-primary"
 				onclick="saveCandidate()">Save</button>
 			<button class="btn" onclick="clearFields()">
@@ -290,7 +268,7 @@
 	<div class="modal hrm-modal vacancy-modal" id="modify-vacancy-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
-			<h4>Add New Vacancy</h4>
+			<span class="modal-title">Add New Vacancy</span>
 		</div>
 
 		<div class="modal-body" id="vacancyInfo">
@@ -345,7 +323,7 @@
 						key="vacancy.no_positions" /></label>
 				<div class="controls">
 					<input type="text" id="no_of_pos" value="3"
-						placeholder="Number of positions" class="required number">
+						placeholder="Number of positions" class="small70 required number">
 				</div>
 			</div>
 
@@ -355,21 +333,6 @@
 					<textarea id="desc" rows="5" cols="50"></textarea>
 				</div>
 			</div>
-
-			<%-- 			<div class="control-group">
-				<label class="control-label" for="job_posting"><liferay-ui:message
-						key="vacancy.job_posting" /></label>
-				<div class="controls">
-					<textarea id="job_posting" rows="5" cols="50"></textarea>
-				</div>
-			</div> --%>
-			<%-- 			<div class="control-group">
-				<label class="control-label" for="summernote"><liferay-ui:message
-						key="vacancy.job_posting" /></label>
-				<div class="controls">
-					<textarea id="summernote" cols="7">Hello summernote</textarea>
-				</div>
-			</div> --%>
 			<label for="job_posting"><liferay-ui:message
 					key="vacancy.job_posting" /></label>
 			<textarea id="job_posting" cols="7">Job Posting</textarea>
@@ -391,7 +354,7 @@
 <div class="modal hrm-modal job-title-modal" id="modify-jtitle-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
-		<h4>Add New Job Title</h4>
+		<span class="modal-title">Add New Job Title</span>
 	</div>
 
 	<div class="modal-body" id="jobTitleInfo">
@@ -435,7 +398,7 @@
 <div class="modal hrm-modal location-modal" id="modify-location-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
-		<h4>Add New Location</h4>
+		<span class="modal-title">Add New Location</span>
 	</div>
 
 	<div class="modal-body" id="jobTitleInfo">
@@ -523,7 +486,7 @@
 <div class="modal hrm-modal interview-modal" id="modify-interview-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
-		<h4>Add New Interview Status</h4>
+		<span class="modal-title">Add New Interview Status</span>
 	</div>
 
 	<div class="modal-body" id="interviewInfo">
@@ -555,7 +518,7 @@
 		id="modify-interviewSchedule-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
-			<h4>Schedule Interview</h4>
+			<span class="modal-title">Schedule Interview</span>
 		</div>
 
 		<div class="modal-body" id="interviewScheduleInfo">
@@ -573,9 +536,10 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="itvName">Interviewer Name</label>
+				<label class="control-label" for="itvName">Interviewer Name<span
+					class="required">*</span></label>
 				<div class="controls">
-					<select id="managerSelect1" onchange="onManagerSelect(1)">
+					<select class="managerSelect" id="managerSelect1" onchange="onManagerSelect(1)">
 					</select>
 					<ul id="managers1" class="options">
 						<li>
@@ -589,20 +553,23 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="itvDate">Date</label>
+				<label class="control-label" for="itvDate">Date<span
+					class="required">*</span></label>
 				<div class="controls">
 					<input type="text" data-date-format="dd/mm/yyyy" id="itvDate"
-						class="itvDate small70">
+						class="itvDate small70 required" placeholder="dd/mm/yyyy">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="itvTime">Time</label>
+				<label class="control-label" for="itvTime">Time<span
+					class="required">*</span></label>
 				<div class="controls">
 					<div id="itvTime">
 						<label class="small70" for="itvTimeFrom">From</label> <input
-							type="text" class="small70" id="itvTimeFrom" placeholder="HH:MM">
+							type="text" class="small70 required" id="itvTimeFrom" placeholder="HH:MM">
 						<label class="small70" for="itvTimeTo">To</label> <input
-							class="small70" type="text" id="itvTimeTo" placeholder="HH:MM">
+							class="small70 required" type="text" id="itvTimeTo"
+							placeholder="HH:MM">
 					</div>
 				</div>
 			</div>
@@ -610,6 +577,164 @@
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary"
 				onclick="saveInterviewSchedule()">
+				<liferay-ui:message key="global.button.save" />
+			</button>
+			<button class="btn" onclick="clearFields()">
+				<liferay-ui:message key="global.button.clear_all" />
+			</button>
+			<button type="button" class="btn" data-dismiss="modal"
+				onclick="resetCandidateStatus()">
+				<liferay-ui:message key="global.button.cancel" />
+			</button>
+		</div>
+	</div>
+</form>
+
+<form id="exportForm" class="form-horizontal">
+	<div class="modal hrm-modal export-modal" id="export-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">x</button>
+			<span class="modal-title">Export Modal</span>
+		</div>
+
+		<div class="modal-body" id="exportSetting">
+			<input type="hidden" class="entityId" id="v_id" value="-1" />
+			<div class="control-group">
+				<label class="control-label" for="jTitleSelect">Choose
+					Preset:</label>
+				<div class="controls">
+					<select class="select2-container" id="exportPresetSelect"
+						class="exportPresetSelect">
+						<optgroup label="Excel">
+							<option>XLS</option>
+							<option>XLSX</option>
+						</optgroup>
+						<optgroup label="CSV">
+							<option>CSV Default</option>
+							<option>CSV Custom</option>
+						</optgroup>
+					</select> <a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
+						<i class="icon-plus"></i>Add
+					</a>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="noOfRecords"><liferay-ui:message
+						key="vacancy.name" /></label>
+				<div class="controls">
+					<input type="text" id="noOfRecords" placeholder="Name"
+						class="required">
+				</div>
+			</div>
+			<%-- 
+			<div class="control-group">
+				<label class="control-label" for="vacancy_status"><liferay-ui:message
+						key="vacancy.status" /></label>
+				<div class="controls">
+					<input disabled id="vacancy_status" value="NEW"
+						style="border: 0px;">
+				</div>
+			</div> --%>
+		</div>
+		<div class="modal-footer">
+			<!--  			<button type="button" class="btn btn-primary" onclick="downloadExport()">
+				Download
+			</button> -->
+			<a href="<portlet:resourceURL id='export_result'/>"
+				class="btn btn-primary">Download</a> <a href="#" class="btn"
+				data-dismiss="modal"><liferay-ui:message
+					key="global.button.cancel" /></a>
+		</div>
+	</div>
+</form>
+
+<form id="employeeForm" class="form-horizontal">
+	<div class="modal hrm-modal employee-modal"
+		id="modify-employee-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">x</button>
+			<span class="modal-title">Hire Candidate</span>
+		</div>
+
+		<div class="modal-body" id="interviewScheduleInfo">
+			<input type="hidden" class="entityId" id="employeeId" value="-1">
+			<input type="hidden" class="entityId" id="e_candidateId" value="-1">
+			<input type="hidden" class="entityId" id="e_vacancyId" value="-1">
+			<div class="control-group">
+				<label class="control-label" for="e_firstname">FirstName<span
+					class="required">*</span>
+				</label>
+				<div class="controls">
+					<input type="text" id="e_firstname" class="required"
+						placeholder="FirstName" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="e_middle_name"><liferay-ui:message
+						key="candidate.middle_name" /><span class="required">*</span></label>
+				<div class="controls">
+					<input type="text" class="required" id="e_middle_name"
+						placeholder="Middle Name">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="e_last_name"><liferay-ui:message
+						key="candidate.last_name" /><span class="required">*</span></label>
+				<div class="controls">
+					<input type="text" class="required" id="e_last_name"
+						placeholder="Last Name">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="e_gender_select">Gender<span class="required">*</span></label>
+				<div class="controls">
+					<select id="e_gender_select">
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+				</div>
+			</div>
+			
+
+			<div class="control-group">
+				<label class="control-label" for="e_inputEmail"><liferay-ui:message
+						key="candidate.email" /><span class="required">*</span></label>
+				<div class="controls">
+					<input type="email" class="required email" id="e_inputEmail"
+						placeholder="Email">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="e_birthday">Birthday:<span class="required">*</span></label>
+				<div class="controls">
+					<input type="text" data-date-format="dd/mm/yyyy" class="small70 required" id="e_birthday"
+						placeholder="dd/mm/yyyy">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="e_contact_number"><liferay-ui:message
+						key="candidate.contact_number" /></label>
+				<div class="controls">
+					<input type="text" id="e_contact_number" value="123-456-789"
+						placeholder="eg. 0902 548822">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="e_start_date">Start Date:<span class="required">*</span></label>
+				<div class="controls">
+					<input type="text" data-date-format="dd/mm/yyyy" class="small70 required" id="e_start_date"
+						placeholder="dd/mm/yyyy">
+				</div>
+			</div>
+			
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary"
+				onclick="saveEmployee()">
 				<liferay-ui:message key="global.button.save" />
 			</button>
 			<button class="btn" onclick="clearFields()">
@@ -636,6 +761,7 @@ var _State = 0;
 var ListJobTitle;
 var ListLocation;
 var isCandidateModalLoaded = false;
+var isCandidateHistoriesLoaded = false;
 
 
 /* 	
@@ -662,9 +788,8 @@ $('#modify-interviewSchedule-modal').on('shown.bs.modal', function(){
 /* clear modal data on closing */
  $('.modal').each(function(index) {
 	$(this).on('hidden.bs.modal', function () {
-		console.log("clear modal");
 	    $(this)
-	    .find("input,textarea,select")
+	    .find("input,textarea")
 	    .val('')
 	    .end()
 	    .find("input[type=checkbox], input[type=radio]")
@@ -672,7 +797,10 @@ $('#modify-interviewSchedule-modal').on('shown.bs.modal', function(){
 	       .end()
 	       .find("input[type=hidden]")
 	       .val('-1')
-	       .end();
+	       .end()
+		       .find("select")
+		       .val('-1')
+		       .end();
 	    $('ul.options').empty();
 	});
 });
@@ -779,6 +907,8 @@ function saveVacancy() {
 		} else {
 			$('#managerSelect2Warning').show();
 		}
+	} else {
+		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
 	}
 };
 
@@ -870,21 +1000,40 @@ function saveCandidate() {
 		obj.email = $('#inputEmail').val();
 		obj.contact_number = $('#contact_number').val();
 		console.log($('#vacancySelect').val());
-		if ($('#vacancySelect').val() != -1) {
-			obj.vacancy = $('#vacancySelect').val();
-		} else {
-			obj.vacancy = -1;
-		}
+		obj.vacancy = $('#vacancySelect').val();
 		obj.comment = $('#comment').val();
 		obj.date_of_application = $('#date_of_application').val();
 		function onSuccessSaveCandidate(response) { 
 			$('#ctable').dataTable().fnDraw();
+			showBottomRightSuccessNotify('Successfully saved Candidate!')
 		}
 		
 		genericAJAXCalling("<portlet:resourceURL id='saveCandidate'/>", obj, onSuccessSaveCandidate);
 		$('#modify-candidate-modal').modal('hide');
+	} else {
+		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
 	}
 	
+}
+
+function saveEmployee() {
+	var obj = new Object();
+	obj.employeeId = $('#employeeId').val();
+	obj.vacancyId = $('#e_vacancyId').val();
+	obj.candidateId = $('#e_candidateId').val();
+	obj.first_name = $('#e_firstname').val();
+	obj.middle_name = $('#e_middle_name').val();
+	obj.last_name = $('#e_last_name').val();
+	obj.email = $('#e_inputEmail').val();
+	obj.contact_number = $('#e_contact_number').val();
+	obj.birthday = $('#e_birthday').val();
+	obj.joined_date = $('#e_start_date').val();
+	obj.gender = $('#e_gender_select').val();
+	function onSuccessSaveEmployee(response) {
+		$('#ctable').dataTable().fnDraw();
+	}
+	genericAJAXCalling("<portlet:resourceURL id='saveEmployee'/>", obj, onSuccessSaveEmployee);
+	$('#modify-employee-modal').modal('hide');
 }
 
 function getCurrentDate() {
@@ -938,7 +1087,8 @@ $('#modify-candidate-modal').on('shown.bs.modal', function () {
 			}	
 		})
 		isCandidateModalLoaded = true;
- 	}  
+ 	} 
+	$('#modal-container').hide();
 });
 
 $('#modify-vacancy-modal').on('shown.bs.modal', function () {
@@ -1066,6 +1216,17 @@ function loadVacancyTable() {
 											return data;
 										}
 									}
+								}, {
+									"mData" : "validApplicants",
+									"bSortable" : false,
+									"mRender" : function(data, type, full) {
+										var s = "<div class='applicantsStatistic'><span class='validApplications'><i class='icon-user'></i> "
+										+ data 
+										+"</span><span class='numberOfPositions'><i class='icon-eye-open'></i> " 
+										+ full.numberOfPositions
+										+ "</span></div";
+										return s.toString();
+									}
 								} ]
 					});
 	vtable.columnFilter({
@@ -1096,7 +1257,7 @@ function loadCandidateTable() {
 				bProcessing : true,
 				bPaginate : true,
 				sPaginationType : "full_numbers",
-				order : [ 1, 'asc' ],
+				order : [ 0, 'asc' ],
 				createdRow : function ( row, data, index ) {
 		        	$('td', row).eq(2).addClass('highlight');
 		        },
@@ -1111,7 +1272,6 @@ function loadCandidateTable() {
 							aoColumns : [
 									{
 										"mData" : "c_id",
-										"type" : "number",
 										"bSortable" : false,
 										"mRender" : function(data, type, full) {
 											return "<input id='cCheckbox' class='cCheckbox' type='checkbox' id='"+full.c_id+"' value='"+full.c_id+"'/>";
@@ -1119,12 +1279,10 @@ function loadCandidateTable() {
 									},
 									{
 										"mData" : "vacancy",
-										"type" : "text"
 									},
 
 									{
 										"mData" : "full_name",
-										"type" : "text",
 										"mRender" : function(data, type, full) {
 											return "<a id='"
 													+ full.c_id
@@ -1135,20 +1293,15 @@ function loadCandidateTable() {
 									},
 									{
 										"mData" : "email",
-										"type" : "text"
 									},
 									{
 										"mData" : "contact_number",
-										"sWidth" : "20px",
-										"type" : "text"
 									},
 									{
 										"mData" : "date_of_application",
-										"type" : "text"
 									},
 									{
 										"mData" : "status",
-										"type" : "text",
 										"mRender" : function(data, type, full) {
 											if (data != null
 													&& full.availableStatuses != null) {
@@ -1184,7 +1337,6 @@ function loadCandidateTable() {
 									},
 									{
 										"mData" : "resume",
-										"type" : "text",
 										"mRender" : function(data, type, full) {
 											return "<a href='javascript:void(0);'>View Resume</a>";
 										}
@@ -1248,7 +1400,7 @@ function loadCandidateTable() {
 
 		/* FILTER DELAYING */
 		var searchWaitInterval = undefined;
-		$('tfoot input.text_filter').unbind('keypress keyup').bind(
+ 		$('tfoot input.text_filter').unbind('keypress keyup').bind(
 				'keypress keyup',
 				function(e) {
 					if (searchWaitInterval != undefined) {
@@ -1260,7 +1412,7 @@ function loadCandidateTable() {
 						console.log("Search value " + $this.value);
 						console.log("Column " + $('tfoot input').index($this));
 						cTable.fnFilter($this.value, $('tfoot input').index(
-								$this) + 1);
+								$this));
 					}, 1000);
 				});
 
@@ -1275,55 +1427,68 @@ function loadCandidateTable() {
 	 */
 	function onCandidateStatusChange(selectorId, vacancyId) {
 
-		var object = new Object();
-		object.c_id = selectorId;
-		object.changedStatus = $(
+		var obj = new Object();
+		obj.c_id = selectorId;
+		obj.v_id = vacancyId;
+		obj.changedStatus = $(
 				"#availStatusSelect" + selectorId + " option:selected").text();
 		if (selectorId != -1) {
-			if (object.changedStatus == 'INTERVIEW_SCHEDULED') {
-				$
-						.ajax({
-							type : 'GET',
-							url : '<portlet:resourceURL id="getInterviewScheduleFormDataAJX"/>',
-							contentType : "application/json; charset=utf-8",
-							success : function(response) {
-								var data = $.parseJSON(response);
-								iSelect = document
-										.getElementById('interviewTitleSelect');
-								mSelect = document
-										.getElementById('managerSelect1');
-								/* $('#itv_c_id').val(selectorId); */
-								iSelect.options.length = 0;
+			if (obj.changedStatus == 'INTERVIEW_SCHEDULED') {
+				
+				function onSuccessGetInterviewScheduleFormData(response) {
+					console.log('HERERRRRRRRR');
+					/* var data = $.parseJSON(response); */
+					var data = response;
+					console.log(data);
+					iSelect = document
+							.getElementById('interviewTitleSelect');
+					mSelect = document
+							.getElementById('managerSelect1');
+					iSelect.options.length = 0;
 
-								$.each(data.interviews, function(i, item) {
-									iSelect.options.add(new Option(
-											item.interviewName,
-											item.interviewId));
-								});
+					$.each(data.interviews, function(i, item) {
+						iSelect.options.add(new Option(
+								item.interviewName,
+								item.interviewId));
+					});
 
-								mSelect.options.length = 0;
-								mSelect.add(new Option("--Select Manager--",
-										"-1"));
-								$.each(data.employees, function(i, item) {
-									mSelect.options
-											.add(new Option(item.employeeName,
-													item.employeeId));
-								});
-								/* clear managers selected list */
-								$('#managers1').empty();
-							},
-						});
+					mSelect.options.length = 0;
+					mSelect.add(new Option("--Select Manager--",
+							"-1"));
+					$.each(data.employees, function(i, item) {
+						mSelect.options.add(new Option(item.employeeName,
+										item.employeeId));
+					});
+					/* clear managers selected list */
+					$('#managers1').empty();	
+				}
+				
+				genericAJAXCalling('<portlet:resourceURL id="getInterviewScheduleFormDataAJX"/>', obj, onSuccessGetInterviewScheduleFormData);
 				$('#vacancyId').val(vacancyId);
 				$('#candidateId').val(selectorId);
-
 				$('#modify-interviewSchedule-modal').modal('show');
+			} else if (obj.changedStatus == 'HIRE') {
+				$('#modify-employee-modal').modal('show');
+ 				function onSuccessHireCandidateStatusChange(response) {
+					var obj = response;
+					$('#employeeId').val('-1');
+					$('#e_candidateId').val(selectorId);
+					$('#e_vacancyId').val(vacancyId);
+					$('#e_firstname').val(obj.first_name);
+					$('#e_middle_name').val(obj.middle_name);
+					$('#e_last_name').val(obj.last_name);
+					$('#e_inputEmail').val(obj.email);
+					$('#e_contact_number').val(obj.contact_number);
+				}
+				genericAJAXCalling('<portlet:resourceURL id="hireCandidateStatusChange"/>', obj, onSuccessHireCandidateStatusChange);
+				
 			} else {
 
 				$.ajax({
 					type : 'POST',
 					url : '<portlet:resourceURL id="candidateStatusChange"/>',
 					contentType : "application/json; charset=utf-8",
-					data : JSON.stringify(object),
+					data : JSON.stringify(obj),
 					success : function(response) {
 						$('#ctable').dataTable().fnDraw();
 					},
@@ -1422,9 +1587,86 @@ function loadCandidateTable() {
 		    $content = $header.next();
 		    $content.slideToggle(500, function () {
 		        $header.text(function () {
-		            return $content.is(":visible") ? "Hide CANDIDATE history" : "Show CANDIDATE history";
+		        	
+		            if ($content.is(':visible') == true) {
+		            	if (isCandidateHistoriesLoaded == false) {
+		            		/* $('#candidateHistoryTable').dataTable({
+		        				bProcessing : true,
+		        				bServerSide : false,
+		        	    		bPaginate : false,
+		        	    		ajax : {
+		        	    			'type' : 'POST',
+		        	    			'url' : '<portlet:resourceURL id="get_all_candidate_histories"/>',
+		        	    			'data' : {
+		        	    				c_id: $('#c_id').val()
+		        	    			}
+		        	    		},
+		        	    		aoColumns : [
+		        	    		             {
+		        	    		            	 "mData" : "performedDate",
+		        	    		             },
+		        	    		             {
+		        	    		            	 "mData" : "note",
+		        	    		             },
+		        	    		             {
+		        	    		            	 "mData" : "candidateHistoryId",
+		        	    		             }
+		        	    		             ]
+		        	    		
+		        	    	});	 */
+		        	    	var obj = new Object();
+		        	    	obj.c_id = $('#c_id').val();
+		        	    	var dataSet = [['Trident','Internet Explorer 4.0','Win 95+'], ['Trident','Internet Explorer 4.0','Win 95+']];
+		        	    	$('#candidateHistoryTable').dataTable({
+		        	    		bServerSide : false,
+		        	    		bPaginate : false,
+		        	    		bProcessing : false,
+	        	    			"aaData" : dataSet,
+	        	    			columns : [
+			        	    		             {
+			        	    		            	 "title" : "performedDate",
+			        	    		             },
+			        	    		             {
+			        	    		            	 "title" : "note",
+			        	    		             },
+			        	    		             {
+			        	    		            	 "title" : "candidateHistoryId",
+			        	    		             }
+		        	    		             ] 
+		        	    		             
+	        	    		});
+		        	    	function onSuccessGetCandidateHistory(response) {
+		        	    		console.log(response.aaData);
+		        	    		
+		        	    	
+		        	    	}
+		        	    	
+		        	    	genericAJAXCalling("<portlet:resourceURL id='get_all_candidate_histories'/>", obj, onSuccessGetCandidateHistory);
+		        	    	
+		        	    	
+		            		isCandidateHistoriesLoaded = true;
+		            	} else {
+		            		console.log("HEREEEE");
+		            		/* var obj = new Object();
+		            		obj.c_id = $('#c_id').val(); */
+		            		/* $('#candidateHistoryTable').DataTable().ajax.reload();	 */	
+		            		$('#candidateHistoryTable').dataTable().fnDestroy();	
+/* 		            		function onSuccessGetCandidateHistories(response) {
+		            			$('#candidateHistoryTable').dataTable().fnClearTable();		
+		            		}
+		            		genericAJAXCalling('<portlet:resourceURL id="get_all_candidate_histories"/>', obj, onSuccessGetCandidateHistories);
+		            		
+		            		 */
+		            	}
+		            	
+		            	return "Hide CANDIDATE history";
+		            } else {
+		            	return "Show CANDIDATE history";
+		            }
 		        });
 		    });
+		    
+
 	});
 
 	$(document).ready(function() {
@@ -1433,7 +1675,7 @@ function loadCandidateTable() {
 /* 		var $validator = $("form").validate();
 		$.validator.addMethod("alpha", function(value,element){
 		return this.optional(element) || /^[a-zA-Z]+$/i.test(value); 
-	}, "Please enter alphabets only"); 
+		}, "Please enter alphabets only"); 
 		 */
 		 
 
@@ -1441,11 +1683,39 @@ function loadCandidateTable() {
 		loadCandidateTable();
 		/* 		$(".select2-container").select2();
 		 $(".select_filter").select2(); */
+		 $('.managerSelect').select2();
+		/*  $('.managerSelect').select2({
+			ajax: {
+			    url: "<portlet:resourceURL id='filterEmpByName'/>",
+			    dataType: 'json',
+			    delay: 250,
+			    data: function (params) {
+			      return {
+			        q: params.term, // search term
+			        page: params.page
+			      };
+			    },
+			    processResults: function (data, page) {
+			      // parse the results into the format expected by Select2.
+			      // since we are using custom formatting functions we do not need to
+			      // alter the remote JSON data
+			      return {
+			        results: data.items
+			      };
+			    },
+			    cache: true
+			  },
+			  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+			  minimumInputLength: 1,
+			  templateResult: formatRepo, // omitted for brevity, see the source of this page
+			  templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+			 
+		 }); */
 
 		/* SELECT A ROW */
 		var cTable = $('#ctable').DataTable();
  		$('#job_posting').summernote({
- 			height: 200,
+ 			height: 100,
  			
  		}); 
 		$('#ctable tbody').on('click', 'tr', function() {
@@ -1459,22 +1729,75 @@ function loadCandidateTable() {
 
 		$('#date_of_application').datepicker();
 		$('#itvDate').datepicker();
+		$('#e_birthday').datepicker();
+		$('#e_start_date').datepicker();
 		$('#itvTimeFrom').timepicker();
 		$('#itvTimeTo').timepicker();
 
-		function onSuccessLoadDataForFooterFilter(response) {
+		$.ajax ({
+			type: 'GET',
+			url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
+			contentType: 'application/json;',
+			dataType: 'json',
+			success: function(response) {
+				ListJobTitle = response.jTitles;
+				ListLocation = response.locations;	
+			},
+			error: function (xhr, textStatus, errorThrown) {
+				console.log('error on loading AJAX');
+			}
+		})
+		
+		
+/* 		function onSuccessLoadDataForFooterFilter(response) {
 			data = $.parseJSON(response);
 			console.log(data);
 			ListJobTitle = data.jTitles;
 			ListLocation = data.locations;	
-		}
+			console.log(ListJobTitle);
+			console.log(ListLocation);
+		} */
+		/* 
+		$.ajax ({
+			type: 'GET',
+			url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
+			contentType: 'application/json;',
+			dataType: 'json',
+			success: function(response) {
+				console.log("SUCCESS");
+				console.log(response);
+				var data = $.parseJSON(response);
+				console.log(data);
+				ListJobTitle = response.jTitles;
+				ListLocation = response.locations;	
+			},
+			error: function (xhr, textStatus, errorThrown) {
+				console.log('error on loading AJAX');
+			}
+		}) */
 		
-		genericAJAXCalling("<portlet:resourceURL id='loadDataForFooterFilter'/>", obj, onSuccessLoadDataForFooterFilter);
+		/* genericAJAXCalling("<portlet:resourceURL id='loadDataForFooterFilter'/>", null, onSuccessLoadDataForFooterFilter); */
 
 	});
+	function showBottomRightSuccessNotify(ntf_msg) {
+		showBottomRightSuccessNotifyShortDelay(2000, ntf_msg);
+	}
+	
+	function showBottomRightSuccessNotifyShortDelay(ntf_delay, ntf_msg) {
+		showNotify('',ntf_msg,'success',ntf_delay,'bottom','right');
+	}
+	
+	
+	function showBottomRightInfoNotify(ntf_msg) {
+		showBottomRightInfoNotifyShortDelay(2000, ntf_msg);
+	}
+	
+	function showBottomRightInfoNotifyShortDelay(ntf_delay, ntf_msg) {
+		showNotify('',ntf_msg,'info',ntf_delay,'bottom','right');
+	}
 	
 	function showBottomRightWarningNotifyShortDelay(ntf_msg) {
-		showNotify('',ntf_msg,'warning',2000,'bottom','right');
+		showBottomRightWarningNotify(2000,ntf_msg);
 	}
 	
 	function showBottomRightWarningNotify(ntf_delay, ntf_msg) {
@@ -1482,7 +1805,7 @@ function loadCandidateTable() {
 	}
 	
 	function showBottomRightErrorNotifyShortDelay(ntf_msg) {
-		showNotify('',ntf_msg,'danger',2000,'bottom','right');
+		showBottomRightErrorNotify(2000, ntf_msg);
 	}
 	
 	function showBottomRightErrorNotify(ntf_delay, ntf_msg) {
@@ -1514,10 +1837,10 @@ function loadCandidateTable() {
 	 *
 	 */
 	function clearFields() {
-		$('#candidateInfo :input').each(function() {
+		$('.hrm-modal .in :input').each(function() {
 			$(this).val('');
 		});
-		$('#c_id').val('-1');
+		$('.entityId').val('-1');
 	};
 
 	/*
@@ -1553,7 +1876,7 @@ function loadCandidateTable() {
 		};
 		
 		genericAJAXCalling("<portlet:resourceURL id='getCandidate'/>", obj, onSuccessGetCandidate);
-
+		$('#modal-container').show();
 	}
 
 	function deleteCandidates() {
@@ -1567,6 +1890,7 @@ function loadCandidateTable() {
 		
 		function onSuccessDeleteCandidates(response) {
 			_State = 3;
+			$('#ctable').dataTable().fnDraw();
 		};
 		
 		genericAJAXCalling("<portlet:resourceURL id='deleteCandidates'/>", selectedArr, onSuccessDeleteCandidates);
@@ -1608,33 +1932,68 @@ function loadCandidateTable() {
 	 *
 	 */
 	function saveInterviewSchedule() {
-		console.log("on SAVE INTERVIEW SCHEDULE");
-		var object = new Object();
-		object.interviewId = $('#interviewTitleSelect').val();
-		object.candidateId = $('#candidateId').val();
-		object.vacancyId = $('#vacancyId').val();
-		object.itvDate = $('#itvDate').val();
-		object.itvTimeFrom = $('#itvTimeFrom').val();
-		object.itvTimeTo = $('#itvTimeTo').val();
-
-		/* add selected managers */
-		var selectedInterviewers = [];
-		$('#managers1 li').each(function(i) {
-			selectedInterviewers.push(($(this).attr('id')));
-		});
-
-		if (selectedInterviewers.length != 0) {
-			object.selectedInterviewers = selectedInterviewers;
-			function onSuccessSaveInterviewSchedule(response) {
-				console.log("DATA RESPONSE FOR saveInterviewSchedule");
-				/* Clear candidate status */
-				/* resetCandidateStatus(); */
-				$('#modify-interviewSchedule-modal').modal('hide');
-				$('#ctable').dataTable().fnDraw();
-			}
-			
-			genericAJAXCalling("<portlet:resourceURL id='saveInterviewSchedule'/>", object, onSuccessSaveInterviewSchedule);
+			var selectedManagers = [];
+			$('#managers1 li').each(function(i) {
+				selectedManagers.push(($(this).attr('id')));
+			}); 
+		if ($('#itvDate').valid() && $('#itvTimeFrom').valid() && $('#itvTimeTo').valid() && selectedManagers.length > 0) {
+				var object = new Object();
+				object.interviewId = $('#interviewTitleSelect').val();
+				object.candidateId = $('#candidateId').val();
+				object.vacancyId = $('#vacancyId').val();
+				object.itvDate = $('#itvDate').val();
+				object.itvTimeFrom = $('#itvTimeFrom').val();
+				object.itvTimeTo = $('#itvTimeTo').val();
+		
+				/* add selected managers */
+				var selectedInterviewers = [];
+				$('#managers1 li').each(function(i) {
+					selectedInterviewers.push(($(this).attr('id')));
+				});
+		
+				if (selectedInterviewers.length != 0) {
+					object.selectedInterviewers = selectedInterviewers;
+					function onSuccessSaveInterviewSchedule(response) {
+						console.log("DATA RESPONSE FOR saveInterviewSchedule");
+						/* Clear candidate status */
+						/* resetCandidateStatus(); */
+						$('#modify-interviewSchedule-modal').modal('hide');
+						$('#ctable').dataTable().fnDraw();
+					}
+					
+					genericAJAXCalling("<portlet:resourceURL id='saveInterviewSchedule'/>", object, onSuccessSaveInterviewSchedule);
+				}
+		} else {
+			showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
 		}
+	}
+	
+	/*
+	* Download Export
+	*/
+	function downloadExport() {
+		var obj = new Object();
+		obj.id = 1;
+ 		$.ajax ({
+			type: 'POST',
+			url: '<portlet:resourceURL id="export_result"/>',
+			data: JSON.stringify(obj),
+			contentType: "application/vnd.ms-excel",
+			dataType: "text",
+			success: function(response){
+				console.log("DOWNLOAD");
+				/*console.log(response);*/
+			},
+			error: function (xhr, textStatus, errorThrown) {
+				console.log('error on loading AJAX');
+			}
+		})
+		
+		/* function onSuccessExport(response) {
+			console.log("SUCCESS DOWNLOAD EXPORT FILE");
+		}
+		genericAJAXCalling('<portlet:resourceURL id="export_result"/>', obj, onSuccessExport); */
+		
 	}
 
 	function saveLocation() {
@@ -1872,11 +2231,25 @@ textarea.note-codable {
 	text-align: left !important;
 }
 
+.hrm-modal .modal-header {
+	height: 25px;
+}
+
+.hrm-modal .modal-header span.modal-title {
+	height: 25px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
 .hrm-modal label {
 	font-size: 12px;
 }
 
-.hrm-modal .controls input[type=text] {
+.hrm-modal .controls input[type=text], input[type=file], input[type=email] {
+	font-size: 12px;
+}
+
+.hrm-modal .controls select {
 	font-size: 12px;
 }
 
@@ -1886,18 +2259,49 @@ textarea.note-codable {
 }
 
 .modal-container div {
-	width: 100%;
+	/* width: 100%; */
+	
 }
 
 .modal-container .header {
 	background-color: #d3d3d3;
-	padding: 2px;
+	/* padding: 2px; */
 	cursor: pointer;
 	font-weight: bold;
+	width: initial;
 }
 
 .modal-container .content {
 	display: none;
 	padding: 5px;
 }
+
+.dataTables_filter input[type=search] {
+	width: 100px !important;
+	border-radius: .25em;
+}
+
+.applicantsStatistic span {
+	display: block;
+	font-size: 15px;
+	display: inline-block;
+	width: 50px;
+	font-weight: bold;
+}
+
+.applicantsStatistic span.validApplications {
+	margin-left: 7px;
+	/* background-color: cadetblue; */
+}
+
+.applicantsStatistic span.numberOfPositions {
+	/* background-color: darkorange;; */
+}
+
+/* Select */
+select>optgroup {
+	font-weight: bold;
+	font-size: 14px;
+}
+
 </style>

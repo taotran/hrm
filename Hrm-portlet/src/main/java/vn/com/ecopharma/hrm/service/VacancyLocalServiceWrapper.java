@@ -326,6 +326,31 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
         _vacancyLocalService.delete(v_id);
     }
 
+    @Override
+    public int getFilterVacanciesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String jTitle,
+        java.lang.String location, java.lang.String vacancy_status,
+        java.lang.String sortColumnName, java.lang.String sortDirection) {
+        return _vacancyLocalService.getFilterVacanciesSize(globStr, name,
+            jTitle, location, vacancy_status, sortColumnName, sortDirection);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String jTitle, java.lang.String location,
+        java.lang.String vacancy_status, java.lang.String sortColumnName,
+        java.lang.String sortDirection, int start, int end) {
+        return _vacancyLocalService.filterVacancies(globStr, name, jTitle,
+            location, vacancy_status, sortColumnName, sortDirection, start, end);
+    }
+
+    @Override
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.countAll();
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

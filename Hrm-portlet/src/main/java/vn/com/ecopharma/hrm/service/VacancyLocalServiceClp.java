@@ -56,6 +56,12 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes23;
     private String _methodName24;
     private String[] _methodParameterTypes24;
+    private String _methodName25;
+    private String[] _methodParameterTypes25;
+    private String _methodName26;
+    private String[] _methodParameterTypes26;
+    private String _methodName27;
+    private String[] _methodParameterTypes27;
 
     public VacancyLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -183,6 +189,26 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodName24 = "delete";
 
         _methodParameterTypes24 = new String[] { "long" };
+
+        _methodName25 = "getFilterVacanciesSize";
+
+        _methodParameterTypes25 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String"
+            };
+
+        _methodName26 = "filterVacancies";
+
+        _methodParameterTypes26 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "int", "int"
+            };
+
+        _methodName27 = "countAll";
+
+        _methodParameterTypes27 = new String[] {  };
     }
 
     @Override
@@ -939,5 +965,114 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                     " is not a valid exception");
             }
         }
+    }
+
+    @Override
+    public int getFilterVacanciesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String jTitle,
+        java.lang.String location, java.lang.String vacancy_status,
+        java.lang.String sortColumnName, java.lang.String sortDirection) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName25,
+                    _methodParameterTypes25,
+                    new Object[] {
+                        ClpSerializer.translateInput(globStr),
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(jTitle),
+                        
+                    ClpSerializer.translateInput(location),
+                        
+                    ClpSerializer.translateInput(vacancy_status),
+                        
+                    ClpSerializer.translateInput(sortColumnName),
+                        
+                    ClpSerializer.translateInput(sortDirection)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return ((Integer) returnObj).intValue();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String jTitle, java.lang.String location,
+        java.lang.String vacancy_status, java.lang.String sortColumnName,
+        java.lang.String sortDirection, int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26,
+                    new Object[] {
+                        ClpSerializer.translateInput(globStr),
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(jTitle),
+                        
+                    ClpSerializer.translateInput(location),
+                        
+                    ClpSerializer.translateInput(vacancy_status),
+                        
+                    ClpSerializer.translateInput(sortColumnName),
+                        
+                    ClpSerializer.translateInput(sortDirection),
+                        
+                    start,
+                        
+                    end
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Vacancy>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName27,
+                    _methodParameterTypes27, new Object[] {  });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return ((Integer) returnObj).intValue();
     }
 }

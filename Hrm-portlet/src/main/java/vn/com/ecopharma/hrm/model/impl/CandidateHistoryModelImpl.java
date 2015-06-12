@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
             { "v_id", Types.BIGINT },
             { "interviewId", Types.BIGINT },
             { "performed_by", Types.BIGINT },
+            { "performedDate", Types.TIMESTAMP },
             { "note", Types.VARCHAR },
             { "interviewers", Types.VARCHAR },
             { "action", Types.VARCHAR },
@@ -64,7 +66,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
             { "userId", Types.BIGINT },
             { "userName", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_CandidateHistory (candidateHistoryId LONG not null primary key,c_id LONG,v_id LONG,interviewId LONG,performed_by LONG,note VARCHAR(75) null,interviewers VARCHAR(75) null,action VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_CandidateHistory (candidateHistoryId LONG not null primary key,c_id LONG,v_id LONG,interviewId LONG,performed_by LONG,performedDate DATE null,note VARCHAR(75) null,interviewers VARCHAR(75) null,action VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_CandidateHistory";
     public static final String ORDER_BY_JPQL = " ORDER BY candidateHistory.candidateHistoryId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_CandidateHistory.candidateHistoryId ASC";
@@ -95,6 +97,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
     private long _v_id;
     private long _interviewId;
     private long _performed_by;
+    private Date _performedDate;
     private String _note;
     private String _interviewers;
     private String _action;
@@ -127,6 +130,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
         model.setV_id(soapModel.getV_id());
         model.setInterviewId(soapModel.getInterviewId());
         model.setPerformed_by(soapModel.getPerformed_by());
+        model.setPerformedDate(soapModel.getPerformedDate());
         model.setNote(soapModel.getNote());
         model.setInterviewers(soapModel.getInterviewers());
         model.setAction(soapModel.getAction());
@@ -198,6 +202,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
         attributes.put("v_id", getV_id());
         attributes.put("interviewId", getInterviewId());
         attributes.put("performed_by", getPerformed_by());
+        attributes.put("performedDate", getPerformedDate());
         attributes.put("note", getNote());
         attributes.put("interviewers", getInterviewers());
         attributes.put("action", getAction());
@@ -239,6 +244,12 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
 
         if (performed_by != null) {
             setPerformed_by(performed_by);
+        }
+
+        Date performedDate = (Date) attributes.get("performedDate");
+
+        if (performedDate != null) {
+            setPerformedDate(performedDate);
         }
 
         String note = (String) attributes.get("note");
@@ -349,6 +360,17 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
     @Override
     public void setPerformed_by(long performed_by) {
         _performed_by = performed_by;
+    }
+
+    @JSON
+    @Override
+    public Date getPerformedDate() {
+        return _performedDate;
+    }
+
+    @Override
+    public void setPerformedDate(Date performedDate) {
+        _performedDate = performedDate;
     }
 
     @JSON
@@ -490,6 +512,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
         candidateHistoryImpl.setV_id(getV_id());
         candidateHistoryImpl.setInterviewId(getInterviewId());
         candidateHistoryImpl.setPerformed_by(getPerformed_by());
+        candidateHistoryImpl.setPerformedDate(getPerformedDate());
         candidateHistoryImpl.setNote(getNote());
         candidateHistoryImpl.setInterviewers(getInterviewers());
         candidateHistoryImpl.setAction(getAction());
@@ -567,6 +590,14 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
 
         candidateHistoryCacheModel.performed_by = getPerformed_by();
 
+        Date performedDate = getPerformedDate();
+
+        if (performedDate != null) {
+            candidateHistoryCacheModel.performedDate = performedDate.getTime();
+        } else {
+            candidateHistoryCacheModel.performedDate = Long.MIN_VALUE;
+        }
+
         candidateHistoryCacheModel.note = getNote();
 
         String note = candidateHistoryCacheModel.note;
@@ -610,7 +641,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{candidateHistoryId=");
         sb.append(getCandidateHistoryId());
@@ -622,6 +653,8 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
         sb.append(getInterviewId());
         sb.append(", performed_by=");
         sb.append(getPerformed_by());
+        sb.append(", performedDate=");
+        sb.append(getPerformedDate());
         sb.append(", note=");
         sb.append(getNote());
         sb.append(", interviewers=");
@@ -643,7 +676,7 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.CandidateHistory");
@@ -668,6 +701,10 @@ public class CandidateHistoryModelImpl extends BaseModelImpl<CandidateHistory>
         sb.append(
             "<column><column-name>performed_by</column-name><column-value><![CDATA[");
         sb.append(getPerformed_by());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>performedDate</column-name><column-value><![CDATA[");
+        sb.append(getPerformedDate());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>note</column-name><column-value><![CDATA[");

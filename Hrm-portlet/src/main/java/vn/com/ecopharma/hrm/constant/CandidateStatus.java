@@ -52,5 +52,25 @@ public enum CandidateStatus {
 		// TODO: get localized name for status, TEMPORARY using this way
 		return this.name().toUpperCase();
 	}
+	
+	public String getCssClass() {
+		switch (this) {
+		case APPLICATION_INITIATED:
+			return "status-grey";
+		case SHORTLIST:
+		case INTERVIEW_SCHEDULED:
+			return "status-yellow";
+		case MARK_INTERVIEW_PASS:
+		case JOB_OFFERED:
+		case HIRE:
+			return "status-green";
+		case MARK_INTERVIEW_FAIL:
+		case DECLINE_OFFERED:
+		case REJECT:
+			return "status-red";
+		default:
+			return "";
+		}
+	}
 
 }

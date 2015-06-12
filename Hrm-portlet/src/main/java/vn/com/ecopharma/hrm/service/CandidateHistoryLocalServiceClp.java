@@ -170,7 +170,7 @@ public class CandidateHistoryLocalServiceClp
 
         _methodParameterTypes22 = new String[] {
                 "long", "long", "long", "long", "java.lang.String",
-                "java.lang.String", "java.lang.String", "long",
+                "java.sql.Date", "java.lang.String", "java.lang.String", "long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -178,7 +178,7 @@ public class CandidateHistoryLocalServiceClp
 
         _methodParameterTypes23 = new String[] {
                 "long", "long", "long", "long", "long", "java.lang.String",
-                "java.lang.String", "java.lang.String", "long",
+                "java.sql.Date", "java.lang.String", "java.lang.String", "long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -795,7 +795,8 @@ public class CandidateHistoryLocalServiceClp
     @Override
     public vn.com.ecopharma.hrm.model.CandidateHistory create(long c_id,
         long v_id, long interviewId, long performer_id, java.lang.String note,
-        java.lang.String interviewers, java.lang.String action, long userId,
+        java.sql.Date performedDate, java.lang.String interviewers,
+        java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
@@ -813,6 +814,8 @@ public class CandidateHistoryLocalServiceClp
                     performer_id,
                         
                     ClpSerializer.translateInput(note),
+                        
+                    ClpSerializer.translateInput(performedDate),
                         
                     ClpSerializer.translateInput(interviewers),
                         
@@ -843,7 +846,7 @@ public class CandidateHistoryLocalServiceClp
     @Override
     public vn.com.ecopharma.hrm.model.CandidateHistory edit(
         long candidateHistoryId, long c_id, long v_id, long interviewId,
-        long performer_id, java.lang.String note,
+        long performer_id, java.lang.String note, java.sql.Date performedDate,
         java.lang.String interviewers, java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
@@ -865,6 +868,8 @@ public class CandidateHistoryLocalServiceClp
                     performer_id,
                         
                     ClpSerializer.translateInput(note),
+                        
+                    ClpSerializer.translateInput(performedDate),
                         
                     ClpSerializer.translateInput(interviewers),
                         

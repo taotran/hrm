@@ -49,6 +49,7 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
         attributes.put("middle_name", getMiddle_name());
         attributes.put("lastname", getLastname());
         attributes.put("email", getEmail());
+        attributes.put("contact_number", getContact_number());
         attributes.put("nickname", getNickname());
         attributes.put("birthday", getBirthday());
         attributes.put("gender", getGender());
@@ -132,6 +133,12 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
 
         if (email != null) {
             setEmail(email);
+        }
+
+        String contact_number = (String) attributes.get("contact_number");
+
+        if (contact_number != null) {
+            setContact_number(contact_number);
         }
 
         String nickname = (String) attributes.get("nickname");
@@ -457,6 +464,26 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
     @Override
     public void setEmail(java.lang.String email) {
         _employee.setEmail(email);
+    }
+
+    /**
+    * Returns the contact_number of this employee.
+    *
+    * @return the contact_number of this employee
+    */
+    @Override
+    public java.lang.String getContact_number() {
+        return _employee.getContact_number();
+    }
+
+    /**
+    * Sets the contact_number of this employee.
+    *
+    * @param contact_number the contact_number of this employee
+    */
+    @Override
+    public void setContact_number(java.lang.String contact_number) {
+        _employee.setContact_number(contact_number);
     }
 
     /**

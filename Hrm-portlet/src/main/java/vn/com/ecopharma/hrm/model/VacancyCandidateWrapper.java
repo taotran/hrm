@@ -46,6 +46,7 @@ public class VacancyCandidateWrapper implements VacancyCandidate,
         attributes.put("userId", getUserId());
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
+        attributes.put("vc_status", getVc_status());
 
         return attributes;
     }
@@ -98,6 +99,12 @@ public class VacancyCandidateWrapper implements VacancyCandidate,
 
         if (modifiedDate != null) {
             setModifiedDate(modifiedDate);
+        }
+
+        String vc_status = (String) attributes.get("vc_status");
+
+        if (vc_status != null) {
+            setVc_status(vc_status);
         }
     }
 
@@ -301,6 +308,26 @@ public class VacancyCandidateWrapper implements VacancyCandidate,
     @Override
     public void setModifiedDate(java.util.Date modifiedDate) {
         _vacancyCandidate.setModifiedDate(modifiedDate);
+    }
+
+    /**
+    * Returns the vc_status of this vacancy candidate.
+    *
+    * @return the vc_status of this vacancy candidate
+    */
+    @Override
+    public java.lang.String getVc_status() {
+        return _vacancyCandidate.getVc_status();
+    }
+
+    /**
+    * Sets the vc_status of this vacancy candidate.
+    *
+    * @param vc_status the vc_status of this vacancy candidate
+    */
+    @Override
+    public void setVc_status(java.lang.String vc_status) {
+        _vacancyCandidate.setVc_status(vc_status);
     }
 
     @Override

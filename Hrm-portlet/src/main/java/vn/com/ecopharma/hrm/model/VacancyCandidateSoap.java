@@ -22,6 +22,7 @@ public class VacancyCandidateSoap implements Serializable {
     private long _userId;
     private Date _createDate;
     private Date _modifiedDate;
+    private String _vc_status;
 
     public VacancyCandidateSoap() {
     }
@@ -37,6 +38,7 @@ public class VacancyCandidateSoap implements Serializable {
         soapModel.setUserId(model.getUserId());
         soapModel.setCreateDate(model.getCreateDate());
         soapModel.setModifiedDate(model.getModifiedDate());
+        soapModel.setVc_status(model.getVc_status());
 
         return soapModel;
     }
@@ -149,5 +151,13 @@ public class VacancyCandidateSoap implements Serializable {
 
     public void setModifiedDate(Date modifiedDate) {
         _modifiedDate = modifiedDate;
+    }
+
+    public String getVc_status() {
+        return _vc_status;
+    }
+
+    public void setVc_status(String vc_status) {
+        _vc_status = vc_status;
     }
 }

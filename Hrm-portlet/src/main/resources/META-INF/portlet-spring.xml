@@ -35,6 +35,7 @@
 	<bean id="vn.com.ecopharma.hrm.service.VacancyLocalService" class="vn.com.ecopharma.hrm.service.impl.VacancyLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyService" class="vn.com.ecopharma.hrm.service.impl.VacancyServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.VacancyPersistence" class="vn.com.ecopharma.hrm.service.persistence.VacancyPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.VacancyFinder" class="vn.com.ecopharma.hrm.service.persistence.VacancyFinderImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyCandidateLocalService" class="vn.com.ecopharma.hrm.service.impl.VacancyCandidateLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyCandidateService" class="vn.com.ecopharma.hrm.service.impl.VacancyCandidateServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence" class="vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistenceImpl" parent="basePersistence" />

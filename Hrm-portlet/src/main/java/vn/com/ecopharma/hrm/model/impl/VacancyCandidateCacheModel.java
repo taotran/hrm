@@ -1,6 +1,7 @@
 package vn.com.ecopharma.hrm.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
@@ -29,10 +30,11 @@ public class VacancyCandidateCacheModel implements CacheModel<VacancyCandidate>,
     public long userId;
     public long createDate;
     public long modifiedDate;
+    public String vc_status;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(19);
 
         sb.append("{vacancyCandidateId=");
         sb.append(vacancyCandidateId);
@@ -50,6 +52,8 @@ public class VacancyCandidateCacheModel implements CacheModel<VacancyCandidate>,
         sb.append(createDate);
         sb.append(", modifiedDate=");
         sb.append(modifiedDate);
+        sb.append(", vc_status=");
+        sb.append(vc_status);
         sb.append("}");
 
         return sb.toString();
@@ -78,6 +82,12 @@ public class VacancyCandidateCacheModel implements CacheModel<VacancyCandidate>,
             vacancyCandidateImpl.setModifiedDate(new Date(modifiedDate));
         }
 
+        if (vc_status == null) {
+            vacancyCandidateImpl.setVc_status(StringPool.BLANK);
+        } else {
+            vacancyCandidateImpl.setVc_status(vc_status);
+        }
+
         vacancyCandidateImpl.resetOriginalValues();
 
         return vacancyCandidateImpl;
@@ -93,6 +103,7 @@ public class VacancyCandidateCacheModel implements CacheModel<VacancyCandidate>,
         userId = objectInput.readLong();
         createDate = objectInput.readLong();
         modifiedDate = objectInput.readLong();
+        vc_status = objectInput.readUTF();
     }
 
     @Override
@@ -106,5 +117,11 @@ public class VacancyCandidateCacheModel implements CacheModel<VacancyCandidate>,
         objectOutput.writeLong(userId);
         objectOutput.writeLong(createDate);
         objectOutput.writeLong(modifiedDate);
+
+        if (vc_status == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(vc_status);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package vn.com.eco.taotv.portlet;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -8,15 +9,24 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.hsqldb.lib.StopWatch;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +36,7 @@ import vn.com.ecopharma.hrm.constant.VacancyStatus;
 import vn.com.ecopharma.hrm.exceptions.InterviewScheduleExistedException;
 import vn.com.ecopharma.hrm.exceptions.VacancyCandidateNotFoundException;
 import vn.com.ecopharma.hrm.model.Candidate;
+import vn.com.ecopharma.hrm.model.CandidateHistory;
 import vn.com.ecopharma.hrm.model.Employee;
 import vn.com.ecopharma.hrm.model.EmployeeVacancy;
 import vn.com.ecopharma.hrm.model.Interview;
@@ -34,6 +45,7 @@ import vn.com.ecopharma.hrm.model.JTitle;
 import vn.com.ecopharma.hrm.model.Location;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.service.CandidateHistoryLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmployeeVacancyLocalServiceUtil;
@@ -49,74 +61,34 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
  * Portlet implementation class HRMPortlet
  */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
-/**
- * @author TaoTran
- *
- */
+
 /**
  * @author TaoTran
  *
@@ -125,10 +97,12 @@ public class HRMPortlet extends MVCPortlet {
 
 	private static final String FILTER_DATE_FORMAT = "dd/MM/yyyy";
 	private static final String SOURCE_DATE_FORMAT = "MM/dd/yyyy";
+
 	private static final String GET_ALL_CANDIDATES = "get_all_candidates";
 	private static final String SAVE_CANDIDATE = "saveCandidate";
 	private static final String GET_CANDIDATE = "getCandidate";
 	private static final String DELETE_CANDIDATES = "deleteCandidates";
+	private static final String HIRE_CANDIDATE_STATUS_CHANGE = "hireCandidateStatusChange";
 
 	private static final String GET_ALL_VACANCIES = "get_all_vacancies";
 	private static final String SAVE_VACANCY = "saveVacancy";
@@ -155,16 +129,22 @@ public class HRMPortlet extends MVCPortlet {
 	private static final String GET_INTERVIEW_SCHEDULE = "getInterviewSchedule";
 	private static final String DELETE_INTERVIEW_SCHEDULE = "deleteInterviewSchedule";
 
+	private static final String SAVE_EMPLOYEE = "saveEmployee";
+
+	private static final String GET_ALL_CANDIDATE_HISTORIES = "get_all_candidate_histories";
+
+	private static final String EXPORT_RESULT = "export_result";
+
 	private String COLUMN_NAME;
 	private String DIRECTION;
 	private int C_INITIAL, V_INITIAL;
 	private int C_RECORD_SIZE, V_RECORD_SIZE;
-	private String ID_SEARCH, C_GLOB_SEARCH, VACANCY_SEARCH, FIRST_NAME_SEARCH,
-			C_NAME_SEARCH, LAST_NAME_SEARCH, EMAIL_SEARCH, CONTACT_NO_SEARCH,
-			C_STATUS;
+	private String C_GLOB_SEARCH, C_VACANCY_SEARCH, C_NAME_SEARCH,
+			C_EMAIL_SEARCH, C_CONTACT_NO_SEARCH, C_STATUS_SEARCH,
+			C_START_DATE_SEARCH, C_END_DATE_SEARCH, DATE_RANGE_STR;
 
-	private String V_GLOB_SEARCH, NAME_SEARCH, JOB_TITLE_SEARCH,
-			VACANCY_MAN_SEARCH, LOCATION_SEARCH, STATUS_SEARCH;
+	private String V_GLOB_SEARCH, V_NAME_SEARCH, V_JOB_TITLE_SEARCH,
+			V_MANAGERS_SEARCH, V_LOCATION_SEARCH, V_STATUS_SEARCH;
 
 	@Override
 	public void render(javax.portlet.RenderRequest request,
@@ -192,12 +172,16 @@ public class HRMPortlet extends MVCPortlet {
 			onInterviewScheduleServeResourceActions(request, response,
 					resourceRequestId);
 
+			onEmployeeServeResourceActions(request, response, resourceRequestId);
+
 			onGetCandidatesFormDataAJX(request, response, resourceRequestId);
 
 			onGetVacanciesFormDataAJX(request, response, resourceRequestId);
 
 			onGetInterviewScheduleFormDataAJX(request, response,
 					resourceRequestId);
+
+			onExportResult(request, response, resourceRequestId);
 		} catch (InterviewScheduleExistedException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -219,6 +203,8 @@ public class HRMPortlet extends MVCPortlet {
 			throws JSONException, PortalException, SystemException,
 			IOException, ParseException {
 		final Map<String, Object> map = new HashMap<String, Object>();
+		final ServiceContext serviceContext = ServiceContextFactory
+				.getInstance(Candidate.class.getName(), request);
 		if (GET_ALL_CANDIDATES.equals(resourceRequestId)) {
 			System.out.println("GET_ALL_CANDIDATES");
 			int iTotalRecords; // total number of records (unfiltered)
@@ -226,35 +212,42 @@ public class HRMPortlet extends MVCPortlet {
 										// companies by keyword
 
 			C_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
-			VACANCY_SEARCH = ParamUtil.getString(request, "sSearch_1");
+			C_VACANCY_SEARCH = ParamUtil.getString(request, "sSearch_1");
 			C_NAME_SEARCH = ParamUtil.getString(request, "sSearch_2");
-			EMAIL_SEARCH = ParamUtil.getString(request, "sSearch_3");
-			CONTACT_NO_SEARCH = ParamUtil.getString(request, "sSearch_4");
-			String START_DATE = "";
-			String END_DATE = "";
-			String DATE_RANGE_STR = ParamUtil.getString(request, "sSearch_5");
+			C_EMAIL_SEARCH = ParamUtil.getString(request, "sSearch_3");
+			C_CONTACT_NO_SEARCH = ParamUtil.getString(request, "sSearch_4");
+			DATE_RANGE_STR = ParamUtil.getString(request,
+					"sSearch_5");
+			System.out.println(DATE_RANGE_STR + " length " + DATE_RANGE_STR.length() + " " + DATE_RANGE_STR.indexOf("~"));
+			if (DATE_RANGE_STR != null && DATE_RANGE_STR != ""
+					&& DATE_RANGE_STR.length() > 1) {
+				C_START_DATE_SEARCH = DATE_RANGE_STR.indexOf("~") != 0 ? DATE_RANGE_STR
+						.substring(0, DATE_RANGE_STR.indexOf("~")).trim()
+						: null;
+						System.out.println(C_START_DATE_SEARCH);
+				if (C_START_DATE_SEARCH != null) {
+					if (DATE_RANGE_STR.length() > C_START_DATE_SEARCH.length() + 1) {
+						C_END_DATE_SEARCH = DATE_RANGE_STR.substring(
+								DATE_RANGE_STR.indexOf("~") + 1,
+								DATE_RANGE_STR.length()).trim();
+					}
+				} else {
+					C_END_DATE_SEARCH = DATE_RANGE_STR.substring(DATE_RANGE_STR.indexOf("~") + 1,
+							DATE_RANGE_STR.length()).trim();
+				}
+			}
+			C_STATUS_SEARCH = ParamUtil.getString(request, "sSearch_6");
+			Integer sortColumnIndex = ParamUtil.getInteger(request,
+					"iSortCol_0");
+			String sortDirection = ParamUtil.getString(request, "sSortDir_0");
+			final String[] columnNames = { "c_id", "vacancy", "fullname",
+					"email", "contact_number", "date_of_application", "status" };
 
-			System.out.println("DATE_RANGE_STR " + DATE_RANGE_STR);
-
-			final String C_STATUS = ParamUtil.getString(request, "sSearch_6");
-			final int sortColumnIndex = ParamUtil.getInteger(request,
-					"iSortColumnIndex");
-			final int sortDirection = ParamUtil.getString(request,
-					"sSortDirection").equals("asc") ? -1 : 1;
-			String[] columnNames = { "_c_id", "_first_name", "_middle_name",
-					"_last_name" };
-
-			JSONObject jsonResult = new JSONObject();
+			final JSONObject jsonResult = new JSONObject();
 			int listDisplayAmount = 10;
 			int start = 0;
-			int column = 0;
-			String dir = "asc";
 			String pageNo = request.getParameter("iDisplayStart");
 			String pageSize = request.getParameter("iDisplayLength");
-			String colIndex = request.getParameter("iSortCol_0");
-			// String sortDirection =
-			// resourceRequest.getParameter("sSortDir_0");
-
 			if (pageNo != null) {
 				start = Integer.parseInt(pageNo);
 				if (start < 0) {
@@ -263,122 +256,58 @@ public class HRMPortlet extends MVCPortlet {
 			}
 			if (pageSize != null) {
 				listDisplayAmount = Integer.parseInt(pageSize);
-				if (listDisplayAmount < 10 || listDisplayAmount > 50) {
+				if (listDisplayAmount < 10 || listDisplayAmount > 100) {
 					listDisplayAmount = 10;
 				}
 			}
-			if (colIndex != null) {
-				column = Integer.parseInt(colIndex);
-				if (column < 0 || column > 5)
-					column = 0;
+			if (sortColumnIndex != null) {
+				if (sortColumnIndex < 0 || sortColumnIndex > 5)
+					sortColumnIndex = 0;
 			}
-			/*
-			 * if (sortDirection != null) { if (!sortDirection.equals("asc"))
-			 * dir = "desc"; }
-			 */
 
-			String colName = columnNames[column];
+			System.out.println("sortColumnIndex: " + sortColumnIndex);
+			System.out.println("sortDirection: " + sortDirection);
+			final String sortColName = columnNames[sortColumnIndex];
+			System.out.println("columnName: " + sortColName);
+			C_RECORD_SIZE = listDisplayAmount;
+			C_INITIAL = start;
 
+			iTotalDisplayRecords = CandidateLocalServiceUtil
+					.getFilterCandidatesSize(C_GLOB_SEARCH, C_NAME_SEARCH,
+							C_EMAIL_SEARCH, C_CONTACT_NO_SEARCH,
+							C_STATUS_SEARCH, C_VACANCY_SEARCH,
+							C_START_DATE_SEARCH, C_END_DATE_SEARCH,
+							sortColName, sortDirection);
 			iTotalRecords = CandidateLocalServiceUtil.countAll();
-			List<Candidate> filteredCandidates = new ArrayList<Candidate>();
-			for (Candidate c : CandidateLocalServiceUtil.findAll()) {
-				String fullName = c.getFullName();
-				VacancyCandidate vc = VacancyCandidateLocalServiceUtil
-						.findByCandidate(c.getC_id());
-				String v_name = "";
-				if (vc != null) {
-					long v_id = VacancyCandidateLocalServiceUtil
-							.findByCandidate(c.getC_id()).getV_id();
-					v_name = VacancyLocalServiceUtil.getVacancy(v_id).getName();
-				}
-				if (fullName.toLowerCase()
-						.contains(C_GLOB_SEARCH.toLowerCase())
-						|| c.getEmail().toLowerCase()
-								.contains(C_GLOB_SEARCH.toLowerCase())
-						|| c.getContact_number().toLowerCase()
-								.contains(C_GLOB_SEARCH.toLowerCase())
-						|| v_name.toLowerCase().contains(C_GLOB_SEARCH)) {
-					if (v_name.toLowerCase().contains(
-							VACANCY_SEARCH.toLowerCase())) {
-						if (fullName.toLowerCase().contains(
-								C_NAME_SEARCH.toLowerCase())) {
-							if (c.getEmail().toLowerCase()
-									.contains(EMAIL_SEARCH.toLowerCase())) {
-								if (c.getContact_number()
-										.toLowerCase()
-										.contains(
-												CONTACT_NO_SEARCH.toLowerCase())) {
-									if (DATE_RANGE_STR != null
-											&& DATE_RANGE_STR != ""
-											&& DATE_RANGE_STR.length() > 1) {
-										if (filterEntityByDateRange(
-												DATE_RANGE_STR,
-												c.getDate_of_application())) {
-											if (C_STATUS != null
-													&& C_STATUS != "") {
-												if (C_STATUS.equals(c
-														.getCandidate_status())) {
-													filteredCandidates.add(c);
-												}
-											} else {
-												filteredCandidates.add(c);
-											}
-										}
-									} else {
-										if (C_STATUS != null && C_STATUS != "") {
-											if (C_STATUS.equals(c
-													.getCandidate_status())) {
-
-												filteredCandidates.add(c);
-											}
-										} else {
-											filteredCandidates.add(c);
-										}
-									}
-								}
-
-							}
-						}
-					}
-
-				}
-
-			}
-
-			/*
-			 * Collections.sort(filteredCandidates, new Comparator<Candidate>()
-			 * {
-			 * 
-			 * @Override public int compare(Candidate c1, Candidate c2) { switch
-			 * (sortColumnIndex) { case 2: return c1.getFirst_name().compareTo(
-			 * c2.getFirst_name()) sortDirection; case 3: return
-			 * c1.getEmail().compareTo( c2.getEmail()) sortDirection; case 4:
-			 * return c1.getContact_number() .compareTo( c2.getContact_number())
-			 * sortDirection; } return 0; } });
-			 */
-
-			iTotalDisplayRecords = filteredCandidates.size();
-
-			if (filteredCandidates.size() < start + listDisplayAmount) {
-				filteredCandidates = filteredCandidates.subList(start,
-						filteredCandidates.size());
-			} else {
-				filteredCandidates = filteredCandidates.subList(start, start
-						+ listDisplayAmount);
-			}
+			final List<Candidate> filterCandidates = CandidateLocalServiceUtil
+					.filterCandidates(C_GLOB_SEARCH, C_NAME_SEARCH,
+							C_EMAIL_SEARCH, C_CONTACT_NO_SEARCH,
+							C_STATUS_SEARCH, C_VACANCY_SEARCH,
+							C_START_DATE_SEARCH, C_END_DATE_SEARCH,
+							sortColName, sortDirection, C_INITIAL,
+							C_RECORD_SIZE);
 
 			jsonResult.put("iTotalRecords", iTotalRecords);
 			jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
+			
+			C_START_DATE_SEARCH = StringUtils.EMPTY;
+			C_END_DATE_SEARCH = StringUtils.EMPTY;
+			C_GLOB_SEARCH = StringUtils.EMPTY;
+			C_NAME_SEARCH = StringUtils.EMPTY;
+			C_EMAIL_SEARCH = StringUtils.EMPTY;
+			C_CONTACT_NO_SEARCH = StringUtils.EMPTY;
+			C_STATUS_SEARCH = StringUtils.EMPTY;
+			C_VACANCY_SEARCH = StringUtils.EMPTY;
+			
 			JSONArray array = new JSONArray();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			for (Candidate c : filteredCandidates) {
+			for (Candidate c : filterCandidates) {
 				JSONObject object = new JSONObject();
 				object.put("c_id", c.getC_id());
 				VacancyCandidate vc = VacancyCandidateLocalServiceUtil
-						.findByCandidate(c.getC_id());
+						.findByCandidate_And_VALID_Status(c.getC_id());
 				if (vc != null) {
-					long v_id = VacancyCandidateLocalServiceUtil
-							.findByCandidate(c.getC_id()).getV_id();
+					long v_id = vc.getV_id();
 					object.put("vacancy",
 							VacancyLocalServiceUtil.getVacancy(v_id).getName());
 					object.put("vacancyId", v_id);
@@ -405,16 +334,15 @@ public class HRMPortlet extends MVCPortlet {
 							.getAvailableStatus(status)) {
 						statuses.put(s.toString());
 					}
-					object.put("statusCssClass", getCandidateStatusCssClass(c.getCandidate_status()));
+					object.put("statusCssClass",
+							CandidateStatus.valueOf(c.getCandidate_status())
+									.getCssClass());
 					object.put("availableStatuses", statuses);
 				}
 				object.put("resume", "on doing");
 				array.put(object);
 			}
-
 			jsonResult.put("aaData", array);
-			// Thread.sleep(1000);
-
 			response.getWriter().print(jsonResult);
 
 		} else if (SAVE_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
@@ -431,12 +359,11 @@ public class HRMPortlet extends MVCPortlet {
 
 			final Long v_id = jObject.get("vacancy").getAsLong() != -1 ? jObject
 					.get("vacancy").getAsLong() : null;
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			final SimpleDateFormat sdf = new SimpleDateFormat(
+					FILTER_DATE_FORMAT);
 			final java.util.Date date_of_application = sdf.parse(jObject.get(
 					"date_of_application").getAsString());
 			// verify c_id to check create/update action
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-					Candidate.class.getName(), request);
 			if (jObject.get("c_id").getAsLong() == -1) {
 				CandidateLocalServiceUtil.create(serviceContext.getUserId(),
 						first_name, middle_name, last_name, email,
@@ -457,97 +384,59 @@ public class HRMPortlet extends MVCPortlet {
 		} else if (GET_CANDIDATE.equalsIgnoreCase(resourceRequestId)) {
 			find_ResponseEntityServeResource(request, response.getWriter(),
 					"c_id");
-		}
-	}
-	
-	private String getCandidateStatusCssClass(String status) {
-		switch (CandidateStatus.valueOf(status)) {
-			case APPLICATION_INITIATED:
-				return "status-grey";
-			case SHORTLIST:
-			case INTERVIEW_SCHEDULED:
-				return "status-yellow";
-			case MARK_INTERVIEW_PASS:
-			case JOB_OFFERED:
-			case HIRE:
-				return "status-green";
-			case MARK_INTERVIEW_FAIL:
-			case DECLINE_OFFERED:
-			case REJECT:
-				return "status-red";
-			default:
-				return "";
-		}
-	}
-	
-	private String getVacancyStatusCssClass(String status) {
-		switch (VacancyStatus.valueOf(status)) {
-			case NEW:
-				return "status-yellow";
-			case PUBLISHED:
-				return "status-green";
-			case UNPUBLISHED:
-				return "status-red";
-			default:
-				return "";
-		}
-	}
+		} else if (GET_ALL_CANDIDATE_HISTORIES
+				.equalsIgnoreCase(resourceRequestId)) {
+			// DLAppServiceUtil
+			// DLFileEntryLocalServiceUtil.addFileEntry(userId, groupId,
+			// repositoryId, folderId, sourceFileName, mimeType, title,
+			// description, changeLog, fileEntryTypeId, fieldsMap, file, is,
+			// size, serviceContext);
+			System.out.println("INSIDE GET_ALL_CANDIDATE_HISTORIES");
+			final JsonObject obj = getPOSTJsonObjectFromRequest(request);
+			long c_id = obj.get("c_id").getAsLong();
+			// long c_id = ParamUtil.getLong(request, "c_id");
+			final List<CandidateHistory> histories = CandidateHistoryLocalServiceUtil
+					.findByCandidate(c_id);
 
-	private boolean filterEntityByDateRange(String DATE_RANGE_STR,
-			java.util.Date comparedDate) throws ParseException {
-		String START_DATE = "";
-		String END_DATE = "";
-		System.out.println(DATE_RANGE_STR.length());
-		if (DATE_RANGE_STR.length() > 1) {
-			System.out.println("Index of ~" + DATE_RANGE_STR.indexOf("~"));
-			START_DATE = DATE_RANGE_STR.indexOf("~") != 0 ? DATE_RANGE_STR
-					.substring(0, DATE_RANGE_STR.indexOf("~")) : "";
-			if (DATE_RANGE_STR.length() > START_DATE.length() + 1) {
-				END_DATE = DATE_RANGE_STR.substring(
-						DATE_RANGE_STR.indexOf("~") + 1,
-						DATE_RANGE_STR.length());
+			final JSONObject result = new JSONObject();
+			final JSONArray historyArr = new JSONArray();
+			final SimpleDateFormat sdf = new SimpleDateFormat(
+					FILTER_DATE_FORMAT);
+			for (CandidateHistory h : histories) {
+				final JSONObject object = new JSONObject();
+				object.put("candidateHistoryId",
+						sdf.format(h.getCandidateHistoryId()));
+				object.put("performedDate", h.getPerformedDate());
+				object.put("note", h.getNote());
+				historyArr.put(object);
 			}
-		} else {
-			return false;
+			// UploadPortletRequest uploadPortletRequest =
+			// PortalUtil.getUploadPortletRequest(request);
+			ThemeDisplay themeDisplay = (ThemeDisplay) request
+					.getAttribute(WebKeys.THEME_DISPLAY);
+			System.out.println("THEME: " + themeDisplay.getThemeId());
+			result.put("aaData", historyArr);
+			response.getWriter().print(result);
+		} else if (HIRE_CANDIDATE_STATUS_CHANGE
+				.equalsIgnoreCase(resourceRequestId)) {
+			final JsonObject object = getPOSTJsonObjectFromRequest(request);
+			long c_id = object.get("c_id").getAsLong();
+			final Candidate candidate = CandidateLocalServiceUtil
+					.getCandidate(c_id);
+			final JSONObject obj = createCandidateJSONObj(candidate, null);
+			response.getWriter().print(obj);
+		} else if ("candidateStatusChange".equalsIgnoreCase(resourceRequestId)) {
+			JsonObject jsonObject = getPOSTJsonObjectFromRequest(request);
+			long candidateId = jsonObject.get("c_id").getAsLong();
+			long vancancyId = jsonObject.get("v_id").getAsLong();
+			final String changedStatus = jsonObject.get("changedStatus")
+					.getAsString();
+			;
+			CandidateLocalServiceUtil.changeCandidateStatus(candidateId,
+					vancancyId, serviceContext.getUserId(),
+					CandidateStatus.valueOf(changedStatus), serviceContext);
+			response.getWriter().print(new JSONObject());
 		}
-		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
-		SimpleDateFormat sourceSdf = new SimpleDateFormat(SOURCE_DATE_FORMAT);
-
-		String convertedDate = sdf.format(comparedDate);
-		java.util.Date cDate = sdf.parse(convertedDate);
-
-		if (START_DATE != "") {
-
-			java.util.Date fDate = sdf.parse(sdf.format(sourceSdf
-					.parse(START_DATE)));
-
-			if (END_DATE != "") {
-				System.out.println("END_DATEEEEEEEEEE" + END_DATE);
-				java.util.Date tDate = sdf.parse(sdf.format(sourceSdf
-						.parse(END_DATE)));
-				if (cDate.after(fDate) && cDate.before(tDate)) {
-					return true;
-				}
-			} else {
-				if (cDate.after(fDate)) {
-					return true;
-				}
-			}
-
-		} else {
-			if (END_DATE != "") {
-				java.util.Date tDate = sdf.parse(sdf.format(sourceSdf
-						.parse(END_DATE)));
-				System.out.println("COMPARE : \n" + cDate + "\n" + tDate);
-				if (cDate.before(tDate)) {
-					return true;
-				}
-			} else {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private void onVacancyServeResourceAction(ResourceRequest request,
@@ -562,16 +451,16 @@ public class HRMPortlet extends MVCPortlet {
 			int iTotalDisplayRecords = 0;
 			int start = 0;
 			int listDisplayAmount = 10;
-
-			List<Vacancy> filteredVacancies = new ArrayList<Vacancy>();
-			List<Vacancy> vacancies = findAllVacancies();
-			iTotalRecords = vacancies.size();
-
+			final String[] colums = { "v_id", "name", "job_title", "location",
+					"vacancy_status" };
 			V_GLOB_SEARCH = ParamUtil.getString(request, "sSearch");
-			NAME_SEARCH = ParamUtil.getString(request, "sSearch_1");
-			JOB_TITLE_SEARCH = ParamUtil.getString(request, "sSearch_2");
-			LOCATION_SEARCH = ParamUtil.getString(request, "sSearch_3");
-			STATUS_SEARCH = ParamUtil.getString(request, "sSearch_4");
+			V_NAME_SEARCH = ParamUtil.getString(request, "sSearch_1");
+			V_JOB_TITLE_SEARCH = ParamUtil.getString(request, "sSearch_2");
+			V_LOCATION_SEARCH = ParamUtil.getString(request, "sSearch_3");
+			V_STATUS_SEARCH = ParamUtil.getString(request, "sSearch_4");
+			Integer sortColumnIndex = ParamUtil.getInteger(request,
+					"iSortCol_0");
+			String sortDirection = ParamUtil.getString(request, "sSortDir_0");
 			String pageNo = request.getParameter("iDisplayStart");
 			String pageSize = request.getParameter("iDisplayLength");
 			if (pageNo != null) {
@@ -583,50 +472,33 @@ public class HRMPortlet extends MVCPortlet {
 
 			if (pageSize != null) {
 				listDisplayAmount = Integer.parseInt(pageSize);
-				if (listDisplayAmount < 10 || listDisplayAmount > 50) {
+				if (listDisplayAmount < 10 || listDisplayAmount > 100) {
 					listDisplayAmount = 10;
 				}
 			}
 
-			// filter
-			for (Vacancy v : vacancies) {
-				final String jTitle = JTitleLocalServiceUtil.getJTitle(
-						v.getJobtitleId()).getTitle();
-				final String location = LocationLocalServiceUtil
-						.getLocationNameById(v.getLocationId());
-				if (v.getName().toLowerCase().contains(V_GLOB_SEARCH)
-						|| jTitle.toLowerCase().contains(V_GLOB_SEARCH)) {
-					if (v.getName().toLowerCase()
-							.contains(NAME_SEARCH.toLowerCase())) {
-						if (JOB_TITLE_SEARCH != null
-								&& jTitle.toLowerCase().contains(
-										JOB_TITLE_SEARCH.toLowerCase())) {
-							if (LOCATION_SEARCH != null
-									&& location.toLowerCase().contains(
-											LOCATION_SEARCH.toLowerCase())) {
-								filteredVacancies.add(v);
-							}
-						}
-					}
-				}
-			}
-			iTotalDisplayRecords = filteredVacancies.size();
+			V_INITIAL = start;
+			V_RECORD_SIZE = listDisplayAmount;
+			final String sortColumnName = colums[sortColumnIndex];
+			
 
-			// paging
-
-			if (filteredVacancies.size() < start + listDisplayAmount) {
-				filteredVacancies = filteredVacancies.subList(start,
-						filteredVacancies.size());
-			} else {
-				filteredVacancies = filteredVacancies.subList(start, start
-						+ listDisplayAmount);
-			}
+			final List<Vacancy> vacancies = VacancyLocalServiceUtil
+					.filterVacancies(V_GLOB_SEARCH, V_NAME_SEARCH,
+							V_JOB_TITLE_SEARCH, V_LOCATION_SEARCH,
+							V_STATUS_SEARCH, sortColumnName, sortDirection, V_INITIAL,
+							V_RECORD_SIZE);
+				
+			iTotalRecords = VacancyLocalServiceUtil.countAll();
+			iTotalDisplayRecords = VacancyLocalServiceUtil.getFilterVacanciesSize(
+					V_GLOB_SEARCH, V_NAME_SEARCH, V_JOB_TITLE_SEARCH,
+					V_LOCATION_SEARCH, V_STATUS_SEARCH, sortColumnName,
+					sortDirection);
 
 			JSONObject jsonResult = new JSONObject();
 			jsonResult.put("iTotalRecords", iTotalRecords);
 			jsonResult.put("iTotalDisplayRecords", iTotalDisplayRecords);
 			JSONArray array = new JSONArray();
-			for (Vacancy v : filteredVacancies) {
+			for (Vacancy v : vacancies) {
 				JSONObject object = new JSONObject();
 				object.put("v_id", v.getV_id());
 				object.put("vacancy_name", v.getName());
@@ -636,13 +508,20 @@ public class HRMPortlet extends MVCPortlet {
 				object.put("location", LocationLocalServiceUtil
 						.getLocationNameById(v.getLocationId()));
 				object.put("status", v.getVacancy_status());
+				int validApplications = VacancyCandidateLocalServiceUtil
+						.findByVacancy_And_VALID_Status(v.getV_id()).size();
+				int numberOfPositions = v.getNo_of_positions();
+				object.put("validApplicants", validApplications);
+				object.put("numberOfPositions", numberOfPositions);
 				final JSONArray availableStatuses = new JSONArray();
 				for (VacancyStatus vs : VacancyStatus
 						.getAvailableStatuses(VacancyStatus.valueOf(v
 								.getVacancy_status()))) {
 					availableStatuses.put(vs.toString());
 				}
-				object.put("statusCssClass", getVacancyStatusCssClass(v.getVacancy_status()));
+				object.put("statusCssClass",
+						VacancyStatus.valueOf(v.getVacancy_status())
+								.getCssClass());
 				object.put("availableStatuses", availableStatuses);
 				array.put(object);
 			}
@@ -666,7 +545,8 @@ public class HRMPortlet extends MVCPortlet {
 			final String name = object.get("v_name").getAsString();
 			final String description = object.get("description").getAsString();
 			final int no_of_pos = object.get("no_of_positions").getAsInt();
-			final List<Long> manIds = getSelectedManagerIds(object.get("selectedManagers").getAsJsonArray());
+			final List<Long> manIds = getSelectedManagerIds(object.get(
+					"selectedManagers").getAsJsonArray());
 			/*
 			 * final String vacancy_status = jObject.get(
 			 * "vacancy_status").getAsString();
@@ -687,9 +567,9 @@ public class HRMPortlet extends MVCPortlet {
 				final Vacancy oldVacancy = VacancyLocalServiceUtil
 						.getVacancy(v_id);
 
-				modifiedVacancy = VacancyLocalServiceUtil.edit(
-						v_id, jTitleId, locationId, manIds,
-						name, description, no_of_pos, job_posting, serviceContext);
+				modifiedVacancy = VacancyLocalServiceUtil.edit(v_id, jTitleId,
+						locationId, manIds, name, description, no_of_pos,
+						job_posting, serviceContext);
 
 				/*
 				 * Notify changes when Name or VacancyStatus changed -> to
@@ -703,22 +583,17 @@ public class HRMPortlet extends MVCPortlet {
 
 			}
 			/*
-			if (isNotifyChanges) {
-				final List<Vacancy> vacancies = VacancyLocalServiceUtil
-						.findAll();
-				final JSONArray vArr = new JSONArray();
-				for (Vacancy v : vacancies) {
-					if (v.getVacancy_status().equalsIgnoreCase(
-							VacancyStatus.PUBLISHED.toString())) {
-						vArr.put(createVacancyJSONObj(v, null));
-					}
-				}
-				response.getWriter().print(vArr);
-			} else {
-				response.getWriter().print(new JSONArray());
-			}
-			*/
-			final JSONObject result = isNotifyChanges ? createVacancyJSONObj(modifiedVacancy, null) : new JSONObject();
+			 * if (isNotifyChanges) { final List<Vacancy> vacancies =
+			 * VacancyLocalServiceUtil .findAll(); final JSONArray vArr = new
+			 * JSONArray(); for (Vacancy v : vacancies) { if
+			 * (v.getVacancy_status().equalsIgnoreCase(
+			 * VacancyStatus.PUBLISHED.toString())) {
+			 * vArr.put(createVacancyJSONObj(v, null)); } }
+			 * response.getWriter().print(vArr); } else {
+			 * response.getWriter().print(new JSONArray()); }
+			 */
+			final JSONObject result = isNotifyChanges ? createVacancyJSONObj(
+					modifiedVacancy, null) : new JSONObject();
 			result.put("isNew", true);
 			response.getWriter().print(result);
 
@@ -773,11 +648,13 @@ public class HRMPortlet extends MVCPortlet {
 			JTitle responseObj = null;
 			if (jTitleId == -1) {
 
-				responseObj = JTitleLocalServiceUtil.create(serviceContext.getUserId(),
+				responseObj = JTitleLocalServiceUtil.create(
+						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(), title, desc, note,
 						false, serviceContext);
 			} else {
-				responseObj = JTitleLocalServiceUtil.edit(serviceContext.getUserId(),
+				responseObj = JTitleLocalServiceUtil.edit(
+						serviceContext.getUserId(),
 						serviceContext.getScopeGroupId(), jTitleId, title,
 						desc, note, false, serviceContext);
 
@@ -809,21 +686,10 @@ public class HRMPortlet extends MVCPortlet {
 			result.put("jTitles", jTitleNamesArr);
 			result.put("locations", locationArr);
 			response.getWriter().print(result);
-		} else if ("candidateStatusChange".equalsIgnoreCase(resourceRequestId)) {
-			JsonObject jsonObject = getPOSTJsonObjectFromRequest(request);
-			long id = jsonObject.get("c_id").getAsLong();
-			String changedStatus = jsonObject.get("changedStatus")
-					.getAsString();
-			Candidate candidate = CandidateLocalServiceUtil.getCandidate(id);
-			candidate.setCandidate_status(changedStatus);
-			CandidateLocalServiceUtil.updateCandidate(candidate);
-			response.getWriter().print("");
-			response.getWriter().flush();
-
 		} else if ("vacancyStatusChange".equalsIgnoreCase(resourceRequestId)) {
 			final JsonObject jsonObject = getPOSTJsonObjectFromRequest(request);
 			long id = jsonObject.get("v_id").getAsLong();
-			
+
 			final String changedStatus = jsonObject.get("changedStatus")
 					.getAsString();
 			System.out.println("VACANCY STATUS CHANGE ID: " + id);
@@ -851,10 +717,10 @@ public class HRMPortlet extends MVCPortlet {
 		} else if (SAVE_INTERVIEW.equalsIgnoreCase(resourceRequestId)) {
 			final ServiceContext context = ServiceContextFactory
 					.getInstance(request);
-				final JsonObject obj = getPOSTJsonObjectFromRequest(request);
-				final String name = obj.get("name").getAsString();
-				InterviewLocalServiceUtil.create(context.getUserId(), name,
-						context);
+			final JsonObject obj = getPOSTJsonObjectFromRequest(request);
+			final String name = obj.get("name").getAsString();
+			InterviewLocalServiceUtil
+					.create(context.getUserId(), name, context);
 		}
 	}
 
@@ -889,7 +755,8 @@ public class HRMPortlet extends MVCPortlet {
 	private void onInterviewScheduleServeResourceActions(
 			ResourceRequest request, ResourceResponse response,
 			String resourceRequestId) throws IOException, SystemException,
-			PortalException, ParseException, VacancyCandidateNotFoundException, InterviewScheduleExistedException {
+			PortalException, ParseException, VacancyCandidateNotFoundException,
+			InterviewScheduleExistedException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				InterviewSchedule.class.getName(), request);
 		long userId = serviceContext.getUserId();
@@ -916,7 +783,53 @@ public class HRMPortlet extends MVCPortlet {
 		}
 	}
 
-	
+	private void onEmployeeServeResourceActions(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId)
+			throws IOException, SystemException, PortalException,
+			ParseException, VacancyCandidateNotFoundException,
+			InterviewScheduleExistedException {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Employee.class.getName(), request);
+		long userId = serviceContext.getUserId();
+		if (SAVE_EMPLOYEE.equalsIgnoreCase(resourceRequestId)) {
+			final JsonObject object = getPOSTJsonObjectFromRequest(request);
+			long employeeId = object.get("employeeId").getAsLong();
+			long candidateId = object.get("candidateId").getAsLong();
+			long vacancyId = object.get("vacancyId").getAsLong();
+			final SimpleDateFormat sdf = new SimpleDateFormat(
+					FILTER_DATE_FORMAT);
+			final String firstname = object.get("first_name").getAsString();
+			final String middle_name = object.get("middle_name").getAsString();
+			final String lastname = object.get("last_name").getAsString();
+			final String email = object.get("email").getAsString();
+			final String contact_number = object.get("contact_number")
+					.getAsString();
+			final String gender = object.get("gender").getAsString();
+			final java.util.Date birthday = sdf.parse(object.get("birthday")
+					.getAsString());
+			final java.util.Date joined_date = sdf.parse(object.get(
+					"joined_date").getAsString());
+			if (employeeId == -1) {
+				// get jobtitleId from vacancyId
+				long jobTitleId = VacancyLocalServiceUtil.getVacancy(vacancyId)
+						.getJobtitleId();
+				EmployeeLocalServiceUtil.create("EMP", firstname, middle_name,
+						lastname, email, contact_number, "", birthday, gender,
+						jobTitleId, joined_date, userId, serviceContext);
+				final Candidate candidate = CandidateLocalServiceUtil
+						.getCandidate(candidateId);
+				candidate.setCandidate_status(CandidateStatus.HIRE.toString());
+				CandidateLocalServiceUtil.updateCandidate(candidate);
+			} else {
+				// TODO implement for editing
+			}
+			response.getWriter().print(new JSONObject());
+		} else if ("filterEmpByName".equalsIgnoreCase(resourceRequestId)) {
+			final JsonObject object = getPOSTJsonObjectFromRequest(request);
+			System.out.println(object);
+		}
+	}
+
 	private List<Long> getSelectedManagerIds(JsonArray manArr) {
 		final List<Long> ids = new ArrayList<Long>();
 		for (JsonElement je : manArr) {
@@ -929,6 +842,7 @@ public class HRMPortlet extends MVCPortlet {
 
 	/**
 	 * Read the InputStream from portlet request & parse to JsonObject
+	 * 
 	 * @param request
 	 * @return JsonObject
 	 * @throws IOException
@@ -946,7 +860,6 @@ public class HRMPortlet extends MVCPortlet {
 		return object;
 	}
 
-	
 	private void onGetCandidatesFormDataAJX(ResourceRequest request,
 			ResourceResponse response, String resourceRequestId)
 			throws IOException, SystemException {
@@ -1033,6 +946,80 @@ public class HRMPortlet extends MVCPortlet {
 			result.put("employees", eArray);
 			response.getWriter().print(result);
 		}
+	}
+
+	private void onExportResult(ResourceRequest request,
+			ResourceResponse response, String resourceRequestId)
+			throws IOException, SystemException {
+		if (EXPORT_RESULT.equalsIgnoreCase(resourceRequestId)) {
+			HSSFWorkbook workbook = new HSSFWorkbook();
+
+			final HSSFSheet sheet = workbook.createSheet("candidate");
+			StopWatch sw = new StopWatch();
+			sw.start();
+			final Map<String, Object[]> data = new TreeMap<String, Object[]>();
+			data.put("1", new Object[] { "ID", "VACANCY", "FULLNAME", "EMAIL",
+					"PHONE", "STATUS", "APPLICATION_DATE" });
+			List<Candidate> allCandidates = CandidateLocalServiceUtil.findAll();
+			for (Candidate candidate : allCandidates) {
+				data.put(
+						String.valueOf(candidate.getC_id()),
+						new Object[] {
+								String.valueOf(candidate.getC_id()),
+								"TEST_VACANCY",
+								candidate.getFirst_name() + " "
+										+ candidate.getMiddle_name() + " "
+										+ candidate.getLast_name(),
+								candidate.getEmail(),
+								candidate.getContact_number(),
+								candidate.getCandidate_status(),
+								String.valueOf(candidate
+										.getDate_of_application()) });
+			}
+			Set<String> keySet = data.keySet();
+			int rowNum = 0;
+			for (String key : keySet) {
+				Row row = sheet.createRow(rowNum++);
+				Object[] objArr = data.get(key);
+				int cellNum = 0;
+				for (Object obj : objArr) {
+					Cell cell = row.createCell(cellNum++);
+					if (obj instanceof String) {
+						cell.setCellValue((String) obj);
+					} else if (obj instanceof Integer) {
+						cell.setCellValue((Integer) obj);
+					}
+				}
+			}
+			try {
+				final ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
+				workbook.write(outByteStream);
+				byte[] outArray = outByteStream.toByteArray();
+				final HttpServletRequest httpRequest = PortalUtil
+						.getHttpServletRequest(request);
+				final HttpServletResponse httpResponse = PortalUtil
+						.getHttpServletResponse(response);
+				ServletResponseUtil
+						.sendFile(httpRequest, httpResponse,
+								"candidateExport.xls", outArray,
+								"application/download");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			/*
+			 * final ByteArrayOutputStream outByteStream = new
+			 * ByteArrayOutputStream(); workbook.write(outByteStream); byte[]
+			 * outArray = outByteStream.toByteArray();
+			 * 
+			 * File file = FileUtil.createTempFile(outArray);
+			 * System.out.println("HERE"); PortletResponseUtil.sendFile(request,
+			 * response, "Export_File.xls", outArray, "application/download");
+			 * System.out.println("HERE"); sw.stop();
+			 * System.out.println(sw.currentElapsedTime());
+			 */
+		}
+
 	}
 
 	private List<Vacancy> findAllVacancies() throws SystemException {
@@ -1124,18 +1111,18 @@ public class HRMPortlet extends MVCPortlet {
 		object.put("middle_name", c.getMiddle_name());
 		object.put("last_name", c.getLast_name());
 		object.put("contact_number", c.getContact_number());
-		SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
+		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
 		object.put("date_of_application",
 				sdf.format(c.getDate_of_application()));
 		final VacancyCandidate vc = VacancyCandidateLocalServiceUtil
-				.findByCandidate(c.getC_id());
+				.findByCandidate_And_VALID_Status(c.getC_id());
 		if (vc != null) {
-			long v_id = VacancyCandidateLocalServiceUtil.findByCandidate(
-					c.getC_id()).getV_id();
+			long v_id = vc.getV_id();
 			object.put("v_id", v_id);
 			object.put("vacancy", VacancyLocalServiceUtil.getVacancy(v_id)
 					.getName());
-			if (!VacancyLocalServiceUtil.getVacancy(v_id).getVacancy_status().equalsIgnoreCase(VacancyStatus.PUBLISHED.toString())){
+			if (!VacancyLocalServiceUtil.getVacancy(v_id).getVacancy_status()
+					.equalsIgnoreCase(VacancyStatus.PUBLISHED.toString())) {
 				object.put("vacancyStateUnpublished", true);
 			} else {
 				object.put("vacancyStateUnpublished", false);
@@ -1159,10 +1146,13 @@ public class HRMPortlet extends MVCPortlet {
 		object.put("jTitleId", v.getJobtitleId());
 		object.put("job_posting", "JOB POSTING....");
 		final JSONArray empArr = new JSONArray();
-		for (EmployeeVacancy employeeVacancy : EmployeeVacancyLocalServiceUtil.findByVacancy(v.getV_id())) {
-			final Employee employee = EmployeeLocalServiceUtil.getEmployee(employeeVacancy.getEmployeeId());
+		for (EmployeeVacancy employeeVacancy : EmployeeVacancyLocalServiceUtil
+				.findByVacancy(v.getV_id())) {
+			final Employee employee = EmployeeLocalServiceUtil
+					.getEmployee(employeeVacancy.getEmployeeId());
 			final JSONObject empObj = new JSONObject();
-			final String fullName = employee.getFirstname() + " " + employee.getMiddle_name() + " " + employee.getLastname();
+			final String fullName = employee.getFirstname() + " "
+					+ employee.getMiddle_name() + " " + employee.getLastname();
 			empObj.put("employeeId", employee.getEmployeeId());
 			empObj.put("name", fullName);
 			empArr.put(empObj);

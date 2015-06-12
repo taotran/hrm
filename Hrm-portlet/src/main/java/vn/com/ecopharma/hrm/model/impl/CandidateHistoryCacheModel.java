@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing CandidateHistory in entity cache.
  *
@@ -25,6 +27,7 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
     public long v_id;
     public long interviewId;
     public long performed_by;
+    public long performedDate;
     public String note;
     public String interviewers;
     public String action;
@@ -35,7 +38,7 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{candidateHistoryId=");
         sb.append(candidateHistoryId);
@@ -47,6 +50,8 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
         sb.append(interviewId);
         sb.append(", performed_by=");
         sb.append(performed_by);
+        sb.append(", performedDate=");
+        sb.append(performedDate);
         sb.append(", note=");
         sb.append(note);
         sb.append(", interviewers=");
@@ -75,6 +80,12 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
         candidateHistoryImpl.setV_id(v_id);
         candidateHistoryImpl.setInterviewId(interviewId);
         candidateHistoryImpl.setPerformed_by(performed_by);
+
+        if (performedDate == Long.MIN_VALUE) {
+            candidateHistoryImpl.setPerformedDate(null);
+        } else {
+            candidateHistoryImpl.setPerformedDate(new Date(performedDate));
+        }
 
         if (note == null) {
             candidateHistoryImpl.setNote(StringPool.BLANK);
@@ -116,6 +127,7 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
         v_id = objectInput.readLong();
         interviewId = objectInput.readLong();
         performed_by = objectInput.readLong();
+        performedDate = objectInput.readLong();
         note = objectInput.readUTF();
         interviewers = objectInput.readUTF();
         action = objectInput.readUTF();
@@ -133,6 +145,7 @@ public class CandidateHistoryCacheModel implements CacheModel<CandidateHistory>,
         objectOutput.writeLong(v_id);
         objectOutput.writeLong(interviewId);
         objectOutput.writeLong(performed_by);
+        objectOutput.writeLong(performedDate);
 
         if (note == null) {
             objectOutput.writeUTF(StringPool.BLANK);

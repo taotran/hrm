@@ -16,6 +16,8 @@ import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule;
 import vn.com.ecopharma.hrm.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.service.CandidateHistoryLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.InterviewLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.base.InterviewScheduleLocalServiceBaseImpl;
 
 /**
@@ -59,7 +61,7 @@ public class InterviewScheduleLocalServiceImpl extends
 		if (interviewSchedulePersistence.fetchByInterview_And_VacancyCandidate(interviewId, vacancyCandidate.getVacancyCandidateId(), true) != null) {
 			throw new InterviewScheduleExistedException();
 		}
-		final InterviewSchedule is = interviewSchedulePersistence
+		InterviewSchedule is = interviewSchedulePersistence
 				.create(counterLocalService.increment());
 		is.setInterviewId(interviewId);
 	
@@ -81,7 +83,11 @@ public class InterviewScheduleLocalServiceImpl extends
 				.toString());
 		candidatePersistence.update(candidate);
 
-		interviewSchedulePersistence.update(is);
+		is = interviewSchedulePersistence.update(is);
+		
+		/* WRITE log to CandidateHistory */
+		CandidateHistoryLocalServiceUtil.create(candidateId, vacancyId, interviewId, userId, "Schedule Interview: " + InterviewLocalServiceUtil.getInterview(interviewId).getName(), new Date(System.currentTimeMillis()), employeeLocalService.getListInterviewersStringByIds(emps), "INTERVIEW_SCHEDULE", userId, serviceContext);
+		
 		return is;
 	}
 

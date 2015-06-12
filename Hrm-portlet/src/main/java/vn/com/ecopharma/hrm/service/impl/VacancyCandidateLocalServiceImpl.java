@@ -11,6 +11,7 @@ import com.liferay.portal.service.ServiceContext;
 import vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
 import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
+import vn.com.ecopharma.hrm.constant.VacancyCandidateStatus;
 import vn.com.ecopharma.hrm.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.VacancyCandidateLocalServiceBaseImpl;
@@ -53,15 +54,16 @@ public class VacancyCandidateLocalServiceImpl extends
 		vc.setV_id(v_id);
 		vc.setUserId(user.getUserId());
 		vc.setGroupId(serviceContext.getScopeGroupId());
+		vc.setVc_status(VacancyCandidateStatus.VALID.toString());
 		vacancyCandidatePersistence.update(vc);
 
 		return vc;
 	}
 
-	public VacancyCandidate findByCandidate(long c_id) throws SystemException {
-		return vacancyCandidatePersistence.fetchByC_Id(c_id);
+	public List<VacancyCandidate> findByCandidate(long c_id) throws SystemException {
+		return vacancyCandidatePersistence.findByC_Id(c_id);
 	}
-
+	
 	public List<VacancyCandidate> findByVacancy(long v_id)
 			throws SystemException {
 		return vacancyCandidatePersistence.findByV_Id(v_id);
@@ -70,6 +72,14 @@ public class VacancyCandidateLocalServiceImpl extends
 	public VacancyCandidate findByVacancyAndCandidate(long v_id, long c_id)
 			throws NoSuchVacancyCandidateException, SystemException {
 		return vacancyCandidatePersistence.findByV_Id_And_C_Id(v_id, c_id);
+	}
+	
+	public VacancyCandidate findByCandidate_And_VALID_Status(long c_id) throws NoSuchVacancyCandidateException, SystemException {
+		return vacancyCandidatePersistence.fetchByCandidate_And_VALID_Status(c_id);
+	}
+	
+	public List<VacancyCandidate> findByVacancy_And_VALID_Status(long v_id) throws SystemException {
+		return vacancyCandidatePersistence.findByVacancy_And_VALID_Status(v_id);
 	}
 
 	public void deleteByVacancyAndCandidate(long v_id, long c_id)

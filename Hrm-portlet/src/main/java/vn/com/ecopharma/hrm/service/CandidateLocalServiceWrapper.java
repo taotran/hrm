@@ -337,14 +337,23 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws com.liferay.portal.NoSuchUserException,
-            com.liferay.portal.kernel.exception.SystemException,
-            vn.com.ecopharma.hrm.NoSuchCandidateException,
-            vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.edit(user_id, candidateId, first_name,
             middle_name, last_name, email, contact_number, comment,
             mode_of_application, date_of_application, cv_file_id,
             cv_text_version, added_person, v_id, serviceContext);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Candidate changeCandidateStatus(
+        long candidateId, long vacancyId, long userId,
+        vn.com.ecopharma.hrm.constant.CandidateStatus status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _candidateLocalService.changeCandidateStatus(candidateId,
+            vacancyId, userId, status, serviceContext);
     }
 
     @Override
@@ -382,19 +391,33 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
-        java.lang.String filterString) {
-        return _candidateLocalService.filterCandidates(filterString);
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String candidate_status, java.lang.String vacancy_name,
+        java.lang.String date_from, java.lang.String date_to,
+        java.lang.String sortColumnName, java.lang.String sortDirection,
+        int start, int end) {
+        return _candidateLocalService.filterCandidates(globStr, name, email,
+            contact_number, candidate_status, vacancy_name, date_from, date_to,
+            sortColumnName, sortDirection, start, end);
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateByGlobalString(
-        java.lang.String filterString) {
-        return _candidateLocalService.filterCandidateByGlobalString(filterString);
+    public int getFilterCandidatesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String candidate_status,
+        java.lang.String vacancy_name, java.lang.String date_from,
+        java.lang.String date_to, java.lang.String sortColName,
+        java.lang.String sortDirection) {
+        return _candidateLocalService.getFilterCandidatesSize(globStr, name,
+            email, contact_number, candidate_status, vacancy_name, date_from,
+            date_to, sortColName, sortDirection);
     }
 
     @Override
-    public java.lang.Long findVacancyByCandidate(long c_id) {
-        return _candidateLocalService.findVacancyByCandidate(c_id);
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> dynamicQueryTest(
+        java.lang.String s, int start, int end) {
+        return _candidateLocalService.dynamicQueryTest(s, start, end);
     }
 
     /**

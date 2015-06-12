@@ -33,6 +33,7 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
     public String middle_name;
     public String lastname;
     public String email;
+    public String contact_number;
     public String nickname;
     public long birthday;
     public String gender;
@@ -43,7 +44,7 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(39);
+        StringBundler sb = new StringBundler(41);
 
         sb.append("{employeeId=");
         sb.append(employeeId);
@@ -69,6 +70,8 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
         sb.append(lastname);
         sb.append(", email=");
         sb.append(email);
+        sb.append(", contact_number=");
+        sb.append(contact_number);
         sb.append(", nickname=");
         sb.append(nickname);
         sb.append(", birthday=");
@@ -145,6 +148,12 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
             employeeImpl.setEmail(email);
         }
 
+        if (contact_number == null) {
+            employeeImpl.setContact_number(StringPool.BLANK);
+        } else {
+            employeeImpl.setContact_number(contact_number);
+        }
+
         if (nickname == null) {
             employeeImpl.setNickname(StringPool.BLANK);
         } else {
@@ -202,6 +211,7 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
         middle_name = objectInput.readUTF();
         lastname = objectInput.readUTF();
         email = objectInput.readUTF();
+        contact_number = objectInput.readUTF();
         nickname = objectInput.readUTF();
         birthday = objectInput.readLong();
         gender = objectInput.readUTF();
@@ -256,6 +266,12 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
             objectOutput.writeUTF(email);
+        }
+
+        if (contact_number == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(contact_number);
         }
 
         if (nickname == null) {

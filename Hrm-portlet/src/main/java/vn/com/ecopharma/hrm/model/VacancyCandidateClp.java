@@ -31,6 +31,7 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
     private String _userUuid;
     private Date _createDate;
     private Date _modifiedDate;
+    private String _vc_status;
     private BaseModel<?> _vacancyCandidateRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -79,6 +80,7 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
         attributes.put("userId", getUserId());
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
+        attributes.put("vc_status", getVc_status());
 
         return attributes;
     }
@@ -131,6 +133,12 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
 
         if (modifiedDate != null) {
             setModifiedDate(modifiedDate);
+        }
+
+        String vc_status = (String) attributes.get("vc_status");
+
+        if (vc_status != null) {
+            setVc_status(vc_status);
         }
     }
 
@@ -321,6 +329,28 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
         }
     }
 
+    @Override
+    public String getVc_status() {
+        return _vc_status;
+    }
+
+    @Override
+    public void setVc_status(String vc_status) {
+        _vc_status = vc_status;
+
+        if (_vacancyCandidateRemoteModel != null) {
+            try {
+                Class<?> clazz = _vacancyCandidateRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setVc_status", String.class);
+
+                method.invoke(_vacancyCandidateRemoteModel, vc_status);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
     public BaseModel<?> getVacancyCandidateRemoteModel() {
         return _vacancyCandidateRemoteModel;
     }
@@ -398,6 +428,7 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
         clone.setUserId(getUserId());
         clone.setCreateDate(getCreateDate());
         clone.setModifiedDate(getModifiedDate());
+        clone.setVc_status(getVc_status());
 
         return clone;
     }
@@ -447,7 +478,7 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(19);
 
         sb.append("{vacancyCandidateId=");
         sb.append(getVacancyCandidateId());
@@ -465,6 +496,8 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
         sb.append(getCreateDate());
         sb.append(", modifiedDate=");
         sb.append(getModifiedDate());
+        sb.append(", vc_status=");
+        sb.append(getVc_status());
         sb.append("}");
 
         return sb.toString();
@@ -472,7 +505,7 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(28);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.VacancyCandidate");
@@ -509,6 +542,10 @@ public class VacancyCandidateClp extends BaseModelImpl<VacancyCandidate>
         sb.append(
             "<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
         sb.append(getModifiedDate());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>vc_status</column-name><column-value><![CDATA[");
+        sb.append(getVc_status());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

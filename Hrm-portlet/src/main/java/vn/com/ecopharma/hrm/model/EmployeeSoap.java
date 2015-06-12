@@ -26,6 +26,7 @@ public class EmployeeSoap implements Serializable {
     private String _middle_name;
     private String _lastname;
     private String _email;
+    private String _contact_number;
     private String _nickname;
     private Date _birthday;
     private String _gender;
@@ -52,6 +53,7 @@ public class EmployeeSoap implements Serializable {
         soapModel.setMiddle_name(model.getMiddle_name());
         soapModel.setLastname(model.getLastname());
         soapModel.setEmail(model.getEmail());
+        soapModel.setContact_number(model.getContact_number());
         soapModel.setNickname(model.getNickname());
         soapModel.setBirthday(model.getBirthday());
         soapModel.setGender(model.getGender());
@@ -201,6 +203,14 @@ public class EmployeeSoap implements Serializable {
 
     public void setEmail(String email) {
         _email = email;
+    }
+
+    public String getContact_number() {
+        return _contact_number;
+    }
+
+    public void setContact_number(String contact_number) {
+        _contact_number = contact_number;
     }
 
     public String getNickname() {

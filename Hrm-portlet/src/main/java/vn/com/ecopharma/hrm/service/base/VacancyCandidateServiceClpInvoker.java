@@ -9,30 +9,30 @@ import java.util.Arrays;
  * @generated
  */
 public class VacancyCandidateServiceClpInvoker {
-    private String _methodName86;
-    private String[] _methodParameterTypes86;
-    private String _methodName87;
-    private String[] _methodParameterTypes87;
+    private String _methodName88;
+    private String[] _methodParameterTypes88;
+    private String _methodName89;
+    private String[] _methodParameterTypes89;
 
     public VacancyCandidateServiceClpInvoker() {
-        _methodName86 = "getBeanIdentifier";
+        _methodName88 = "getBeanIdentifier";
 
-        _methodParameterTypes86 = new String[] {  };
+        _methodParameterTypes88 = new String[] {  };
 
-        _methodName87 = "setBeanIdentifier";
+        _methodName89 = "setBeanIdentifier";
 
-        _methodParameterTypes87 = new String[] { "java.lang.String" };
+        _methodParameterTypes89 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
-        if (_methodName86.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+        if (_methodName88.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
             return VacancyCandidateServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName87.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
+        if (_methodName89.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
             VacancyCandidateServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

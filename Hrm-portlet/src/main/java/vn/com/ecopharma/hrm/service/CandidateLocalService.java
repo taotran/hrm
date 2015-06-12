@@ -282,10 +282,15 @@ public interface CandidateLocalService extends BaseLocalService,
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws com.liferay.portal.NoSuchUserException,
-            com.liferay.portal.kernel.exception.SystemException,
-            vn.com.ecopharma.hrm.NoSuchCandidateException,
-            vn.com.ecopharma.hrm.NoSuchVacancyException;
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    public vn.com.ecopharma.hrm.model.Candidate changeCandidateStatus(
+        long candidateId, long vacancyId, long userId,
+        vn.com.ecopharma.hrm.constant.CandidateStatus status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
 
     public void delele(long c_id)
         throws com.liferay.portal.kernel.exception.SystemException,
@@ -307,10 +312,21 @@ public interface CandidateLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
-        java.lang.String filterString);
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String candidate_status, java.lang.String vacancy_name,
+        java.lang.String date_from, java.lang.String date_to,
+        java.lang.String sortColumnName, java.lang.String sortDirection,
+        int start, int end);
 
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateByGlobalString(
-        java.lang.String filterString);
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getFilterCandidatesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String candidate_status,
+        java.lang.String vacancy_name, java.lang.String date_from,
+        java.lang.String date_to, java.lang.String sortColName,
+        java.lang.String sortDirection);
 
-    public java.lang.Long findVacancyByCandidate(long c_id);
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> dynamicQueryTest(
+        java.lang.String s, int start, int end);
 }

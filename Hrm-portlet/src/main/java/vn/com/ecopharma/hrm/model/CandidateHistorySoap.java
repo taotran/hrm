@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class CandidateHistorySoap implements Serializable {
     private long _v_id;
     private long _interviewId;
     private long _performed_by;
+    private Date _performedDate;
     private String _note;
     private String _interviewers;
     private String _action;
@@ -37,6 +39,7 @@ public class CandidateHistorySoap implements Serializable {
         soapModel.setV_id(model.getV_id());
         soapModel.setInterviewId(model.getInterviewId());
         soapModel.setPerformed_by(model.getPerformed_by());
+        soapModel.setPerformedDate(model.getPerformedDate());
         soapModel.setNote(model.getNote());
         soapModel.setInterviewers(model.getInterviewers());
         soapModel.setAction(model.getAction());
@@ -132,6 +135,14 @@ public class CandidateHistorySoap implements Serializable {
 
     public void setPerformed_by(long performed_by) {
         _performed_by = performed_by;
+    }
+
+    public Date getPerformedDate() {
+        return _performedDate;
+    }
+
+    public void setPerformedDate(Date performedDate) {
+        _performedDate = performedDate;
     }
 
     public String getNote() {

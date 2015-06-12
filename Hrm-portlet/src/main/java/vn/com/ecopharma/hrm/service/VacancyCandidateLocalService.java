@@ -248,7 +248,7 @@ public interface VacancyCandidateLocalService extends BaseLocalService,
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyException;
 
-    public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
+    public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByCandidate(
         long c_id) throws com.liferay.portal.kernel.exception.SystemException;
 
     public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy(
@@ -258,6 +258,14 @@ public interface VacancyCandidateLocalService extends BaseLocalService,
         long v_id, long c_id)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
+
+    public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
+
+    public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException;
 
     public void deleteByVacancyAndCandidate(long v_id, long c_id)
         throws com.liferay.portal.kernel.exception.SystemException,

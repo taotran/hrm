@@ -4,9 +4,14 @@ import java.sql.Date;
 import java.util.List;
 
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -16,6 +21,7 @@ import vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
 import vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
 import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.constant.CandidateStatus;
+import vn.com.ecopharma.hrm.constant.VacancyCandidateStatus;
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.CandidateLocalServiceBaseImpl;
@@ -79,12 +85,6 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 				middle_name, last_name, email, start, end, order);
 	}
 
-	/*
-	 * public List<Vacancy> getVacanciesByCandidate(long c_id) { try { return
-	 * candidatePersistence.getVacancies(c_id); } catch (SystemException e) { //
-	 * TODO Auto-generated catch block e.printStackTrace(); } return null; }
-	 */
-
 	public Candidate create(long user_id, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
@@ -105,14 +105,21 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		c.setCv_file_id(cv_file_id);
 		c.setCv_text_version(cv_text_version);
 		c.setUser_id(user.getUserId());
-		c.setCandidate_status(v_id != null ? CandidateStatus.APPLICATION_INITIATED.toString() : null);
+		c.setCandidate_status(v_id != null ? CandidateStatus.APPLICATION_INITIATED
+				.toString() : null);
 		c.setGroup_id(serviceContext.getScopeGroupId());
 		if (v_id != null) {
 			vacancyCandidateLocalService.create(v_id, c_id, user_id,
 					serviceContext);
+			candidateHistoryLocalService.create(c_id, v_id, -1,
+					user.getUserId(),
+					"Candidate is INITIATED by " + user.getLastName(),
+					new Date(System.currentTimeMillis()), "",
+					CandidateStatus.APPLICATION_INITIATED.toString(),
+					user.getUserId(), serviceContext);
 		}
-		candidateHistoryLocalService.create(c_id, v_id, -1, user.getUserId(), "Candidate is INITIATED by " + user.getLastName(), "", CandidateStatus.APPLICATION_INITIATED.toString(), user.getUserId(), serviceContext);
-		candidatePersistence.update(c);
+
+		c = candidatePersistence.update(c);
 		resourceLocalService.addResources(user.getCompanyId(),
 				serviceContext.getScopeGroupId(), user.getUserId(),
 				Candidate.class.getName(), c_id, false, true, true);
@@ -124,12 +131,8 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			String contact_number, String comment, int mode_of_application,
 			Date date_of_application, long cv_file_id, String cv_text_version,
 			int added_person, Long v_id, ServiceContext serviceContext)
-			throws NoSuchVacancyException, NoSuchCandidateException,
-			SystemException, NoSuchUserException {
+			throws SystemException, PortalException {
 		Candidate c = candidatePersistence.findByPrimaryKey(candidateId);
-		c.setCandidate_status(c.getCandidate_status() != null ? c
-				.getCandidate_status() : CandidateStatus.APPLICATION_INITIATED
-				.toString());
 		c.setFirst_name(first_name);
 		c.setMiddle_name(middle_name);
 		c.setLast_name(last_name);
@@ -140,23 +143,68 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		c.setCv_file_id(cv_file_id);
 		c.setCv_text_version(cv_text_version);
 		if (v_id != null) {
-			vacancyCandidateLocalService.create(v_id, candidateId, user_id,
-					serviceContext);
-			c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED
-					.toString());
+			/*
+			 * c.setCandidate_status(c.getCandidate_status() != null ? c
+			 * .getCandidate_status() : CandidateStatus.APPLICATION_INITIATED
+			 * .toString());
+			 */
+			/* Do NOTHING if the Vacancy for this Candidate has already existed */
+			if (vacancyCandidatePersistence.fetchByV_Id_And_C_Id(v_id,
+					candidateId) == null) {
+				// Set all previous CANDIDATE's Vacancy to INVALID
+				final List<VacancyCandidate> VCs = vacancyCandidateLocalService
+						.findByCandidate(candidateId);
+				final VacancyCandidate prevVC = vacancyCandidateLocalService
+						.findByCandidate_And_VALID_Status(candidateId);
+				for (VacancyCandidate vc : VCs) {
+					vc.setVc_status(VacancyCandidateStatus.INVALID.toString());
+					vacancyCandidateLocalService.updateVacancyCandidate(vc);
+				}
+				vacancyCandidateLocalService.create(v_id, candidateId, user_id,
+						serviceContext);
+				c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED
+						.toString());
+				final String prevVacancy = vacancyLocalService.getVacancy(
+						prevVC.getV_id()).getName();
+				final String currVacancy = vacancyLocalService.getVacancy(v_id)
+						.getName();
+
+				candidateHistoryLocalService.create(candidateId, v_id, 0l,
+						user_id, "VACANCY is changed from " + prevVacancy
+								+ " to " + currVacancy,
+						new Date(System.currentTimeMillis()), "",
+						"VACANCY CHANGED", user_id, serviceContext);
+
+			}
 		}
 		candidatePersistence.update(c);
 		return c;
 	}
 
+	public Candidate changeCandidateStatus(long candidateId, long vacancyId,
+			long userId, CandidateStatus status, ServiceContext serviceContext)
+			throws SystemException, PortalException {
+		Candidate c = this.getCandidate(candidateId);
+		final User user = userLocalService.fetchUserById(userId);
+		final String oldStatus = c.getCandidate_status();
+		c.setCandidate_status(status.toString());
+		c = this.updateCandidate(c);
+
+		candidateHistoryLocalService.create(candidateId, vacancyId, -1,
+				user.getUserId(), "Status changed " + oldStatus + " to "
+						+ status.toString() + " by " + user.getLastName(),
+				new Date(System.currentTimeMillis()), "", status.toString(),
+				user.getUserId(), serviceContext);
+		return c;
+	}
+
 	public void delele(long c_id) throws NoSuchCandidateException,
-			SystemException, NoSuchVacancyCandidateException, NoSuchInterviewScheduleException {
-		VacancyCandidate vc = vacancyCandidateLocalService
+			SystemException, NoSuchVacancyCandidateException,
+			NoSuchInterviewScheduleException {
+		List<VacancyCandidate> VCs = vacancyCandidateLocalService
 				.findByCandidate(c_id);
-		if (vc != null) {
-			long v_id = vc.getV_id();
-			vacancyCandidateLocalService
-					.deleteByVacancyAndCandidate(v_id, c_id);
+		for (VacancyCandidate vc : VCs) {
+			vacancyCandidateLocalService.delete(vc.getVacancyCandidateId());
 		}
 		candidatePersistence.remove(c_id);
 	}
@@ -181,16 +229,39 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return candidatePersistence.countAll();
 	}
 
-	public List<Candidate> filterCandidates(String filterString) {
-		return CandidateFinderUtil.filterCandidates(filterString);
+	public List<Candidate> filterCandidates(String globStr, String name,
+			String email, String contact_number, String candidate_status,
+			String vacancy_name, String date_from, String date_to,
+			String sortColumnName, String sortDirection, int start, int end) {
+
+		return CandidateFinderUtil.filterCandidates(globStr, name, email,
+				contact_number, candidate_status, vacancy_name, date_from,
+				date_to, sortColumnName, sortDirection, start, end);
 	}
 
-	public List<Candidate> filterCandidateByGlobalString(String filterString) {
-		return CandidateFinderUtil.filterCandidateByGlobalString(filterString);
+	public int getFilterCandidatesSize(String globStr, String name,
+			String email, String contact_number, String candidate_status,
+			String vacancy_name, String date_from, String date_to, String sortColName, String sortDirection) {
+		return CandidateFinderUtil.getFilterCandidatesSize(globStr, name,
+				email, contact_number, candidate_status, vacancy_name,
+				date_from, date_to, sortColName, sortDirection);
 	}
 
-	public Long findVacancyByCandidate(long c_id) {
-		return CandidateFinderUtil.findVacancyByCandidate(c_id);
+	@SuppressWarnings("unchecked")
+	public List<Candidate> dynamicQueryTest(String s, int start, int end) {
+		DynamicQuery candidateQuery = DynamicQueryFactoryUtil.forClass(
+				Candidate.class, PortletClassLoaderUtil.getClassLoader());
+		Criterion crit = null;
+		crit = RestrictionsFactoryUtil.like("first_name", s);
+		crit = RestrictionsFactoryUtil.or(crit,
+				RestrictionsFactoryUtil.like("middle_name", s));
+		crit = RestrictionsFactoryUtil.or(crit,
+				RestrictionsFactoryUtil.like("last_name", s));
+
+		candidateQuery.add(crit);
+
+		candidateQuery.setLimit(start, end);
+		return (List<Candidate>) candidateQuery.list();
 	}
 
 }

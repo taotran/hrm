@@ -34,6 +34,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     private String _middle_name;
     private String _lastname;
     private String _email;
+    private String _contact_number;
     private String _nickname;
     private Date _birthday;
     private String _gender;
@@ -93,6 +94,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         attributes.put("middle_name", getMiddle_name());
         attributes.put("lastname", getLastname());
         attributes.put("email", getEmail());
+        attributes.put("contact_number", getContact_number());
         attributes.put("nickname", getNickname());
         attributes.put("birthday", getBirthday());
         attributes.put("gender", getGender());
@@ -176,6 +178,12 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
         if (email != null) {
             setEmail(email);
+        }
+
+        String contact_number = (String) attributes.get("contact_number");
+
+        if (contact_number != null) {
+            setContact_number(contact_number);
         }
 
         String nickname = (String) attributes.get("nickname");
@@ -496,6 +504,29 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     }
 
     @Override
+    public String getContact_number() {
+        return _contact_number;
+    }
+
+    @Override
+    public void setContact_number(String contact_number) {
+        _contact_number = contact_number;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setContact_number",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, contact_number);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public String getNickname() {
         return _nickname;
     }
@@ -729,6 +760,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         clone.setMiddle_name(getMiddle_name());
         clone.setLastname(getLastname());
         clone.setEmail(getEmail());
+        clone.setContact_number(getContact_number());
         clone.setNickname(getNickname());
         clone.setBirthday(getBirthday());
         clone.setGender(getGender());
@@ -785,7 +817,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(39);
+        StringBundler sb = new StringBundler(41);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
@@ -811,6 +843,8 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(getLastname());
         sb.append(", email=");
         sb.append(getEmail());
+        sb.append(", contact_number=");
+        sb.append(getContact_number());
         sb.append(", nickname=");
         sb.append(getNickname());
         sb.append(", birthday=");
@@ -832,7 +866,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(61);
+        StringBundler sb = new StringBundler(64);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -885,6 +919,10 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(
             "<column><column-name>email</column-name><column-value><![CDATA[");
         sb.append(getEmail());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
+        sb.append(getContact_number());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>nickname</column-name><column-value><![CDATA[");

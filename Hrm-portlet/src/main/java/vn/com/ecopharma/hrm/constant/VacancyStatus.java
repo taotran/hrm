@@ -33,4 +33,16 @@ public enum VacancyStatus {
 		}
 	}
 	
+	public String getCssClass() {
+		switch (this) {
+		case NEW:
+			return "status-yellow";
+		case PUBLISHED:
+			return "status-green";
+		case UNPUBLISHED:
+			return "status-red";
+		default:
+			return "";
+		}
+	}
 }

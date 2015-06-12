@@ -41,10 +41,10 @@ public class FileAttachmentLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName102;
-    private String[] _methodParameterTypes102;
-    private String _methodName103;
-    private String[] _methodParameterTypes103;
+    private String _methodName104;
+    private String[] _methodParameterTypes104;
+    private String _methodName105;
+    private String[] _methodParameterTypes105;
 
     public FileAttachmentLocalServiceClpInvoker() {
         _methodName0 = "addFileAttachment";
@@ -129,13 +129,13 @@ public class FileAttachmentLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.FileAttachment"
             };
 
-        _methodName102 = "getBeanIdentifier";
+        _methodName104 = "getBeanIdentifier";
 
-        _methodParameterTypes102 = new String[] {  };
+        _methodParameterTypes104 = new String[] {  };
 
-        _methodName103 = "setBeanIdentifier";
+        _methodName105 = "setBeanIdentifier";
 
-        _methodParameterTypes103 = new String[] { "java.lang.String" };
+        _methodParameterTypes105 = new String[] { "java.lang.String" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -227,13 +227,13 @@ public class FileAttachmentLocalServiceClpInvoker {
             return FileAttachmentLocalServiceUtil.updateFileAttachment((vn.com.ecopharma.hrm.model.FileAttachment) arguments[0]);
         }
 
-        if (_methodName102.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+        if (_methodName104.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
             return FileAttachmentLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName103.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+        if (_methodName105.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
             FileAttachmentLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;

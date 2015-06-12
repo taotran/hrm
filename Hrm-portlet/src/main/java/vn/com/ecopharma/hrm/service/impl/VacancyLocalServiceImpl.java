@@ -19,6 +19,7 @@ import vn.com.ecopharma.hrm.model.EmployeeVacancy;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.service.base.VacancyLocalServiceBaseImpl;
+import vn.com.ecopharma.hrm.service.persistence.VacancyFinderUtil;
 
 /**
  * The implementation of the vacancy local service.
@@ -132,4 +133,22 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		}
 		
 	}
+	
+	public int getFilterVacanciesSize(String globStr, String name,
+			String jTitle, String location, String vacancy_status,
+			String sortColumnName, String sortDirection) {
+		return VacancyFinderUtil.getFilterVacanciesSize(globStr, name, jTitle, location, vacancy_status, sortColumnName, sortDirection);
+	}
+	
+	public List<Vacancy> filterVacancies(String globStr, String name,
+			String jTitle, String location, String vacancy_status,
+			String sortColumnName, String sortDirection, int start, int end) {
+		return VacancyFinderUtil.filterVacancies(globStr, name, jTitle, location, vacancy_status, sortColumnName, sortDirection, start, end);
+	}
+	
+	public int countAll() throws SystemException {
+		return vacancyPersistence.countAll();
+	}
+	
+	
 }

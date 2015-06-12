@@ -283,25 +283,26 @@ public class CandidateHistoryLocalServiceUtil {
 
     public static vn.com.ecopharma.hrm.model.CandidateHistory create(
         long c_id, long v_id, long interviewId, long performer_id,
-        java.lang.String note, java.lang.String interviewers,
-        java.lang.String action, long userId,
+        java.lang.String note, java.sql.Date performedDate,
+        java.lang.String interviewers, java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
                    .create(c_id, v_id, interviewId, performer_id, note,
-            interviewers, action, userId, serviceContext);
+            performedDate, interviewers, action, userId, serviceContext);
     }
 
     public static vn.com.ecopharma.hrm.model.CandidateHistory edit(
         long candidateHistoryId, long c_id, long v_id, long interviewId,
-        long performer_id, java.lang.String note,
+        long performer_id, java.lang.String note, java.sql.Date performedDate,
         java.lang.String interviewers, java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchCandidateHistoryException {
         return getService()
                    .edit(candidateHistoryId, c_id, v_id, interviewId,
-            performer_id, note, interviewers, action, userId, serviceContext);
+            performer_id, note, performedDate, interviewers, action, userId,
+            serviceContext);
     }
 
     public static java.util.List<vn.com.ecopharma.hrm.model.CandidateHistory> findByCandidate(

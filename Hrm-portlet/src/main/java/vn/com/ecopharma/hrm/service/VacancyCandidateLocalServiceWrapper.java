@@ -289,7 +289,7 @@ public class VacancyCandidateLocalServiceWrapper
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
+    public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByCandidate(
         long c_id) throws com.liferay.portal.kernel.exception.SystemException {
         return _vacancyCandidateLocalService.findByCandidate(c_id);
     }
@@ -307,6 +307,20 @@ public class VacancyCandidateLocalServiceWrapper
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         return _vacancyCandidateLocalService.findByVacancyAndCandidate(v_id,
             c_id);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return _vacancyCandidateLocalService.findByCandidate_And_VALID_Status(c_id);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyCandidateLocalService.findByVacancy_And_VALID_Status(v_id);
     }
 
     @Override

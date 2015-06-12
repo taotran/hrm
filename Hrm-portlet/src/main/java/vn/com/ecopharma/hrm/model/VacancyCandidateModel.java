@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -171,6 +172,21 @@ public interface VacancyCandidateModel extends BaseModel<VacancyCandidate> {
      * @param modifiedDate the modified date of this vacancy candidate
      */
     public void setModifiedDate(Date modifiedDate);
+
+    /**
+     * Returns the vc_status of this vacancy candidate.
+     *
+     * @return the vc_status of this vacancy candidate
+     */
+    @AutoEscape
+    public String getVc_status();
+
+    /**
+     * Sets the vc_status of this vacancy candidate.
+     *
+     * @param vc_status the vc_status of this vacancy candidate
+     */
+    public void setVc_status(String vc_status);
 
     @Override
     public boolean isNew();

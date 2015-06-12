@@ -72,6 +72,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     private String[] _methodParameterTypes31;
     private String _methodName32;
     private String[] _methodParameterTypes32;
+    private String _methodName33;
+    private String[] _methodParameterTypes33;
 
     public CandidateLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -215,39 +217,57 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName26 = "delele";
+        _methodName26 = "changeCandidateStatus";
 
-        _methodParameterTypes26 = new String[] { "long" };
-
-        _methodName27 = "findCandidates";
-
-        _methodParameterTypes27 = new String[] {
-                "java.lang.String", "java.lang.String", "java.lang.String",
-                "java.lang.String"
+        _methodParameterTypes26 = new String[] {
+                "long", "long", "long",
+                "vn.com.ecopharma.hrm.constant.CandidateStatus",
+                "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName27 = "delele";
+
+        _methodParameterTypes27 = new String[] { "long" };
 
         _methodName28 = "findCandidates";
 
         _methodParameterTypes28 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String"
+            };
+
+        _methodName29 = "findCandidates";
+
+        _methodParameterTypes29 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "int"
             };
 
-        _methodName29 = "countAll";
+        _methodName30 = "countAll";
 
-        _methodParameterTypes29 = new String[] {  };
+        _methodParameterTypes30 = new String[] {  };
 
-        _methodName30 = "filterCandidates";
+        _methodName31 = "filterCandidates";
 
-        _methodParameterTypes30 = new String[] { "java.lang.String" };
+        _methodParameterTypes31 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "int", "int"
+            };
 
-        _methodName31 = "filterCandidateByGlobalString";
+        _methodName32 = "getFilterCandidatesSize";
 
-        _methodParameterTypes31 = new String[] { "java.lang.String" };
+        _methodParameterTypes32 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String"
+            };
 
-        _methodName32 = "findVacancyByCandidate";
+        _methodName33 = "dynamicQueryTest";
 
-        _methodParameterTypes32 = new String[] { "long" };
+        _methodParameterTypes33 = new String[] { "java.lang.String", "int", "int" };
     }
 
     @Override
@@ -1014,10 +1034,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         java.lang.String cv_text_version, int added_person,
         java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
-        throws com.liferay.portal.NoSuchUserException,
-            com.liferay.portal.kernel.exception.SystemException,
-            vn.com.ecopharma.hrm.NoSuchCandidateException,
-            vn.com.ecopharma.hrm.NoSuchVacancyException {
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
@@ -1057,20 +1075,57 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
-            if (t instanceof com.liferay.portal.NoSuchUserException) {
-                throw (com.liferay.portal.NoSuchUserException) t;
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
             }
 
             if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
                 throw (com.liferay.portal.kernel.exception.SystemException) t;
             }
 
-            if (t instanceof vn.com.ecopharma.hrm.NoSuchCandidateException) {
-                throw (vn.com.ecopharma.hrm.NoSuchCandidateException) t;
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Candidate) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Candidate changeCandidateStatus(
+        long candidateId, long vacancyId, long userId,
+        vn.com.ecopharma.hrm.constant.CandidateStatus status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26,
+                    new Object[] {
+                        candidateId,
+                        
+                    vacancyId,
+                        
+                    userId,
+                        
+                    ClpSerializer.translateInput(status),
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
             }
 
-            if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
-                throw (vn.com.ecopharma.hrm.NoSuchVacancyException) t;
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
             }
 
             if (t instanceof RuntimeException) {
@@ -1091,8 +1146,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
             vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
-            _invokableLocalService.invokeMethod(_methodName26,
-                _methodParameterTypes26, new Object[] { c_id });
+            _invokableLocalService.invokeMethod(_methodName27,
+                _methodParameterTypes27, new Object[] { c_id });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1129,8 +1184,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName27,
-                    _methodParameterTypes27,
+            returnObj = _invokableLocalService.invokeMethod(_methodName28,
+                    _methodParameterTypes28,
                     new Object[] {
                         ClpSerializer.translateInput(first_name),
                         
@@ -1166,8 +1221,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName28,
-                    _methodParameterTypes28,
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29,
                     new Object[] {
                         ClpSerializer.translateInput(first_name),
                         
@@ -1205,8 +1260,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName29,
-                    _methodParameterTypes29, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1227,36 +1282,42 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
     @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidates(
-        java.lang.String filterString) {
-        Object returnObj = null;
-
-        try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName30,
-                    _methodParameterTypes30,
-                    new Object[] { ClpSerializer.translateInput(filterString) });
-        } catch (Throwable t) {
-            t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new RuntimeException(t.getClass().getName() +
-                    " is not a valid exception");
-            }
-        }
-
-        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
-    }
-
-    @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateByGlobalString(
-        java.lang.String filterString) {
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String candidate_status, java.lang.String vacancy_name,
+        java.lang.String date_from, java.lang.String date_to,
+        java.lang.String sortColumnName, java.lang.String sortDirection,
+        int start, int end) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName31,
                     _methodParameterTypes31,
-                    new Object[] { ClpSerializer.translateInput(filterString) });
+                    new Object[] {
+                        ClpSerializer.translateInput(globStr),
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(email),
+                        
+                    ClpSerializer.translateInput(contact_number),
+                        
+                    ClpSerializer.translateInput(candidate_status),
+                        
+                    ClpSerializer.translateInput(vacancy_name),
+                        
+                    ClpSerializer.translateInput(date_from),
+                        
+                    ClpSerializer.translateInput(date_to),
+                        
+                    ClpSerializer.translateInput(sortColumnName),
+                        
+                    ClpSerializer.translateInput(sortDirection),
+                        
+                    start,
+                        
+                    end
+                    });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1272,12 +1333,38 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     }
 
     @Override
-    public java.lang.Long findVacancyByCandidate(long c_id) {
+    public int getFilterCandidatesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String email,
+        java.lang.String contact_number, java.lang.String candidate_status,
+        java.lang.String vacancy_name, java.lang.String date_from,
+        java.lang.String date_to, java.lang.String sortColName,
+        java.lang.String sortDirection) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName32,
-                    _methodParameterTypes32, new Object[] { c_id });
+                    _methodParameterTypes32,
+                    new Object[] {
+                        ClpSerializer.translateInput(globStr),
+                        
+                    ClpSerializer.translateInput(name),
+                        
+                    ClpSerializer.translateInput(email),
+                        
+                    ClpSerializer.translateInput(contact_number),
+                        
+                    ClpSerializer.translateInput(candidate_status),
+                        
+                    ClpSerializer.translateInput(vacancy_name),
+                        
+                    ClpSerializer.translateInput(date_from),
+                        
+                    ClpSerializer.translateInput(date_to),
+                        
+                    ClpSerializer.translateInput(sortColName),
+                        
+                    ClpSerializer.translateInput(sortDirection)
+                    });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1289,6 +1376,29 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
             }
         }
 
-        return (java.lang.Long) ClpSerializer.translateOutput(returnObj);
+        return ((Integer) returnObj).intValue();
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> dynamicQueryTest(
+        java.lang.String s, int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName33,
+                    _methodParameterTypes33,
+                    new Object[] { ClpSerializer.translateInput(s), start, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
     }
 }

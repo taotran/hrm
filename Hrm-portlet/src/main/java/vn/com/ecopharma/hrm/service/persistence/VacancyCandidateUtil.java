@@ -99,58 +99,150 @@ public class VacancyCandidateUtil {
     }
 
     /**
-    * Returns the vacancy candidate where c_id = &#63; or throws a {@link vn.com.ecopharma.hrm.NoSuchVacancyCandidateException} if it could not be found.
+    * Returns all the vacancy candidates where c_id = &#63;.
     *
     * @param c_id the c_id
-    * @return the matching vacancy candidate
-    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @return the matching vacancy candidates
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByC_Id(
-        long c_id)
-        throws com.liferay.portal.kernel.exception.SystemException,
-            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByC_Id(
+        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence().findByC_Id(c_id);
     }
 
     /**
-    * Returns the vacancy candidate where c_id = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+    * Returns a range of all the vacancy candidates where c_id = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyCandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
     *
     * @param c_id the c_id
-    * @return the matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @param start the lower bound of the range of vacancy candidates
+    * @param end the upper bound of the range of vacancy candidates (not inclusive)
+    * @return the range of matching vacancy candidates
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByC_Id(
-        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
-        return getPersistence().fetchByC_Id(c_id);
-    }
-
-    /**
-    * Returns the vacancy candidate where c_id = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-    *
-    * @param c_id the c_id
-    * @param retrieveFromCache whether to use the finder cache
-    * @return the matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
-    * @throws SystemException if a system exception occurred
-    */
-    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByC_Id(
-        long c_id, boolean retrieveFromCache)
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByC_Id(
+        long c_id, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
-        return getPersistence().fetchByC_Id(c_id, retrieveFromCache);
+        return getPersistence().findByC_Id(c_id, start, end);
     }
 
     /**
-    * Removes the vacancy candidate where c_id = &#63; from the database.
+    * Returns an ordered range of all the vacancy candidates where c_id = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyCandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
     *
     * @param c_id the c_id
-    * @return the vacancy candidate that was removed
+    * @param start the lower bound of the range of vacancy candidates
+    * @param end the upper bound of the range of vacancy candidates (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching vacancy candidates
     * @throws SystemException if a system exception occurred
     */
-    public static vn.com.ecopharma.hrm.model.VacancyCandidate removeByC_Id(
-        long c_id)
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByC_Id(
+        long c_id, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByC_Id(c_id, start, end, orderByComparator);
+    }
+
+    /**
+    * Returns the first vacancy candidate in the ordered set where c_id = &#63;.
+    *
+    * @param c_id the c_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByC_Id_First(
+        long c_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
-        return getPersistence().removeByC_Id(c_id);
+        return getPersistence().findByC_Id_First(c_id, orderByComparator);
+    }
+
+    /**
+    * Returns the first vacancy candidate in the ordered set where c_id = &#63;.
+    *
+    * @param c_id the c_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByC_Id_First(
+        long c_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByC_Id_First(c_id, orderByComparator);
+    }
+
+    /**
+    * Returns the last vacancy candidate in the ordered set where c_id = &#63;.
+    *
+    * @param c_id the c_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByC_Id_Last(
+        long c_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence().findByC_Id_Last(c_id, orderByComparator);
+    }
+
+    /**
+    * Returns the last vacancy candidate in the ordered set where c_id = &#63;.
+    *
+    * @param c_id the c_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByC_Id_Last(
+        long c_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByC_Id_Last(c_id, orderByComparator);
+    }
+
+    /**
+    * Returns the vacancy candidates before and after the current vacancy candidate in the ordered set where c_id = &#63;.
+    *
+    * @param vacancyCandidateId the primary key of the current vacancy candidate
+    * @param c_id the c_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the previous, current, and next vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a vacancy candidate with the primary key could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate[] findByC_Id_PrevAndNext(
+        long vacancyCandidateId, long c_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence()
+                   .findByC_Id_PrevAndNext(vacancyCandidateId, c_id,
+            orderByComparator);
+    }
+
+    /**
+    * Removes all the vacancy candidates where c_id = &#63; from the database.
+    *
+    * @param c_id the c_id
+    * @throws SystemException if a system exception occurred
+    */
+    public static void removeByC_Id(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        getPersistence().removeByC_Id(c_id);
     }
 
     /**
@@ -396,6 +488,240 @@ public class VacancyCandidateUtil {
     public static int countByV_Id_And_C_Id(long v_id, long c_id)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getPersistence().countByV_Id_And_C_Id(v_id, c_id);
+    }
+
+    /**
+    * Returns the vacancy candidate where c_id = &#63; or throws a {@link vn.com.ecopharma.hrm.NoSuchVacancyCandidateException} if it could not be found.
+    *
+    * @param c_id the c_id
+    * @return the matching vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence().findByCandidate_And_VALID_Status(c_id);
+    }
+
+    /**
+    * Returns the vacancy candidate where c_id = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+    *
+    * @param c_id the c_id
+    * @return the matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByCandidate_And_VALID_Status(
+        long c_id) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByCandidate_And_VALID_Status(c_id);
+    }
+
+    /**
+    * Returns the vacancy candidate where c_id = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+    *
+    * @param c_id the c_id
+    * @param retrieveFromCache whether to use the finder cache
+    * @return the matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByCandidate_And_VALID_Status(
+        long c_id, boolean retrieveFromCache)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .fetchByCandidate_And_VALID_Status(c_id, retrieveFromCache);
+    }
+
+    /**
+    * Removes the vacancy candidate where c_id = &#63; from the database.
+    *
+    * @param c_id the c_id
+    * @return the vacancy candidate that was removed
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate removeByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence().removeByCandidate_And_VALID_Status(c_id);
+    }
+
+    /**
+    * Returns the number of vacancy candidates where c_id = &#63;.
+    *
+    * @param c_id the c_id
+    * @return the number of matching vacancy candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static int countByCandidate_And_VALID_Status(long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().countByCandidate_And_VALID_Status(c_id);
+    }
+
+    /**
+    * Returns all the vacancy candidates where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @return the matching vacancy candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByVacancy_And_VALID_Status(v_id);
+    }
+
+    /**
+    * Returns a range of all the vacancy candidates where v_id = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyCandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param v_id the v_id
+    * @param start the lower bound of the range of vacancy candidates
+    * @param end the upper bound of the range of vacancy candidates (not inclusive)
+    * @return the range of matching vacancy candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByVacancy_And_VALID_Status(v_id, start, end);
+    }
+
+    /**
+    * Returns an ordered range of all the vacancy candidates where v_id = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.model.impl.VacancyCandidateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param v_id the v_id
+    * @param start the lower bound of the range of vacancy candidates
+    * @param end the upper bound of the range of vacancy candidates (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching vacancy candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .findByVacancy_And_VALID_Status(v_id, start, end,
+            orderByComparator);
+    }
+
+    /**
+    * Returns the first vacancy candidate in the ordered set where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancy_And_VALID_Status_First(
+        long v_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence()
+                   .findByVacancy_And_VALID_Status_First(v_id, orderByComparator);
+    }
+
+    /**
+    * Returns the first vacancy candidate in the ordered set where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByVacancy_And_VALID_Status_First(
+        long v_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .fetchByVacancy_And_VALID_Status_First(v_id,
+            orderByComparator);
+    }
+
+    /**
+    * Returns the last vacancy candidate in the ordered set where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByVacancy_And_VALID_Status_Last(
+        long v_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence()
+                   .findByVacancy_And_VALID_Status_Last(v_id, orderByComparator);
+    }
+
+    /**
+    * Returns the last vacancy candidate in the ordered set where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching vacancy candidate, or <code>null</code> if a matching vacancy candidate could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate fetchByVacancy_And_VALID_Status_Last(
+        long v_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .fetchByVacancy_And_VALID_Status_Last(v_id, orderByComparator);
+    }
+
+    /**
+    * Returns the vacancy candidates before and after the current vacancy candidate in the ordered set where v_id = &#63;.
+    *
+    * @param vacancyCandidateId the primary key of the current vacancy candidate
+    * @param v_id the v_id
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the previous, current, and next vacancy candidate
+    * @throws vn.com.ecopharma.hrm.NoSuchVacancyCandidateException if a vacancy candidate with the primary key could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate[] findByVacancy_And_VALID_Status_PrevAndNext(
+        long vacancyCandidateId, long v_id,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getPersistence()
+                   .findByVacancy_And_VALID_Status_PrevAndNext(vacancyCandidateId,
+            v_id, orderByComparator);
+    }
+
+    /**
+    * Removes all the vacancy candidates where v_id = &#63; from the database.
+    *
+    * @param v_id the v_id
+    * @throws SystemException if a system exception occurred
+    */
+    public static void removeByVacancy_And_VALID_Status(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        getPersistence().removeByVacancy_And_VALID_Status(v_id);
+    }
+
+    /**
+    * Returns the number of vacancy candidates where v_id = &#63;.
+    *
+    * @param v_id the v_id
+    * @return the number of matching vacancy candidates
+    * @throws SystemException if a system exception occurred
+    */
+    public static int countByVacancy_And_VALID_Status(long v_id)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().countByVacancy_And_VALID_Status(v_id);
     }
 
     /**

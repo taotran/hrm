@@ -41,6 +41,9 @@
 			<basic name="v_id" />
 			<basic name="interviewId" />
 			<basic name="performed_by" />
+			<basic name="performedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="note" />
 			<basic name="interviewers" />
 			<basic name="action" />
@@ -72,6 +75,7 @@
 			<basic name="middle_name" />
 			<basic name="lastname" />
 			<basic name="email" />
+			<basic name="contact_number" />
 			<basic name="nickname" />
 			<basic name="birthday">
 				<temporal>TIMESTAMP</temporal>
@@ -285,6 +289,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="vc_status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

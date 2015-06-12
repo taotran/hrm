@@ -27,6 +27,7 @@
 		<field name="v_id" type="long" />
 		<field name="interviewId" type="long" />
 		<field name="performed_by" type="long" />
+		<field name="performedDate" type="Date" />
 		<field name="note" type="String" />
 		<field name="interviewers" type="String" />
 		<field name="action" type="String" />
@@ -48,6 +49,7 @@
 		<field name="middle_name" type="String" />
 		<field name="lastname" type="String" />
 		<field name="email" type="String" />
+		<field name="contact_number" type="String" />
 		<field name="nickname" type="String" />
 		<field name="birthday" type="Date" />
 		<field name="gender" type="String" />
@@ -165,5 +167,6 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="vc_status" type="String" />
 	</model>
 </model-hints>

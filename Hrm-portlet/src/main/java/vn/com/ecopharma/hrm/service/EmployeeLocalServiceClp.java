@@ -52,6 +52,18 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     private String[] _methodParameterTypes21;
     private String _methodName22;
     private String[] _methodParameterTypes22;
+    private String _methodName23;
+    private String[] _methodParameterTypes23;
+    private String _methodName24;
+    private String[] _methodParameterTypes24;
+    private String _methodName25;
+    private String[] _methodParameterTypes25;
+    private String _methodName26;
+    private String[] _methodParameterTypes26;
+    private String _methodName27;
+    private String[] _methodParameterTypes27;
+    private String _methodName28;
+    private String[] _methodParameterTypes28;
 
     public EmployeeLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -160,9 +172,42 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName22 = "delete";
+        _methodName22 = "create";
 
-        _methodParameterTypes22 = new String[] { "long" };
+        _methodParameterTypes22 = new String[] {
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.util.Date", "java.lang.String", "long",
+                "java.util.Date", "long",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName23 = "tranferCandidate";
+
+        _methodParameterTypes23 = new String[] {
+                "vn.com.ecopharma.hrm.model.Candidate", "java.lang.String",
+                "java.lang.String", "java.util.Date", "long", "java.util.Date"
+            };
+
+        _methodName24 = "delete";
+
+        _methodParameterTypes24 = new String[] { "long" };
+
+        _methodName25 = "getListInterviewersStringByIds";
+
+        _methodParameterTypes25 = new String[] { "java.util.List" };
+
+        _methodName26 = "getListInterviewersStringByEmps";
+
+        _methodParameterTypes26 = new String[] { "java.util.List" };
+
+        _methodName27 = "findByIds";
+
+        _methodParameterTypes27 = new String[] { "java.util.List" };
+
+        _methodName28 = "filterByName";
+
+        _methodParameterTypes28 = new String[] { "java.lang.String" };
     }
 
     @Override
@@ -764,13 +809,114 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     }
 
     @Override
+    public vn.com.ecopharma.hrm.model.Employee create(
+        java.lang.String emp_code, java.lang.String firstname,
+        java.lang.String middle_name, java.lang.String lastname,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String nickname, java.util.Date birthday,
+        java.lang.String gender, long jobTitleId, java.util.Date joined_date,
+        long userId, com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName22,
+                    _methodParameterTypes22,
+                    new Object[] {
+                        ClpSerializer.translateInput(emp_code),
+                        
+                    ClpSerializer.translateInput(firstname),
+                        
+                    ClpSerializer.translateInput(middle_name),
+                        
+                    ClpSerializer.translateInput(lastname),
+                        
+                    ClpSerializer.translateInput(email),
+                        
+                    ClpSerializer.translateInput(contact_number),
+                        
+                    ClpSerializer.translateInput(nickname),
+                        
+                    ClpSerializer.translateInput(birthday),
+                        
+                    ClpSerializer.translateInput(gender),
+                        
+                    jobTitleId,
+                        
+                    ClpSerializer.translateInput(joined_date),
+                        
+                    userId,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Employee) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public vn.com.ecopharma.hrm.model.Employee tranferCandidate(
+        vn.com.ecopharma.hrm.model.Candidate candidate,
+        java.lang.String emp_code, java.lang.String nickname,
+        java.util.Date birthday, long jobTitleId, java.util.Date joined_date)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName23,
+                    _methodParameterTypes23,
+                    new Object[] {
+                        ClpSerializer.translateInput(candidate),
+                        
+                    ClpSerializer.translateInput(emp_code),
+                        
+                    ClpSerializer.translateInput(nickname),
+                        
+                    ClpSerializer.translateInput(birthday),
+                        
+                    jobTitleId,
+                        
+                    ClpSerializer.translateInput(joined_date)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Employee) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public void delete(long employeeId)
         throws com.liferay.portal.NoSuchModelException,
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
-            _invokableLocalService.invokeMethod(_methodName22,
-                _methodParameterTypes22, new Object[] { employeeId });
+            _invokableLocalService.invokeMethod(_methodName24,
+                _methodParameterTypes24, new Object[] { employeeId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -793,5 +939,122 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
                     " is not a valid exception");
             }
         }
+    }
+
+    @Override
+    public java.lang.String getListInterviewersStringByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName25,
+                    _methodParameterTypes25,
+                    new Object[] { ClpSerializer.translateInput(ids) });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.lang.String) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.lang.String getListInterviewersStringByEmps(
+        java.util.List<vn.com.ecopharma.hrm.model.Employee> emps) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26,
+                    new Object[] { ClpSerializer.translateInput(emps) });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.lang.String) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName27,
+                    _methodParameterTypes27,
+                    new Object[] { ClpSerializer.translateInput(ids) });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Employee>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
+        java.lang.String term)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName28,
+                    _methodParameterTypes28,
+                    new Object[] { ClpSerializer.translateInput(term) });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Employee>) ClpSerializer.translateOutput(returnObj);
     }
 }

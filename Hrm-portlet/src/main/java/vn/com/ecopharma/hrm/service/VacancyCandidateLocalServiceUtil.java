@@ -272,7 +272,7 @@ public class VacancyCandidateLocalServiceUtil {
         return getService().create(v_id, c_id, user_id, serviceContext);
     }
 
-    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate(
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByCandidate(
         long c_id) throws com.liferay.portal.kernel.exception.SystemException {
         return getService().findByCandidate(c_id);
     }
@@ -287,6 +287,18 @@ public class VacancyCandidateLocalServiceUtil {
         throws com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         return getService().findByVacancyAndCandidate(v_id, c_id);
+    }
+
+    public static vn.com.ecopharma.hrm.model.VacancyCandidate findByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
+        return getService().findByCandidate_And_VALID_Status(c_id);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.VacancyCandidate> findByVacancy_And_VALID_Status(
+        long v_id) throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().findByVacancy_And_VALID_Status(v_id);
     }
 
     public static void deleteByVacancyAndCandidate(long v_id, long c_id)

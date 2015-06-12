@@ -273,4 +273,19 @@ public interface VacancyLocalService extends BaseLocalService,
             vn.com.ecopharma.hrm.NoSuchInterviewScheduleException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException,
             vn.com.ecopharma.hrm.NoSuchVacancyException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int getFilterVacanciesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String jTitle,
+        java.lang.String location, java.lang.String vacancy_status,
+        java.lang.String sortColumnName, java.lang.String sortDirection);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String jTitle, java.lang.String location,
+        java.lang.String vacancy_status, java.lang.String sortColumnName,
+        java.lang.String sortDirection, int start, int end);
+
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -22,6 +22,7 @@ import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
 import vn.com.ecopharma.hrm.service.persistence.LocationPersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence;
+import vn.com.ecopharma.hrm.service.persistence.VacancyFinder;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
 
 import javax.sql.DataSource;
@@ -108,6 +109,8 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
     protected vn.com.ecopharma.hrm.service.VacancyService vacancyService;
     @BeanReference(type = VacancyPersistence.class)
     protected VacancyPersistence vacancyPersistence;
+    @BeanReference(type = VacancyFinder.class)
+    protected VacancyFinder vacancyFinder;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyCandidateLocalService.class)
     protected vn.com.ecopharma.hrm.service.VacancyCandidateLocalService vacancyCandidateLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyCandidateService.class)
@@ -773,6 +776,24 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
      */
     public void setVacancyPersistence(VacancyPersistence vacancyPersistence) {
         this.vacancyPersistence = vacancyPersistence;
+    }
+
+    /**
+     * Returns the vacancy finder.
+     *
+     * @return the vacancy finder
+     */
+    public VacancyFinder getVacancyFinder() {
+        return vacancyFinder;
+    }
+
+    /**
+     * Sets the vacancy finder.
+     *
+     * @param vacancyFinder the vacancy finder
+     */
+    public void setVacancyFinder(VacancyFinder vacancyFinder) {
+        this.vacancyFinder = vacancyFinder;
     }
 
     /**

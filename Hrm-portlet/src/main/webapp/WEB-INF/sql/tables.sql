@@ -78,6 +78,7 @@ create table HRM_Recruitment_CandidateHistory (
 	v_id LONG,
 	interviewId LONG,
 	performed_by LONG,
+	performedDate DATE null,
 	note VARCHAR(75) null,
 	interviewers VARCHAR(75) null,
 	action VARCHAR(75) null,
@@ -100,6 +101,7 @@ create table HRM_Recruitment_Employee (
 	middle_name VARCHAR(75) null,
 	lastname VARCHAR(75) null,
 	email VARCHAR(75) null,
+	contact_number VARCHAR(75) null,
 	nickname VARCHAR(75) null,
 	birthday DATE null,
 	gender VARCHAR(75) null,
@@ -231,7 +233,8 @@ create table HRM_Recruitment_VacancyCandidate (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	vc_status VARCHAR(75) null
 );
 
 create table HRM_Vacancies_Candidates (

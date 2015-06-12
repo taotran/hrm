@@ -255,13 +255,14 @@ public interface CandidateHistoryLocalService extends BaseLocalService,
 
     public vn.com.ecopharma.hrm.model.CandidateHistory create(long c_id,
         long v_id, long interviewId, long performer_id, java.lang.String note,
-        java.lang.String interviewers, java.lang.String action, long userId,
+        java.sql.Date performedDate, java.lang.String interviewers,
+        java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.CandidateHistory edit(
         long candidateHistoryId, long c_id, long v_id, long interviewId,
-        long performer_id, java.lang.String note,
+        long performer_id, java.lang.String note, java.sql.Date performedDate,
         java.lang.String interviewers, java.lang.String action, long userId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,

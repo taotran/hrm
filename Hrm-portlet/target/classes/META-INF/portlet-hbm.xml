@@ -44,6 +44,7 @@
 		<property name="v_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="performed_by" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="performedDate" type="org.hibernate.type.TimestampType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="interviewers" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="action" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -68,6 +69,7 @@
 		<property name="middle_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contact_number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="nickname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="birthday" type="org.hibernate.type.TimestampType" />
 		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -212,5 +214,6 @@
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="vc_status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

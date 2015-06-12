@@ -828,6 +828,7 @@ public class CandidateHistoryPersistenceImpl extends BasePersistenceImpl<Candida
         candidateHistoryImpl.setV_id(candidateHistory.getV_id());
         candidateHistoryImpl.setInterviewId(candidateHistory.getInterviewId());
         candidateHistoryImpl.setPerformed_by(candidateHistory.getPerformed_by());
+        candidateHistoryImpl.setPerformedDate(candidateHistory.getPerformedDate());
         candidateHistoryImpl.setNote(candidateHistory.getNote());
         candidateHistoryImpl.setInterviewers(candidateHistory.getInterviewers());
         candidateHistoryImpl.setAction(candidateHistory.getAction());

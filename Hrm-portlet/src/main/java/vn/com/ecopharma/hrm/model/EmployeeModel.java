@@ -251,6 +251,21 @@ public interface EmployeeModel extends BaseModel<Employee>, GroupedModel {
     public void setEmail(String email);
 
     /**
+     * Returns the contact_number of this employee.
+     *
+     * @return the contact_number of this employee
+     */
+    @AutoEscape
+    public String getContact_number();
+
+    /**
+     * Sets the contact_number of this employee.
+     *
+     * @param contact_number the contact_number of this employee
+     */
+    public void setContact_number(String contact_number);
+
+    /**
      * Returns the nickname of this employee.
      *
      * @return the nickname of this employee

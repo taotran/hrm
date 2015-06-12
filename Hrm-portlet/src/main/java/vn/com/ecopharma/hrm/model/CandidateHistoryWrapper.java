@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ public class CandidateHistoryWrapper implements CandidateHistory,
         attributes.put("v_id", getV_id());
         attributes.put("interviewId", getInterviewId());
         attributes.put("performed_by", getPerformed_by());
+        attributes.put("performedDate", getPerformedDate());
         attributes.put("note", getNote());
         attributes.put("interviewers", getInterviewers());
         attributes.put("action", getAction());
@@ -83,6 +85,12 @@ public class CandidateHistoryWrapper implements CandidateHistory,
 
         if (performed_by != null) {
             setPerformed_by(performed_by);
+        }
+
+        Date performedDate = (Date) attributes.get("performedDate");
+
+        if (performedDate != null) {
+            setPerformedDate(performedDate);
         }
 
         String note = (String) attributes.get("note");
@@ -246,6 +254,26 @@ public class CandidateHistoryWrapper implements CandidateHistory,
     @Override
     public void setPerformed_by(long performed_by) {
         _candidateHistory.setPerformed_by(performed_by);
+    }
+
+    /**
+    * Returns the performed date of this candidate history.
+    *
+    * @return the performed date of this candidate history
+    */
+    @Override
+    public java.util.Date getPerformedDate() {
+        return _candidateHistory.getPerformedDate();
+    }
+
+    /**
+    * Sets the performed date of this candidate history.
+    *
+    * @param performedDate the performed date of this candidate history
+    */
+    @Override
+    public void setPerformedDate(java.util.Date performedDate) {
+        _candidateHistory.setPerformedDate(performedDate);
     }
 
     /**

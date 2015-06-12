@@ -15,6 +15,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
     private long _v_id;
     private long _interviewId;
     private long _performed_by;
+    private Date _performedDate;
     private String _note;
     private String _interviewers;
     private String _action;
@@ -79,6 +81,7 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
         attributes.put("v_id", getV_id());
         attributes.put("interviewId", getInterviewId());
         attributes.put("performed_by", getPerformed_by());
+        attributes.put("performedDate", getPerformedDate());
         attributes.put("note", getNote());
         attributes.put("interviewers", getInterviewers());
         attributes.put("action", getAction());
@@ -120,6 +123,12 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
 
         if (performed_by != null) {
             setPerformed_by(performed_by);
+        }
+
+        Date performedDate = (Date) attributes.get("performedDate");
+
+        if (performedDate != null) {
+            setPerformedDate(performedDate);
         }
 
         String note = (String) attributes.get("note");
@@ -270,6 +279,28 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
                 Method method = clazz.getMethod("setPerformed_by", long.class);
 
                 method.invoke(_candidateHistoryRemoteModel, performed_by);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getPerformedDate() {
+        return _performedDate;
+    }
+
+    @Override
+    public void setPerformedDate(Date performedDate) {
+        _performedDate = performedDate;
+
+        if (_candidateHistoryRemoteModel != null) {
+            try {
+                Class<?> clazz = _candidateHistoryRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setPerformedDate", Date.class);
+
+                method.invoke(_candidateHistoryRemoteModel, performedDate);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -514,6 +545,7 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
         clone.setV_id(getV_id());
         clone.setInterviewId(getInterviewId());
         clone.setPerformed_by(getPerformed_by());
+        clone.setPerformedDate(getPerformedDate());
         clone.setNote(getNote());
         clone.setInterviewers(getInterviewers());
         clone.setAction(getAction());
@@ -570,7 +602,7 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{candidateHistoryId=");
         sb.append(getCandidateHistoryId());
@@ -582,6 +614,8 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
         sb.append(getInterviewId());
         sb.append(", performed_by=");
         sb.append(getPerformed_by());
+        sb.append(", performedDate=");
+        sb.append(getPerformedDate());
         sb.append(", note=");
         sb.append(getNote());
         sb.append(", interviewers=");
@@ -603,7 +637,7 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.CandidateHistory");
@@ -628,6 +662,10 @@ public class CandidateHistoryClp extends BaseModelImpl<CandidateHistory>
         sb.append(
             "<column><column-name>performed_by</column-name><column-value><![CDATA[");
         sb.append(getPerformed_by());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>performedDate</column-name><column-value><![CDATA[");
+        sb.append(getPerformedDate());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>note</column-name><column-value><![CDATA[");

@@ -249,8 +249,43 @@ public interface EmployeeLocalService extends BaseLocalService,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException;
 
+    public vn.com.ecopharma.hrm.model.Employee create(
+        java.lang.String emp_code, java.lang.String firstname,
+        java.lang.String middle_name, java.lang.String lastname,
+        java.lang.String email, java.lang.String contact_number,
+        java.lang.String nickname, java.util.Date birthday,
+        java.lang.String gender, long jobTitleId, java.util.Date joined_date,
+        long userId, com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @java.lang.Deprecated
+    public vn.com.ecopharma.hrm.model.Employee tranferCandidate(
+        vn.com.ecopharma.hrm.model.Candidate candidate,
+        java.lang.String emp_code, java.lang.String nickname,
+        java.util.Date birthday, long jobTitleId, java.util.Date joined_date)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
     public void delete(long employeeId)
         throws com.liferay.portal.NoSuchModelException,
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.lang.String getListInterviewersStringByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.lang.String getListInterviewersStringByEmps(
+        java.util.List<vn.com.ecopharma.hrm.model.Employee> emps);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findByIds(
+        java.util.List<java.lang.Long> ids)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
+        java.lang.String term)
+        throws com.liferay.portal.kernel.exception.SystemException;
 }

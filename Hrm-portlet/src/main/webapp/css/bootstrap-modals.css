@@ -147,3 +147,8 @@
 		width: 900px
 	}
 }
+
+/* custom modals setting */
+.modal .hrm-modal .export-modal .in {
+	margin-top: 180px!important;
+}

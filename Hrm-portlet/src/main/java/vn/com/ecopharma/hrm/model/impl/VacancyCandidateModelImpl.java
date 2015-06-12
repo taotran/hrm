@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -58,9 +59,10 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
             { "companyId", Types.BIGINT },
             { "userId", Types.BIGINT },
             { "createDate", Types.TIMESTAMP },
-            { "modifiedDate", Types.TIMESTAMP }
+            { "modifiedDate", Types.TIMESTAMP },
+            { "vc_status", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_VacancyCandidate (vacancyCandidateId LONG not null primary key,c_id LONG,v_id LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_VacancyCandidate (vacancyCandidateId LONG not null primary key,c_id LONG,v_id LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,vc_status VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_VacancyCandidate";
     public static final String ORDER_BY_JPQL = " ORDER BY vacancyCandidate.vacancyCandidateId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_VacancyCandidate.vacancyCandidateId ASC";
@@ -98,6 +100,7 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
     private String _userUuid;
     private Date _createDate;
     private Date _modifiedDate;
+    private String _vc_status;
     private long _columnBitmask;
     private VacancyCandidate _escapedModel;
 
@@ -125,6 +128,7 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         model.setUserId(soapModel.getUserId());
         model.setCreateDate(soapModel.getCreateDate());
         model.setModifiedDate(soapModel.getModifiedDate());
+        model.setVc_status(soapModel.getVc_status());
 
         return model;
     }
@@ -192,6 +196,7 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         attributes.put("userId", getUserId());
         attributes.put("createDate", getCreateDate());
         attributes.put("modifiedDate", getModifiedDate());
+        attributes.put("vc_status", getVc_status());
 
         return attributes;
     }
@@ -244,6 +249,12 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
 
         if (modifiedDate != null) {
             setModifiedDate(modifiedDate);
+        }
+
+        String vc_status = (String) attributes.get("vc_status");
+
+        if (vc_status != null) {
+            setVc_status(vc_status);
         }
     }
 
@@ -369,6 +380,21 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         _modifiedDate = modifiedDate;
     }
 
+    @JSON
+    @Override
+    public String getVc_status() {
+        if (_vc_status == null) {
+            return StringPool.BLANK;
+        } else {
+            return _vc_status;
+        }
+    }
+
+    @Override
+    public void setVc_status(String vc_status) {
+        _vc_status = vc_status;
+    }
+
     public long getColumnBitmask() {
         return _columnBitmask;
     }
@@ -408,6 +434,7 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         vacancyCandidateImpl.setUserId(getUserId());
         vacancyCandidateImpl.setCreateDate(getCreateDate());
         vacancyCandidateImpl.setModifiedDate(getModifiedDate());
+        vacancyCandidateImpl.setVc_status(getVc_status());
 
         vacancyCandidateImpl.resetOriginalValues();
 
@@ -500,12 +527,20 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
             vacancyCandidateCacheModel.modifiedDate = Long.MIN_VALUE;
         }
 
+        vacancyCandidateCacheModel.vc_status = getVc_status();
+
+        String vc_status = vacancyCandidateCacheModel.vc_status;
+
+        if ((vc_status != null) && (vc_status.length() == 0)) {
+            vacancyCandidateCacheModel.vc_status = null;
+        }
+
         return vacancyCandidateCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(17);
+        StringBundler sb = new StringBundler(19);
 
         sb.append("{vacancyCandidateId=");
         sb.append(getVacancyCandidateId());
@@ -523,6 +558,8 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         sb.append(getCreateDate());
         sb.append(", modifiedDate=");
         sb.append(getModifiedDate());
+        sb.append(", vc_status=");
+        sb.append(getVc_status());
         sb.append("}");
 
         return sb.toString();
@@ -530,7 +567,7 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(28);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.VacancyCandidate");
@@ -567,6 +604,10 @@ public class VacancyCandidateModelImpl extends BaseModelImpl<VacancyCandidate>
         sb.append(
             "<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
         sb.append(getModifiedDate());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>vc_status</column-name><column-value><![CDATA[");
+        sb.append(getVc_status());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

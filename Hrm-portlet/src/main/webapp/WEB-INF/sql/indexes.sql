@@ -9,6 +9,8 @@ create index IX_96279315 on HRM_Recruitment_Candidate (first_name, middle_name, 
 
 create index IX_3E546041 on HRM_Recruitment_CandidateHistory (c_id);
 
+create index IX_DB094E22 on HRM_Recruitment_Employee (firstname, middle_name, lastname);
+
 create index IX_35E32E6E on HRM_Recruitment_EmployeeInterviewSchedule (employeeId);
 create index IX_8C6B2932 on HRM_Recruitment_EmployeeInterviewSchedule (interviewScheduleId);
 

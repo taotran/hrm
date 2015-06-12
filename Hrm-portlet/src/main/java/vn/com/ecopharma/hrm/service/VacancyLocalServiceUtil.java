@@ -313,6 +313,30 @@ public class VacancyLocalServiceUtil {
         getService().delete(v_id);
     }
 
+    public static int getFilterVacanciesSize(java.lang.String globStr,
+        java.lang.String name, java.lang.String jTitle,
+        java.lang.String location, java.lang.String vacancy_status,
+        java.lang.String sortColumnName, java.lang.String sortDirection) {
+        return getService()
+                   .getFilterVacanciesSize(globStr, name, jTitle, location,
+            vacancy_status, sortColumnName, sortDirection);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
+        java.lang.String globStr, java.lang.String name,
+        java.lang.String jTitle, java.lang.String location,
+        java.lang.String vacancy_status, java.lang.String sortColumnName,
+        java.lang.String sortDirection, int start, int end) {
+        return getService()
+                   .filterVacancies(globStr, name, jTitle, location,
+            vacancy_status, sortColumnName, sortDirection, start, end);
+    }
+
+    public static int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().countAll();
+    }
+
     public static void clearService() {
         _service = null;
     }
