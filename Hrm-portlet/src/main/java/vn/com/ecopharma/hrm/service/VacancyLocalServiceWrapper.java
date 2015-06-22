@@ -291,28 +291,31 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long locationId, java.util.List<java.lang.Long> emps,
-        java.lang.String name, java.lang.String description,
-        int no_of_positions, java.lang.String vacancy_status,
-        java.lang.String job_posting,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long jTitle_id, long locationId, long subUnitId,
+        java.util.List<java.lang.Long> emps, java.lang.String name,
+        java.lang.String description, int no_of_positions,
+        java.lang.String vacancy_status, java.lang.String job_posting,
+        long jdId, com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         return _vacancyLocalService.create(user_id, jTitle_id, locationId,
-            emps, name, description, no_of_positions, vacancy_status,
-            job_posting, serviceContext);
+            subUnitId, emps, name, description, no_of_positions,
+            vacancy_status, job_posting, jdId, serviceContext);
     }
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy edit(long v_id, long jtitle_id,
-        long locationId, java.util.List<java.lang.Long> emps,
+        long locationId, long subUnitId, java.util.List<java.lang.Long> emps,
         java.lang.String name, java.lang.String description,
-        int number_of_positions, java.lang.String job_posting,
+        int number_of_positions, java.lang.String job_posting, long jdId,
+        java.lang.Boolean isDeleteOrNotAddJD,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.portlet.documentlibrary.NoSuchFileEntryException,
             vn.com.ecopharma.hrm.NoSuchVacancyException {
-        return _vacancyLocalService.edit(v_id, jtitle_id, locationId, emps,
-            name, description, number_of_positions, job_posting, serviceContext);
+        return _vacancyLocalService.edit(v_id, jtitle_id, locationId,
+            subUnitId, emps, name, description, number_of_positions,
+            job_posting, jdId, isDeleteOrNotAddJD, serviceContext);
     }
 
     @Override
@@ -336,6 +339,22 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
     }
 
     @Override
+    public vn.com.ecopharma.hrm.model.Vacancy getVacancyByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.getVacancyByCandidate_And_VALID_Status(c_id);
+    }
+
+    @Override
+    public java.lang.String getVacancyNameByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _vacancyLocalService.getVacancyNameByCandidate_And_VALID_Status(c_id);
+    }
+
+    @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
         java.lang.String globStr, java.lang.String name,
         java.lang.String jTitle, java.lang.String location,
@@ -343,6 +362,11 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
         java.lang.String sortDirection, int start, int end) {
         return _vacancyLocalService.filterVacancies(globStr, name, jTitle,
             location, vacancy_status, sortColumnName, sortDirection, start, end);
+    }
+
+    @Override
+    public java.util.List<java.lang.Object[]> getVacancySuccessionReport() {
+        return _vacancyLocalService.getVacancySuccessionReport();
     }
 
     @Override

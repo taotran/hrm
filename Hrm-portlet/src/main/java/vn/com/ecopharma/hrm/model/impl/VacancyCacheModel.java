@@ -32,10 +32,12 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
     public long update_date;
     public long user_id;
     public long group_id;
+    public long subUnitId;
+    public long fileEntryId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{v_id=");
         sb.append(v_id);
@@ -59,6 +61,10 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         sb.append(user_id);
         sb.append(", group_id=");
         sb.append(group_id);
+        sb.append(", subUnitId=");
+        sb.append(subUnitId);
+        sb.append(", fileEntryId=");
+        sb.append(fileEntryId);
         sb.append("}");
 
         return sb.toString();
@@ -107,6 +113,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 
         vacancyImpl.setUser_id(user_id);
         vacancyImpl.setGroup_id(group_id);
+        vacancyImpl.setSubUnitId(subUnitId);
+        vacancyImpl.setFileEntryId(fileEntryId);
 
         vacancyImpl.resetOriginalValues();
 
@@ -126,6 +134,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         update_date = objectInput.readLong();
         user_id = objectInput.readLong();
         group_id = objectInput.readLong();
+        subUnitId = objectInput.readLong();
+        fileEntryId = objectInput.readLong();
     }
 
     @Override
@@ -160,5 +170,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
         objectOutput.writeLong(update_date);
         objectOutput.writeLong(user_id);
         objectOutput.writeLong(group_id);
+        objectOutput.writeLong(subUnitId);
+        objectOutput.writeLong(fileEntryId);
     }
 }

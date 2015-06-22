@@ -1,0 +1,129 @@
+package vn.com.ecopharma.hrm.util;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.portlet.PortletRequest;
+
+import org.json.JSONObject;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
+
+/**
+ * @author TaoTran
+ *
+ */
+public class HRMUtil {
+	
+	private static final String PREVIEW_FILE_INDEX="previewFileIndex";
+	private static final String PREVIEW_FILE_COUNT="previewFileCount";
+	private static final String PREVIEW_FILE_URL="previewFileURL";
+	private static final String DOC_URL="docURL";
+	
+	/**
+	 * @author TaoTran
+	 * @param request
+	 * @param inputFileId : html input field id
+	 * @param title : file name
+	 * @param description
+	 * @param changeLog
+	 * @param folderId
+	 * @return DLFileEntry
+	 * @throws PortalException
+	 * @throws SystemException
+	 * @throws IOException
+	 */
+	public static DLFileEntry uploadFile(PortletRequest request,
+			String inputFileId, String title, String description, String changeLog, long folderId)
+			throws PortalException, SystemException, IOException {
+		final ThemeDisplay themeDisplay = (ThemeDisplay) request
+				.getAttribute(WebKeys.THEME_DISPLAY);
+
+		final UploadPortletRequest uploadRequest = PortalUtil
+				.getUploadPortletRequest(request);
+
+		final File upload = uploadRequest.getFile(inputFileId);
+
+		DLFileEntry fileEntry = null;
+		String ext = FileUtil.getExtension(upload.getName());
+
+		title = title + "-" + System.currentTimeMillis()
+				+ "." + ext;
+
+		byte[] fileBytes = FileUtil.getBytes(upload);
+
+		InputStream is = new ByteArrayInputStream(fileBytes);
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), request);
+
+		fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getScopeGroupId(), dlFolder.getFolderId(),
+				title , MimeTypesUtil.getContentType(upload), title,
+				description, changeLog, 0, null, upload, is, upload.length(),
+				serviceContext);
+
+		fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
+				title, MimeTypesUtil.getContentType(upload), title,
+				description, changeLog, true, 0, null, upload, is, upload.length(),
+				serviceContext);
+		return fileEntry;
+	}
+	
+	/**
+	 * @param dlFileEntry
+	 * @return FileEntry
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	public static FileEntry getUploadFileEntry(DLFileEntry dlFileEntry) throws PortalException, SystemException {
+		return DLAppServiceUtil.getFileEntry(dlFileEntry.getGroupId(), dlFileEntry.getFolderId(), dlFileEntry.getTitle());
+	}
+	
+	/**
+	 * @param request
+	 * @param fileEntryId
+	 * @return
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
+	public static JSONObject getFilePreviewInfo(PortletRequest request, long fileEntryId) throws PortalException, SystemException {
+		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		final DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(fileEntryId);
+		final FileEntry fe = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+		final FileVersion version = fe.getFileVersion();
+		final String docURL = DLUtil.getPreviewURL(fe, version, themeDisplay, "");
+		int previewFileCount = PDFProcessorUtil.getPreviewFileCount(version);
+		String previewFileURL = docURL + "&previewFileIndex=";
+		final JSONObject result = new JSONObject();
+		result.put("previewFileCount", previewFileCount);
+		result.put("previewFileURL", previewFileURL);
+		result.put("initial", "1");
+		result.put("docURL", docURL);
+		return result;
+	}
+}

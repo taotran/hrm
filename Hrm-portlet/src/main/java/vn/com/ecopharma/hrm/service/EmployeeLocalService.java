@@ -285,7 +285,11 @@ public interface EmployeeLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
 
-    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
-        java.lang.String term)
+    public int filterEmployeeByTermSize(java.lang.String term);
+
+    public org.json.JSONArray filterEmployeeByTerm(java.lang.String term,
+        int start, int end);
+
+    public int countAll()
         throws com.liferay.portal.kernel.exception.SystemException;
 }

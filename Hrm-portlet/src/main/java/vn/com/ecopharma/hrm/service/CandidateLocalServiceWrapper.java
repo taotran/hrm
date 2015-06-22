@@ -334,15 +334,16 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         java.lang.String email, java.lang.String contact_number,
         java.lang.String comment, int mode_of_application,
         java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person,
-        java.lang.Long v_id,
+        boolean isDeleteOrNotAddResume, java.lang.String cv_text_version,
+        int added_person, java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         return _candidateLocalService.edit(user_id, candidateId, first_name,
             middle_name, last_name, email, contact_number, comment,
             mode_of_application, date_of_application, cv_file_id,
-            cv_text_version, added_person, v_id, serviceContext);
+            isDeleteOrNotAddResume, cv_text_version, added_person, v_id,
+            serviceContext);
     }
 
     @Override

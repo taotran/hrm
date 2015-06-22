@@ -57,6 +57,7 @@
 		<field name="status" type="String" />
 		<field name="jobtitleId" type="long" />
 		<field name="joined_date" type="Date" />
+		<field name="subUnitId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule">
 		<field name="employeeInterviewScheduleId" type="long" />
@@ -145,6 +146,15 @@
 		<field name="fax" type="String" />
 		<field name="note" type="String" />
 	</model>
+	<model name="vn.com.ecopharma.hrm.model.SubUnit">
+		<field name="subUnitId" type="long" />
+		<field name="name" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.hrm.model.Vacancy">
 		<field name="v_id" type="long" />
 		<field name="jobtitleId" type="long" />
@@ -157,6 +167,8 @@
 		<field name="update_date" type="Date" />
 		<field name="user_id" type="long" />
 		<field name="group_id" type="long" />
+		<field name="subUnitId" type="long" />
+		<field name="fileEntryId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.VacancyCandidate">
 		<field name="vacancyCandidateId" type="long" />

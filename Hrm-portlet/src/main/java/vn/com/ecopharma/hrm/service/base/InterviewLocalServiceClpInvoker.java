@@ -41,20 +41,20 @@ public class InterviewLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName104;
-    private String[] _methodParameterTypes104;
-    private String _methodName105;
-    private String[] _methodParameterTypes105;
-    private String _methodName110;
-    private String[] _methodParameterTypes110;
-    private String _methodName111;
-    private String[] _methodParameterTypes111;
     private String _methodName112;
     private String[] _methodParameterTypes112;
     private String _methodName113;
     private String[] _methodParameterTypes113;
-    private String _methodName114;
-    private String[] _methodParameterTypes114;
+    private String _methodName118;
+    private String[] _methodParameterTypes118;
+    private String _methodName119;
+    private String[] _methodParameterTypes119;
+    private String _methodName120;
+    private String[] _methodParameterTypes120;
+    private String _methodName121;
+    private String[] _methodParameterTypes121;
+    private String _methodName122;
+    private String[] _methodParameterTypes122;
 
     public InterviewLocalServiceClpInvoker() {
         _methodName0 = "addInterview";
@@ -139,38 +139,38 @@ public class InterviewLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.Interview"
             };
 
-        _methodName104 = "getBeanIdentifier";
+        _methodName112 = "getBeanIdentifier";
 
-        _methodParameterTypes104 = new String[] {  };
+        _methodParameterTypes112 = new String[] {  };
 
-        _methodName105 = "setBeanIdentifier";
+        _methodName113 = "setBeanIdentifier";
 
-        _methodParameterTypes105 = new String[] { "java.lang.String" };
+        _methodParameterTypes113 = new String[] { "java.lang.String" };
 
-        _methodName110 = "findAll";
+        _methodName118 = "findAll";
 
-        _methodParameterTypes110 = new String[] {  };
+        _methodParameterTypes118 = new String[] {  };
 
-        _methodName111 = "findAll";
+        _methodName119 = "findAll";
 
-        _methodParameterTypes111 = new String[] { "int", "int" };
+        _methodParameterTypes119 = new String[] { "int", "int" };
 
-        _methodName112 = "findAll";
+        _methodName120 = "findAll";
 
-        _methodParameterTypes112 = new String[] {
+        _methodParameterTypes120 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName113 = "create";
+        _methodName121 = "create";
 
-        _methodParameterTypes113 = new String[] {
+        _methodParameterTypes121 = new String[] {
                 "long", "java.lang.String",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName114 = "delete";
+        _methodName122 = "delete";
 
-        _methodParameterTypes114 = new String[] { "long" };
+        _methodParameterTypes122 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -262,45 +262,45 @@ public class InterviewLocalServiceClpInvoker {
             return InterviewLocalServiceUtil.updateInterview((vn.com.ecopharma.hrm.model.Interview) arguments[0]);
         }
 
-        if (_methodName104.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
+        if (_methodName112.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
             return InterviewLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName105.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
+        if (_methodName113.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
             InterviewLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName110.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+        if (_methodName118.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
             return InterviewLocalServiceUtil.findAll();
         }
 
-        if (_methodName111.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+        if (_methodName119.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
             return InterviewLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
-        if (_methodName112.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+        if (_methodName120.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
             return InterviewLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName113.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+        if (_methodName121.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
             return InterviewLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
         }
 
-        if (_methodName114.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+        if (_methodName122.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
             InterviewLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;

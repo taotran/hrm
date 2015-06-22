@@ -2,6 +2,7 @@ package vn.com.ecopharma.hrm.service.persistence;
 
 import java.util.List;
 
+import vn.com.ecopharma.hrm.customModel.VacancyReport;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.impl.VacancyImpl;
 
@@ -133,6 +134,33 @@ public class VacancyFinderImpl extends BasePersistenceImpl<Vacancy> implements
 			qPos.add(end);
 
 			return (List<Vacancy>) q.list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	public List<Object[]> getVacancySuccessionReport(){
+		Session session = null;
+		try {
+			session = openSession();
+			final StringBuilder query = new StringBuilder();
+			query.append("SELECT distinct(j.title) as 'Job Title',  v.name as 'Vacancy Name', date_format(v.insert_date, '%d/%m/%Y') AS 'Vacancy Added Date', v.no_of_positions as 'Number of Positions', "
+							+ "(SELECT count(*) from lportal.hrm_recruitment_candidate c "
+							+ "JOIN lportal.hrm_recruitment_vacancycandidate vc ON c.c_id = vc.c_id "
+							+ "JOIN lportal.hrm_recruitment_vacancy vv ON vv.v_id = vc.v_id WHERE vv.v_id = v.v_id) AS 'Number of Applicants', "
+							+ "(SELECT count(*) from lportal.hrm_recruitment_candidate c "
+							+ "JOIN lportal.hrm_recruitment_vacancycandidate vc ON c.c_id = vc.c_id "
+							+ "JOIN lportal.hrm_recruitment_vacancy vv ON vv.v_id = vc.v_id WHERE vv.v_id = v.v_id AND c.candidate_status='SHORTLIST') AS 'Number of Shortlisted', "
+							+ "(SELECT count(*) from lportal.hrm_recruitment_candidate c "
+							+ "JOIN lportal.hrm_recruitment_vacancycandidate vc ON c.c_id = vc.c_id "
+							+ "JOIN lportal.hrm_recruitment_vacancy vv ON vv.v_id = vc.v_id WHERE vv.v_id = v.v_id AND c.candidate_status='HIRE') AS 'Number of Hire' "
+						+ "FROM lportal.hrm_recruitment_vacancy v "
+						+ "JOIN lportal.hrm_recruitment_jtitle j ON v.jobtitleId = j.jobtitleId;");
+			final SQLQuery q = session.createSQLQuery(query.toString());
+			return (List<Object[]>)q.list();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

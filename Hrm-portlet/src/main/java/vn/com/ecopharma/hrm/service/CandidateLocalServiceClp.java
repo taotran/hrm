@@ -212,7 +212,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         _methodParameterTypes25 = new String[] {
                 "long", "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
-                "java.lang.String", "int", "java.sql.Date", "long",
+                "java.lang.String", "int", "java.sql.Date", "long", "boolean",
                 "java.lang.String", "int", "java.lang.Long",
                 "com.liferay.portal.service.ServiceContext"
             };
@@ -1031,8 +1031,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         java.lang.String email, java.lang.String contact_number,
         java.lang.String comment, int mode_of_application,
         java.sql.Date date_of_application, long cv_file_id,
-        java.lang.String cv_text_version, int added_person,
-        java.lang.Long v_id,
+        boolean isDeleteOrNotAddResume, java.lang.String cv_text_version,
+        int added_person, java.lang.Long v_id,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -1063,6 +1063,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
                     ClpSerializer.translateInput(date_of_application),
                         
                     cv_file_id,
+                        
+                    isDeleteOrNotAddResume,
                         
                     ClpSerializer.translateInput(cv_text_version),
                         

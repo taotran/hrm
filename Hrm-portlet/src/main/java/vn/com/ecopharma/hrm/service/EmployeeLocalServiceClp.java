@@ -64,6 +64,10 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     private String[] _methodParameterTypes27;
     private String _methodName28;
     private String[] _methodParameterTypes28;
+    private String _methodName29;
+    private String[] _methodParameterTypes29;
+    private String _methodName30;
+    private String[] _methodParameterTypes30;
 
     public EmployeeLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -205,9 +209,17 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
 
         _methodParameterTypes27 = new String[] { "java.util.List" };
 
-        _methodName28 = "filterByName";
+        _methodName28 = "filterEmployeeByTermSize";
 
         _methodParameterTypes28 = new String[] { "java.lang.String" };
+
+        _methodName29 = "filterEmployeeByTerm";
+
+        _methodParameterTypes29 = new String[] { "java.lang.String", "int", "int" };
+
+        _methodName30 = "countAll";
+
+        _methodParameterTypes30 = new String[] {  };
     }
 
     @Override
@@ -1031,15 +1043,58 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
-        java.lang.String term)
-        throws com.liferay.portal.kernel.exception.SystemException {
+    public int filterEmployeeByTermSize(java.lang.String term) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName28,
                     _methodParameterTypes28,
                     new Object[] { ClpSerializer.translateInput(term) });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return ((Integer) returnObj).intValue();
+    }
+
+    @Override
+    public org.json.JSONArray filterEmployeeByTerm(java.lang.String term,
+        int start, int end) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29,
+                    new Object[] { ClpSerializer.translateInput(term), start, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (org.json.JSONArray) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public int countAll()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1055,6 +1110,6 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
             }
         }
 
-        return (java.util.List<vn.com.ecopharma.hrm.model.Employee>) ClpSerializer.translateOutput(returnObj);
+        return ((Integer) returnObj).intValue();
     }
 }

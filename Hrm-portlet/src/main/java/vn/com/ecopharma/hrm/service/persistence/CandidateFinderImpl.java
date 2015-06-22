@@ -22,16 +22,16 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 			String sortColumnName, String sortDirection) {
 		final StringBuilder query = new StringBuilder();
 		query.append("SELECT c.* FROM hrm_recruitment_candidate c ");
-		query.append("WHERE (c.first_name LIKE ? OR c.middle_name LIKE ? OR c.last_name LIKE ? "
+		query.append("WHERE (CONCAT(c.first_name, ' ', c.middle_name, ' ', c.last_name) LIKE ? "
 				+ "OR c.email LIKE ? "
 				+ "OR c.contact_number LIKE ? "
 				+ "OR c.candidate_status LIKE ? "
 				+ "OR c.c_id "
-				+ "IN (SELECT cd.c_id FROM hrm_recruitment_candidate cd "
-				+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
-				+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
-				+ "WHERE v.name LIKE ?))");
-		query.append("AND (c.first_name LIKE ? OR c.middle_name LIKE ? OR c.last_name LIKE ?) "
+					+ "IN (SELECT cd.c_id FROM hrm_recruitment_candidate cd "
+					+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
+					+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
+					+ "WHERE v.name LIKE ?)) ");
+		query.append("AND  CONCAT(c.first_name, ' ', c.middle_name, ' ', c.last_name) LIKE ? "
 				+ "AND c.email LIKE ? "
 				+ "AND c.contact_number LIKE ? "
 				+ "AND c.candidate_status LIKE ? "
@@ -54,7 +54,7 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 								+ "FROM hrm_recruitment_candidate cd "
 								+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
 								+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
-								+ "WHERE cd.c_id = c.c_id) "
+								+ "WHERE cd.c_id = c.c_id AND vc.vc_status = 'VALID') "
 								+ sortDirection 
 								+ " ");
 		} else {
@@ -71,18 +71,14 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 			String date_to) {
 		final QueryPos qPos = QueryPos.getInstance(q);
 		/* Filter by GLOBAL (OR) */
-		qPos.add("%" + globStr + "%"); // first_name
-		qPos.add("%" + globStr + "%"); // middle_name
-		qPos.add("%" + globStr + "%"); // last_name
+		qPos.add("%" + globStr + "%"); // name
 		qPos.add("%" + globStr + "%"); // email
 		qPos.add("%" + globStr + "%"); // contact number
 		qPos.add("%" + globStr + "%"); // candidate status
 		qPos.add("%" + globStr + "%"); // vacancy_name
 
 		/* Filter by FIELD (AND) */
-		qPos.add("%" + name + "%"); // first_name
-		qPos.add("%" + name + "%"); // middle_name
-		qPos.add("%" + name + "%"); // last_name
+		qPos.add("%" + name + "%"); // name
 
 		qPos.add("%" + email + "%"); // email
 		qPos.add("%" + contact_number + "%"); // contact number

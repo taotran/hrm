@@ -34,6 +34,7 @@ public class EmployeeSoap implements Serializable {
     private String _status;
     private long _jobtitleId;
     private Date _joined_date;
+    private long _subUnitId;
 
     public EmployeeSoap() {
     }
@@ -61,6 +62,7 @@ public class EmployeeSoap implements Serializable {
         soapModel.setStatus(model.getStatus());
         soapModel.setJobtitleId(model.getJobtitleId());
         soapModel.setJoined_date(model.getJoined_date());
+        soapModel.setSubUnitId(model.getSubUnitId());
 
         return soapModel;
     }
@@ -267,5 +269,13 @@ public class EmployeeSoap implements Serializable {
 
     public void setJoined_date(Date joined_date) {
         _joined_date = joined_date;
+    }
+
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
     }
 }

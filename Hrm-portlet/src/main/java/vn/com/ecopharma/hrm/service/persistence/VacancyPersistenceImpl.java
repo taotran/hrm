@@ -331,6 +331,8 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
         vacancyImpl.setUpdate_date(vacancy.getUpdate_date());
         vacancyImpl.setUser_id(vacancy.getUser_id());
         vacancyImpl.setGroup_id(vacancy.getGroup_id());
+        vacancyImpl.setSubUnitId(vacancy.getSubUnitId());
+        vacancyImpl.setFileEntryId(vacancy.getFileEntryId());
 
         return vacancyImpl;
     }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,6 +18,7 @@ import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.Employee;
 import vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule;
 import vn.com.ecopharma.hrm.service.base.EmployeeLocalServiceBaseImpl;
+import vn.com.ecopharma.hrm.service.persistence.EmployeeFinderUtil;
 
 /**
  * The implementation of the employee local service.
@@ -124,8 +127,16 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		return emps;
 	}
 	
-	public List<Employee> filterByName(String term) throws SystemException {
-		return employeePersistence.findByName(term, term, term);
+	public int filterEmployeeByTermSize(String term) {
+		return EmployeeFinderUtil.filterEmployeeByTermSize(term);
+	}
+	
+	public JSONArray filterEmployeeByTerm(String term, int start, int end) {
+		return EmployeeFinderUtil.filterEmployeeByTerm(term, start, end);
+	}
+	
+	public int countAll() throws SystemException{
+		return employeePersistence.countAll();
 	}
 	
 }

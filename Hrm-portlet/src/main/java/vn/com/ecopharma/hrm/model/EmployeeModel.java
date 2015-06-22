@@ -367,6 +367,20 @@ public interface EmployeeModel extends BaseModel<Employee>, GroupedModel {
      */
     public void setJoined_date(Date joined_date);
 
+    /**
+     * Returns the sub unit ID of this employee.
+     *
+     * @return the sub unit ID of this employee
+     */
+    public long getSubUnitId();
+
+    /**
+     * Sets the sub unit ID of this employee.
+     *
+     * @param subUnitId the sub unit ID of this employee
+     */
+    public void setSubUnitId(long subUnitId);
+
     @Override
     public boolean isNew();
 

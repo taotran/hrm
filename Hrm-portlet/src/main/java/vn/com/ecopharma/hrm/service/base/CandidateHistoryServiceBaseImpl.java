@@ -13,6 +13,7 @@ import vn.com.ecopharma.hrm.service.CandidateHistoryService;
 import vn.com.ecopharma.hrm.service.persistence.CandidateFinder;
 import vn.com.ecopharma.hrm.service.persistence.CandidateHistoryPersistence;
 import vn.com.ecopharma.hrm.service.persistence.CandidatePersistence;
+import vn.com.ecopharma.hrm.service.persistence.EmployeeFinder;
 import vn.com.ecopharma.hrm.service.persistence.EmployeeInterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.EmployeePersistence;
 import vn.com.ecopharma.hrm.service.persistence.EmployeeVacancyPersistence;
@@ -21,6 +22,7 @@ import vn.com.ecopharma.hrm.service.persistence.InterviewPersistence;
 import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
 import vn.com.ecopharma.hrm.service.persistence.LocationPersistence;
+import vn.com.ecopharma.hrm.service.persistence.SubUnitPersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyFinder;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
@@ -61,6 +63,8 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
     protected vn.com.ecopharma.hrm.service.EmployeeService employeeService;
     @BeanReference(type = EmployeePersistence.class)
     protected EmployeePersistence employeePersistence;
+    @BeanReference(type = EmployeeFinder.class)
+    protected EmployeeFinder employeeFinder;
     @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService.class)
     protected vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService employeeInterviewScheduleLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService.class)
@@ -103,6 +107,12 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
     protected vn.com.ecopharma.hrm.service.LocationService locationService;
     @BeanReference(type = LocationPersistence.class)
     protected LocationPersistence locationPersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.SubUnitLocalService.class)
+    protected vn.com.ecopharma.hrm.service.SubUnitLocalService subUnitLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.SubUnitService.class)
+    protected vn.com.ecopharma.hrm.service.SubUnitService subUnitService;
+    @BeanReference(type = SubUnitPersistence.class)
+    protected SubUnitPersistence subUnitPersistence;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyLocalService.class)
     protected vn.com.ecopharma.hrm.service.VacancyLocalService vacancyLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyService.class)
@@ -323,6 +333,24 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
      */
     public void setEmployeePersistence(EmployeePersistence employeePersistence) {
         this.employeePersistence = employeePersistence;
+    }
+
+    /**
+     * Returns the employee finder.
+     *
+     * @return the employee finder
+     */
+    public EmployeeFinder getEmployeeFinder() {
+        return employeeFinder;
+    }
+
+    /**
+     * Sets the employee finder.
+     *
+     * @param employeeFinder the employee finder
+     */
+    public void setEmployeeFinder(EmployeeFinder employeeFinder) {
+        this.employeeFinder = employeeFinder;
     }
 
     /**
@@ -720,6 +748,62 @@ public abstract class CandidateHistoryServiceBaseImpl extends BaseServiceImpl
      */
     public void setLocationPersistence(LocationPersistence locationPersistence) {
         this.locationPersistence = locationPersistence;
+    }
+
+    /**
+     * Returns the sub unit local service.
+     *
+     * @return the sub unit local service
+     */
+    public vn.com.ecopharma.hrm.service.SubUnitLocalService getSubUnitLocalService() {
+        return subUnitLocalService;
+    }
+
+    /**
+     * Sets the sub unit local service.
+     *
+     * @param subUnitLocalService the sub unit local service
+     */
+    public void setSubUnitLocalService(
+        vn.com.ecopharma.hrm.service.SubUnitLocalService subUnitLocalService) {
+        this.subUnitLocalService = subUnitLocalService;
+    }
+
+    /**
+     * Returns the sub unit remote service.
+     *
+     * @return the sub unit remote service
+     */
+    public vn.com.ecopharma.hrm.service.SubUnitService getSubUnitService() {
+        return subUnitService;
+    }
+
+    /**
+     * Sets the sub unit remote service.
+     *
+     * @param subUnitService the sub unit remote service
+     */
+    public void setSubUnitService(
+        vn.com.ecopharma.hrm.service.SubUnitService subUnitService) {
+        this.subUnitService = subUnitService;
+    }
+
+    /**
+     * Returns the sub unit persistence.
+     *
+     * @return the sub unit persistence
+     */
+    public SubUnitPersistence getSubUnitPersistence() {
+        return subUnitPersistence;
+    }
+
+    /**
+     * Sets the sub unit persistence.
+     *
+     * @param subUnitPersistence the sub unit persistence
+     */
+    public void setSubUnitPersistence(SubUnitPersistence subUnitPersistence) {
+        this.subUnitPersistence = subUnitPersistence;
     }
 
     /**

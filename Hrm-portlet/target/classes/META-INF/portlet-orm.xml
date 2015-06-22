@@ -87,6 +87,7 @@
 			<basic name="joined_date">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="subUnitId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -253,6 +254,25 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.SubUnitModelImpl">
+		<attributes>
+			<id name="subUnitId" />
+			<basic name="name" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.VacancyModelImpl">
 		<attributes>
 			<id name="v_id" />
@@ -270,6 +290,8 @@
 			</basic>
 			<basic name="user_id" />
 			<basic name="group_id" />
+			<basic name="subUnitId" />
+			<basic name="fileEntryId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -336,6 +358,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.LocationImpl" name="Location">
 		<table name="HRM_Recruitment_Location" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.SubUnitImpl" name="SubUnit">
+		<table name="HRM_Recruitment_SubUnit" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.VacancyImpl" name="Vacancy">

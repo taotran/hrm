@@ -11,6 +11,7 @@
 	<bean id="vn.com.ecopharma.hrm.service.EmployeeLocalService" class="vn.com.ecopharma.hrm.service.impl.EmployeeLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.EmployeeService" class="vn.com.ecopharma.hrm.service.impl.EmployeeServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.EmployeePersistence" class="vn.com.ecopharma.hrm.service.persistence.EmployeePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.EmployeeFinder" class="vn.com.ecopharma.hrm.service.persistence.EmployeeFinderImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleLocalService" class="vn.com.ecopharma.hrm.service.impl.EmployeeInterviewScheduleLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.EmployeeInterviewScheduleService" class="vn.com.ecopharma.hrm.service.impl.EmployeeInterviewScheduleServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.EmployeeInterviewSchedulePersistence" class="vn.com.ecopharma.hrm.service.persistence.EmployeeInterviewSchedulePersistenceImpl" parent="basePersistence" />
@@ -32,6 +33,9 @@
 	<bean id="vn.com.ecopharma.hrm.service.LocationLocalService" class="vn.com.ecopharma.hrm.service.impl.LocationLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.LocationService" class="vn.com.ecopharma.hrm.service.impl.LocationServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.LocationPersistence" class="vn.com.ecopharma.hrm.service.persistence.LocationPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.SubUnitLocalService" class="vn.com.ecopharma.hrm.service.impl.SubUnitLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.SubUnitService" class="vn.com.ecopharma.hrm.service.impl.SubUnitServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistence" class="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyLocalService" class="vn.com.ecopharma.hrm.service.impl.VacancyLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyService" class="vn.com.ecopharma.hrm.service.impl.VacancyServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.VacancyPersistence" class="vn.com.ecopharma.hrm.service.persistence.VacancyPersistenceImpl" parent="basePersistence" />

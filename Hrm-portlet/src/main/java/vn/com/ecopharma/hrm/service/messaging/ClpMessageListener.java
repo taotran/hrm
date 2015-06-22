@@ -24,6 +24,8 @@ import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleServiceUtil;
 import vn.com.ecopharma.hrm.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.LocationServiceUtil;
+import vn.com.ecopharma.hrm.service.SubUnitLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.SubUnitServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyCandidateServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
@@ -72,6 +74,9 @@ public class ClpMessageListener extends BaseMessageListener {
             LocationLocalServiceUtil.clearService();
 
             LocationServiceUtil.clearService();
+            SubUnitLocalServiceUtil.clearService();
+
+            SubUnitServiceUtil.clearService();
             VacancyLocalServiceUtil.clearService();
 
             VacancyServiceUtil.clearService();

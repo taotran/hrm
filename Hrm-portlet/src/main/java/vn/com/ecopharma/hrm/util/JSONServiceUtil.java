@@ -3,6 +3,8 @@ package vn.com.ecopharma.hrm.util;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 
 public class JSONServiceUtil {
@@ -17,5 +19,10 @@ public class JSONServiceUtil {
 		System.out.println("JSON STRING: "+jsonString);
 		writer.print(jsonString);
 		writer.flush();
+	}
+	
+	public static void writeJSON(PrintWriter writer, JSONObject object) {
+		writer.print(object);
+		writer.close();
 	}
 }

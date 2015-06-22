@@ -39,8 +39,8 @@
 		</portlet-class>
 		<init-param>
 			<name>view-template</name>
+<!-- 			<value>/jsp/hrm/recruitment.jsp</value> -->
 			<value>/jsp/hrm/view.jsp</value>
-<!-- 			<value>/jsp/hrm/view_test.jsp</value> -->
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

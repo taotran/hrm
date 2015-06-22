@@ -11,4 +11,6 @@ public interface VacancyFinder {
         java.lang.String jTitle, java.lang.String location,
         java.lang.String vacancy_status, java.lang.String sortColumnName,
         java.lang.String sortDirection, int start, int end);
+
+    public java.util.List<java.lang.Object[]> getVacancySuccessionReport();
 }

@@ -3,12 +3,16 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryUtil;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
 import vn.com.ecopharma.hrm.NoSuchEmployeeVacancyException;
@@ -18,6 +22,8 @@ import vn.com.ecopharma.hrm.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.model.EmployeeVacancy;
 import vn.com.ecopharma.hrm.model.Vacancy;
 import vn.com.ecopharma.hrm.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.service.VacancyCandidateLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.base.VacancyLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.service.persistence.VacancyFinderUtil;
 
@@ -61,8 +67,8 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return vacancyPersistence.findAll(start, end, orderByComparator);
 	}
 
-	public Vacancy create(long user_id, long jTitle_id, long locationId, List<Long> emps, String name, String description,
-			int no_of_positions, String vacancy_status, String job_posting,
+	public Vacancy create(long user_id, long jTitle_id, long locationId, long subUnitId, List<Long> emps, String name, String description,
+			int no_of_positions, String vacancy_status, String job_posting, long jdId,
 			ServiceContext serviceContext) throws PortalException,
 			SystemException {
 		User user = userPersistence.findByPrimaryKey(user_id);
@@ -71,6 +77,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		final Date now = new Date(System.currentTimeMillis());
 		v.setJobtitleId(jTitle_id);
 		v.setLocationId(locationId);
+		v.setSubUnitId(subUnitId);
 		v.setName(name);
 		v.setDescription(description);
 		v.setNo_of_positions(no_of_positions);
@@ -79,6 +86,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		v.setUpdate_date(now);
 		v.setUser_id(user.getUserId());
 		v.setGroup_id(serviceContext.getScopeGroupId());
+		v.setFileEntryId(jdId);
 		/* update new vacancy managers */
 		for (long id: emps) {
 			employeeVacancyLocalService.create(id, v_id, user.getUserId(), serviceContext);
@@ -90,24 +98,31 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return v;
 	}
 
-	public Vacancy edit(long v_id, long jtitle_id, long locationId, List<Long> emps, String name, String description,
-			int number_of_positions, String job_posting, ServiceContext serviceContext)
-			throws SystemException, NoSuchVacancyException {
-		Vacancy vacancy = vacancyPersistence.findByPrimaryKey(v_id);
-		vacancy.setJobtitleId(jtitle_id);
-		vacancy.setLocationId(locationId);
-		vacancy.setName(name);
-		vacancy.setDescription(description);
-		vacancy.setNo_of_positions(number_of_positions);
-		vacancy.setUpdate_date(new Date(System.currentTimeMillis()));
+	public Vacancy edit(long v_id, long jtitle_id, long locationId, long subUnitId, List<Long> emps, String name, String description,
+			int number_of_positions, String job_posting, long jdId, Boolean isDeleteOrNotAddJD, ServiceContext serviceContext)
+			throws SystemException, NoSuchVacancyException, NoSuchFileEntryException {
+		Vacancy v = vacancyPersistence.findByPrimaryKey(v_id);
+		v.setJobtitleId(jtitle_id);
+		v.setLocationId(locationId);
+		v.setSubUnitId(subUnitId);
+		v.setName(name);
+		v.setDescription(description);
+		v.setNo_of_positions(number_of_positions);
+		v.setUpdate_date(new Date(System.currentTimeMillis()));
+		if (isDeleteOrNotAddJD) {
+			if (v.getFileEntryId() != -1) {
+				DLFileEntryUtil.remove(v.getFileEntryId());
+			}
+			v.setFileEntryId(jdId);
+		}
 		/* update new vacancy managers */
 		for (long employeeId: emps) {
 			if (employeeVacancyPersistence.fetchByVacancyId_EmployeeId(v_id, employeeId) == null) {
 				employeeVacancyLocalService.create(employeeId, v_id, serviceContext.getUserId(), serviceContext);
 			}
 		}
-		vacancyPersistence.update(vacancy);
-		return vacancy;
+		vacancyPersistence.update(v);
+		return v;
 	}
 
 	public void delete(long v_id) throws NoSuchVacancyException,
@@ -140,10 +155,24 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return VacancyFinderUtil.getFilterVacanciesSize(globStr, name, jTitle, location, vacancy_status, sortColumnName, sortDirection);
 	}
 	
+	public Vacancy getVacancyByCandidate_And_VALID_Status(long c_id) throws PortalException, SystemException {
+		VacancyCandidate vc = VacancyCandidateLocalServiceUtil
+				.findByCandidate_And_VALID_Status(c_id);
+		return vc != null ? getVacancy(vc.getV_id()) : null;
+	}
+	
+	public String getVacancyNameByCandidate_And_VALID_Status(long c_id) throws PortalException, SystemException {
+		return getVacancyByCandidate_And_VALID_Status(c_id) != null ? getVacancyByCandidate_And_VALID_Status(c_id).getName() : StringUtils.EMPTY;
+	}
+	
 	public List<Vacancy> filterVacancies(String globStr, String name,
 			String jTitle, String location, String vacancy_status,
 			String sortColumnName, String sortDirection, int start, int end) {
 		return VacancyFinderUtil.filterVacancies(globStr, name, jTitle, location, vacancy_status, sortColumnName, sortDirection, start, end);
+	}
+	
+	public List<Object[]> getVacancySuccessionReport() {
+		return VacancyFinderUtil.getVacancySuccessionReport();
 	}
 	
 	public int countAll() throws SystemException {

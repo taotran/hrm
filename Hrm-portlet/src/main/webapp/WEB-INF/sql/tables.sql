@@ -108,7 +108,8 @@ create table HRM_Recruitment_Employee (
 	marital_status VARCHAR(75) null,
 	status VARCHAR(75) null,
 	jobtitleId LONG,
-	joined_date DATE null
+	joined_date DATE null,
+	subUnitId LONG
 );
 
 create table HRM_Recruitment_EmployeeInterviewSchedule (
@@ -205,6 +206,16 @@ create table HRM_Recruitment_Location (
 	note VARCHAR(75) null
 );
 
+create table HRM_Recruitment_SubUnit (
+	subUnitId LONG not null primary key,
+	name VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table HRM_Recruitment_Vacancies_Candidates (
 	c_id LONG not null,
 	v_id LONG not null,
@@ -222,7 +233,9 @@ create table HRM_Recruitment_Vacancy (
 	insert_date DATE null,
 	update_date DATE null,
 	user_id LONG,
-	group_id LONG
+	group_id LONG,
+	subUnitId LONG,
+	fileEntryId LONG
 );
 
 create table HRM_Recruitment_VacancyCandidate (

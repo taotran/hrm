@@ -25,6 +25,8 @@ public class VacancySoap implements Serializable {
     private Date _update_date;
     private long _user_id;
     private long _group_id;
+    private long _subUnitId;
+    private long _fileEntryId;
 
     public VacancySoap() {
     }
@@ -43,6 +45,8 @@ public class VacancySoap implements Serializable {
         soapModel.setUpdate_date(model.getUpdate_date());
         soapModel.setUser_id(model.getUser_id());
         soapModel.setGroup_id(model.getGroup_id());
+        soapModel.setSubUnitId(model.getSubUnitId());
+        soapModel.setFileEntryId(model.getFileEntryId());
 
         return soapModel;
     }
@@ -177,5 +181,21 @@ public class VacancySoap implements Serializable {
 
     public void setGroup_id(long group_id) {
         _group_id = group_id;
+    }
+
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+    }
+
+    public long getFileEntryId() {
+        return _fileEntryId;
+    }
+
+    public void setFileEntryId(long fileEntryId) {
+        _fileEntryId = fileEntryId;
     }
 }

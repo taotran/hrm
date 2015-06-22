@@ -71,9 +71,10 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             { "marital_status", Types.VARCHAR },
             { "status", Types.VARCHAR },
             { "jobtitleId", Types.BIGINT },
-            { "joined_date", Types.TIMESTAMP }
+            { "joined_date", Types.TIMESTAMP },
+            { "subUnitId", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,emp_code VARCHAR(75) null,firstname VARCHAR(75) null,middle_name VARCHAR(75) null,lastname VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,nickname VARCHAR(75) null,birthday DATE null,gender VARCHAR(75) null,marital_status VARCHAR(75) null,status VARCHAR(75) null,jobtitleId LONG,joined_date DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,emp_code VARCHAR(75) null,firstname VARCHAR(75) null,middle_name VARCHAR(75) null,lastname VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,nickname VARCHAR(75) null,birthday DATE null,gender VARCHAR(75) null,marital_status VARCHAR(75) null,status VARCHAR(75) null,jobtitleId LONG,joined_date DATE null,subUnitId LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Employee";
     public static final String ORDER_BY_JPQL = " ORDER BY employee.employeeId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Employee.employeeId ASC";
@@ -123,6 +124,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     private String _status;
     private long _jobtitleId;
     private Date _joined_date;
+    private long _subUnitId;
     private long _columnBitmask;
     private Employee _escapedModel;
 
@@ -162,6 +164,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         model.setStatus(soapModel.getStatus());
         model.setJobtitleId(soapModel.getJobtitleId());
         model.setJoined_date(soapModel.getJoined_date());
+        model.setSubUnitId(soapModel.getSubUnitId());
 
         return model;
     }
@@ -240,6 +243,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         attributes.put("status", getStatus());
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("joined_date", getJoined_date());
+        attributes.put("subUnitId", getSubUnitId());
 
         return attributes;
     }
@@ -364,6 +368,12 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
         if (joined_date != null) {
             setJoined_date(joined_date);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
         }
     }
 
@@ -671,6 +681,17 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         _joined_date = joined_date;
     }
 
+    @JSON
+    @Override
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+    }
+
     public long getColumnBitmask() {
         return _columnBitmask;
     }
@@ -722,6 +743,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         employeeImpl.setStatus(getStatus());
         employeeImpl.setJobtitleId(getJobtitleId());
         employeeImpl.setJoined_date(getJoined_date());
+        employeeImpl.setSubUnitId(getSubUnitId());
 
         employeeImpl.resetOriginalValues();
 
@@ -914,12 +936,14 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             employeeCacheModel.joined_date = Long.MIN_VALUE;
         }
 
+        employeeCacheModel.subUnitId = getSubUnitId();
+
         return employeeCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(41);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
@@ -961,6 +985,8 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(getJobtitleId());
         sb.append(", joined_date=");
         sb.append(getJoined_date());
+        sb.append(", subUnitId=");
+        sb.append(getSubUnitId());
         sb.append("}");
 
         return sb.toString();
@@ -968,7 +994,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(64);
+        StringBundler sb = new StringBundler(67);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -1053,6 +1079,10 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(
             "<column><column-name>joined_date</column-name><column-value><![CDATA[");
         sb.append(getJoined_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
+        sb.append(getSubUnitId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

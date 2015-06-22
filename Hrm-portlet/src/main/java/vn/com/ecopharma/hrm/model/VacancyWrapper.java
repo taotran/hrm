@@ -48,6 +48,8 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
         attributes.put("update_date", getUpdate_date());
         attributes.put("user_id", getUser_id());
         attributes.put("group_id", getGroup_id());
+        attributes.put("subUnitId", getSubUnitId());
+        attributes.put("fileEntryId", getFileEntryId());
 
         return attributes;
     }
@@ -118,6 +120,18 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
         if (group_id != null) {
             setGroup_id(group_id);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
+        }
+
+        Long fileEntryId = (Long) attributes.get("fileEntryId");
+
+        if (fileEntryId != null) {
+            setFileEntryId(fileEntryId);
         }
     }
 
@@ -359,6 +373,46 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
     @Override
     public void setGroup_id(long group_id) {
         _vacancy.setGroup_id(group_id);
+    }
+
+    /**
+    * Returns the sub unit ID of this vacancy.
+    *
+    * @return the sub unit ID of this vacancy
+    */
+    @Override
+    public long getSubUnitId() {
+        return _vacancy.getSubUnitId();
+    }
+
+    /**
+    * Sets the sub unit ID of this vacancy.
+    *
+    * @param subUnitId the sub unit ID of this vacancy
+    */
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _vacancy.setSubUnitId(subUnitId);
+    }
+
+    /**
+    * Returns the file entry ID of this vacancy.
+    *
+    * @return the file entry ID of this vacancy
+    */
+    @Override
+    public long getFileEntryId() {
+        return _vacancy.getFileEntryId();
+    }
+
+    /**
+    * Sets the file entry ID of this vacancy.
+    *
+    * @param fileEntryId the file entry ID of this vacancy
+    */
+    @Override
+    public void setFileEntryId(long fileEntryId) {
+        _vacancy.setFileEntryId(fileEntryId);
     }
 
     /**

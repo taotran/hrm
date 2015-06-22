@@ -331,10 +331,18 @@ public class EmployeeLocalServiceUtil {
         return getService().findByIds(ids);
     }
 
-    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
-        java.lang.String term)
+    public static int filterEmployeeByTermSize(java.lang.String term) {
+        return getService().filterEmployeeByTermSize(term);
+    }
+
+    public static org.json.JSONArray filterEmployeeByTerm(
+        java.lang.String term, int start, int end) {
+        return getService().filterEmployeeByTerm(term, start, end);
+    }
+
+    public static int countAll()
         throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().filterByName(term);
+        return getService().countAll();
     }
 
     public static void clearService() {

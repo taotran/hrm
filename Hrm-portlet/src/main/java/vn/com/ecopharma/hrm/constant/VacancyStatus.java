@@ -28,6 +28,8 @@ public enum VacancyStatus {
 			return Arrays.asList(PUBLISHED, UNPUBLISHED);
 		case PUBLISHED: 
 			return Arrays.asList(UNPUBLISHED);
+		case UNPUBLISHED: 
+			return Arrays.asList(PUBLISHED);
 		default:
 			return new java.util.ArrayList<VacancyStatus>();
 		}

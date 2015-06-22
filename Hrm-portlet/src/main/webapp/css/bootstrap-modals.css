@@ -1,8 +1,8 @@
-.modal-open {
+.hrm-modal .modal-open {
 	overflow: hidden
 }
 
-.modal {
+.hrm-modal.modal {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -15,9 +15,10 @@
 	-webkit-overflow-scrolling: touch;
 	outline: 0;
 	font-size: 12px!important;
+	margin: 4% auto auto;
 }
 
-.modal.fade .modal-dialog {
+.hrm-modal .modal.fade .modal-dialog {
 	-webkit-transition: -webkit-transform .3s ease-out;
 	-o-transition: -o-transform .3s ease-out;
 	transition: transform .3s ease-out;
@@ -27,25 +28,25 @@
 	transform: translate(0, -25%)
 }
 
-.modal.in .modal-dialog {
+.hrm-modal .modal.in .modal-dialog {
 	-webkit-transform: translate(0, 0);
 	-ms-transform: translate(0, 0);
 	-o-transform: translate(0, 0);
-	transform: translate(0, 0)
+	transform: translate(0, 0);
 }
 
-.modal-open .modal {
+.hrm-modal .modal.modal-open .modal {
 	overflow-x: hidden;
 	overflow-y: auto
 }
 
-.modal-dialog {
+.hrm-modal .modal.modal-dialog {
 	position: relative;
 	width: auto;
 	margin: 10px
 }
 
-.modal-content {
+.hrm-modal .modal.modal-content {
 	position: relative;
 	background-color: #fff;
 	-webkit-background-clip: padding-box;
@@ -58,7 +59,7 @@
 	box-shadow: 0 3px 9px rgba(0, 0, 0, .5)
 }
 
-.modal-backdrop {
+.hrm-modal .modal.modal-backdrop {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -68,59 +69,59 @@
 	background-color: #000
 }
 
-.modal-backdrop.fade {
+.hrm-modal .modal.modal-backdrop.fade {
 	filter: alpha(opacity = 0);
 	opacity: 0
 }
 
-.modal-backdrop.in {
+.hrm-modal .modal.modal-backdrop.in {
 	filter: alpha(opacity = 50);
 	opacity: .5
 }
 
-.modal-header {
+.hrm-modal .modal.modal-header {
 	min-height: 16.43px;
 	padding: 15px;
 	border-bottom: 1px solid #e5e5e5;
 	width: 537px;
 }
 
-.modal-header .close {
+.hrm-modal .modal.modal-header .close {
 	margin-top: -2px
 }
 
-.modal-title {
+.hrm-modal .modal.modal-title {
 	margin: 0;
 	line-height: 1.42857143
 }
 
-.modal-body {
+.hrm-modal .modal.modal-body {
 	position: relative;
 	padding: 15px;
 	width: 537px;
 }
 
-.modal-footer {
+.hrm-modal .modal.modal-footer {
 	padding: 15px;
 	text-align: right;
 	border-top: 1px solid #e5e5e5;
 	width: 537px;
 }
 
-.modal-footer .btn+.btn {
+.hrm-modal .modal.modal-footer .btn+.btn {
 	margin-bottom: 0;
 	margin-left: 5px
 }
 
-.modal-footer .btn-group .btn+.btn {
+.hrm-modal .modal.modal-footer .btn-group .btn+.btn {
 	margin-left: -1px
 }
 
-.modal-footer .btn-block+.btn-block {
+.hrm-modal .modal.modal-footer .btn-block+.btn-block {
 	margin-left: 0
 }
 
-.modal-scrollbar-measure {
+.hrm-modal .modal.modal-scrollbar-measure {
 	position: absolute;
 	top: -9999px;
 	width: 50px;
@@ -149,6 +150,10 @@
 }
 
 /* custom modals setting */
-.modal .hrm-modal .export-modal .in {
+.hrm-modal .modal .export-modal .in {
 	margin-top: 180px!important;
 }
+
+/* .hrm-modal .modal .preview-modal {
+	max-height: 100%!important;
+} */

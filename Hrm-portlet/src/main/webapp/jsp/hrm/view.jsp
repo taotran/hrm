@@ -1,21 +1,24 @@
-<%@page
-	import="vn.com.ecopharma.hrm.service.permission.CandidatePermission"%>
-<%@page import="vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil"%>
-<%@page import="vn.com.ecopharma.hrm.service.VacancyServiceUtil"%>
-<%@page import="vn.com.ecopharma.hrm.service.persistence.VacancyUtil"%>
-<%@page import="vn.com.ecopharma.hrm.model.Vacancy"%>
-<%@page import="java.util.List"%>
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@include file="init.jsp"%>
+<%-- <portlet:actionURL var="submitFileAction" name="submitFile"></portlet:actionURL> --%>
 
+<portlet:renderURL var="reportTabURL">
+	<portlet:param name="mvcPath" value="/jsp/hrm/reports.jsp"></portlet:param>
+</portlet:renderURL>
+
+<%-- <button type="button" onclick="<%= reportTabURL.toString()%>">Go to Reports</button>
+<aui:button cssClass="btn" value="Go to Reports" onClick="<%= reportTabURL.toString()%>"/> --%>
 <div id="myTab">
-
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#cTab" onclick="candidateTabClick()"><liferay-ui:message
 					key="tab.candidate.title" /></a></li>
 		<li><a href="#vTab" onclick="vacancyTabClick()"><liferay-ui:message
 					key="tab.vacancy.title" /></a></li>
-		<li><a href="#testTab">Test Tab</a></li>
+		<li><a href="#reportTab" style="display: none">z</a><a href="#"
+			onclick="location.href = '<%= reportTabURL.toString() %>';">Reports</a></li>
+		<%-- <li><aui:a href="#reportTab" onClick="<%= reportTabURL.toString()%>"></aui:a></li> --%>
+
 	</ul>
 
 	<div class="tab-content">
@@ -28,9 +31,9 @@
 
 					<div class="actionButtons">
 						<div class="buttons">
-							<a href="#modify-candidate-modal" data-toggle="modal"
-								class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
-									key="global.button.add" />
+							<a href="javascript:void(0);" class="btn btn-primary"
+								onclick="showAddCandidateModal()"> <i class="icon-plus"></i>
+								<liferay-ui:message key="global.button.add" />
 							</a>
 							<button data-toggle="modal" id="cDeleteBtn"
 								class="btn btn-danger" onclick="deleteCandidates()">
@@ -121,15 +124,16 @@
 				<tbody></tbody>
 			</table>
 		</div>
-		<div id="testTab">This is TestTab</div>
+		<div id="reportTab" style="display: none;"></div>
 	</div>
 
 </div>
 
 <!-- ########################################### MODALS ########################################### -->
 
-<form id="candidateForm" class="form-horizontal">
-	<div class="modal hrm-modal candidate-modal"
+<form id="candidateForm" class="form-horizontal"
+	enctype="multipart/form-data" method="POST">
+	<div class="hrm-modal modal candidate-modal"
 		id="modify-candidate-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
@@ -200,8 +204,26 @@
 			<div class="control-group">
 				<label class="control-label" for="addCandidate_resume">Resume</label>
 				<div class="controls">
-					<input type="file" name='addCandidate_resume'
-						id="addCandidate_resume" />
+					<div class="resume-actions" id="resume-actions">
+						<input id="resumeId" type="hidden" value="-1" /> <a
+							id="resumeLink" href="javascript:void(0);"
+							onclick="candidateModalGetPreviewResume()">candidateResume</a>
+						<div class='inline-edit'>
+							<a href="javascript:void(0);" onclick="onReplaceResume()"><i
+								class='icon-pencil'></i></a> <a href="javascript:void(0);"
+								onclick="onModifyResume()"><i class='icon-remove'></i></a> <a
+								id="downloadResumeLink" href="javascript:void(0);"><i
+								class='icon-download'></i></a>
+						</div>
+					</div>
+					<div class="noresume-actions" id="noresume-actions"
+						style='display: none;'>
+						<input type="file" name='addCandidate_resume'
+							accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+							id="addCandidate_resume" /> <a id="resetResumeLink"
+							style='display: none;' href="javascript:void(0);"
+							onclick="onModifyResume()"><i class='icon-repeat'></i></a>
+					</div>
 				</div>
 			</div>
 
@@ -222,10 +244,10 @@
 				<div class="controls">
 					<input type="text" data-date-format="dd/mm/yyyy"
 						id="date_of_application" class="small70 required">
-					<button type="button"></button>
 				</div>
 			</div>
-			<div id="modal-container" class="modal-container">
+			<div id="candidate-history-container"
+				class="candidate-history-container" style="display: none;">
 				<div class="header">
 					<span>Expand</span>
 
@@ -233,7 +255,7 @@
 				<div class="content">
 					<table id="candidateHistoryTable"
 						class="table table-striped table-bordered">
-				<!-- 		<thead>
+						<!-- 		<thead>
 							<tr>
 								<th>Performed Date</th>
 								<th>Description</th>
@@ -249,8 +271,11 @@
 		</div>
 
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary"
-				onclick="saveCandidate()">Save</button>
+			<!-- <input type="submit" value="submit"/> -->
+			<!-- 			<button type="button" class="btn btn-primary"
+				onclick="saveCandidate()">Save</button> -->
+
+			<button type="submit" class="btn btn-primary">Save</button>
 			<button class="btn" onclick="clearFields()">
 				<liferay-ui:message key="global.button.clear_all" />
 			</button>
@@ -260,12 +285,10 @@
 	</div>
 </form>
 
-
-
-
-
-<form id="vacancyForm" class="form-horizontal">
-	<div class="modal hrm-modal vacancy-modal" id="modify-vacancy-modal">
+<!-- VACANCY MODAL -->
+<form id="vacancyForm" class="form-horizontal"
+	enctype="multipart/form-data" method="POST">
+	<div class="hrm-modal modal vacancy-modal" id="modify-vacancy-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
 			<span class="modal-title">Add New Vacancy</span>
@@ -290,6 +313,33 @@
 					<input type="text" id="v_name" placeholder="Name" class="required">
 				</div>
 			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="jd-actions">Job Description</label>
+				<div class="controls">
+					<div class="resume-actions" id="jd-actions">
+						<input id="jdId" type="hidden" value="-1" /> <a
+							id="jdLink" href="javascript:void(0);"
+							onclick="vacancyModalGetPreviewJD()">Job Description</a>
+						<div class='inline-edit'>
+							<a href="javascript:void(0);" onclick="onReplaceJD()"><i
+								class='icon-pencil'></i></a> <a href="javascript:void(0);"
+								onclick="onModifyJD()"><i class='icon-remove'></i></a> <a
+								id="downloadJDLink" href="javascript:void(0);"><i
+								class='icon-download'></i></a>
+						</div>
+					</div>
+					<div class="noresume-actions" id="nojd-actions"
+						style='display: none;'>
+						<input type="file" name='addVacancy_JD'
+							accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+							id="addVacancy_JD" /> <a id="resetJDLink"
+							style='display: none;' href="javascript:void(0);"
+							onclick="onModifyJD()"><i class='icon-repeat'></i></a>
+					</div>
+				</div>
+			</div>
+			
 			<div class="control-group">
 				<label class="control-label" for="vacancy_status"><liferay-ui:message
 						key="vacancy.status" /></label>
@@ -308,12 +358,21 @@
 			</div>
 
 			<div class="control-group">
+				<label class="control-label" for="subUnitSelect">Sub Unit</label>
+				<div class="controls">
+					<select id="subUnitSelect">
+					</select>
+				</div>
+			</div>
+
+			<div class="control-group">
 				<label class="control-label" for="hiring_managers"><liferay-ui:message
 						key="vacancy.hiring_managers" /><span class="required">*</span></label>
 				<div class="controls">
-					<select id="managerSelect2" onchange="onManagerSelect(2)"></select>
-					<label id="managerSelect2Warning" for="managerSelect2"
-						class="error" style="display: none;">Manager is required</label>
+					<select id="managerSelect2" class="managerSelect"
+						onchange="onManagerSelect(2)"></select> <label
+						id="managerSelect2Warning" for="managerSelect2" class="error"
+						style="display: none;">Manager is required</label>
 					<ul id="managers2" class="options"></ul>
 				</div>
 			</div>
@@ -322,8 +381,8 @@
 				<label class="control-label" for="no_of_pos"><liferay-ui:message
 						key="vacancy.no_positions" /></label>
 				<div class="controls">
-					<input type="text" id="no_of_pos" value="3"
-						placeholder="Number of positions" class="small70 required number">
+					<input type="text" id="no_of_pos" value="3" placeholder=""
+						class="small70 required number">
 				</div>
 			</div>
 
@@ -333,14 +392,14 @@
 					<textarea id="desc" rows="5" cols="50"></textarea>
 				</div>
 			</div>
-			<label for="job_posting"><liferay-ui:message
+			
+			<%-- <label for="job_posting" style="font-weight: bold; font-size: 12px;"><liferay-ui:message
 					key="vacancy.job_posting" /></label>
-			<textarea id="job_posting" cols="7">Job Posting</textarea>
+			<textarea id="job_posting" cols="7">Job Posting</textarea> --%>
+			
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" onclick="saveVacancy()">
-				<liferay-ui:message key="global.button.save" />
-			</button>
+			<button type="submit" class="btn btn-primary">Save</button>
 			<button class="btn" onclick="clearFields()">
 				<liferay-ui:message key="global.button.clear_all" />
 			</button>
@@ -351,7 +410,7 @@
 </form>
 
 <!-- JOB TITLE MODAL -->
-<div class="modal hrm-modal job-title-modal" id="modify-jtitle-modal">
+<div class="hrm-modal modal job-title-modal" id="modify-jtitle-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<span class="modal-title">Add New Job Title</span>
@@ -395,7 +454,7 @@
 </div>
 
 <!-- LOCATION MODAL -->
-<div class="modal hrm-modal location-modal" id="modify-location-modal">
+<div class="hrm-modal modal location-modal" id="modify-location-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<span class="modal-title">Add New Location</span>
@@ -483,7 +542,7 @@
 </div>
 
 <!-- JOB INTERVIEW MODAL -->
-<div class="modal hrm-modal interview-modal" id="modify-interview-modal">
+<div class="hrm-modal modal interview-modal" id="modify-interview-modal">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">x</button>
 		<span class="modal-title">Add New Interview Status</span>
@@ -514,10 +573,11 @@
 
 <!-- SCHEDULE INTERVIEW MODAL -->
 <form id="intervewScheduleForm" class="form-horizontal">
-	<div class="modal hrm-modal schedule-interview-modal"
+	<div class="hrm-modal modal schedule-interview-modal"
 		id="modify-interviewSchedule-modal">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">x</button>
+			<button type="button" class="close" data-dismiss="modal"
+				onclick="resetCandidateStatus()">x</button>
 			<span class="modal-title">Schedule Interview</span>
 		</div>
 
@@ -539,8 +599,9 @@
 				<label class="control-label" for="itvName">Interviewer Name<span
 					class="required">*</span></label>
 				<div class="controls">
-					<select class="managerSelect" id="managerSelect1" onchange="onManagerSelect(1)">
-					</select>
+					<select id="managerSelect1" name="managerSelect1"
+						class="managerSelect" onChange="onManagerSelect(1)"></select>
+
 					<ul id="managers1" class="options">
 						<li>
 							<div class="edit-buttons">
@@ -566,10 +627,10 @@
 				<div class="controls">
 					<div id="itvTime">
 						<label class="small70" for="itvTimeFrom">From</label> <input
-							type="text" class="small70 required" id="itvTimeFrom" placeholder="HH:MM">
-						<label class="small70" for="itvTimeTo">To</label> <input
-							class="small70 required" type="text" id="itvTimeTo"
-							placeholder="HH:MM">
+							type="text" class="small70 required" id="itvTimeFrom"
+							placeholder="HH:MM"> <label class="small70"
+							for="itvTimeTo">To</label> <input class="small70 required"
+							type="text" id="itvTimeTo" placeholder="HH:MM">
 					</div>
 				</div>
 			</div>
@@ -591,7 +652,7 @@
 </form>
 
 <form id="exportForm" class="form-horizontal">
-	<div class="modal hrm-modal export-modal" id="export-modal">
+	<div class="hrm-modal modal export-modal" id="export-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
 			<span class="modal-title">Export Modal</span>
@@ -613,9 +674,7 @@
 							<option>CSV Default</option>
 							<option>CSV Custom</option>
 						</optgroup>
-					</select> <a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
-						<i class="icon-plus"></i>Add
-					</a>
+					</select>
 				</div>
 			</div>
 			<div class="control-group">
@@ -626,6 +685,53 @@
 						class="required">
 				</div>
 			</div>
+
+			<label class="control-label">Conditions:</label>
+			<ul id="managers1" class="options">
+				<li>
+					<div class="attributes" style="display: inline-block;">
+						<div class="edit-buttons">
+							<button type="button">
+								<i class="icon-minus-sign"></i>
+							</button>
+							<button type="button">
+								<i class="icon-plus-sign"></i>
+							</button>
+						</div>
+						<select id="attribute1" class="attribute-select">
+							<option>Firstname</option>
+							<option>Middle name</option>
+							<option>Last name</option>
+						</select> <select id="search-options" class="search-options">
+							<option>contains</option>
+							<option>equals</option>
+						</select> <input type="text" name="attribute1" class="attribute-text"
+							placeholder="Firstname" />
+					</div>
+				</li>
+
+				<li>
+					<div class="attributes" style="display: inline-block;">
+						<div class="edit-buttons">
+							<button type="button">
+								<i class="icon-minus-sign"></i>
+							</button>
+							<button type="button">
+								<i class="icon-plus-sign" onclick="addCondition"></i>
+							</button>
+						</div>
+						<select id="attribute1" class="attribute-select">
+							<option>Firstname</option>
+							<option>Middle name</option>
+							<option>Last name</option>
+						</select> <select id="search-options" class="search-options">
+							<option>contains</option>
+							<option>equals</option>
+						</select> <input type="text" name="attribute1" class="attribute-text"
+							placeholder="Firstname" />
+					</div>
+				</li>
+			</ul>
 			<%-- 
 			<div class="control-group">
 				<label class="control-label" for="vacancy_status"><liferay-ui:message
@@ -649,8 +755,7 @@
 </form>
 
 <form id="employeeForm" class="form-horizontal">
-	<div class="modal hrm-modal employee-modal"
-		id="modify-employee-modal">
+	<div class="hrm-modal modal employee-modal" id="modify-employee-modal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">x</button>
 			<span class="modal-title">Hire Candidate</span>
@@ -685,9 +790,10 @@
 						placeholder="Last Name">
 				</div>
 			</div>
-			
+
 			<div class="control-group">
-				<label class="control-label" for="e_gender_select">Gender<span class="required">*</span></label>
+				<label class="control-label" for="e_gender_select">Gender<span
+					class="required">*</span></label>
 				<div class="controls">
 					<select id="e_gender_select">
 						<option value="Male">Male</option>
@@ -695,7 +801,7 @@
 					</select>
 				</div>
 			</div>
-			
+
 
 			<div class="control-group">
 				<label class="control-label" for="e_inputEmail"><liferay-ui:message
@@ -705,12 +811,13 @@
 						placeholder="Email">
 				</div>
 			</div>
-			
+
 			<div class="control-group">
-				<label class="control-label" for="e_birthday">Birthday:<span class="required">*</span></label>
+				<label class="control-label" for="e_birthday">Birthday:<span
+					class="required">*</span></label>
 				<div class="controls">
-					<input type="text" data-date-format="dd/mm/yyyy" class="small70 required" id="e_birthday"
-						placeholder="dd/mm/yyyy">
+					<input type="text" data-date-format="dd/mm/yyyy"
+						class="small70 required" id="e_birthday" placeholder="dd/mm/yyyy">
 				</div>
 			</div>
 
@@ -722,15 +829,24 @@
 						placeholder="eg. 0902 548822">
 				</div>
 			</div>
-			
+
 			<div class="control-group">
-				<label class="control-label" for="e_start_date">Start Date:<span class="required">*</span></label>
+				<label class="control-label" for="e_subUnit">Sub Unit</label>
 				<div class="controls">
-					<input type="text" data-date-format="dd/mm/yyyy" class="small70 required" id="e_start_date"
+					<input disabled id="e_subUnit" value="" style="border: 0px;">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="e_start_date">Start Date:<span
+					class="required">*</span></label>
+				<div class="controls">
+					<input type="text" data-date-format="dd/mm/yyyy"
+						class="small70 required" id="e_start_date"
 						placeholder="dd/mm/yyyy">
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary"
@@ -746,7 +862,46 @@
 			</button>
 		</div>
 	</div>
+
+	<!-- PREVIEW MODAL -->
 </form>
+<div class="hrm-modal modal preview-modal" id="preview-modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<span class="modal-title">Preview</span>
+	</div>
+
+	<div class="modal-body" id="previewInfo">
+		<div class="lfr-preview-file" id="previewFile">
+			<div class="lfr-preview-file-content" id="previewFileContent">
+				<div class="lfr-preview-file-image-current-column">
+					<div class="lfr-preview-file-image-container">
+						<img class="lfr-preview-file-image-current" id="previewFileImage"
+							src="${previewFileURL}${initial}" />
+					</div>
+					<span class="lfr-preview-file-actions hide" id="previewFileActions">
+						<span class="lfr-preview-file-toolbar" id="previewToolbar"></span>
+						<span class="lfr-preview-file-info"> <span
+							class="lfr-preview-file-index" id="previewFileIndex">1</span> of
+							<span class="lfr-preview-file-count" id='previewFileCount'>${previewFileCount}</span>
+					</span>
+					</span>
+				</div>
+
+				<div class="lfr-preview-file-images" id="previewImagesContent">
+					<div class="lfr-preview-file-images-content"
+						id="previewImagesContentSub"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a type="button" class="btn btn-primary" id="preview_downloadLink">
+			Download </a> <a href="#" class="btn" data-dismiss="modal"><liferay-ui:message
+				key="global.button.cancel" /></a>
+	</div>
+</div>
+
 
 <!-- ########################################### END MODALS ########################################### -->
 <script type="text/javascript">
@@ -764,25 +919,100 @@ var isCandidateModalLoaded = false;
 var isCandidateHistoriesLoaded = false;
 
 
-/* 	
-	var cForm = $('#cForm');
-	cForm.submit(function(ev) {
-	console.log("SUBMIT");
-	$.ajax({
-		type : cForm.attr('method'),
-		url : cForm.attr('action'),
-		data : cForm.serialize(),
-		success : function(data) {
-			alert('OK');
+$(document).ready(function() {
+	
+	loadCandidateTable();
+	
+	function dataFormatResult(state) {
+		return state.text;
+	}
+	 
+	function dataFormatSelection(state) {
+		return state.id;
+	}
+	 
+	$('.managerSelect').select2({
+		placeholder: {
+			id: '-1',
+			text: 'Select a manager'
+		},
+		/* initSelection: function(element, callback){}, */
+		allowClear: true,
+	 	minimumInputLength: 1,
+	 	ajax: {
+	 		url: '<portlet:resourceURL id="getManagerSelectData"/>',
+	 		dataType: 'json',
+	 		quietMillis: 100,
+	 		data: function (params) {
+	 			return {
+	 				q: params.term,
+	 				iDisplayStart: (params.page-1)*10,
+	 				iDisplayLength: 10,
+	 				sEcho: 0,
+	 				iSortCol_0: 0,
+	 				sSortDir_0: 'asc',
+	 				page: params.page
+	 			};
+	 		},
+	 		processResults: function(data, page) {
+	 			var more= (page * 10) < data.iTotalDisplayRecords;
+	 			return {
+	 				results: data.aaData, more: more
+	 			}
+	 		}
+	 	},
+	 	formatResult : dataFormatResult,
+         formatSelection : dataFormatSelection,
+         dropdownCssClass : "bigdrop",
+         escapeMarkup : function(m) { return m; } 
+	 });
+	 
+
+/* 	var cTable = $('#ctable').DataTable();
+		$('#job_posting').summernote({
+			height: 100,
+			
+		});  */
+	$('#ctable tbody').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			cTable.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
 		}
 	});
-	ev.preventDefault();
 
-}); */
+	$('#date_of_application').datepicker();
+	$('#itvDate').datepicker();
+	$('#e_birthday').datepicker();
+	$('#e_start_date').datepicker();
+	$('#itvTimeFrom').timepicker();
+	$('#itvTimeTo').timepicker();
 
+	$.ajax ({
+		type: 'GET',
+		url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
+		contentType: 'application/json;',
+		dataType: 'json',
+		success: function(response) {
+			ListJobTitle = response.jTitles;
+			ListLocation = response.locations;	
+		},
+		error: function (xhr, textStatus, errorThrown) {
+			console.log('error on loading AJAX');
+		}
+	})
+	
+});
 
 $('#modify-interviewSchedule-modal').on('shown.bs.modal', function(){
 	console.log("#modify-interviewSchedule-modal shown!!!")
+});
+
+
+$('#preview-modal').on('hide.bs.modal', function(){
+	$('#previewImagesContent').empty();
+	console.log("#preview-modal close!!!")
 });
 
 /* clear modal data on closing */
@@ -833,40 +1063,46 @@ $("#c_checkAll").click(function(event) {
 
 
 function getVacancy(id) {
+	$('#modify-vacancy-modal').modal('show');
 	var obj = new Object();
 	obj.v_id = id;
-	$('#modify-vacancy-modal').modal('show');
-	jQuery.ajax({
-		type : 'POST',
-		url : "<portlet:resourceURL id='getVacancy'/>",
-		data : JSON.stringify(obj),
-		dataType : "json",
-		contentType : 'application/json',
-		mimeType : 'application/json',
-		error : function(e) {
 
-		},
-		success : function(response) {
-			var obj = response;
-			$('#v_id').val(obj.v_id);
-			$('#v_name').val(obj.v_name);
-			$('#location').val(obj.location);
-			$('#no_of_pos').val(obj.no_of_pos);
-			$('#vacancy_status').val(obj.vacancy_status);
-			$('#job_posting').val(obj.job_posting);
-			$('#jTitleSelect').val(obj.jTitleId);
-			/* add to managers list and show */
-			var emps = obj.employees;
-			$.each(emps, function(i, item){
-				addManagerToList('2', item.employeeId, item.name);	
-			});
+	function onSuccessGetVacancy(response) {
+		var obj = response;
+		console.log(obj);
+		$('#v_id').val(obj.v_id);
+		$('#v_name').val(obj.v_name);
+		$('#location').val(obj.location);
+		$('#no_of_pos').val(obj.no_of_pos);
+		$('#vacancy_status').val(obj.vacancy_status);
+		$('#job_posting').val(obj.job_posting);
+		$('#jTitleSelect').val(obj.jTitleId);
+		$('#subUnitSelect').val(obj.subUnitId);
+		/* add to managers list and show */
+		var emps = obj.employees;
+		$.each(emps, function(i, item){
+			addManagerToList('2', item.employeeId, item.name);	
+		});
+		
+		if (obj.jd != "-1") {
+			$('#nojd-actions').hide();
+			$('#jd-actions').show();
+			$('#resetJDLink').show();
 			
-			/* Show edit vacancy modal */
+			$('a#downloadJDLink').attr("href", obj.jd);
+			$('a#jdLink').text(obj.jdFileName);
+			$('a#jdLink').attr("href", "javascript:void(0);");
+			$('#jdId').val(obj.jdId);
+		} else {
+			$('#nojd-actions').show();
+			$('#jd-actions').hide();
+			$('#resetJDLink').hide();
 		}
-	});
+	}
+	genericAJAXCalling("<portlet:resourceURL id='getVacancy'/>", obj, onSuccessGetVacancy);
 }
 
-function saveVacancy() {
+$('#vacancyForm').submit(function(e){
 	if($('#v_name').valid() && $('#no_of_pos').valid()) {
 		var selectedManagers = [];
 		$('#managers2 li').each(function(i) {
@@ -882,10 +1118,46 @@ function saveVacancy() {
 				obj.published_in_feed = $('#published_in_feed').val(); 
 				obj.job_posting = $("#job_posting").val();
 				obj.locationId = $("#locationSelect").val();
+				obj.subUnitId = $("#subUnitSelect").val();
 				/* add selected managers */
 				obj.selectedManagers = selectedManagers;
 			
-				function onSuccessModifyVacancy(data) {
+				if (document.getElementById('addVacancy_JD').files.length == 0) {
+					obj.jdId = -1;
+					if ($('#nojd-actions').css('display') == 'none') {
+						obj.isDeleteOrChange = false;
+					} else {
+						obj.isDeleteOrChange = true;
+					}
+					function onSuccessSaveVacancy(response) { 
+						$('#vtable').dataTable().fnDraw();
+						showBottomRightSuccessNotify('Successfully saved Vacancy!');
+					}
+					
+					genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessSaveVacancy);
+					$('#modify-vacancy-modal').modal('hide');	
+				} else {
+					$.ajax({
+						url: '<portlet:resourceURL id="uploadVacancyJD"/>',
+						type: 'POST',
+						data: new FormData($(this)[0]),
+						processData: false,
+						contentType: false,
+						success: function(data) {
+							obj.jdId=$.parseJSON(data).id;
+							obj.isDeleteOrChange = true;
+							function onSuccessSaveVacancy(response) { 
+								$('#vtable').dataTable().fnDraw();
+								showBottomRightSuccessNotify('Successfully saved Vacancy!');
+							}
+							
+							genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessSaveVacancy);
+							$('#modify-vacancy-modal').modal('hide');
+						}
+					});	
+				}
+				
+/* 				function onSuccessModifyVacancy(data) {
 					$('#vtable').dataTable().fnDraw();
 					if (data != null) {
 						var vObj = data;
@@ -903,9 +1175,94 @@ function saveVacancy() {
 					}	
 				}
 				genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessModifyVacancy);
-				$('#modify-candidate-modal').modal('hide');
+				$('#modify-vacancy-modal').modal('hide'); */
 		} else {
 			$('#managerSelect2Warning').show();
+			showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");	
+		}
+	} else {
+		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
+	}
+	e.preventDefault();
+})
+
+function saveVacancy() {
+	if($('#v_name').valid() && $('#no_of_pos').valid()) {
+		var selectedManagers = [];
+		$('#managers2 li').each(function(i) {
+			selectedManagers.push(($(this).attr('id')));
+		});
+			if (selectedManagers.length > 0) {
+				var obj = new Object();
+				obj.v_id = $("#v_id").val();
+				obj.jTitleId = $('#jTitleSelect').val();
+				obj.v_name = $('#v_name').val();
+				obj.description = $('#desc').val();
+				obj.no_of_positions = $('#no_of_pos').val();
+				obj.published_in_feed = $('#published_in_feed').val(); 
+				obj.job_posting = $("#job_posting").val();
+				obj.locationId = $("#locationSelect").val();
+				obj.subUnitId = $("#subUnitSelect").val();
+				/* add selected managers */
+				obj.selectedManagers = selectedManagers;
+			
+				if (document.getElementById('addVacancy_JD').files.length == 0) {
+					obj.jdId = -1;
+					if ($('#nojd-actions').css('display') == 'none') {
+						obj.isDeleteOrChange = false;
+					} else {
+						obj.isDeleteOrChange = true;
+					}
+					function onSuccessSaveVacancy(response) { 
+						$('#vtable').dataTable().fnDraw();
+						showBottomRightSuccessNotify('Successfully saved Vacancy!');
+					}
+					
+					genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessSaveVacancy);
+					$('#modify-vacancy-modal').modal('hide');	
+				} else {
+					$.ajax({
+						url: '<portlet:resourceURL id="uploadVacancyJD"/>',
+						type: 'POST',
+						data: new FormData($(this)[0]),
+						processData: false,
+						contentType: false,
+						success: function(data) {
+							obj.jdId=$.parseJSON(data).id;
+							obj.isDeleteOrChange = true;
+							function onSuccessSaveVacancy(response) { 
+								$('#vtable').dataTable().fnDraw();
+								showBottomRightSuccessNotify('Successfully saved Vacancy!');
+							}
+							
+							genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessSaveVacancy);
+							$('#modify-vacancy-modal').modal('hide');
+						}
+					});	
+				}
+				
+/* 				function onSuccessModifyVacancy(data) {
+					$('#vtable').dataTable().fnDraw();
+					if (data != null) {
+						var vObj = data;
+						if (vObj.v_id != null && vObj.v_id != "") {
+							vSelect = document.getElementById('vacancySelect');
+							
+							if (vObj.isNew == true) {
+								vSelect.options.add(new Option(vObj.v_name, vObj.v_id));
+							} else {
+								$('#vacancySelect option').eq(vObj.v_id).text(vObj.v_name);
+							}
+							_State = 3;
+						}
+						
+					}	
+				}
+				genericAJAXCalling("<portlet:resourceURL id='saveVacancy'/>", obj, onSuccessModifyVacancy);
+				$('#modify-vacancy-modal').modal('hide'); */
+		} else {
+			$('#managerSelect2Warning').show();
+			showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");	
 		}
 	} else {
 		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
@@ -932,7 +1289,6 @@ function saveJobTitle() {
 		jSelect = document.getElementById('jTitleSelect');
 		/* add new JTitle to Select if CREATE NEW */
 		if (obj.jTitleId == -1) {
-			console.log("CREATE NEW JTitle");
 			jSelect.options.add(new Option(response.title, response.jTitleId));	
 		} else {
 			/* only change JTitle Text if EDIT */
@@ -970,22 +1326,61 @@ YUI().use('aui-tabview', function(Y) {
 	}).render();
 });
 
-
-function ajaxCall(url, parameters, successCallback) {
-	jQuery.ajax({
-		type : 'POST',
-		url : url,
-		data : JSON.stringify(parameters),
-		contentType : 'application/json;',
-		dataType : 'json',
-		contentType : 'application/json',
-		mimeType : 'application/json',
-		success : successCallback,
-		error : function(xhr, textStatus, errorThrown) {
-			console.log('error');
+$('#candidateForm').submit(function(e){
+	if ($('#first_name').valid() && $('#middle_name').valid() && 
+			$('#last_name').valid() && $('#inputEmail').valid() && $('#date_of_application').valid()) {
+		
+		var obj = new Object();
+		obj.c_id = $("#c_id").val();
+		obj.first_name = $('#first_name').val();
+		obj.middle_name = $('#middle_name').val();
+		obj.last_name = $('#last_name').val();
+		obj.email = $('#inputEmail').val();
+		obj.contact_number = $('#contact_number').val();
+		obj.vacancy = $('#vacancySelect').val();
+		obj.comment = $('#comment').val();
+		obj.date_of_application = $('#date_of_application').val();
+		
+		if (document.getElementById('addCandidate_resume').files.length == 0) {
+			obj.cv_file_id = -1;
+			if ($('#noresume-actions').css('display') == 'none') {
+				obj.isDeleteOrChange = false;
+			} else {
+				obj.isDeleteOrChange = true;
+			}
+			function onSuccessSaveCandidate(response) { 
+				$('#ctable').dataTable().fnDraw();
+				showBottomRightSuccessNotify('Successfully saved Candidate!');
+			}
+			
+			genericAJAXCalling("<portlet:resourceURL id='saveCandidate'/>", obj, onSuccessSaveCandidate);
+			$('#modify-candidate-modal').modal('hide');	
+		} else {
+			$.ajax({
+				url: '<portlet:resourceURL id="uploadCandidateResume"/>',
+				type: 'POST',
+				data: new FormData($(this)[0]),
+				processData: false,
+				contentType: false,
+				success: function(data) {
+					console.log("INSIDE RESPONSE AFTER CREATING FILE_ENTRY");
+					obj.cv_file_id=$.parseJSON(data).id;
+					obj.isDeleteOrChange = true;
+					function onSuccessSaveCandidate(response) { 
+						$('#ctable').dataTable().fnDraw();
+						showBottomRightSuccessNotify('Successfully saved Candidate!')
+					}
+					
+					genericAJAXCalling("<portlet:resourceURL id='saveCandidate'/>", obj, onSuccessSaveCandidate);
+					$('#modify-candidate-modal').modal('hide');
+				}
+			});	
 		}
-	});
-}
+	} else {
+		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");			
+	}
+	e.preventDefault();
+});
 
 //AJAX save new/updated candidate
 function saveCandidate() {
@@ -1017,35 +1412,28 @@ function saveCandidate() {
 }
 
 function saveEmployee() {
-	var obj = new Object();
-	obj.employeeId = $('#employeeId').val();
-	obj.vacancyId = $('#e_vacancyId').val();
-	obj.candidateId = $('#e_candidateId').val();
-	obj.first_name = $('#e_firstname').val();
-	obj.middle_name = $('#e_middle_name').val();
-	obj.last_name = $('#e_last_name').val();
-	obj.email = $('#e_inputEmail').val();
-	obj.contact_number = $('#e_contact_number').val();
-	obj.birthday = $('#e_birthday').val();
-	obj.joined_date = $('#e_start_date').val();
-	obj.gender = $('#e_gender_select').val();
-	function onSuccessSaveEmployee(response) {
-		$('#ctable').dataTable().fnDraw();
+	if ($('#e_firstname').valid() && $('#e_middle_name').valid() && $('#e_last_name').valid() &&
+			$('#e_inputEmail').valid() && $('#e_birthday').valid() && $('#e_start_date').valid()) {
+		var obj = new Object();
+		obj.employeeId = $('#employeeId').val();
+		obj.vacancyId = $('#e_vacancyId').val();
+		obj.candidateId = $('#e_candidateId').val();
+		obj.first_name = $('#e_firstname').val();
+		obj.middle_name = $('#e_middle_name').val();
+		obj.last_name = $('#e_last_name').val();
+		obj.email = $('#e_inputEmail').val();
+		obj.contact_number = $('#e_contact_number').val();
+		obj.birthday = $('#e_birthday').val();
+		obj.joined_date = $('#e_start_date').val();
+		obj.gender = $('#e_gender_select').val();
+		function onSuccessSaveEmployee(response) {
+			$('#ctable').dataTable().fnDraw();
+		}
+		genericAJAXCalling("<portlet:resourceURL id='saveEmployee'/>", obj, onSuccessSaveEmployee);
+		$('#modify-employee-modal').modal('hide');
+	} else {
+		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");
 	}
-	genericAJAXCalling("<portlet:resourceURL id='saveEmployee'/>", obj, onSuccessSaveEmployee);
-	$('#modify-employee-modal').modal('hide');
-}
-
-function getCurrentDate() {
-	var fullDate = new Date();
-	console.log(fullDate);
-	//Thu May 19 2011 17:25:38 GMT+1000 {}
-	  
-	//convert month to 2 digits
-	var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-	  
-	var currentDate = fullDate.getDate() + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
-	console.log(currentDate);
 }
 
 function candidateTabClick() {
@@ -1063,8 +1451,11 @@ function vacancyTabClick() {
 	}
 };
 
-$('#modify-candidate-modal').on('shown.bs.modal', function () {
+$('#modify-candidate-modal').on('show.bs.modal', function () {
 	console.log("modify-candidate-modal open");
+	$('a#resumeLink').attr("href", '');
+	$('a#resumeLink').text('');
+	$('#addCandidate_resume').val('');
 	vSelect = document.getElementById('vacancySelect');
 	/* check if vacancySelect is already loaded or not */
 	 if (isCandidateModalLoaded == false) {
@@ -1088,14 +1479,16 @@ $('#modify-candidate-modal').on('shown.bs.modal', function () {
 		})
 		isCandidateModalLoaded = true;
  	} 
-	$('#modal-container').hide();
 });
 
-$('#modify-vacancy-modal').on('shown.bs.modal', function () {
-	console.log("Vacancy Model OPENED");
+$('#modify-vacancy-modal').on('show.bs.modal', function () {
+	$('a#jdLink').attr("href", '');
+	$('a#jdLink').text('');
+	$('#addVacancy_JD').val('');
 	jSelect = document.getElementById('jTitleSelect');
 	lSelect = document.getElementById('locationSelect');
 	mSelect = document.getElementById('managerSelect2');
+	sSelect = document.getElementById('subUnitSelect');
 	/* check if jTitleSelect is already loaded or not */
 		$.ajax ({
 			type : 'POST',
@@ -1108,6 +1501,7 @@ $('#modify-vacancy-modal').on('shown.bs.modal', function () {
 				jSelect.options.length = 0;
 				lSelect.options.length = 0;
 				mSelect.options.length = 0;
+				sSelect.options.length = 0;
 				var data = $.parseJSON(response);
 				$.each(data.jTitles, function(i, item) {
 					jSelect.options.add(new Option(item.title, item.jTitleId));
@@ -1117,12 +1511,9 @@ $('#modify-vacancy-modal').on('shown.bs.modal', function () {
 					lSelect.options.add(new Option(item.name, item.locationId));	
 				}); 
 				
-				mSelect.add(new Option("--Select Manager--",
-				"-1"));
-				$.each(data.emps, function(i, item){
-					mSelect.options.add(new Option(item.name, item.employeeId));	
+				$.each(data.subUnits, function(i, item){
+					sSelect.options.add(new Option(item.name, item.subUnitId));
 				});
-				
 				$('#vacancy_status').val('NEW');
 			}	
 		})
@@ -1154,6 +1545,7 @@ function loadVacancyTable() {
 										console.log(item.title);
 										select.options.add(new Option(item.title, item.jTitleId));
 									});
+									showBottomRightInfoNotify('Vacancies loaded!');
 				                    fnCallback(json);
 				                    $('#vtable').show();
 				                }
@@ -1253,11 +1645,26 @@ function loadCandidateTable() {
 	.dataTable(
 			{
 				bServerSide : true,
-				sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
 				bProcessing : true,
 				bPaginate : true,
-				sPaginationType : "full_numbers",
 				order : [ 0, 'asc' ],
+				sPaginationType : "full_numbers",
+				sAjaxSource : '<portlet:resourceURL id="get_all_candidates"/>',
+				fnServerData : function ( sSource, aoData, fnCallback ) {
+		            $.ajax({
+		                "dataType": 'json',
+		                "contentType": "application/json; charset=utf-8",
+		                "type": "GET",
+		                "url": sSource,
+		                "data": aoData,
+		                "success": function(json){
+		                	showBottomRightInfoNotify('Candidates loaded!');
+		                	console.log(json);
+		                    fnCallback(json);
+		                    $('#ctable').show();
+		                }
+		            });               
+		        },
 				createdRow : function ( row, data, index ) {
 		        	$('td', row).eq(2).addClass('highlight');
 		        },
@@ -1265,9 +1672,8 @@ function loadCandidateTable() {
 					console.log("row selected");
 		        },
 				oLanguage : {
-					sProcessing : "<img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><span>Please wait...</span>"
-					<%-- sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>
-	/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>" --%>
+					<%-- sProcessing : "<img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><span>Please wait...</span>" --%>
+					sProcessing : "<div class='modal-backdrop'><div class='loading-indicator'><img src='<%=renderRequest.getContextPath()%>/images/loading_animator.gif'/><br /><span>Please wait...</span></div></div>"
 							},
 							aoColumns : [
 									{
@@ -1284,11 +1690,15 @@ function loadCandidateTable() {
 									{
 										"mData" : "full_name",
 										"mRender" : function(data, type, full) {
-											return "<a id='"
+											if (full.status != 'HIRE') {
+												return "<a id='"
 													+ full.c_id
 													+ "' href='javascript:void(0)' onclick='getCandidate("
 													+ full.c_id + ");'>" + data
 													+ "</a>";
+											} else {
+												return data;
+											}
 										}
 									},
 									{
@@ -1337,8 +1747,16 @@ function loadCandidateTable() {
 									},
 									{
 										"mData" : "resume",
+										"bSortable" : false,
 										"mRender" : function(data, type, full) {
-											return "<a href='javascript:void(0);'>View Resume</a>";
+											var s = '';
+											if (data != '') {
+												console.log(full);
+												s += "<div class='candidateResume'><a hef='javascript:void(0);' title='View Resume' onclick='getPreview(" + full.fileEntryId +");'><i class='icon-eye-open'></i> "
+													+"</a><a href='" + data + "' title='Download Resume'><i class='icon-download'></i> " 
+													+ "</a></div";
+											} 
+											return s;
 										}
 									} ],
 							bColVis : true,
@@ -1392,9 +1810,7 @@ function loadCandidateTable() {
 												"DECLINE_OFFERED", "HIRE",
 												"MARK_INTERVIEW_PASS",
 												"MARK_INTERVIEW_FAIL" ]
-									}, {
-										type : "text"
-									} ]
+									}, null ]
 
 						});
 
@@ -1442,8 +1858,8 @@ function loadCandidateTable() {
 					console.log(data);
 					iSelect = document
 							.getElementById('interviewTitleSelect');
-					mSelect = document
-							.getElementById('managerSelect1');
+					/* mSelect = document
+							.getElementById('managerSelect1'); */
 					iSelect.options.length = 0;
 
 					$.each(data.interviews, function(i, item) {
@@ -1452,14 +1868,14 @@ function loadCandidateTable() {
 								item.interviewId));
 					});
 
-					mSelect.options.length = 0;
-					mSelect.add(new Option("--Select Manager--",
-							"-1"));
-					$.each(data.employees, function(i, item) {
-						mSelect.options.add(new Option(item.employeeName,
-										item.employeeId));
-					});
-					/* clear managers selected list */
+					
+					 function dataFormatResult(state) {
+						 return state.text;
+					 }
+					 
+					 function dataFormatSelection(state) {
+						 return state.id;
+					 }
 					$('#managers1').empty();	
 				}
 				
@@ -1479,6 +1895,7 @@ function loadCandidateTable() {
 					$('#e_last_name').val(obj.last_name);
 					$('#e_inputEmail').val(obj.email);
 					$('#e_contact_number').val(obj.contact_number);
+					$('#e_subUnit').val(obj.subUnit);
 				}
 				genericAJAXCalling('<portlet:resourceURL id="hireCandidateStatusChange"/>', obj, onSuccessHireCandidateStatusChange);
 				
@@ -1513,35 +1930,42 @@ function loadCandidateTable() {
 	}
 
 	function onManagerSelect(selectPrefix) {
-		console.log("Selected changed");
 		var employeeId = $('#managerSelect' + selectPrefix).val();
-		if (employeeId != -1) {
-			var employeeName = $(
+		var employeeName = $(
 					'#managerSelect' + selectPrefix + ' option:selected')
 					.text();
-			console.log(employeeId);
-
-			/* add to managers list and show */
+		if (employeeName != null && employeeName != "") {
+				/* add to managers list and show */
 			addManagerToList(selectPrefix, employeeId, employeeName);
-			/* remove from select after adding to list */
-			$(
-					'#managerSelect' + selectPrefix + ' option[value='
-							+ employeeId + ']').remove();
-			$('#managerSelect' + selectPrefix).val("-1");
+				/* remove from select after adding to list */
+			$('#managerSelect' + selectPrefix + ' option[value='
+								+ employeeId + ']').remove();
+			$('#managerSelect' + selectPrefix).select2('data',null);
 		}
 	}
 
 	function addManagerToList(selectPrefix, employeeId, employeeName) {
-		/* add to managers list and show */
-		$('#managers' + selectPrefix)
-				.append(
-						"<li id='li"+ selectPrefix + employeeId +
-			"'><div class='edit-buttons'><button type='button' onclick='onRemoveManager("
-								+ selectPrefix
-								+ ","
-								+ employeeId
-								+ ")'><i class='icon-minus-sign'></i></button></div> <span>"
-								+ employeeName + "</span></li>");
+		var existed = false;
+		$('#managers' + selectPrefix + ' li').each(function(i) {
+			if (($(this).attr('id')) == 'li' + selectPrefix + employeeId ) {
+				existed = true;
+			}
+		});
+		
+		if (existed == false) {
+			/* add to managers list and show */
+			$('#managers' + selectPrefix)
+					.append(
+							"<li id='li"+ selectPrefix + employeeId +
+				"'><div class='edit-buttons'><button type='button' onclick='onRemoveManager("
+									+ selectPrefix
+									+ ","
+									+ employeeId
+									+ ")'><i class='icon-minus-sign'></i></button></div> <span>"
+									+ employeeName + "</span></li>");
+		} else {
+			showBottomRightErrorNotifyShortDelay("This manager has been selected. Duplication is not allowed");				
+		}
 	}
 
 	function onRemoveManager(selectPrefix, employeeId) {
@@ -1669,116 +2093,7 @@ function loadCandidateTable() {
 
 	});
 
-	$(document).ready(function() {
-		/* Add more validate for form */
-		
-/* 		var $validator = $("form").validate();
-		$.validator.addMethod("alpha", function(value,element){
-		return this.optional(element) || /^[a-zA-Z]+$/i.test(value); 
-		}, "Please enter alphabets only"); 
-		 */
-		 
-
-			
-		loadCandidateTable();
-		/* 		$(".select2-container").select2();
-		 $(".select_filter").select2(); */
-		 $('.managerSelect').select2();
-		/*  $('.managerSelect').select2({
-			ajax: {
-			    url: "<portlet:resourceURL id='filterEmpByName'/>",
-			    dataType: 'json',
-			    delay: 250,
-			    data: function (params) {
-			      return {
-			        q: params.term, // search term
-			        page: params.page
-			      };
-			    },
-			    processResults: function (data, page) {
-			      // parse the results into the format expected by Select2.
-			      // since we are using custom formatting functions we do not need to
-			      // alter the remote JSON data
-			      return {
-			        results: data.items
-			      };
-			    },
-			    cache: true
-			  },
-			  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-			  minimumInputLength: 1,
-			  templateResult: formatRepo, // omitted for brevity, see the source of this page
-			  templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
-			 
-		 }); */
-
-		/* SELECT A ROW */
-		var cTable = $('#ctable').DataTable();
- 		$('#job_posting').summernote({
- 			height: 100,
- 			
- 		}); 
-		$('#ctable tbody').on('click', 'tr', function() {
-			if ($(this).hasClass('selected')) {
-				$(this).removeClass('selected');
-			} else {
-				cTable.$('tr.selected').removeClass('selected');
-				$(this).addClass('selected');
-			}
-		});
-
-		$('#date_of_application').datepicker();
-		$('#itvDate').datepicker();
-		$('#e_birthday').datepicker();
-		$('#e_start_date').datepicker();
-		$('#itvTimeFrom').timepicker();
-		$('#itvTimeTo').timepicker();
-
-		$.ajax ({
-			type: 'GET',
-			url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
-			contentType: 'application/json;',
-			dataType: 'json',
-			success: function(response) {
-				ListJobTitle = response.jTitles;
-				ListLocation = response.locations;	
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				console.log('error on loading AJAX');
-			}
-		})
-		
-		
-/* 		function onSuccessLoadDataForFooterFilter(response) {
-			data = $.parseJSON(response);
-			console.log(data);
-			ListJobTitle = data.jTitles;
-			ListLocation = data.locations;	
-			console.log(ListJobTitle);
-			console.log(ListLocation);
-		} */
-		/* 
-		$.ajax ({
-			type: 'GET',
-			url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
-			contentType: 'application/json;',
-			dataType: 'json',
-			success: function(response) {
-				console.log("SUCCESS");
-				console.log(response);
-				var data = $.parseJSON(response);
-				console.log(data);
-				ListJobTitle = response.jTitles;
-				ListLocation = response.locations;	
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				console.log('error on loading AJAX');
-			}
-		}) */
-		
-		/* genericAJAXCalling("<portlet:resourceURL id='loadDataForFooterFilter'/>", null, onSuccessLoadDataForFooterFilter); */
-
-	});
+	
 	function showBottomRightSuccessNotify(ntf_msg) {
 		showBottomRightSuccessNotifyShortDelay(2000, ntf_msg);
 	}
@@ -1851,7 +2166,6 @@ function loadCandidateTable() {
 	function getCandidate(id) {
 		var obj = new Object();
 		obj.c_id = id;
-		$('#modify-candidate-modal').modal('show');
 		
 		function onSuccessGetCandidate(response) {
 			var obj = response;
@@ -1863,20 +2177,33 @@ function loadCandidateTable() {
 			$('#contact_number').val(obj.contact_number);
 			$('#comment').val(obj.comment);
 			$('#date_of_application').val(obj.date_of_application);
-			console.log("V_ID " + obj.v_id);
 			if (obj.vacancyStateUnpublished == true) {
 				$('#vacancySelect').val('-1');
 				$('#unpublish-vacancy-warn').show();
 				showBottomRightWarningNotify(5000, 'The Vacany for this Candidate was set to UNPUBLISH');
-				notify.close();
 			} else {
 				$('#vacancySelect').val(obj.v_id);
 				$('#unpublish-vacancy-warn').hide();
 			}
+			if (obj.resume != "-1") {
+				$('#noresume-actions').hide();
+				$('#resume-actions').show();
+				$('#resetResumeLink').show();
+				
+				$('a#downloadResumeLink').attr("href", obj.resume);
+				$('a#resumeLink').text(obj.resumeFileName);
+				$('a#resumeLink').attr("href", "javascript:void(0);");
+				$('#resumeId').val(obj.resumeId);
+			} else {
+				$('#noresume-actions').show();
+				$('#resume-actions').hide();
+				$('#resetResumeLink').hide();
+			}
+			
 		};
 		
 		genericAJAXCalling("<portlet:resourceURL id='getCandidate'/>", obj, onSuccessGetCandidate);
-		$('#modal-container').show();
+		$('#modify-candidate-modal').modal('show');
 	}
 
 	function deleteCandidates() {
@@ -1950,7 +2277,7 @@ function loadCandidateTable() {
 				$('#managers1 li').each(function(i) {
 					selectedInterviewers.push(($(this).attr('id')));
 				});
-		
+				console.log(selectedInterviewers);
 				if (selectedInterviewers.length != 0) {
 					object.selectedInterviewers = selectedInterviewers;
 					function onSuccessSaveInterviewSchedule(response) {
@@ -1968,36 +2295,94 @@ function loadCandidateTable() {
 		}
 	}
 	
-	/*
-	* Download Export
-	*/
-	function downloadExport() {
-		var obj = new Object();
-		obj.id = 1;
- 		$.ajax ({
-			type: 'POST',
-			url: '<portlet:resourceURL id="export_result"/>',
-			data: JSON.stringify(obj),
-			contentType: "application/vnd.ms-excel",
-			dataType: "text",
-			success: function(response){
-				console.log("DOWNLOAD");
-				/*console.log(response);*/
-			},
-			error: function (xhr, textStatus, errorThrown) {
-				console.log('error on loading AJAX');
-			}
-		})
-		
-		/* function onSuccessExport(response) {
-			console.log("SUCCESS DOWNLOAD EXPORT FILE");
+	function onReplaceResume() {
+		$('#noresume-actions').show();
+		$('#addCandidate_resume').trigger('click');
+		$('#resume-actions').hide();
+	}
+	
+	function onModifyResume() {
+		if ($('#resume-actions').is(':visible')) {
+			$('#resume-actions').hide();
+			$('#noresume-actions').show();
+		} else {
+			$('#resume-actions').show();
+			$('#noresume-actions').hide();
 		}
-		genericAJAXCalling('<portlet:resourceURL id="export_result"/>', obj, onSuccessExport); */
+	}
+	
+	function showAddCandidateModal() {
+		$('#resume-actions').hide();
+		$('#noresume-actions').show();
+		$('#resetResumeLink').hide();
+		$('#modify-candidate-modal').modal('show');
+	}
+	
+	function onReplaceJD() {
+		$('#nojd-actions').show();
+		$('#addVacancy_JD').trigger('click');
+		$('#jd-actions').hide();
+	}
+	
+	function onModifyJD() {
+		if ($('#jd-actions').is(':visible')) {
+			$('#jd-actions').hide();
+			$('#nojd-actions').show();
+		} else {
+			$('#jd-actions').show();
+			$('#nojd-actions').hide();
+		}
+	}
+	
+	function showAddVacancyModal() {
+		$('#jd-actions').hide();
+		$('#nojd-actions').show();
+		$('#resetJDLink').hide();
+		$('#modify-vacancy-modal').modal('show');
+	}
+	
+	function getPreview(id) {
+		var obj = new Object();
+		obj.id = id;
+		$('#previewImagesContent').empty();
+		function onSuccessGetPreview(response) {
+			$('#previewFileImage').attr('src', response.previewFileURL + '1');
+			$('#previewFileCount').text(response.previewFileCount);
+			$('#preview_downloadLink').attr('href',response.docURL);
+			AUI().use('liferay-preview', function(A) {
+			    new Liferay.Preview(
+			                       	{
+			                        	actionContent: '#previewFileActions',
+			                        	baseImageURL: response.previewFileURL,
+			                        	boundingBox: '#previewFile',
+			                        	contentBox: '#previewFileContent',
+			                        	currentPreviewImage: '#previewFileImage',
+			                        	imageListContent: '#previewImagesContent',
+			                        	maxIndex: response.previewFileCount,
+			                        	previewFileIndexNode: '#previewFileIndex',
+			                        	toolbar: '#previewToolbar'
+			                        }
+			                ).render();
+			});
+			
+			$('#preview-modal').modal('show');
+		}
+		
+		genericAJAXCalling("<portlet:resourceURL id='getPreview'/>", obj, onSuccessGetPreview);
 		
 	}
+	
+	function candidateModalGetPreviewResume() {
+		var id = $('#resumeId').val();
+		getPreview(id);
+	}
 
+	function vacancyModalGetPreviewJD() {
+		var id = $('#jdId').val();
+		getPreview(id);
+	}
+	
 	function saveLocation() {
-		console.log("SAVE LOCATION");
 		var obj = new Object();
 		obj.name = $('#locationName').val();
 		obj.province = $('#locationProvince').val();
@@ -2007,21 +2392,10 @@ function loadCandidateTable() {
 		obj.phone = $('#locationPhone').val();
 		obj.fax = $('#locationFax').val();
 		obj.note = $('#locationNote').val();
-		console.log(obj);
-		$.ajax({
-			type : 'POST',
-			url : "<portlet:resourceURL id='saveLocation'/>",
-			data : JSON.stringify(obj),
-			dataType : "json",
-			contentType : 'application/json',
-			mimeType : 'application/json',
-			error : function(e) {
-
-			},
-			success : function(response) {
-				console.log('SAVED LOCATION');
-			}
-		});
+		function onSuccessSaveLocation(response) {
+			console.log('SAVED LOCATION');
+		}
+		genericAJAXCalling("<portlet:resourceURL id='saveLocation'/>", obj, onSuccessSaveLocation);
 	}
 	
 	function genericAJAXCalling(url, parameters, successCallback) {
@@ -2037,271 +2411,6 @@ function loadCandidateTable() {
 			}
 		})
 	}
-	//Util functions
 </script>
 
 
-<!-- <style>
-tfoot input {
-	width: 100%;
-	padding: 3px;
-	box-sizing: border-box;
-}
-
-.tableHeader {
-	text-align: left;
-}
-
-tfoot {
-	display: table-header-group;
-}
-
-.dataTables_length {
-	position: absolute;
-	top: 10px;
-	left: 220px;
-}
-
-.dataTables_info {
-	position: absolute;
-	top: 0px;
-	left: 5px;
-}
-
-.ColVis {
-	padding-right: 10px;
-	padding-top: 5px;
-}
-
-.dataTables_filter {
-	position: absolute;
-	top: 10px;
-	left: 200px;
-	font-size: 15px;
-}
-
-.dataTables_filter input {
-	height: 22px;
-	width: 150px
-}
-
-input {
-	-moz-border-radius: 15px;
-	border-radius: 3px;
-	border: solid 1px #c7c7c7;
-	padding: 5px;
-}
-
-table.dataTable tbody td {
-	padding: 5px;
-	padding-left: 20px;
-}
-</style> -->
-
-<style>
-.date_range_filter {
-	width: 90px !important;
-}
-
-select {
-	width: 200px !important;
-}
-
-select .select2-search__field {
-	width: 175px !important;
-}
-
-label {
-	display: inline-block;
-	width: 120px;
-}
-
-.small70 {
-	width: 70px !important;
-}
-
-ul.options {
-	over-flow: hidden;
-	list-style: none;
-	margin-left: 0;
-	margin-bottom: 0;
-}
-
-ul.options>li {
-	padding: 2px 6px 3px;
-	margin: 0 0 5px;
-	/* 	float: left;
-	
-	display: inline-block; 
-	margin-left: 117px;*/
-	clear: both;
-}
-
-div.edit-buttons {
-	display: inline-block;
-	float: left;
-	padding: 0 5px 0 0;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.unpublish-vacancy-warn, .edit-buttons button {
-	width: 16px;
-	height: 16px;
-	position: relative;
-	display: inline-block;
-	overflow: visible;
-	padding: 0;
-	margin: 0;
-	background: transparent;
-	border: none;
-	z-index: 3;
-	text-align: center;
-}
-
-.unpublish-vacancy-warn:hover {
-	
-}
-
-span.unpubish_warn {
-	display: none;
-	font-style: italic;
-	color: red;
-}
-
-div.vacancyStatus, div.candidateStatus {
-	width: 100px;
-}
-
-div.vacancyStatus select, div.candidateStatus select {
-	width: 30px !important;
-	height: 14px;
-	margin-top: 22px;
-	border-color: inherit;
-	border-radius: .55em;
-	font-size: 12px;
-	cursor: default;
-}
-
-span.currentStatus {
-	/* right: 20px; */
-	display: block;
-	position: absolute;
-	margin: 0;
-	font-size: 11px;
-	line-height: 20px;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
-	padding: 0 6px;
-	float: right !important;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: baseline;
-	border-radius: .25em;
-}
-
-.status-green {
-	color: #fff;
-	background: green;
-}
-
-.status-red {
-	color: #fff;
-	background: maroon;
-}
-
-.status-grey {
-	color: #fff;
-	background: grey;
-}
-
-.status-yellow {
-	color: #fff;
-	background: #f4b04f;
-}
-
-textarea.note-codable {
-	display: none !important;
-}
-
-.note-editor .btn-toolbar {
-	margin-top: 0px !important;
-}
-
-.form-horizontal .control-label {
-	text-align: left !important;
-}
-
-.hrm-modal .modal-header {
-	height: 25px;
-}
-
-.hrm-modal .modal-header span.modal-title {
-	height: 25px;
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.hrm-modal label {
-	font-size: 12px;
-}
-
-.hrm-modal .controls input[type=text], input[type=file], input[type=email] {
-	font-size: 12px;
-}
-
-.hrm-modal .controls select {
-	font-size: 12px;
-}
-
-.modal-container {
-	width: 100%;
-	border: 1px solid #d3d3d3;
-}
-
-.modal-container div {
-	/* width: 100%; */
-	
-}
-
-.modal-container .header {
-	background-color: #d3d3d3;
-	/* padding: 2px; */
-	cursor: pointer;
-	font-weight: bold;
-	width: initial;
-}
-
-.modal-container .content {
-	display: none;
-	padding: 5px;
-}
-
-.dataTables_filter input[type=search] {
-	width: 100px !important;
-	border-radius: .25em;
-}
-
-.applicantsStatistic span {
-	display: block;
-	font-size: 15px;
-	display: inline-block;
-	width: 50px;
-	font-weight: bold;
-}
-
-.applicantsStatistic span.validApplications {
-	margin-left: 7px;
-	/* background-color: cadetblue; */
-}
-
-.applicantsStatistic span.numberOfPositions {
-	/* background-color: darkorange;; */
-}
-
-/* Select */
-select>optgroup {
-	font-weight: bold;
-	font-size: 14px;
-}
-
-</style>

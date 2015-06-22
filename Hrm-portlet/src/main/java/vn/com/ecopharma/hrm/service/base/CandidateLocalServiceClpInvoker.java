@@ -41,26 +41,10 @@ public class CandidateLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName104;
-    private String[] _methodParameterTypes104;
-    private String _methodName105;
-    private String[] _methodParameterTypes105;
-    private String _methodName110;
-    private String[] _methodParameterTypes110;
-    private String _methodName111;
-    private String[] _methodParameterTypes111;
     private String _methodName112;
     private String[] _methodParameterTypes112;
     private String _methodName113;
     private String[] _methodParameterTypes113;
-    private String _methodName114;
-    private String[] _methodParameterTypes114;
-    private String _methodName115;
-    private String[] _methodParameterTypes115;
-    private String _methodName116;
-    private String[] _methodParameterTypes116;
-    private String _methodName117;
-    private String[] _methodParameterTypes117;
     private String _methodName118;
     private String[] _methodParameterTypes118;
     private String _methodName119;
@@ -75,6 +59,22 @@ public class CandidateLocalServiceClpInvoker {
     private String[] _methodParameterTypes123;
     private String _methodName124;
     private String[] _methodParameterTypes124;
+    private String _methodName125;
+    private String[] _methodParameterTypes125;
+    private String _methodName126;
+    private String[] _methodParameterTypes126;
+    private String _methodName127;
+    private String[] _methodParameterTypes127;
+    private String _methodName128;
+    private String[] _methodParameterTypes128;
+    private String _methodName129;
+    private String[] _methodParameterTypes129;
+    private String _methodName130;
+    private String[] _methodParameterTypes130;
+    private String _methodName131;
+    private String[] _methodParameterTypes131;
+    private String _methodName132;
+    private String[] _methodParameterTypes132;
 
     public CandidateLocalServiceClpInvoker() {
         _methodName0 = "addCandidate";
@@ -159,46 +159,46 @@ public class CandidateLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.Candidate"
             };
 
-        _methodName104 = "getBeanIdentifier";
+        _methodName112 = "getBeanIdentifier";
 
-        _methodParameterTypes104 = new String[] {  };
+        _methodParameterTypes112 = new String[] {  };
 
-        _methodName105 = "setBeanIdentifier";
+        _methodName113 = "setBeanIdentifier";
 
-        _methodParameterTypes105 = new String[] { "java.lang.String" };
+        _methodParameterTypes113 = new String[] { "java.lang.String" };
 
-        _methodName110 = "findAll";
+        _methodName118 = "findAll";
 
-        _methodParameterTypes110 = new String[] {  };
+        _methodParameterTypes118 = new String[] {  };
 
-        _methodName111 = "findAll";
+        _methodName119 = "findAll";
 
-        _methodParameterTypes111 = new String[] { "int", "int" };
+        _methodParameterTypes119 = new String[] { "int", "int" };
 
-        _methodName112 = "findAll";
+        _methodName120 = "findAll";
 
-        _methodParameterTypes112 = new String[] {
+        _methodParameterTypes120 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName113 = "searchCandidates";
+        _methodName121 = "searchCandidates";
 
-        _methodParameterTypes113 = new String[] {
+        _methodParameterTypes121 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "int", "int"
             };
 
-        _methodName114 = "searchCandidates";
+        _methodName122 = "searchCandidates";
 
-        _methodParameterTypes114 = new String[] {
+        _methodParameterTypes122 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "int", "int",
                 "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName115 = "create";
+        _methodName123 = "create";
 
-        _methodParameterTypes115 = new String[] {
+        _methodParameterTypes123 = new String[] {
                 "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "java.sql.Date", "long",
@@ -206,67 +206,67 @@ public class CandidateLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName116 = "edit";
+        _methodName124 = "edit";
 
-        _methodParameterTypes116 = new String[] {
+        _methodParameterTypes124 = new String[] {
                 "long", "long", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
-                "java.lang.String", "int", "java.sql.Date", "long",
+                "java.lang.String", "int", "java.sql.Date", "long", "boolean",
                 "java.lang.String", "int", "java.lang.Long",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName117 = "changeCandidateStatus";
+        _methodName125 = "changeCandidateStatus";
 
-        _methodParameterTypes117 = new String[] {
+        _methodParameterTypes125 = new String[] {
                 "long", "long", "long",
                 "vn.com.ecopharma.hrm.constant.CandidateStatus",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName118 = "delele";
+        _methodName126 = "delele";
 
-        _methodParameterTypes118 = new String[] { "long" };
+        _methodParameterTypes126 = new String[] { "long" };
 
-        _methodName119 = "findCandidates";
+        _methodName127 = "findCandidates";
 
-        _methodParameterTypes119 = new String[] {
+        _methodParameterTypes127 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String"
             };
 
-        _methodName120 = "findCandidates";
+        _methodName128 = "findCandidates";
 
-        _methodParameterTypes120 = new String[] {
+        _methodParameterTypes128 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "int"
             };
 
-        _methodName121 = "countAll";
+        _methodName129 = "countAll";
 
-        _methodParameterTypes121 = new String[] {  };
+        _methodParameterTypes129 = new String[] {  };
 
-        _methodName122 = "filterCandidates";
+        _methodName130 = "filterCandidates";
 
-        _methodParameterTypes122 = new String[] {
+        _methodParameterTypes130 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "int"
             };
 
-        _methodName123 = "getFilterCandidatesSize";
+        _methodName131 = "getFilterCandidatesSize";
 
-        _methodParameterTypes123 = new String[] {
+        _methodParameterTypes131 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String"
             };
 
-        _methodName124 = "dynamicQueryTest";
+        _methodName132 = "dynamicQueryTest";
 
-        _methodParameterTypes124 = new String[] { "java.lang.String", "int", "int" };
+        _methodParameterTypes132 = new String[] { "java.lang.String", "int", "int" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -358,38 +358,38 @@ public class CandidateLocalServiceClpInvoker {
             return CandidateLocalServiceUtil.updateCandidate((vn.com.ecopharma.hrm.model.Candidate) arguments[0]);
         }
 
-        if (_methodName104.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
+        if (_methodName112.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
             return CandidateLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName105.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
+        if (_methodName113.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
             CandidateLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName110.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+        if (_methodName118.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
             return CandidateLocalServiceUtil.findAll();
         }
 
-        if (_methodName111.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+        if (_methodName119.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
             return CandidateLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
-        if (_methodName112.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+        if (_methodName120.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
             return CandidateLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName113.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+        if (_methodName121.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
             return CandidateLocalServiceUtil.searchCandidates(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -399,8 +399,8 @@ public class CandidateLocalServiceClpInvoker {
                 ((Integer) arguments[6]).intValue());
         }
 
-        if (_methodName114.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+        if (_methodName122.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
             return CandidateLocalServiceUtil.searchCandidates(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -411,8 +411,8 @@ public class CandidateLocalServiceClpInvoker {
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[7]);
         }
 
-        if (_methodName115.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+        if (_methodName123.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
             return CandidateLocalServiceUtil.create(((Long) arguments[0]).longValue(),
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -429,8 +429,8 @@ public class CandidateLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[13]);
         }
 
-        if (_methodName116.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+        if (_methodName124.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
             return CandidateLocalServiceUtil.edit(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 (java.lang.String) arguments[2],
@@ -442,14 +442,15 @@ public class CandidateLocalServiceClpInvoker {
                 ((Integer) arguments[8]).intValue(),
                 (java.sql.Date) arguments[9],
                 ((Long) arguments[10]).longValue(),
-                (java.lang.String) arguments[11],
-                ((Integer) arguments[12]).intValue(),
-                (java.lang.Long) arguments[13],
-                (com.liferay.portal.service.ServiceContext) arguments[14]);
+                ((Boolean) arguments[11]).booleanValue(),
+                (java.lang.String) arguments[12],
+                ((Integer) arguments[13]).intValue(),
+                (java.lang.Long) arguments[14],
+                (com.liferay.portal.service.ServiceContext) arguments[15]);
         }
 
-        if (_methodName117.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+        if (_methodName125.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
             return CandidateLocalServiceUtil.changeCandidateStatus(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
@@ -457,22 +458,22 @@ public class CandidateLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[4]);
         }
 
-        if (_methodName118.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+        if (_methodName126.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
             CandidateLocalServiceUtil.delele(((Long) arguments[0]).longValue());
 
             return null;
         }
 
-        if (_methodName119.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+        if (_methodName127.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
             return CandidateLocalServiceUtil.findCandidates((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2], (java.lang.String) arguments[3]);
         }
 
-        if (_methodName120.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+        if (_methodName128.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
             return CandidateLocalServiceUtil.findCandidates((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -481,13 +482,13 @@ public class CandidateLocalServiceClpInvoker {
                 ((Integer) arguments[5]).intValue());
         }
 
-        if (_methodName121.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+        if (_methodName129.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
             return CandidateLocalServiceUtil.countAll();
         }
 
-        if (_methodName122.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+        if (_methodName130.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
             return CandidateLocalServiceUtil.filterCandidates((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -502,8 +503,8 @@ public class CandidateLocalServiceClpInvoker {
                 ((Integer) arguments[11]).intValue());
         }
 
-        if (_methodName123.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+        if (_methodName131.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
             return CandidateLocalServiceUtil.getFilterCandidatesSize((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -515,8 +516,8 @@ public class CandidateLocalServiceClpInvoker {
                 (java.lang.String) arguments[8], (java.lang.String) arguments[9]);
         }
 
-        if (_methodName124.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+        if (_methodName132.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
             return CandidateLocalServiceUtil.dynamicQueryTest((java.lang.String) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());

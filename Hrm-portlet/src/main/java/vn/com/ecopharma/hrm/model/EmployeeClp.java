@@ -42,6 +42,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     private String _status;
     private long _jobtitleId;
     private Date _joined_date;
+    private long _subUnitId;
     private BaseModel<?> _employeeRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -102,6 +103,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         attributes.put("status", getStatus());
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("joined_date", getJoined_date());
+        attributes.put("subUnitId", getSubUnitId());
 
         return attributes;
     }
@@ -226,6 +228,12 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
         if (joined_date != null) {
             setJoined_date(joined_date);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
         }
     }
 
@@ -681,6 +689,28 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         }
     }
 
+    @Override
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setSubUnitId", long.class);
+
+                method.invoke(_employeeRemoteModel, subUnitId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
     public BaseModel<?> getEmployeeRemoteModel() {
         return _employeeRemoteModel;
     }
@@ -768,6 +798,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         clone.setStatus(getStatus());
         clone.setJobtitleId(getJobtitleId());
         clone.setJoined_date(getJoined_date());
+        clone.setSubUnitId(getSubUnitId());
 
         return clone;
     }
@@ -817,7 +848,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(41);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
@@ -859,6 +890,8 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(getJobtitleId());
         sb.append(", joined_date=");
         sb.append(getJoined_date());
+        sb.append(", subUnitId=");
+        sb.append(getSubUnitId());
         sb.append("}");
 
         return sb.toString();
@@ -866,7 +899,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(64);
+        StringBundler sb = new StringBundler(67);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -951,6 +984,10 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(
             "<column><column-name>joined_date</column-name><column-value><![CDATA[");
         sb.append(getJoined_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
+        sb.append(getSubUnitId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

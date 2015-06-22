@@ -62,6 +62,12 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     private String[] _methodParameterTypes26;
     private String _methodName27;
     private String[] _methodParameterTypes27;
+    private String _methodName28;
+    private String[] _methodParameterTypes28;
+    private String _methodName29;
+    private String[] _methodParameterTypes29;
+    private String _methodName30;
+    private String[] _methodParameterTypes30;
 
     public VacancyLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -173,16 +179,18 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         _methodName22 = "create";
 
         _methodParameterTypes22 = new String[] {
-                "long", "long", "long", "java.util.List", "java.lang.String",
-                "java.lang.String", "int", "java.lang.String",
-                "java.lang.String", "com.liferay.portal.service.ServiceContext"
+                "long", "long", "long", "long", "java.util.List",
+                "java.lang.String", "java.lang.String", "int",
+                "java.lang.String", "java.lang.String", "long",
+                "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName23 = "edit";
 
         _methodParameterTypes23 = new String[] {
-                "long", "long", "long", "java.util.List", "java.lang.String",
-                "java.lang.String", "int", "java.lang.String",
+                "long", "long", "long", "long", "java.util.List",
+                "java.lang.String", "java.lang.String", "int",
+                "java.lang.String", "long", "java.lang.Boolean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -198,17 +206,29 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                 "java.lang.String"
             };
 
-        _methodName26 = "filterVacancies";
+        _methodName26 = "getVacancyByCandidate_And_VALID_Status";
 
-        _methodParameterTypes26 = new String[] {
+        _methodParameterTypes26 = new String[] { "long" };
+
+        _methodName27 = "getVacancyNameByCandidate_And_VALID_Status";
+
+        _methodParameterTypes27 = new String[] { "long" };
+
+        _methodName28 = "filterVacancies";
+
+        _methodParameterTypes28 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "int", "int"
             };
 
-        _methodName27 = "countAll";
+        _methodName29 = "getVacancySuccessionReport";
 
-        _methodParameterTypes27 = new String[] {  };
+        _methodParameterTypes29 = new String[] {  };
+
+        _methodName30 = "countAll";
+
+        _methodParameterTypes30 = new String[] {  };
     }
 
     @Override
@@ -811,11 +831,11 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long locationId, java.util.List<java.lang.Long> emps,
-        java.lang.String name, java.lang.String description,
-        int no_of_positions, java.lang.String vacancy_status,
-        java.lang.String job_posting,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long jTitle_id, long locationId, long subUnitId,
+        java.util.List<java.lang.Long> emps, java.lang.String name,
+        java.lang.String description, int no_of_positions,
+        java.lang.String vacancy_status, java.lang.String job_posting,
+        long jdId, com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
@@ -830,6 +850,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     locationId,
                         
+                    subUnitId,
+                        
                     ClpSerializer.translateInput(emps),
                         
                     ClpSerializer.translateInput(name),
@@ -841,6 +863,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                     ClpSerializer.translateInput(vacancy_status),
                         
                     ClpSerializer.translateInput(job_posting),
+                        
+                    jdId,
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
@@ -868,11 +892,13 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
     @Override
     public vn.com.ecopharma.hrm.model.Vacancy edit(long v_id, long jtitle_id,
-        long locationId, java.util.List<java.lang.Long> emps,
+        long locationId, long subUnitId, java.util.List<java.lang.Long> emps,
         java.lang.String name, java.lang.String description,
-        int number_of_positions, java.lang.String job_posting,
+        int number_of_positions, java.lang.String job_posting, long jdId,
+        java.lang.Boolean isDeleteOrNotAddJD,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.portlet.documentlibrary.NoSuchFileEntryException,
             vn.com.ecopharma.hrm.NoSuchVacancyException {
         Object returnObj = null;
 
@@ -886,6 +912,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     locationId,
                         
+                    subUnitId,
+                        
                     ClpSerializer.translateInput(emps),
                         
                     ClpSerializer.translateInput(name),
@@ -896,6 +924,10 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
                         
                     ClpSerializer.translateInput(job_posting),
                         
+                    jdId,
+                        
+                    ClpSerializer.translateInput(isDeleteOrNotAddJD),
+                        
                     ClpSerializer.translateInput(serviceContext)
                     });
         } catch (Throwable t) {
@@ -903,6 +935,10 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
             if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
                 throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof com.liferay.portlet.documentlibrary.NoSuchFileEntryException) {
+                throw (com.liferay.portlet.documentlibrary.NoSuchFileEntryException) t;
             }
 
             if (t instanceof vn.com.ecopharma.hrm.NoSuchVacancyException) {
@@ -1007,6 +1043,70 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
+    public vn.com.ecopharma.hrm.model.Vacancy getVacancyByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26, new Object[] { c_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Vacancy) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.lang.String getVacancyNameByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName27,
+                    _methodParameterTypes27, new Object[] { c_id });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.lang.String) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
         java.lang.String globStr, java.lang.String name,
         java.lang.String jTitle, java.lang.String location,
@@ -1015,8 +1115,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName26,
-                    _methodParameterTypes26,
+            returnObj = _invokableLocalService.invokeMethod(_methodName28,
+                    _methodParameterTypes28,
                     new Object[] {
                         ClpSerializer.translateInput(globStr),
                         
@@ -1051,13 +1151,34 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
     }
 
     @Override
+    public java.util.List<java.lang.Object[]> getVacancySuccessionReport() {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29, new Object[] {  });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<java.lang.Object[]>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public int countAll()
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName27,
-                    _methodParameterTypes27, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

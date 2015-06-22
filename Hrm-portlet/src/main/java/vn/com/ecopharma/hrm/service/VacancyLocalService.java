@@ -250,20 +250,22 @@ public interface VacancyLocalService extends BaseLocalService,
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.Vacancy create(long user_id,
-        long jTitle_id, long locationId, java.util.List<java.lang.Long> emps,
-        java.lang.String name, java.lang.String description,
-        int no_of_positions, java.lang.String vacancy_status,
-        java.lang.String job_posting,
-        com.liferay.portal.service.ServiceContext serviceContext)
+        long jTitle_id, long locationId, long subUnitId,
+        java.util.List<java.lang.Long> emps, java.lang.String name,
+        java.lang.String description, int no_of_positions,
+        java.lang.String vacancy_status, java.lang.String job_posting,
+        long jdId, com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
 
     public vn.com.ecopharma.hrm.model.Vacancy edit(long v_id, long jtitle_id,
-        long locationId, java.util.List<java.lang.Long> emps,
+        long locationId, long subUnitId, java.util.List<java.lang.Long> emps,
         java.lang.String name, java.lang.String description,
-        int number_of_positions, java.lang.String job_posting,
+        int number_of_positions, java.lang.String job_posting, long jdId,
+        java.lang.Boolean isDeleteOrNotAddJD,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException,
+            com.liferay.portlet.documentlibrary.NoSuchFileEntryException,
             vn.com.ecopharma.hrm.NoSuchVacancyException;
 
     public void delete(long v_id)
@@ -280,11 +282,26 @@ public interface VacancyLocalService extends BaseLocalService,
         java.lang.String location, java.lang.String vacancy_status,
         java.lang.String sortColumnName, java.lang.String sortDirection);
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public vn.com.ecopharma.hrm.model.Vacancy getVacancyByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.lang.String getVacancyNameByCandidate_And_VALID_Status(
+        long c_id)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
     public java.util.List<vn.com.ecopharma.hrm.model.Vacancy> filterVacancies(
         java.lang.String globStr, java.lang.String name,
         java.lang.String jTitle, java.lang.String location,
         java.lang.String vacancy_status, java.lang.String sortColumnName,
         java.lang.String sortDirection, int start, int end);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<java.lang.Object[]> getVacancySuccessionReport();
 
     public int countAll()
         throws com.liferay.portal.kernel.exception.SystemException;

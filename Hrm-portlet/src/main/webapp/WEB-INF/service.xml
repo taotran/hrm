@@ -52,6 +52,8 @@
 		<column name="update_date" type="Date"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
+        <column name="subUnitId" type="long"></column>
+        <column name="fileEntryId" type="long"></column>
 	</entity>
 
 
@@ -235,6 +237,7 @@
 		<column name="status" type="String"></column>
 		<column name="jobtitleId" type="long"></column>
 		<column name="joined_date" type="Date"></column>
+        <column name="subUnitId" type="long"></column>
         <finder name="Name" return-type="Collection">
             <finder-column name="firstname" comparator="LIKE" arrayable-operator="OR"></finder-column>
             <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
@@ -360,6 +363,25 @@
 		<finder name="C_Id" return-type="Collection">
 			<finder-column name="c_id"></finder-column>
 		</finder>
+	</entity>
+	<entity name="SubUnit" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<column name="subUnitId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="name" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
 	</entity>
 
 

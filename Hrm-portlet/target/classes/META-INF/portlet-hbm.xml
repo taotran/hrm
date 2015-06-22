@@ -12,6 +12,7 @@
 	<import class="vn.com.ecopharma.hrm.model.InterviewSchedule" />
 	<import class="vn.com.ecopharma.hrm.model.JTitle" />
 	<import class="vn.com.ecopharma.hrm.model.Location" />
+	<import class="vn.com.ecopharma.hrm.model.SubUnit" />
 	<import class="vn.com.ecopharma.hrm.model.Vacancy" />
 	<import class="vn.com.ecopharma.hrm.model.VacancyCandidate" />
 	<class name="vn.com.ecopharma.hrm.model.impl.CandidateImpl" table="HRM_Recruitment_Candidate">
@@ -77,6 +78,7 @@
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="jobtitleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="joined_date" type="org.hibernate.type.TimestampType" />
+		<property name="subUnitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.EmployeeInterviewScheduleImpl" table="HRM_Recruitment_EmployeeInterviewSchedule">
 		<cache usage="read-write" />
@@ -186,6 +188,18 @@
 		<property name="fax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
+	<class name="vn.com.ecopharma.hrm.model.impl.SubUnitImpl" table="HRM_Recruitment_SubUnit">
+		<cache usage="read-write" />
+		<id name="subUnitId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.VacancyImpl" table="HRM_Recruitment_Vacancy">
 		<cache usage="read-write" />
 		<id name="v_id" type="long">
@@ -201,6 +215,8 @@
 		<property name="update_date" type="org.hibernate.type.TimestampType" />
 		<property name="user_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="group_id" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="subUnitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.model.impl.VacancyCandidateImpl" table="HRM_Recruitment_VacancyCandidate">
 		<cache usage="read-write" />

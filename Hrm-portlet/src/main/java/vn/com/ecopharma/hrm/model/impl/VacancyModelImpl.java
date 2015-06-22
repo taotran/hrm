@@ -71,9 +71,11 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
             { "insert_date", Types.TIMESTAMP },
             { "update_date", Types.TIMESTAMP },
             { "user_id", Types.BIGINT },
-            { "group_id", Types.BIGINT }
+            { "group_id", Types.BIGINT },
+            { "subUnitId", Types.BIGINT },
+            { "fileEntryId", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Vacancy (v_id LONG not null primary key,jobtitleId LONG,name VARCHAR(75) null,locationId LONG,description VARCHAR(75) null,no_of_positions INTEGER,vacancy_status VARCHAR(75) null,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Vacancy (v_id LONG not null primary key,jobtitleId LONG,name VARCHAR(75) null,locationId LONG,description VARCHAR(75) null,no_of_positions INTEGER,vacancy_status VARCHAR(75) null,insert_date DATE null,update_date DATE null,user_id LONG,group_id LONG,subUnitId LONG,fileEntryId LONG)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Vacancy";
     public static final String ORDER_BY_JPQL = " ORDER BY vacancy.v_id ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Vacancy.v_id ASC";
@@ -104,6 +106,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
     private Date _update_date;
     private long _user_id;
     private long _group_id;
+    private long _subUnitId;
+    private long _fileEntryId;
     private Vacancy _escapedModel;
 
     public VacancyModelImpl() {
@@ -133,6 +137,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         model.setUpdate_date(soapModel.getUpdate_date());
         model.setUser_id(soapModel.getUser_id());
         model.setGroup_id(soapModel.getGroup_id());
+        model.setSubUnitId(soapModel.getSubUnitId());
+        model.setFileEntryId(soapModel.getFileEntryId());
 
         return model;
     }
@@ -202,6 +208,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         attributes.put("update_date", getUpdate_date());
         attributes.put("user_id", getUser_id());
         attributes.put("group_id", getGroup_id());
+        attributes.put("subUnitId", getSubUnitId());
+        attributes.put("fileEntryId", getFileEntryId());
 
         return attributes;
     }
@@ -272,6 +280,18 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         if (group_id != null) {
             setGroup_id(group_id);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
+        }
+
+        Long fileEntryId = (Long) attributes.get("fileEntryId");
+
+        if (fileEntryId != null) {
+            setFileEntryId(fileEntryId);
         }
     }
 
@@ -408,6 +428,28 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         _group_id = group_id;
     }
 
+    @JSON
+    @Override
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+    }
+
+    @JSON
+    @Override
+    public long getFileEntryId() {
+        return _fileEntryId;
+    }
+
+    @Override
+    public void setFileEntryId(long fileEntryId) {
+        _fileEntryId = fileEntryId;
+    }
+
     @Override
     public int getStatus() {
         return 0;
@@ -539,6 +581,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         vacancyImpl.setUpdate_date(getUpdate_date());
         vacancyImpl.setUser_id(getUser_id());
         vacancyImpl.setGroup_id(getGroup_id());
+        vacancyImpl.setSubUnitId(getSubUnitId());
+        vacancyImpl.setFileEntryId(getFileEntryId());
 
         vacancyImpl.resetOriginalValues();
 
@@ -644,12 +688,16 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
         vacancyCacheModel.group_id = getGroup_id();
 
+        vacancyCacheModel.subUnitId = getSubUnitId();
+
+        vacancyCacheModel.fileEntryId = getFileEntryId();
+
         return vacancyCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{v_id=");
         sb.append(getV_id());
@@ -673,6 +721,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(getUser_id());
         sb.append(", group_id=");
         sb.append(getGroup_id());
+        sb.append(", subUnitId=");
+        sb.append(getSubUnitId());
+        sb.append(", fileEntryId=");
+        sb.append(getFileEntryId());
         sb.append("}");
 
         return sb.toString();
@@ -680,7 +732,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(37);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Vacancy");
@@ -729,6 +781,14 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
         sb.append(
             "<column><column-name>group_id</column-name><column-value><![CDATA[");
         sb.append(getGroup_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
+        sb.append(getSubUnitId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
+        sb.append(getFileEntryId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

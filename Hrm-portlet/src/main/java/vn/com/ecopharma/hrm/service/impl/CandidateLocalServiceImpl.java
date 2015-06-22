@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryUtil;
 
 import vn.com.ecopharma.hrm.NoSuchCandidateException;
 import vn.com.ecopharma.hrm.NoSuchInterviewScheduleException;
@@ -129,7 +131,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	public Candidate edit(long user_id, long candidateId, String first_name,
 			String middle_name, String last_name, String email,
 			String contact_number, String comment, int mode_of_application,
-			Date date_of_application, long cv_file_id, String cv_text_version,
+			Date date_of_application, long cv_file_id, boolean isDeleteOrNotAddResume, String cv_text_version,
 			int added_person, Long v_id, ServiceContext serviceContext)
 			throws SystemException, PortalException {
 		Candidate c = candidatePersistence.findByPrimaryKey(candidateId);
@@ -140,7 +142,14 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		c.setComment(comment);
 		c.setContact_number(contact_number);
 		c.setDate_of_application(date_of_application);
-		c.setCv_file_id(cv_file_id);
+		
+		if (isDeleteOrNotAddResume) {
+			if (c.getCv_file_id() != -1) {
+				DLFileEntryUtil.remove(c.getCv_file_id());
+			}
+			c.setCv_file_id(cv_file_id);
+		}
+		
 		c.setCv_text_version(cv_text_version);
 		if (v_id != null) {
 			/*
@@ -164,17 +173,26 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						serviceContext);
 				c.setCandidate_status(CandidateStatus.APPLICATION_INITIATED
 						.toString());
-				final String prevVacancy = vacancyLocalService.getVacancy(
-						prevVC.getV_id()).getName();
-				final String currVacancy = vacancyLocalService.getVacancy(v_id)
-						.getName();
-
-				candidateHistoryLocalService.create(candidateId, v_id, 0l,
-						user_id, "VACANCY is changed from " + prevVacancy
-								+ " to " + currVacancy,
-						new Date(System.currentTimeMillis()), "",
-						"VACANCY CHANGED", user_id, serviceContext);
-
+				if (prevVC != null) {
+					final String prevVacancy = vacancyLocalService.getVacancy(
+							prevVC.getV_id()).getName();
+					final String currVacancy = vacancyLocalService.getVacancy(v_id)
+							.getName();
+	
+					candidateHistoryLocalService.create(candidateId, v_id, 0l,
+							user_id, "VACANCY is changed from " + prevVacancy
+									+ " to " + currVacancy,
+							new Date(System.currentTimeMillis()), "",
+							"VACANCY CHANGED", user_id, serviceContext);
+				} else {
+					final String currVacancy = vacancyLocalService.getVacancy(v_id)
+							.getName();
+					candidateHistoryLocalService.create(candidateId, v_id, 0l,
+							user_id, "VACANCY is set "
+									+ " to " + currVacancy,
+							new Date(System.currentTimeMillis()), "",
+							"VACANCY CHANGED", user_id, serviceContext);
+				}
 			}
 		}
 		candidatePersistence.update(c);

@@ -1402,6 +1402,7 @@ public class EmployeePersistenceImpl extends BasePersistenceImpl<Employee>
         employeeImpl.setStatus(employee.getStatus());
         employeeImpl.setJobtitleId(employee.getJobtitleId());
         employeeImpl.setJoined_date(employee.getJoined_date());
+        employeeImpl.setSubUnitId(employee.getSubUnitId());
 
         return employeeImpl;
     }

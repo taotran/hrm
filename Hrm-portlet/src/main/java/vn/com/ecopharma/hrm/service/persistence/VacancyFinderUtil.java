@@ -26,6 +26,10 @@ public class VacancyFinderUtil {
             vacancy_status, sortColumnName, sortDirection, start, end);
     }
 
+    public static java.util.List<java.lang.Object[]> getVacancySuccessionReport() {
+        return getFinder().getVacancySuccessionReport();
+    }
+
     public static VacancyFinder getFinder() {
         if (_finder == null) {
             _finder = (VacancyFinder) PortletBeanLocatorUtil.locate(vn.com.ecopharma.hrm.service.ClpSerializer.getServletContextName(),

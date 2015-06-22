@@ -346,10 +346,20 @@ public class EmployeeLocalServiceWrapper implements EmployeeLocalService,
     }
 
     @Override
-    public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterByName(
-        java.lang.String term)
+    public int filterEmployeeByTermSize(java.lang.String term) {
+        return _employeeLocalService.filterEmployeeByTermSize(term);
+    }
+
+    @Override
+    public org.json.JSONArray filterEmployeeByTerm(java.lang.String term,
+        int start, int end) {
+        return _employeeLocalService.filterEmployeeByTerm(term, start, end);
+    }
+
+    @Override
+    public int countAll()
         throws com.liferay.portal.kernel.exception.SystemException {
-        return _employeeLocalService.filterByName(term);
+        return _employeeLocalService.countAll();
     }
 
     /**

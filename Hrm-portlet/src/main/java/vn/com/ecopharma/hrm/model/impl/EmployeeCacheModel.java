@@ -41,10 +41,11 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
     public String status;
     public long jobtitleId;
     public long joined_date;
+    public long subUnitId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(41);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("{employeeId=");
         sb.append(employeeId);
@@ -86,6 +87,8 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
         sb.append(jobtitleId);
         sb.append(", joined_date=");
         sb.append(joined_date);
+        sb.append(", subUnitId=");
+        sb.append(subUnitId);
         sb.append("}");
 
         return sb.toString();
@@ -192,6 +195,8 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
             employeeImpl.setJoined_date(new Date(joined_date));
         }
 
+        employeeImpl.setSubUnitId(subUnitId);
+
         employeeImpl.resetOriginalValues();
 
         return employeeImpl;
@@ -219,6 +224,7 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
         status = objectInput.readUTF();
         jobtitleId = objectInput.readLong();
         joined_date = objectInput.readLong();
+        subUnitId = objectInput.readLong();
     }
 
     @Override
@@ -302,5 +308,6 @@ public class EmployeeCacheModel implements CacheModel<Employee>, Externalizable 
 
         objectOutput.writeLong(jobtitleId);
         objectOutput.writeLong(joined_date);
+        objectOutput.writeLong(subUnitId);
     }
 }

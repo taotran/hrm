@@ -57,6 +57,7 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
         attributes.put("status", getStatus());
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("joined_date", getJoined_date());
+        attributes.put("subUnitId", getSubUnitId());
 
         return attributes;
     }
@@ -181,6 +182,12 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
 
         if (joined_date != null) {
             setJoined_date(joined_date);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
         }
     }
 
@@ -624,6 +631,26 @@ public class EmployeeWrapper implements Employee, ModelWrapper<Employee> {
     @Override
     public void setJoined_date(java.util.Date joined_date) {
         _employee.setJoined_date(joined_date);
+    }
+
+    /**
+    * Returns the sub unit ID of this employee.
+    *
+    * @return the sub unit ID of this employee
+    */
+    @Override
+    public long getSubUnitId() {
+        return _employee.getSubUnitId();
+    }
+
+    /**
+    * Sets the sub unit ID of this employee.
+    *
+    * @param subUnitId the sub unit ID of this employee
+    */
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _employee.setSubUnitId(subUnitId);
     }
 
     @Override

@@ -208,6 +208,34 @@ public interface VacancyModel extends BaseModel<Vacancy>, TrashedModel {
     public void setGroup_id(long group_id);
 
     /**
+     * Returns the sub unit ID of this vacancy.
+     *
+     * @return the sub unit ID of this vacancy
+     */
+    public long getSubUnitId();
+
+    /**
+     * Sets the sub unit ID of this vacancy.
+     *
+     * @param subUnitId the sub unit ID of this vacancy
+     */
+    public void setSubUnitId(long subUnitId);
+
+    /**
+     * Returns the file entry ID of this vacancy.
+     *
+     * @return the file entry ID of this vacancy
+     */
+    public long getFileEntryId();
+
+    /**
+     * Sets the file entry ID of this vacancy.
+     *
+     * @param fileEntryId the file entry ID of this vacancy
+     */
+    public void setFileEntryId(long fileEntryId);
+
+    /**
      * Returns the status of this vacancy.
      *
      * @return the status of this vacancy
