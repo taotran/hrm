@@ -53,7 +53,7 @@ public class HRMUtil {
 	 * @throws SystemException
 	 * @throws IOException
 	 */
-	public static DLFileEntry uploadFile(PortletRequest request,
+	public static DLFileEntry uploadFileFromRequest(PortletRequest request,
 			String inputFileId, String title, String description, String changeLog, long folderId)
 			throws PortalException, SystemException, IOException {
 		final ThemeDisplay themeDisplay = (ThemeDisplay) request
@@ -73,9 +73,8 @@ public class HRMUtil {
 		byte[] fileBytes = FileUtil.getBytes(upload);
 
 		InputStream is = new ByteArrayInputStream(fileBytes);
-
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
-
+		
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), request);
 
@@ -90,6 +89,52 @@ public class HRMUtil {
 				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
 				title, MimeTypesUtil.getContentType(upload), title,
 				description, changeLog, true, 0, null, upload, is, upload.length(),
+				serviceContext);
+		return fileEntry;
+	}
+	
+	/**
+	 * @param request
+	 * @param inputFileId
+	 * @param title
+	 * @param description
+	 * @param changeLog
+	 * @param folderId
+	 * @return
+	 * @throws PortalException
+	 * @throws SystemException
+	 * @throws IOException
+	 */
+	public static DLFileEntry uploadFile(PortletRequest request, File file, String title, String description, String changeLog, long folderId)
+			throws PortalException, SystemException, IOException {
+		final ThemeDisplay themeDisplay = (ThemeDisplay) request
+				.getAttribute(WebKeys.THEME_DISPLAY);
+
+		DLFileEntry fileEntry = null;
+		String ext = FileUtil.getExtension(file.getName());
+
+		title = title + "-" + System.currentTimeMillis()
+				+ "." + ext;
+
+		byte[] fileBytes = FileUtil.getBytes(file);
+
+		InputStream is = new ByteArrayInputStream(fileBytes);
+		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+		
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), request);
+
+		fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getScopeGroupId(), dlFolder.getFolderId(),
+				title , MimeTypesUtil.getContentType(file), title,
+				description, changeLog, 0, null, file, is, file.length(),
+				serviceContext);
+
+		fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
+				title, MimeTypesUtil.getContentType(file), title,
+				description, changeLog, true, 0, null, file, is, file.length(),
 				serviceContext);
 		return fileEntry;
 	}

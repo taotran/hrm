@@ -74,6 +74,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
     private String[] _methodParameterTypes32;
     private String _methodName33;
     private String[] _methodParameterTypes33;
+    private String _methodName34;
+    private String[] _methodParameterTypes34;
 
     public CandidateLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -268,6 +270,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
         _methodName33 = "dynamicQueryTest";
 
         _methodParameterTypes33 = new String[] { "java.lang.String", "int", "int" };
+
+        _methodName34 = "filterCandidateForExport";
+
+        _methodParameterTypes34 = new String[] { "com.google.gson.JsonArray" };
     }
 
     @Override
@@ -1390,6 +1396,29 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
             returnObj = _invokableLocalService.invokeMethod(_methodName33,
                     _methodParameterTypes33,
                     new Object[] { ClpSerializer.translateInput(s), start, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<vn.com.ecopharma.hrm.model.Candidate>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions) {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName34,
+                    _methodParameterTypes34,
+                    new Object[] { ClpSerializer.translateInput(conditions) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

@@ -75,6 +75,8 @@ public class CandidateLocalServiceClpInvoker {
     private String[] _methodParameterTypes131;
     private String _methodName132;
     private String[] _methodParameterTypes132;
+    private String _methodName133;
+    private String[] _methodParameterTypes133;
 
     public CandidateLocalServiceClpInvoker() {
         _methodName0 = "addCandidate";
@@ -267,6 +269,10 @@ public class CandidateLocalServiceClpInvoker {
         _methodName132 = "dynamicQueryTest";
 
         _methodParameterTypes132 = new String[] { "java.lang.String", "int", "int" };
+
+        _methodName133 = "filterCandidateForExport";
+
+        _methodParameterTypes133 = new String[] { "com.google.gson.JsonArray" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -521,6 +527,11 @@ public class CandidateLocalServiceClpInvoker {
             return CandidateLocalServiceUtil.dynamicQueryTest((java.lang.String) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
+        }
+
+        if (_methodName133.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+            return CandidateLocalServiceUtil.filterCandidateForExport((com.google.gson.JsonArray) arguments[0]);
         }
 
         throw new UnsupportedOperationException();

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,15 +19,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -130,12 +129,14 @@ public class HRMPortlet extends MVCPortlet {
 	private static final String GET_CANDIDATE = "getCandidate";
 	private static final String DELETE_CANDIDATES = "deleteCandidates";
 	private static final String HIRE_CANDIDATE_STATUS_CHANGE = "hireCandidateStatusChange";
+	private static final String UPLOAD_CANDIDATE_RESUME = "uploadCandidateResume";
 
 	private static final String GET_ALL_VACANCIES = "get_all_vacancies";
 	private static final String SAVE_VACANCY = "saveVacancy";
 	private static final String GET_VACANCY = "getVacancy";
 	private static final String DELETE_VACANCIES = "deleteVacancies";
 
+	private static final String UPLOAD_VACANCY_JD = "uploadVacancyJD";
 	private static final String GENERATE_VACANCIES_SUCCESSION_REPORT = "generateVacancySuccessionReport";
 
 	private static final String GET_ALL_JOB_TITLES = "get_all_jTitles";
@@ -164,8 +165,8 @@ public class HRMPortlet extends MVCPortlet {
 
 	private static final String EXPORT_RESULT = "export_result";
 
-	private String COLUMN_NAME;
-	private String DIRECTION;
+	private static final String GET_PREVIEW = "getPreview";
+
 	private int C_INITIAL, V_INITIAL;
 	private int C_RECORD_SIZE, V_RECORD_SIZE;
 	private String C_GLOB_SEARCH, C_VACANCY_SEARCH, C_NAME_SEARCH,
@@ -180,17 +181,6 @@ public class HRMPortlet extends MVCPortlet {
 			javax.portlet.RenderResponse response) throws PortletException,
 			IOException {
 		super.render(request, response);
-	}
-
-	public void submitFile(ActionRequest request, ActionResponse response) {
-		System.out.println("submitFile");
-
-		UploadPortletRequest uploadRequest = PortalUtil
-				.getUploadPortletRequest(request);
-
-		String fileName = uploadRequest.getFileName("addCandidate_resume");
-
-		File upload = uploadRequest.getFile(fileName);
 	}
 
 	@Override
@@ -225,10 +215,10 @@ public class HRMPortlet extends MVCPortlet {
 
 			onVacancyReportActions(request, response, resourceRequestId);
 
-			if ("uploadCandidateResume".equals(resourceRequestId)) {
-				final DLFileEntry dlFileEntry = HRMUtil
-						.uploadFile(request, "addCandidate_resume",
-								"candidateResume", "", "", 43008);
+			if (UPLOAD_CANDIDATE_RESUME.equals(resourceRequestId)) {
+				final DLFileEntry dlFileEntry = HRMUtil.uploadFileFromRequest(
+						request, "addCandidate_resume", "candidateResume", "",
+						"", 43008);
 				final FileEntry fileEntry = HRMUtil
 						.getUploadFileEntry(dlFileEntry);
 				JSONObject object = new JSONObject();
@@ -237,18 +227,17 @@ public class HRMPortlet extends MVCPortlet {
 
 			}
 
-			if ("getPreview".equalsIgnoreCase(resourceRequestId)) {
+			if (GET_PREVIEW.equalsIgnoreCase(resourceRequestId)) {
 				final JsonObject reqObj = getPOSTJsonObjectFromRequest(request);
 				final long dlFileEntryId = reqObj.get("id").getAsLong();
 				final JSONObject result = HRMUtil.getFilePreviewInfo(request,
 						dlFileEntryId);
-				System.out.println("INSIDE getResumePreview");
 				JSONServiceUtil.writeJSON(response.getWriter(), result);
 			}
 
-			if ("uploadVacancyJD".equals(resourceRequestId)) {
-				final DLFileEntry dlFileEntry = HRMUtil.uploadFile(request,
-						"addVacancy_JD", "vacancyJD", "", "", 43008);
+			if (UPLOAD_VACANCY_JD.equals(resourceRequestId)) {
+				final DLFileEntry dlFileEntry = HRMUtil.uploadFileFromRequest(
+						request, "addVacancy_JD", "vacancyJD", "", "", 43008);
 				final FileEntry fileEntry = HRMUtil
 						.getUploadFileEntry(dlFileEntry);
 				final JSONObject object = new JSONObject();
@@ -257,13 +246,6 @@ public class HRMPortlet extends MVCPortlet {
 
 			}
 
-			if ("getVacancyJDPreview".equalsIgnoreCase(resourceRequestId)) {
-				final JsonObject reqObj = getPOSTJsonObjectFromRequest(request);
-				final long dlFileEntryId = reqObj.get("id").getAsLong();
-				final JSONObject result = HRMUtil.getFilePreviewInfo(request,
-						dlFileEntryId);
-				JSONServiceUtil.writeJSON(response.getWriter(), result);
-			}
 		} catch (InterviewScheduleExistedException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -700,10 +682,10 @@ public class HRMPortlet extends MVCPortlet {
 			final int no_of_pos = object.get("no_of_positions").getAsInt();
 			final List<Long> manIds = getSelectedManagerIds(object.get(
 					"selectedManagers").getAsJsonArray());
-			final long jdId = object.get("jdId") != null ? object
-					.get("jdId").getAsLong() : -1;
-			final Boolean isDeleteOrNotAddJD = object.get(
-							"isDeleteOrChange").getAsBoolean();
+			final long jdId = object.get("jdId") != null ? object.get("jdId")
+					.getAsLong() : -1;
+			final Boolean isDeleteOrNotAddJD = object.get("isDeleteOrChange")
+					.getAsBoolean();
 			/*
 			 * final String vacancy_status = jObject.get(
 			 * "vacancy_status").getAsString();
@@ -715,17 +697,17 @@ public class HRMPortlet extends MVCPortlet {
 				modifiedVacancy = VacancyLocalServiceUtil.create(
 						serviceContext.getUserId(), jTitleId, locationId,
 						subUnitId, manIds, name, description, no_of_pos,
-						VacancyStatus.NEW.toString(), "", jdId,
-						serviceContext);
+						VacancyStatus.NEW.toString(), "", jdId, serviceContext);
 				isNotifyChanges = modifiedVacancy != null;
 
 			} else {
 				final Vacancy oldVacancy = VacancyLocalServiceUtil
 						.getVacancy(v_id);
 
-				modifiedVacancy = VacancyLocalServiceUtil.edit(v_id, jTitleId,
-						locationId, subUnitId, manIds, name, description,
-						no_of_pos, "", jdId, isDeleteOrNotAddJD, serviceContext);
+				modifiedVacancy = VacancyLocalServiceUtil
+						.edit(v_id, jTitleId, locationId, subUnitId, manIds,
+								name, description, no_of_pos, "", jdId,
+								isDeleteOrNotAddJD, serviceContext);
 
 				/*
 				 * Notify changes when Name or VacancyStatus changed -> to
@@ -1178,121 +1160,94 @@ public class HRMPortlet extends MVCPortlet {
 	private void onExportResult(ResourceRequest request,
 			ResourceResponse response, String resourceRequestId)
 			throws IOException, SystemException, PortalException {
-		final ServiceContext serviceContext = ServiceContextFactory
-				.getInstance(DLFolder.class.getName(), request);
-		ThemeDisplay themeDisplay = (ThemeDisplay) request
-				.getAttribute(WebKeys.THEME_DISPLAY);
 		if (EXPORT_RESULT.equalsIgnoreCase(resourceRequestId)) {
-			/*
-			 * Repository re =
-			 * RepositoryLocalServiceUtil.createRepository(CounterLocalServiceUtil
-			 * .increment()); re.setPortletId("hrm");
-			 * re.setName("Candidate_CV"); re.setDescription("none");
-			 * 
-			 * RepositoryLocalServiceUtil.updateRepository(re);
-			 */
 
-			/*
-			 * DLFolder fo =
-			 * DLFolderLocalServiceUtil.createDLFolder(CounterLocalServiceUtil
-			 * .increment()); fo.setRepositoryId(42801l); fo.setName("cv");
-			 * fo.setGroupId(themeDisplay.getScopeGroupId());
-			 */
-
-			/*
-			 * DLFolder dlFolder =
-			 * DLFolderLocalServiceUtil.addFolder(themeDisplay.getUserId(),
-			 * themeDisplay.getScopeGroupId(), themeDisplay.getScopeGroupId(),
-			 * false, 0, "TestFolder3", "TestFolder3", false, new
-			 * ServiceContext()); dlFolder.setOverrideFileEntryTypes(true);
-			 * dlFolder = DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
-			 * 
-			 * System.out.println("FOLDER ID: " + dlFolder.getFolderId());
-			 * long[] fileEntryTypeIds = new long[] {0};
-			 * 
-			 * DLFileEntryTypeLocalServiceUtil.setDLFolderDLFileEntryTypes(dlFolder
-			 * .getFolderId(), fileEntryTypeIds);
-			 */
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(43501);
-			DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil
-					.getDLFileEntryType(0);
-
-			System.out.println(dlFileEntryType.getName());
-			System.out.println(dlFolder.getName());
-
-			// DLFolderLocalServiceUtil.addFolder(serviceContext.getUserId(),
-			// serviceContext.getScopeGroupId(), re.getRepositoryId(), false ,
-			// 0L, "TestFolder", "zzz", false, serviceContext);
 			HSSFWorkbook workbook = new HSSFWorkbook();
-
 			final HSSFSheet sheet = workbook.createSheet("candidate");
 			StopWatch sw = new StopWatch();
 			sw.start();
 			final Map<String, Object[]> data = new TreeMap<String, Object[]>();
 			data.put("1", new Object[] { "ID", "VACANCY", "FULLNAME", "EMAIL",
 					"PHONE", "STATUS", "APPLICATION_DATE" });
-			List<Candidate> allCandidates = CandidateLocalServiceUtil.findAll();
-			for (Candidate candidate : allCandidates) {
-				data.put(
-						String.valueOf(candidate.getC_id()),
-						new Object[] {
-								String.valueOf(candidate.getC_id()),
-								VacancyLocalServiceUtil
-										.getVacancyNameByCandidate_And_VALID_Status(candidate
-												.getC_id()),
-								candidate.getFirst_name() + " "
-										+ candidate.getMiddle_name() + " "
-										+ candidate.getLast_name(),
-								candidate.getEmail(),
-								candidate.getContact_number(),
-								candidate.getCandidate_status(),
-								String.valueOf(candidate
-										.getDate_of_application()) });
-			}
-			Set<String> keySet = data.keySet();
-			int rowNum = 0;
-			for (String key : keySet) {
-				Row row = sheet.createRow(rowNum++);
-				Object[] objArr = data.get(key);
-				int cellNum = 0;
-				for (Object obj : objArr) {
-					Cell cell = row.createCell(cellNum++);
-					if (obj instanceof String) {
-						cell.setCellValue((String) obj);
-					} else if (obj instanceof Integer) {
-						cell.setCellValue((Integer) obj);
+			final JsonObject jObj = getPOSTJsonObjectFromRequest(request);
+			System.out.println(jObj);
+			List<Candidate> filteredCandidates = CandidateLocalServiceUtil
+					.filterCandidateForExport(jObj.get("conditions")
+							.getAsJsonArray());
+			JSONObject result = null;
+			if (!CollectionUtils.isEmpty(filteredCandidates)) {
+				for (Candidate candidate : filteredCandidates) {
+					data.put(
+							String.valueOf(candidate.getC_id()),
+							new Object[] {
+									String.valueOf(candidate.getC_id()),
+									VacancyLocalServiceUtil
+											.getVacancyNameByCandidate_And_VALID_Status(candidate
+													.getC_id()),
+									candidate.getFirst_name() + " "
+											+ candidate.getMiddle_name() + " "
+											+ candidate.getLast_name(),
+									candidate.getEmail(),
+									candidate.getContact_number(),
+									candidate.getCandidate_status(),
+									String.valueOf(candidate
+											.getDate_of_application()) });
+				}
+				Set<String> keySet = data.keySet();
+				int rowNum = 0;
+				for (String key : keySet) {
+					Row row = sheet.createRow(rowNum++);
+					Object[] objArr = data.get(key);
+					int cellNum = 0;
+					for (Object obj : objArr) {
+						Cell cell = row.createCell(cellNum++);
+						if (obj instanceof String) {
+							cell.setCellValue((String) obj);
+						} else if (obj instanceof Integer) {
+							cell.setCellValue((Integer) obj);
+						}
 					}
 				}
-			}
-			try {
+				/*
+				 * try { final ByteArrayOutputStream outByteStream = new
+				 * ByteArrayOutputStream(); workbook.write(outByteStream);
+				 * byte[] outArray = outByteStream.toByteArray(); final
+				 * HttpServletRequest httpRequest = PortalUtil
+				 * .getHttpServletRequest(request); final HttpServletResponse
+				 * httpResponse = PortalUtil .getHttpServletResponse(response);
+				 * ServletResponseUtil .sendFile(httpRequest, httpResponse,
+				 * "candidateExport.xls", outArray, "application/download"); }
+				 * catch (IOException e) { e.printStackTrace(); }
+				 */
+
 				final ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 				workbook.write(outByteStream);
 				byte[] outArray = outByteStream.toByteArray();
-				final HttpServletRequest httpRequest = PortalUtil
-						.getHttpServletRequest(request);
-				final HttpServletResponse httpResponse = PortalUtil
-						.getHttpServletResponse(response);
-				ServletResponseUtil
-						.sendFile(httpRequest, httpResponse,
-								"candidateExport.xls", outArray,
-								"application/download");
-			} catch (IOException e) {
-				e.printStackTrace();
+
+				File file = FileUtil.createTempFile(outArray);
+				File newFile = new File(file.getParent(), "exportCandidates-"
+						+ System.currentTimeMillis() + ".xls");
+				Files.move(file.toPath(), newFile.toPath());
+
+				System.out.println(file.getPath());
+				// PortletResponseUtil.sendFile(request, response,
+				// "Export_File.xls", outArray, "application/download");
+
+				final DLFileEntry dlFileEntry = HRMUtil.uploadFile(request,
+						newFile, "candidateExport", "", "", 51001);
+				newFile.delete();
+				final FileEntry fe = HRMUtil.getUploadFileEntry(dlFileEntry);
+				result = HRMUtil.getFilePreviewInfo(request,
+						fe.getFileEntryId());
 			}
-
-			/*
-			 * final ByteArrayOutputStream outByteStream = new
-			 * ByteArrayOutputStream(); workbook.write(outByteStream); byte[]
-			 * outArray = outByteStream.toByteArray();
-			 * 
-			 * File file = FileUtil.createTempFile(outArray);
-			 * System.out.println("HERE"); PortletResponseUtil.sendFile(request,
-			 * response, "Export_File.xls", outArray, "application/download");
-			 * System.out.println("HERE"); sw.stop();
-			 * System.out.println(sw.currentElapsedTime());
-			 */
+			
+			if (result == null) {
+				result = new JSONObject();
+				result.put("fail", "No results were found with these conditions!");
+			}
+			
+			JSONServiceUtil.writeJSON(response.getWriter(), result);
 		}
-
 	}
 
 	private List<Vacancy> findAllVacancies() throws SystemException {
@@ -1438,7 +1393,6 @@ public class HRMPortlet extends MVCPortlet {
 		object.put("vacancy_status", v.getVacancy_status());
 		object.put("jTitleId", v.getJobtitleId());
 		object.put("subUnitId", v.getSubUnitId());
-		object.put("job_posting", "JOB POSTING....");
 		if (v.getFileEntryId() != -1) {
 			ThemeDisplay themeDisplay = (ThemeDisplay) request
 					.getAttribute(WebKeys.THEME_DISPLAY);

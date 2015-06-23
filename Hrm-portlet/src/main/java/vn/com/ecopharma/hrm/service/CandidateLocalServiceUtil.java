@@ -403,6 +403,11 @@ public class CandidateLocalServiceUtil {
         return getService().dynamicQueryTest(s, start, end);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions) {
+        return getService().filterCandidateForExport(conditions);
+    }
+
     public static void clearService() {
         _service = null;
     }

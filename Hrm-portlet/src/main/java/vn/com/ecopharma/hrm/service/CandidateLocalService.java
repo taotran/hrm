@@ -329,4 +329,7 @@ public interface CandidateLocalService extends BaseLocalService,
 
     public java.util.List<vn.com.ecopharma.hrm.model.Candidate> dynamicQueryTest(
         java.lang.String s, int start, int end);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions);
 }

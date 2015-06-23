@@ -1,12 +1,16 @@
 package vn.com.ecopharma.hrm.service.persistence;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.hrm.model.Candidate;
 import vn.com.ecopharma.hrm.model.impl.CandidateImpl;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -16,7 +20,7 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 		implements CandidateFinder {
 
 	private static final String VACANCY_NAME_COL = "vacancy";
-	private static final String FULL_NAME_COL = "fullname";	
+	private static final String FULL_NAME_COL = "fullname";
 
 	private StringBuilder getFilterQuery(String vacancy_name,
 			String sortColumnName, String sortDirection) {
@@ -27,10 +31,10 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 				+ "OR c.contact_number LIKE ? "
 				+ "OR c.candidate_status LIKE ? "
 				+ "OR c.c_id "
-					+ "IN (SELECT cd.c_id FROM hrm_recruitment_candidate cd "
-					+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
-					+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
-					+ "WHERE v.name LIKE ?)) ");
+				+ "IN (SELECT cd.c_id FROM hrm_recruitment_candidate cd "
+				+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
+				+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
+				+ "WHERE v.name LIKE ?)) ");
 		query.append("AND  CONCAT(c.first_name, ' ', c.middle_name, ' ', c.last_name) LIKE ? "
 				+ "AND c.email LIKE ? "
 				+ "AND c.contact_number LIKE ? "
@@ -42,26 +46,27 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 					+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
 					+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
 					+ "WHERE v.name LIKE ?) ");
-		} 
-		
+		}
+
 		/* ORDER Part */
-		
+
 		if (FULL_NAME_COL.equalsIgnoreCase(sortColumnName)) {
-			query.append("ORDER BY c.first_name " + sortDirection + ", c.middle_name " + sortDirection + ", c.last_name " + sortDirection + " "); 
+			query.append("ORDER BY c.first_name " + sortDirection
+					+ ", c.middle_name " + sortDirection + ", c.last_name "
+					+ sortDirection + " ");
 		} else if (VACANCY_NAME_COL.equalsIgnoreCase(sortColumnName)) {
 			query.append("ORDER BY "
-								+ "(SELECT v.name "
-								+ "FROM hrm_recruitment_candidate cd "
-								+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
-								+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
-								+ "WHERE cd.c_id = c.c_id AND vc.vc_status = 'VALID') "
-								+ sortDirection 
-								+ " ");
+					+ "(SELECT v.name "
+					+ "FROM hrm_recruitment_candidate cd "
+					+ "JOIN hrm_recruitment_vacancycandidate vc ON vc.c_id = cd.c_id "
+					+ "JOIN hrm_recruitment_vacancy v ON vc.v_id = v.v_id "
+					+ "WHERE cd.c_id = c.c_id AND vc.vc_status = 'VALID') "
+					+ sortDirection + " ");
 		} else {
-			query.append("ORDER BY " + sortColumnName + " " + sortDirection 
-						+ " "); 
+			query.append("ORDER BY " + sortColumnName + " " + sortDirection
+					+ " ");
 		}
-		
+
 		return query;
 	}
 
@@ -157,5 +162,51 @@ public class CandidateFinderImpl extends BasePersistenceImpl<Candidate>
 			closeSession(session);
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Candidate> filterCandidateForExport(JsonArray conditions) {
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT c.* FROM hrm_recruitment_candidate c WHERE ");
+		for (JsonElement obj: conditions) {
+			JsonObject o = obj.getAsJsonObject();
+			String sql = "";
+			if (o.get("restriction") != null) {
+				sql += o.get("restriction").getAsString() + " ";
+			}
+			if (!getAtrributeNameFromXPort(o.get("attribute").getAsString()).equalsIgnoreCase("date_of_application")) {
+				sql += getAtrributeNameFromXPort(o.get("attribute").getAsString()) 
+							+ " " + o.get("searchOption").getAsString() + " ";
+				if(o.get("searchOption").getAsString().equalsIgnoreCase("LIKE")) {
+					sql += " '%" + o.get("attributeValue").getAsString() + "%' ";
+				} else {
+					sql += " '" + o.get("attributeValue").getAsString() + "' ";
+				}
+			} else {
+				sql += " " + o.get("attributeValue").getAsString();
+			}
+			
+			query.append(sql);
+		}
+		System.out.println(query);
+		Session session = null;
+		try {
+			session = openSession();
+			final StringBuilder sb_limit = new StringBuilder();
+			sb_limit.append("LIMIT ?, ?");
+//			query.append(sb_limit);
+			final SQLQuery q = session.createSQLQuery(query.toString());
+			q.addEntity("c", CandidateImpl.class);
+			return (List<Candidate>) q.list();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			closeSession(session);
+		}
+		return null;
+	}
+
+	private String getAtrributeNameFromXPort(String xportAttributeName) {
+		return xportAttributeName.substring(6, xportAttributeName.length());
 	}
 }

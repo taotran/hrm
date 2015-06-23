@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.service.impl;
 import java.sql.Date;
 import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -281,5 +282,10 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		candidateQuery.setLimit(start, end);
 		return (List<Candidate>) candidateQuery.list();
 	}
+	
+	public List<Candidate> filterCandidateForExport(JsonArray conditions) {
+		return CandidateFinderUtil.filterCandidateForExport(conditions);
+	}
+	
 
 }

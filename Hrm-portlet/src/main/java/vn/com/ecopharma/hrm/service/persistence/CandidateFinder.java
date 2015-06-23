@@ -15,4 +15,7 @@ public interface CandidateFinder {
         java.lang.String date_from, java.lang.String date_to,
         java.lang.String sortColumnName, java.lang.String sortDirection,
         int start, int end);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions);
 }

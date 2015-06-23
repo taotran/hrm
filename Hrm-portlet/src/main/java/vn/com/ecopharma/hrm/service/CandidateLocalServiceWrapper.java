@@ -421,6 +421,12 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
         return _candidateLocalService.dynamicQueryTest(s, start, end);
     }
 
+    @Override
+    public java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions) {
+        return _candidateLocalService.filterCandidateForExport(conditions);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

@@ -4,19 +4,18 @@
 	border: 1px;
 	border-style: dotted;
 	border-color: gray;
-
 }
 
 .actionButtons .buttons {
-/* 	float: left; */
+	/* 	float: left; */
+	
 }
 
 .advancedSearchBox {
 	display: block;
 	border: 0px;
-	border-style:solid;
-/* 	border-color: orange; */
-	
+	border-style: solid;
+	/* 	border-color: orange; */
 }
 
 .advancedSearchBox .searchFields {
@@ -83,7 +82,6 @@ table.dataTable tbody td {
 	padding-left: 20px;
 }
 </style> */
-
 .date_range_filter {
 	width: 90px !important;
 }
@@ -152,11 +150,11 @@ div.edit-buttons i.icon-plus-sign {
 	text-align: center;
 }
 
-.attributes input[type=text] {
+.attribute input[type=text] {
 	margin-bottom: 0px !important;
 }
 
-.attributes input.attribute-text {
+.attribute input.attribute-text {
 	width: 140px !important;
 }
 
@@ -164,17 +162,17 @@ select.search-options {
 	width: 92px !important;;
 }
 
-.attributes select.attribute-select {
-	width: 170px !important;
+.attribute select.attribute-select {
+	width: 140px !important;
 }
 
-div.attributes input[type=text] {
+div.attribute input[type=text] {
 	height: 15px;
 	font-size: 12px;
 	color: #555;
 }
 
-div.attributes select {
+div.attribute select {
 	height: 25px;
 	font-size: 12px;
 	color: #555;
@@ -317,8 +315,8 @@ textarea.note-codable {
 	width: 100px !important;
 	border-radius: .25em;
 }
-.applicantsStatistic span, 
-.candidateResume a {
+
+.applicantsStatistic span, .candidateResume a {
 	display: block;
 	font-size: 15px;
 	display: inline-block;
@@ -327,20 +325,21 @@ textarea.note-codable {
 }
 
 .candidateResume {
-	display: inline-block!important;
+	display: inline-block !important;
 	width: 110px
 }
-.applicantsStatistic span:FIRST-CHILD,
-.candidateResume a:FIRST-CHILD {
+
+.applicantsStatistic span:FIRST-CHILD, .candidateResume a:FIRST-CHILD {
 	margin-left: 5px;
 }
 
-.candidateResume a, .candidateResume i{
+.candidateResume a, .candidateResume i {
 	color: #555;
 }
+
 .candidateResume a:hover {
 	text-decoration: none;
-}	
+}
 
 /* Select */
 select>optgroup {
@@ -361,7 +360,6 @@ select>optgroup {
 	width: 176px !important;
 }
 
-
 .resume-actions {
 	display: inline-block;
 }
@@ -371,7 +369,7 @@ select>optgroup {
 	margin-left: 5px;
 }
 
-.resume-actions .inline-edit > a {
+.resume-actions .inline-edit>a {
 	text-decoration: none;
 	color: #555;
 }
@@ -379,4 +377,33 @@ select>optgroup {
 .noresume-actions a {
 	text-decoration: none;
 	color: #555;
+}
+
+/* Export Part  */
+select.restrictionSelect {
+	width: 60px !important;
+	font-size: 10px !important;
+	font-weight: bold !important;
+}
+
+select.xport_candidate_status_select {
+	width: 140px !important;
+}
+
+div.noConditions {
+	white-space: pre;
+	margin-left: 110px;
+}
+
+div.noConditions > span {
+	margin-left: -60px;
+  	font-size: 15px;
+  	font-style: oblique;
+  	color: #b5b5b5;
+}
+
+button.addCondition {
+	height: 25px;
+  	font-size: 12px;
+  	color: #555;
 }

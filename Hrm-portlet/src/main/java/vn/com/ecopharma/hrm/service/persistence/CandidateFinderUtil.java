@@ -32,6 +32,11 @@ public class CandidateFinderUtil {
             sortDirection, start, end);
     }
 
+    public static java.util.List<vn.com.ecopharma.hrm.model.Candidate> filterCandidateForExport(
+        com.google.gson.JsonArray conditions) {
+        return getFinder().filterCandidateForExport(conditions);
+    }
+
     public static CandidateFinder getFinder() {
         if (_finder == null) {
             _finder = (CandidateFinder) PortletBeanLocatorUtil.locate(vn.com.ecopharma.hrm.service.ClpSerializer.getServletContextName(),
