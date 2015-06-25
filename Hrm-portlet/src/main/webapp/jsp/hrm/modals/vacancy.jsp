@@ -13,12 +13,19 @@
 			<div class="control-group">
 				<label class="control-label" for="jTitleSelect">Job Title</label>
 				<div class="controls">
-					<select class="select2-container" id="jTitleSelect"
-						class="jTitleSelect2">
+					<select id="jTitleSelect" class="select2-container jTitleSelect">
 					</select> <a data-toggle="modal" href="#modify-jtitle-modal" class="btn">
 						<i class="icon-plus"></i>Add
 					</a>
+					<div class="currentSelect2Selected" id="v_current_jTitle"
+						style="display: none;">
+						<input type="hidden" value="-1" name="v_current_jTitleId"> 
+						<span class="current_label">Current: </span>
+						<span class="current_value"
+							id="v_current_jTitleValue"></span>
+					</div>
 				</div>
+
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="v_name"><liferay-ui:message
@@ -27,14 +34,15 @@
 					<input type="text" id="v_name" placeholder="Name" class="required">
 				</div>
 			</div>
-			
+
 			<div class="control-group">
-				<label class="control-label" for="jd-actions">Job Description</label>
+				<label class="control-label" for="jd-actions">Job
+					Description</label>
 				<div class="controls">
 					<div class="resume-actions" id="jd-actions">
-						<input id="jdId" type="hidden" value="-1" /> <a
-							id="jdLink" href="javascript:void(0);"
-							onclick="vacancyModalGetPreviewJD()">Job Description</a>
+						<input id="jdId" type="hidden" value="-1" /> <a id="jdLink"
+							href="javascript:void(0);" onclick="vacancyModalGetPreviewJD()">Job
+							Description</a>
 						<div class='inline-edit'>
 							<a href="javascript:void(0);" onclick="onReplaceJD()"><i
 								class='icon-pencil'></i></a> <a href="javascript:void(0);"
@@ -47,13 +55,13 @@
 						style='display: none;'>
 						<input type="file" name='addVacancy_JD'
 							accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-							id="addVacancy_JD" /> <a id="resetJDLink"
-							style='display: none;' href="javascript:void(0);"
-							onclick="onModifyJD()"><i class='icon-repeat'></i></a>
+							id="addVacancy_JD" /> <a id="resetJDLink" style='display: none;'
+							href="javascript:void(0);" onclick="onModifyJD()"><i
+							class='icon-repeat'></i></a>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="control-group">
 				<label class="control-label" for="vacancy_status"><liferay-ui:message
 						key="vacancy.status" /></label>
@@ -106,11 +114,11 @@
 					<textarea id="desc" rows="5" cols="50"></textarea>
 				</div>
 			</div>
-			
+
 			<%-- <label for="job_posting" style="font-weight: bold; font-size: 12px;"><liferay-ui:message
 					key="vacancy.job_posting" /></label>
 			<textarea id="job_posting" cols="7">Job Posting</textarea> --%>
-			
+
 		</div>
 		<div class="modal-footer">
 			<button type="submit" class="btn btn-primary">Save</button>
@@ -122,3 +130,14 @@
 		</div>
 	</div>
 </form>
+
+<style type="text/css">
+
+	span.current_label {
+		font-size: 13px;
+  		font-weight: bold;
+  		font-style: italic;
+  		color: #555;
+  	}
+  			
+</style>

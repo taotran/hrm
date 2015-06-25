@@ -18,10 +18,11 @@
 
 <div id="myTab">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#cTab" onclick="candidateTabClick()"><liferay-ui:message
+		<li><a href="#cTab" onclick="candidateTabClick()"><liferay-ui:message
 					key="tab.candidate.title" /></a></li>
 		<li><a href="#vTab" onclick="vacancyTabClick()"><liferay-ui:message
 					key="tab.vacancy.title" /></a></li>
+		<li class="active"><a href="#eTab">Employee</a></li>
 		<li><a href="#reportTab" style="display: none">z</a><a href="#"
 			onclick="location.href = '<%= reportTabURL.toString() %>';">Reports</a></li>
 	</ul>
@@ -129,6 +130,46 @@
 				<tbody></tbody>
 			</table>
 		</div>
+		<div id="eTab">
+			<div class="actionButtons">
+				<div class="buttons">
+					<a data-toggle="modal" href="#modify-employee-modal"
+						class="btn btn-primary"> <i class="icon-plus"></i> <liferay-ui:message
+							key="global.button.add" />
+					</a>
+					<button data-toggle="modal" id="vDeleteBtn" class="btn"
+						onclick="deleteVacancies()">
+						<liferay-ui:message key="global.button.delete" />
+					</button>
+
+					<button data-toggle="modal" id="addLocation" class="btn"
+						onclick="addLocation()">Add location</button>
+				</div>
+			</div>
+			<table id="etable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Employee Code</th>
+						<th>Employee Name</th>
+						<th>Title</th>
+						<th>Level</th>
+						<th>Joined Date</th>
+						<th>Education</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Employee Code</th>
+						<th>Employee Name</th>
+						<th>Title</th>
+						<th>Level</th>
+						<th>Joined Date</th>
+						<th>Education</th>
+				</tfoot>
+				<tbody></tbody>
+			</table>
+		</div>
+		
 		<div id="reportTab" style="display: none;"></div>
 	</div>
 
@@ -218,7 +259,7 @@ $(document).ready(function() {
 	$('#e_start_date').datepicker();
 	$('#itvTimeFrom').timepicker();
 	$('#itvTimeTo').timepicker();
-
+	$('.hrm_dateTimePicker').datepicker();
 	$.ajax ({
 		type: 'GET',
 		url: "<portlet:resourceURL id='loadDataForFooterFilter'/>",
@@ -246,7 +287,7 @@ $('#preview-modal').on('hide.bs.modal', function(){
 });
 
 /* clear modal data on closing */
- $('.modal').each(function(index) {
+/*  $('.modal').each(function(index) {
 	$(this).on('hidden.bs.modal', function () {
 	    $(this)
 	    .find("input,textarea")
@@ -263,7 +304,7 @@ $('#preview-modal').on('hide.bs.modal', function(){
 		       .end();
 	    $('ul.options').empty();
 	});
-});
+}); */
 
 
 /* select/deselect all base on header select/deselect */
@@ -306,7 +347,10 @@ function getVacancy(id) {
 		$('#no_of_pos').val(obj.no_of_pos);
 		$('#vacancy_status').val(obj.vacancy_status);
 		$('#job_posting').val(obj.job_posting);
-		$('#jTitleSelect').val(obj.jTitleId);
+		$('#v_current_jTitle').show();
+		$('#v_current_jTitleId').val(obj.jTitleId);
+		$('#v_current_jTitleValue').text(obj.jTitleName);
+		/* $('#jTitleSelect').select2("data", {id: obj.jTitleId, a_key: obj.jTitleName}); */
 		$('#subUnitSelect').val(obj.subUnitId);
 		/* add to managers list and show */
 		var emps = obj.employees;
@@ -516,14 +560,14 @@ function saveJobTitle() {
 	obj.note = $("#jnote").val();
 	
 	function onSuccessSaveNewJTitle(response) {
-		jSelect = document.getElementById('jTitleSelect');
+		/* jSelect = document.getElementById('jTitleSelect'); */
 		/* add new JTitle to Select if CREATE NEW */
-		if (obj.jTitleId == -1) {
+	/* 	if (obj.jTitleId == -1) {
 			jSelect.options.add(new Option(response.title, response.jTitleId));	
-		} else {
+		} else { */
 			/* only change JTitle Text if EDIT */
-			$('#jTitleSelect option').eq(response.jTitleId).text(response.title);
-		}
+			/* $('#jTitleSelect option').eq(response.jTitleId).text(response.title);
+		} */
 	};
 	genericAJAXCalling("<portlet:resourceURL id='saveJTitle'/>", obj, onSuccessSaveNewJTitle);
 };
@@ -641,7 +685,7 @@ function saveCandidate() {
 	
 }
 
-function saveEmployee() {
+/* function saveEmployee() {
 	if ($('#e_firstname').valid() && $('#e_middle_name').valid() && $('#e_last_name').valid() &&
 			$('#e_inputEmail').valid() && $('#e_birthday').valid() && $('#e_start_date').valid()) {
 		var obj = new Object();
@@ -664,7 +708,7 @@ function saveEmployee() {
 	} else {
 		showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");
 	}
-}
+} */
 
 function candidateTabClick() {
 	console.log("cTab click" + _State);
@@ -715,7 +759,7 @@ $('#modify-vacancy-modal').on('show.bs.modal', function () {
 	$('a#jdLink').attr("href", '');
 	$('a#jdLink').text('');
 	$('#addVacancy_JD').val('');
-	jSelect = document.getElementById('jTitleSelect');
+	/* jSelect = document.getElementById('jTitleSelect'); */
 	lSelect = document.getElementById('locationSelect');
 	mSelect = document.getElementById('managerSelect2');
 	sSelect = document.getElementById('subUnitSelect');
@@ -728,14 +772,14 @@ $('#modify-vacancy-modal').on('show.bs.modal', function () {
 
 			},
 			success : function(response) {
-				jSelect.options.length = 0;
+				/* jSelect.options.length = 0; */
 				lSelect.options.length = 0;
 				mSelect.options.length = 0;
 				sSelect.options.length = 0;
 				var data = $.parseJSON(response);
-				$.each(data.jTitles, function(i, item) {
+				/* $.each(data.jTitles, function(i, item) {
 					jSelect.options.add(new Option(item.title, item.jTitleId));
-				});
+				}); */
 				
 				$.each(data.locations, function(i, item){
 					lSelect.options.add(new Option(item.name, item.locationId));	
@@ -768,13 +812,13 @@ function loadVacancyTable() {
 				                "url": sSource,
 				                "data": aoData,
 				                "success": function(json){
-				                 	var data = json.jTitles;
+				                 	/* var data = json.jTitles;
 				                    select = document.getElementById('jTitleSelect');
 									select.options.length = 0;
 										$.each(data, function(i, item) {
 										console.log(item.title);
 										select.options.add(new Option(item.title, item.jTitleId));
-									});
+									}); */
 									showBottomRightInfoNotify('Vacancies loaded!');
 				                    fnCallback(json);
 				                    $('#vtable').show();

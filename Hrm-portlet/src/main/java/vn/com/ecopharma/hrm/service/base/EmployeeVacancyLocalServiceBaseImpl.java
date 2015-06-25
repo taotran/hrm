@@ -32,6 +32,8 @@ import vn.com.ecopharma.hrm.service.persistence.InterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.service.persistence.JTitlePersistence;
 import vn.com.ecopharma.hrm.service.persistence.LocationPersistence;
 import vn.com.ecopharma.hrm.service.persistence.SubUnitPersistence;
+import vn.com.ecopharma.hrm.service.persistence.UniversityFinder;
+import vn.com.ecopharma.hrm.service.persistence.UniversityPersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyCandidatePersistence;
 import vn.com.ecopharma.hrm.service.persistence.VacancyFinder;
 import vn.com.ecopharma.hrm.service.persistence.VacancyPersistence;
@@ -127,6 +129,14 @@ public abstract class EmployeeVacancyLocalServiceBaseImpl
     protected vn.com.ecopharma.hrm.service.SubUnitService subUnitService;
     @BeanReference(type = SubUnitPersistence.class)
     protected SubUnitPersistence subUnitPersistence;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.UniversityLocalService.class)
+    protected vn.com.ecopharma.hrm.service.UniversityLocalService universityLocalService;
+    @BeanReference(type = vn.com.ecopharma.hrm.service.UniversityService.class)
+    protected vn.com.ecopharma.hrm.service.UniversityService universityService;
+    @BeanReference(type = UniversityPersistence.class)
+    protected UniversityPersistence universityPersistence;
+    @BeanReference(type = UniversityFinder.class)
+    protected UniversityFinder universityFinder;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyLocalService.class)
     protected vn.com.ecopharma.hrm.service.VacancyLocalService vacancyLocalService;
     @BeanReference(type = vn.com.ecopharma.hrm.service.VacancyService.class)
@@ -1036,6 +1046,81 @@ public abstract class EmployeeVacancyLocalServiceBaseImpl
      */
     public void setSubUnitPersistence(SubUnitPersistence subUnitPersistence) {
         this.subUnitPersistence = subUnitPersistence;
+    }
+
+    /**
+     * Returns the university local service.
+     *
+     * @return the university local service
+     */
+    public vn.com.ecopharma.hrm.service.UniversityLocalService getUniversityLocalService() {
+        return universityLocalService;
+    }
+
+    /**
+     * Sets the university local service.
+     *
+     * @param universityLocalService the university local service
+     */
+    public void setUniversityLocalService(
+        vn.com.ecopharma.hrm.service.UniversityLocalService universityLocalService) {
+        this.universityLocalService = universityLocalService;
+    }
+
+    /**
+     * Returns the university remote service.
+     *
+     * @return the university remote service
+     */
+    public vn.com.ecopharma.hrm.service.UniversityService getUniversityService() {
+        return universityService;
+    }
+
+    /**
+     * Sets the university remote service.
+     *
+     * @param universityService the university remote service
+     */
+    public void setUniversityService(
+        vn.com.ecopharma.hrm.service.UniversityService universityService) {
+        this.universityService = universityService;
+    }
+
+    /**
+     * Returns the university persistence.
+     *
+     * @return the university persistence
+     */
+    public UniversityPersistence getUniversityPersistence() {
+        return universityPersistence;
+    }
+
+    /**
+     * Sets the university persistence.
+     *
+     * @param universityPersistence the university persistence
+     */
+    public void setUniversityPersistence(
+        UniversityPersistence universityPersistence) {
+        this.universityPersistence = universityPersistence;
+    }
+
+    /**
+     * Returns the university finder.
+     *
+     * @return the university finder
+     */
+    public UniversityFinder getUniversityFinder() {
+        return universityFinder;
+    }
+
+    /**
+     * Sets the university finder.
+     *
+     * @param universityFinder the university finder
+     */
+    public void setUniversityFinder(UniversityFinder universityFinder) {
+        this.universityFinder = universityFinder;
     }
 
     /**

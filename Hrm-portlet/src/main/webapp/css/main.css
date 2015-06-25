@@ -288,19 +288,15 @@ textarea.note-codable {
 	color: #555;
 }
 
-.candidate-history-container {
+/* .candidate-history-container {
 	width: 100%;
 	border: 1px solid #d3d3d3;
 }
 
-.candidate-history-container div {
-	/* width: 100%; */
-	
-}
 
 .candidate-history-container .header {
 	background-color: #d3d3d3;
-	/* padding: 2px; */
+	padding: 2px;
 	cursor: pointer;
 	font-weight: bold;
 	width: initial;
@@ -310,7 +306,7 @@ textarea.note-codable {
 	display: none;
 	padding: 5px;
 }
-
+ */
 .dataTables_filter input[type=search] {
 	width: 100px !important;
 	border-radius: .25em;

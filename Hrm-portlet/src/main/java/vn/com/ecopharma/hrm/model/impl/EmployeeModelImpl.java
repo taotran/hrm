@@ -53,28 +53,51 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     public static final String TABLE_NAME = "HRM_Recruitment_Employee";
     public static final Object[][] TABLE_COLUMNS = {
             { "employeeId", Types.BIGINT },
+            { "emp_code", Types.VARCHAR },
+            { "contact_number", Types.VARCHAR },
+            { "birthday", Types.TIMESTAMP },
+            { "jobtitleId", Types.BIGINT },
+            { "joined_date", Types.TIMESTAMP },
+            { "subUnitId", Types.BIGINT },
+            { "titles_id", Types.BIGINT },
+            { "level_id", Types.BIGINT },
+            { "promoted_date", Types.TIMESTAMP },
+            { "labour_contract_signed_date", Types.TIMESTAMP },
+            { "labour_contract_expired_date", Types.TIMESTAMP },
+            { "labour_contract_type", Types.VARCHAR },
+            { "gender", Types.VARCHAR },
+            { "place_of_birth", Types.VARCHAR },
+            { "education", Types.VARCHAR },
+            { "education_specialize", Types.VARCHAR },
+            { "universityId", Types.BIGINT },
+            { "marital_status", Types.VARCHAR },
+            { "identityCardNo", Types.VARCHAR },
+            { "issued_date", Types.TIMESTAMP },
+            { "issued_place", Types.VARCHAR },
+            { "addressId", Types.BIGINT },
+            { "company_email", Types.VARCHAR },
+            { "personal_tax_code", Types.VARCHAR },
+            { "number_of_dependents", Types.INTEGER },
+            { "dependent_names", Types.VARCHAR },
+            { "social_insurance_no", Types.VARCHAR },
+            { "health_insurance_no", Types.VARCHAR },
+            { "bank_account_no", Types.VARCHAR },
+            { "bank_branch_name", Types.VARCHAR },
+            { "base_wage_rates", Types.DOUBLE },
+            { "position_wage_rates", Types.DOUBLE },
+            { "capacity_salary", Types.DOUBLE },
+            { "total_salary", Types.DOUBLE },
+            { "bonus", Types.DOUBLE },
+            { "resigned_date", Types.TIMESTAMP },
+            { "employee_userId", Types.BIGINT },
             { "groupId", Types.BIGINT },
             { "companyId", Types.BIGINT },
             { "userId", Types.BIGINT },
-            { "userName", Types.VARCHAR },
             { "createDate", Types.TIMESTAMP },
             { "modifiedDate", Types.TIMESTAMP },
-            { "emp_code", Types.VARCHAR },
-            { "firstname", Types.VARCHAR },
-            { "middle_name", Types.VARCHAR },
-            { "lastname", Types.VARCHAR },
-            { "email", Types.VARCHAR },
-            { "contact_number", Types.VARCHAR },
-            { "nickname", Types.VARCHAR },
-            { "birthday", Types.TIMESTAMP },
-            { "gender", Types.VARCHAR },
-            { "marital_status", Types.VARCHAR },
-            { "status", Types.VARCHAR },
-            { "jobtitleId", Types.BIGINT },
-            { "joined_date", Types.TIMESTAMP },
-            { "subUnitId", Types.BIGINT }
+            { "isDeleted", Types.BOOLEAN }
         };
-    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,emp_code VARCHAR(75) null,firstname VARCHAR(75) null,middle_name VARCHAR(75) null,lastname VARCHAR(75) null,email VARCHAR(75) null,contact_number VARCHAR(75) null,nickname VARCHAR(75) null,birthday DATE null,gender VARCHAR(75) null,marital_status VARCHAR(75) null,status VARCHAR(75) null,jobtitleId LONG,joined_date DATE null,subUnitId LONG)";
+    public static final String TABLE_SQL_CREATE = "create table HRM_Recruitment_Employee (employeeId LONG not null primary key,emp_code VARCHAR(75) null,contact_number VARCHAR(75) null,birthday DATE null,jobtitleId LONG,joined_date DATE null,subUnitId LONG,titles_id LONG,level_id LONG,promoted_date DATE null,labour_contract_signed_date DATE null,labour_contract_expired_date DATE null,labour_contract_type VARCHAR(75) null,gender VARCHAR(75) null,place_of_birth VARCHAR(75) null,education VARCHAR(75) null,education_specialize VARCHAR(75) null,universityId LONG,marital_status VARCHAR(75) null,identityCardNo VARCHAR(75) null,issued_date DATE null,issued_place VARCHAR(75) null,addressId LONG,company_email VARCHAR(75) null,personal_tax_code VARCHAR(75) null,number_of_dependents INTEGER,dependent_names VARCHAR(75) null,social_insurance_no VARCHAR(75) null,health_insurance_no VARCHAR(75) null,bank_account_no VARCHAR(75) null,bank_branch_name VARCHAR(75) null,base_wage_rates DOUBLE,position_wage_rates DOUBLE,capacity_salary DOUBLE,total_salary DOUBLE,bonus DOUBLE,resigned_date DATE null,employee_userId LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,isDeleted BOOLEAN)";
     public static final String TABLE_SQL_DROP = "drop table HRM_Recruitment_Employee";
     public static final String ORDER_BY_JPQL = " ORDER BY employee.employeeId ASC";
     public static final String ORDER_BY_SQL = " ORDER BY HRM_Recruitment_Employee.employeeId ASC";
@@ -87,13 +110,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.finder.cache.enabled.vn.com.ecopharma.hrm.model.Employee"),
             true);
-    public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
-                "value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.model.Employee"),
-            true);
-    public static long FIRSTNAME_COLUMN_BITMASK = 1L;
-    public static long LASTNAME_COLUMN_BITMASK = 2L;
-    public static long MIDDLE_NAME_COLUMN_BITMASK = 4L;
-    public static long EMPLOYEEID_COLUMN_BITMASK = 8L;
+    public static final boolean COLUMN_BITMASK_ENABLED = false;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.vn.com.ecopharma.hrm.model.Employee"));
     private static ClassLoader _classLoader = Employee.class.getClassLoader();
@@ -101,31 +118,50 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             Employee.class
         };
     private long _employeeId;
+    private String _emp_code;
+    private String _contact_number;
+    private Date _birthday;
+    private long _jobtitleId;
+    private Date _joined_date;
+    private long _subUnitId;
+    private long _titles_id;
+    private long _level_id;
+    private Date _promoted_date;
+    private Date _labour_contract_signed_date;
+    private Date _labour_contract_expired_date;
+    private String _labour_contract_type;
+    private String _gender;
+    private String _place_of_birth;
+    private String _education;
+    private String _education_specialize;
+    private long _universityId;
+    private String _marital_status;
+    private String _identityCardNo;
+    private Date _issued_date;
+    private String _issued_place;
+    private long _addressId;
+    private String _company_email;
+    private String _personal_tax_code;
+    private int _number_of_dependents;
+    private String _dependent_names;
+    private String _social_insurance_no;
+    private String _health_insurance_no;
+    private String _bank_account_no;
+    private String _bank_branch_name;
+    private double _base_wage_rates;
+    private double _position_wage_rates;
+    private double _capacity_salary;
+    private double _total_salary;
+    private double _bonus;
+    private Date _resigned_date;
+    private long _employee_userId;
     private long _groupId;
     private long _companyId;
     private long _userId;
     private String _userUuid;
-    private String _userName;
     private Date _createDate;
     private Date _modifiedDate;
-    private String _emp_code;
-    private String _firstname;
-    private String _originalFirstname;
-    private String _middle_name;
-    private String _originalMiddle_name;
-    private String _lastname;
-    private String _originalLastname;
-    private String _email;
-    private String _contact_number;
-    private String _nickname;
-    private Date _birthday;
-    private String _gender;
-    private String _marital_status;
-    private String _status;
-    private long _jobtitleId;
-    private Date _joined_date;
-    private long _subUnitId;
-    private long _columnBitmask;
+    private boolean _isDeleted;
     private Employee _escapedModel;
 
     public EmployeeModelImpl() {
@@ -145,26 +181,49 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         Employee model = new EmployeeImpl();
 
         model.setEmployeeId(soapModel.getEmployeeId());
-        model.setGroupId(soapModel.getGroupId());
-        model.setCompanyId(soapModel.getCompanyId());
-        model.setUserId(soapModel.getUserId());
-        model.setUserName(soapModel.getUserName());
-        model.setCreateDate(soapModel.getCreateDate());
-        model.setModifiedDate(soapModel.getModifiedDate());
         model.setEmp_code(soapModel.getEmp_code());
-        model.setFirstname(soapModel.getFirstname());
-        model.setMiddle_name(soapModel.getMiddle_name());
-        model.setLastname(soapModel.getLastname());
-        model.setEmail(soapModel.getEmail());
         model.setContact_number(soapModel.getContact_number());
-        model.setNickname(soapModel.getNickname());
         model.setBirthday(soapModel.getBirthday());
-        model.setGender(soapModel.getGender());
-        model.setMarital_status(soapModel.getMarital_status());
-        model.setStatus(soapModel.getStatus());
         model.setJobtitleId(soapModel.getJobtitleId());
         model.setJoined_date(soapModel.getJoined_date());
         model.setSubUnitId(soapModel.getSubUnitId());
+        model.setTitles_id(soapModel.getTitles_id());
+        model.setLevel_id(soapModel.getLevel_id());
+        model.setPromoted_date(soapModel.getPromoted_date());
+        model.setLabour_contract_signed_date(soapModel.getLabour_contract_signed_date());
+        model.setLabour_contract_expired_date(soapModel.getLabour_contract_expired_date());
+        model.setLabour_contract_type(soapModel.getLabour_contract_type());
+        model.setGender(soapModel.getGender());
+        model.setPlace_of_birth(soapModel.getPlace_of_birth());
+        model.setEducation(soapModel.getEducation());
+        model.setEducation_specialize(soapModel.getEducation_specialize());
+        model.setUniversityId(soapModel.getUniversityId());
+        model.setMarital_status(soapModel.getMarital_status());
+        model.setIdentityCardNo(soapModel.getIdentityCardNo());
+        model.setIssued_date(soapModel.getIssued_date());
+        model.setIssued_place(soapModel.getIssued_place());
+        model.setAddressId(soapModel.getAddressId());
+        model.setCompany_email(soapModel.getCompany_email());
+        model.setPersonal_tax_code(soapModel.getPersonal_tax_code());
+        model.setNumber_of_dependents(soapModel.getNumber_of_dependents());
+        model.setDependent_names(soapModel.getDependent_names());
+        model.setSocial_insurance_no(soapModel.getSocial_insurance_no());
+        model.setHealth_insurance_no(soapModel.getHealth_insurance_no());
+        model.setBank_account_no(soapModel.getBank_account_no());
+        model.setBank_branch_name(soapModel.getBank_branch_name());
+        model.setBase_wage_rates(soapModel.getBase_wage_rates());
+        model.setPosition_wage_rates(soapModel.getPosition_wage_rates());
+        model.setCapacity_salary(soapModel.getCapacity_salary());
+        model.setTotal_salary(soapModel.getTotal_salary());
+        model.setBonus(soapModel.getBonus());
+        model.setResigned_date(soapModel.getResigned_date());
+        model.setEmployee_userId(soapModel.getEmployee_userId());
+        model.setGroupId(soapModel.getGroupId());
+        model.setCompanyId(soapModel.getCompanyId());
+        model.setUserId(soapModel.getUserId());
+        model.setCreateDate(soapModel.getCreateDate());
+        model.setModifiedDate(soapModel.getModifiedDate());
+        model.setIsDeleted(soapModel.getIsDeleted());
 
         return model;
     }
@@ -224,26 +283,51 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("employeeId", getEmployeeId());
-        attributes.put("groupId", getGroupId());
-        attributes.put("companyId", getCompanyId());
-        attributes.put("userId", getUserId());
-        attributes.put("userName", getUserName());
-        attributes.put("createDate", getCreateDate());
-        attributes.put("modifiedDate", getModifiedDate());
         attributes.put("emp_code", getEmp_code());
-        attributes.put("firstname", getFirstname());
-        attributes.put("middle_name", getMiddle_name());
-        attributes.put("lastname", getLastname());
-        attributes.put("email", getEmail());
         attributes.put("contact_number", getContact_number());
-        attributes.put("nickname", getNickname());
         attributes.put("birthday", getBirthday());
-        attributes.put("gender", getGender());
-        attributes.put("marital_status", getMarital_status());
-        attributes.put("status", getStatus());
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("joined_date", getJoined_date());
         attributes.put("subUnitId", getSubUnitId());
+        attributes.put("titles_id", getTitles_id());
+        attributes.put("level_id", getLevel_id());
+        attributes.put("promoted_date", getPromoted_date());
+        attributes.put("labour_contract_signed_date",
+            getLabour_contract_signed_date());
+        attributes.put("labour_contract_expired_date",
+            getLabour_contract_expired_date());
+        attributes.put("labour_contract_type", getLabour_contract_type());
+        attributes.put("gender", getGender());
+        attributes.put("place_of_birth", getPlace_of_birth());
+        attributes.put("education", getEducation());
+        attributes.put("education_specialize", getEducation_specialize());
+        attributes.put("universityId", getUniversityId());
+        attributes.put("marital_status", getMarital_status());
+        attributes.put("identityCardNo", getIdentityCardNo());
+        attributes.put("issued_date", getIssued_date());
+        attributes.put("issued_place", getIssued_place());
+        attributes.put("addressId", getAddressId());
+        attributes.put("company_email", getCompany_email());
+        attributes.put("personal_tax_code", getPersonal_tax_code());
+        attributes.put("number_of_dependents", getNumber_of_dependents());
+        attributes.put("dependent_names", getDependent_names());
+        attributes.put("social_insurance_no", getSocial_insurance_no());
+        attributes.put("health_insurance_no", getHealth_insurance_no());
+        attributes.put("bank_account_no", getBank_account_no());
+        attributes.put("bank_branch_name", getBank_branch_name());
+        attributes.put("base_wage_rates", getBase_wage_rates());
+        attributes.put("position_wage_rates", getPosition_wage_rates());
+        attributes.put("capacity_salary", getCapacity_salary());
+        attributes.put("total_salary", getTotal_salary());
+        attributes.put("bonus", getBonus());
+        attributes.put("resigned_date", getResigned_date());
+        attributes.put("employee_userId", getEmployee_userId());
+        attributes.put("groupId", getGroupId());
+        attributes.put("companyId", getCompanyId());
+        attributes.put("userId", getUserId());
+        attributes.put("createDate", getCreateDate());
+        attributes.put("modifiedDate", getModifiedDate());
+        attributes.put("isDeleted", getIsDeleted());
 
         return attributes;
     }
@@ -254,6 +338,236 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
         if (employeeId != null) {
             setEmployeeId(employeeId);
+        }
+
+        String emp_code = (String) attributes.get("emp_code");
+
+        if (emp_code != null) {
+            setEmp_code(emp_code);
+        }
+
+        String contact_number = (String) attributes.get("contact_number");
+
+        if (contact_number != null) {
+            setContact_number(contact_number);
+        }
+
+        Date birthday = (Date) attributes.get("birthday");
+
+        if (birthday != null) {
+            setBirthday(birthday);
+        }
+
+        Long jobtitleId = (Long) attributes.get("jobtitleId");
+
+        if (jobtitleId != null) {
+            setJobtitleId(jobtitleId);
+        }
+
+        Date joined_date = (Date) attributes.get("joined_date");
+
+        if (joined_date != null) {
+            setJoined_date(joined_date);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
+        }
+
+        Long titles_id = (Long) attributes.get("titles_id");
+
+        if (titles_id != null) {
+            setTitles_id(titles_id);
+        }
+
+        Long level_id = (Long) attributes.get("level_id");
+
+        if (level_id != null) {
+            setLevel_id(level_id);
+        }
+
+        Date promoted_date = (Date) attributes.get("promoted_date");
+
+        if (promoted_date != null) {
+            setPromoted_date(promoted_date);
+        }
+
+        Date labour_contract_signed_date = (Date) attributes.get(
+                "labour_contract_signed_date");
+
+        if (labour_contract_signed_date != null) {
+            setLabour_contract_signed_date(labour_contract_signed_date);
+        }
+
+        Date labour_contract_expired_date = (Date) attributes.get(
+                "labour_contract_expired_date");
+
+        if (labour_contract_expired_date != null) {
+            setLabour_contract_expired_date(labour_contract_expired_date);
+        }
+
+        String labour_contract_type = (String) attributes.get(
+                "labour_contract_type");
+
+        if (labour_contract_type != null) {
+            setLabour_contract_type(labour_contract_type);
+        }
+
+        String gender = (String) attributes.get("gender");
+
+        if (gender != null) {
+            setGender(gender);
+        }
+
+        String place_of_birth = (String) attributes.get("place_of_birth");
+
+        if (place_of_birth != null) {
+            setPlace_of_birth(place_of_birth);
+        }
+
+        String education = (String) attributes.get("education");
+
+        if (education != null) {
+            setEducation(education);
+        }
+
+        String education_specialize = (String) attributes.get(
+                "education_specialize");
+
+        if (education_specialize != null) {
+            setEducation_specialize(education_specialize);
+        }
+
+        Long universityId = (Long) attributes.get("universityId");
+
+        if (universityId != null) {
+            setUniversityId(universityId);
+        }
+
+        String marital_status = (String) attributes.get("marital_status");
+
+        if (marital_status != null) {
+            setMarital_status(marital_status);
+        }
+
+        String identityCardNo = (String) attributes.get("identityCardNo");
+
+        if (identityCardNo != null) {
+            setIdentityCardNo(identityCardNo);
+        }
+
+        Date issued_date = (Date) attributes.get("issued_date");
+
+        if (issued_date != null) {
+            setIssued_date(issued_date);
+        }
+
+        String issued_place = (String) attributes.get("issued_place");
+
+        if (issued_place != null) {
+            setIssued_place(issued_place);
+        }
+
+        Long addressId = (Long) attributes.get("addressId");
+
+        if (addressId != null) {
+            setAddressId(addressId);
+        }
+
+        String company_email = (String) attributes.get("company_email");
+
+        if (company_email != null) {
+            setCompany_email(company_email);
+        }
+
+        String personal_tax_code = (String) attributes.get("personal_tax_code");
+
+        if (personal_tax_code != null) {
+            setPersonal_tax_code(personal_tax_code);
+        }
+
+        Integer number_of_dependents = (Integer) attributes.get(
+                "number_of_dependents");
+
+        if (number_of_dependents != null) {
+            setNumber_of_dependents(number_of_dependents);
+        }
+
+        String dependent_names = (String) attributes.get("dependent_names");
+
+        if (dependent_names != null) {
+            setDependent_names(dependent_names);
+        }
+
+        String social_insurance_no = (String) attributes.get(
+                "social_insurance_no");
+
+        if (social_insurance_no != null) {
+            setSocial_insurance_no(social_insurance_no);
+        }
+
+        String health_insurance_no = (String) attributes.get(
+                "health_insurance_no");
+
+        if (health_insurance_no != null) {
+            setHealth_insurance_no(health_insurance_no);
+        }
+
+        String bank_account_no = (String) attributes.get("bank_account_no");
+
+        if (bank_account_no != null) {
+            setBank_account_no(bank_account_no);
+        }
+
+        String bank_branch_name = (String) attributes.get("bank_branch_name");
+
+        if (bank_branch_name != null) {
+            setBank_branch_name(bank_branch_name);
+        }
+
+        Double base_wage_rates = (Double) attributes.get("base_wage_rates");
+
+        if (base_wage_rates != null) {
+            setBase_wage_rates(base_wage_rates);
+        }
+
+        Double position_wage_rates = (Double) attributes.get(
+                "position_wage_rates");
+
+        if (position_wage_rates != null) {
+            setPosition_wage_rates(position_wage_rates);
+        }
+
+        Double capacity_salary = (Double) attributes.get("capacity_salary");
+
+        if (capacity_salary != null) {
+            setCapacity_salary(capacity_salary);
+        }
+
+        Double total_salary = (Double) attributes.get("total_salary");
+
+        if (total_salary != null) {
+            setTotal_salary(total_salary);
+        }
+
+        Double bonus = (Double) attributes.get("bonus");
+
+        if (bonus != null) {
+            setBonus(bonus);
+        }
+
+        Date resigned_date = (Date) attributes.get("resigned_date");
+
+        if (resigned_date != null) {
+            setResigned_date(resigned_date);
+        }
+
+        Long employee_userId = (Long) attributes.get("employee_userId");
+
+        if (employee_userId != null) {
+            setEmployee_userId(employee_userId);
         }
 
         Long groupId = (Long) attributes.get("groupId");
@@ -274,12 +588,6 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             setUserId(userId);
         }
 
-        String userName = (String) attributes.get("userName");
-
-        if (userName != null) {
-            setUserName(userName);
-        }
-
         Date createDate = (Date) attributes.get("createDate");
 
         if (createDate != null) {
@@ -292,88 +600,10 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             setModifiedDate(modifiedDate);
         }
 
-        String emp_code = (String) attributes.get("emp_code");
+        Boolean isDeleted = (Boolean) attributes.get("isDeleted");
 
-        if (emp_code != null) {
-            setEmp_code(emp_code);
-        }
-
-        String firstname = (String) attributes.get("firstname");
-
-        if (firstname != null) {
-            setFirstname(firstname);
-        }
-
-        String middle_name = (String) attributes.get("middle_name");
-
-        if (middle_name != null) {
-            setMiddle_name(middle_name);
-        }
-
-        String lastname = (String) attributes.get("lastname");
-
-        if (lastname != null) {
-            setLastname(lastname);
-        }
-
-        String email = (String) attributes.get("email");
-
-        if (email != null) {
-            setEmail(email);
-        }
-
-        String contact_number = (String) attributes.get("contact_number");
-
-        if (contact_number != null) {
-            setContact_number(contact_number);
-        }
-
-        String nickname = (String) attributes.get("nickname");
-
-        if (nickname != null) {
-            setNickname(nickname);
-        }
-
-        Date birthday = (Date) attributes.get("birthday");
-
-        if (birthday != null) {
-            setBirthday(birthday);
-        }
-
-        String gender = (String) attributes.get("gender");
-
-        if (gender != null) {
-            setGender(gender);
-        }
-
-        String marital_status = (String) attributes.get("marital_status");
-
-        if (marital_status != null) {
-            setMarital_status(marital_status);
-        }
-
-        String status = (String) attributes.get("status");
-
-        if (status != null) {
-            setStatus(status);
-        }
-
-        Long jobtitleId = (Long) attributes.get("jobtitleId");
-
-        if (jobtitleId != null) {
-            setJobtitleId(jobtitleId);
-        }
-
-        Date joined_date = (Date) attributes.get("joined_date");
-
-        if (joined_date != null) {
-            setJoined_date(joined_date);
-        }
-
-        Long subUnitId = (Long) attributes.get("subUnitId");
-
-        if (subUnitId != null) {
-            setSubUnitId(subUnitId);
+        if (isDeleted != null) {
+            setIsDeleted(isDeleted);
         }
     }
 
@@ -386,6 +616,482 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
     @Override
     public void setEmployeeId(long employeeId) {
         _employeeId = employeeId;
+    }
+
+    @JSON
+    @Override
+    public String getEmp_code() {
+        if (_emp_code == null) {
+            return StringPool.BLANK;
+        } else {
+            return _emp_code;
+        }
+    }
+
+    @Override
+    public void setEmp_code(String emp_code) {
+        _emp_code = emp_code;
+    }
+
+    @JSON
+    @Override
+    public String getContact_number() {
+        if (_contact_number == null) {
+            return StringPool.BLANK;
+        } else {
+            return _contact_number;
+        }
+    }
+
+    @Override
+    public void setContact_number(String contact_number) {
+        _contact_number = contact_number;
+    }
+
+    @JSON
+    @Override
+    public Date getBirthday() {
+        return _birthday;
+    }
+
+    @Override
+    public void setBirthday(Date birthday) {
+        _birthday = birthday;
+    }
+
+    @JSON
+    @Override
+    public long getJobtitleId() {
+        return _jobtitleId;
+    }
+
+    @Override
+    public void setJobtitleId(long jobtitleId) {
+        _jobtitleId = jobtitleId;
+    }
+
+    @JSON
+    @Override
+    public Date getJoined_date() {
+        return _joined_date;
+    }
+
+    @Override
+    public void setJoined_date(Date joined_date) {
+        _joined_date = joined_date;
+    }
+
+    @JSON
+    @Override
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+    }
+
+    @JSON
+    @Override
+    public long getTitles_id() {
+        return _titles_id;
+    }
+
+    @Override
+    public void setTitles_id(long titles_id) {
+        _titles_id = titles_id;
+    }
+
+    @JSON
+    @Override
+    public long getLevel_id() {
+        return _level_id;
+    }
+
+    @Override
+    public void setLevel_id(long level_id) {
+        _level_id = level_id;
+    }
+
+    @JSON
+    @Override
+    public Date getPromoted_date() {
+        return _promoted_date;
+    }
+
+    @Override
+    public void setPromoted_date(Date promoted_date) {
+        _promoted_date = promoted_date;
+    }
+
+    @JSON
+    @Override
+    public Date getLabour_contract_signed_date() {
+        return _labour_contract_signed_date;
+    }
+
+    @Override
+    public void setLabour_contract_signed_date(Date labour_contract_signed_date) {
+        _labour_contract_signed_date = labour_contract_signed_date;
+    }
+
+    @JSON
+    @Override
+    public Date getLabour_contract_expired_date() {
+        return _labour_contract_expired_date;
+    }
+
+    @Override
+    public void setLabour_contract_expired_date(
+        Date labour_contract_expired_date) {
+        _labour_contract_expired_date = labour_contract_expired_date;
+    }
+
+    @JSON
+    @Override
+    public String getLabour_contract_type() {
+        if (_labour_contract_type == null) {
+            return StringPool.BLANK;
+        } else {
+            return _labour_contract_type;
+        }
+    }
+
+    @Override
+    public void setLabour_contract_type(String labour_contract_type) {
+        _labour_contract_type = labour_contract_type;
+    }
+
+    @JSON
+    @Override
+    public String getGender() {
+        if (_gender == null) {
+            return StringPool.BLANK;
+        } else {
+            return _gender;
+        }
+    }
+
+    @Override
+    public void setGender(String gender) {
+        _gender = gender;
+    }
+
+    @JSON
+    @Override
+    public String getPlace_of_birth() {
+        if (_place_of_birth == null) {
+            return StringPool.BLANK;
+        } else {
+            return _place_of_birth;
+        }
+    }
+
+    @Override
+    public void setPlace_of_birth(String place_of_birth) {
+        _place_of_birth = place_of_birth;
+    }
+
+    @JSON
+    @Override
+    public String getEducation() {
+        if (_education == null) {
+            return StringPool.BLANK;
+        } else {
+            return _education;
+        }
+    }
+
+    @Override
+    public void setEducation(String education) {
+        _education = education;
+    }
+
+    @JSON
+    @Override
+    public String getEducation_specialize() {
+        if (_education_specialize == null) {
+            return StringPool.BLANK;
+        } else {
+            return _education_specialize;
+        }
+    }
+
+    @Override
+    public void setEducation_specialize(String education_specialize) {
+        _education_specialize = education_specialize;
+    }
+
+    @JSON
+    @Override
+    public long getUniversityId() {
+        return _universityId;
+    }
+
+    @Override
+    public void setUniversityId(long universityId) {
+        _universityId = universityId;
+    }
+
+    @JSON
+    @Override
+    public String getMarital_status() {
+        if (_marital_status == null) {
+            return StringPool.BLANK;
+        } else {
+            return _marital_status;
+        }
+    }
+
+    @Override
+    public void setMarital_status(String marital_status) {
+        _marital_status = marital_status;
+    }
+
+    @JSON
+    @Override
+    public String getIdentityCardNo() {
+        if (_identityCardNo == null) {
+            return StringPool.BLANK;
+        } else {
+            return _identityCardNo;
+        }
+    }
+
+    @Override
+    public void setIdentityCardNo(String identityCardNo) {
+        _identityCardNo = identityCardNo;
+    }
+
+    @JSON
+    @Override
+    public Date getIssued_date() {
+        return _issued_date;
+    }
+
+    @Override
+    public void setIssued_date(Date issued_date) {
+        _issued_date = issued_date;
+    }
+
+    @JSON
+    @Override
+    public String getIssued_place() {
+        if (_issued_place == null) {
+            return StringPool.BLANK;
+        } else {
+            return _issued_place;
+        }
+    }
+
+    @Override
+    public void setIssued_place(String issued_place) {
+        _issued_place = issued_place;
+    }
+
+    @JSON
+    @Override
+    public long getAddressId() {
+        return _addressId;
+    }
+
+    @Override
+    public void setAddressId(long addressId) {
+        _addressId = addressId;
+    }
+
+    @JSON
+    @Override
+    public String getCompany_email() {
+        if (_company_email == null) {
+            return StringPool.BLANK;
+        } else {
+            return _company_email;
+        }
+    }
+
+    @Override
+    public void setCompany_email(String company_email) {
+        _company_email = company_email;
+    }
+
+    @JSON
+    @Override
+    public String getPersonal_tax_code() {
+        if (_personal_tax_code == null) {
+            return StringPool.BLANK;
+        } else {
+            return _personal_tax_code;
+        }
+    }
+
+    @Override
+    public void setPersonal_tax_code(String personal_tax_code) {
+        _personal_tax_code = personal_tax_code;
+    }
+
+    @JSON
+    @Override
+    public int getNumber_of_dependents() {
+        return _number_of_dependents;
+    }
+
+    @Override
+    public void setNumber_of_dependents(int number_of_dependents) {
+        _number_of_dependents = number_of_dependents;
+    }
+
+    @JSON
+    @Override
+    public String getDependent_names() {
+        if (_dependent_names == null) {
+            return StringPool.BLANK;
+        } else {
+            return _dependent_names;
+        }
+    }
+
+    @Override
+    public void setDependent_names(String dependent_names) {
+        _dependent_names = dependent_names;
+    }
+
+    @JSON
+    @Override
+    public String getSocial_insurance_no() {
+        if (_social_insurance_no == null) {
+            return StringPool.BLANK;
+        } else {
+            return _social_insurance_no;
+        }
+    }
+
+    @Override
+    public void setSocial_insurance_no(String social_insurance_no) {
+        _social_insurance_no = social_insurance_no;
+    }
+
+    @JSON
+    @Override
+    public String getHealth_insurance_no() {
+        if (_health_insurance_no == null) {
+            return StringPool.BLANK;
+        } else {
+            return _health_insurance_no;
+        }
+    }
+
+    @Override
+    public void setHealth_insurance_no(String health_insurance_no) {
+        _health_insurance_no = health_insurance_no;
+    }
+
+    @JSON
+    @Override
+    public String getBank_account_no() {
+        if (_bank_account_no == null) {
+            return StringPool.BLANK;
+        } else {
+            return _bank_account_no;
+        }
+    }
+
+    @Override
+    public void setBank_account_no(String bank_account_no) {
+        _bank_account_no = bank_account_no;
+    }
+
+    @JSON
+    @Override
+    public String getBank_branch_name() {
+        if (_bank_branch_name == null) {
+            return StringPool.BLANK;
+        } else {
+            return _bank_branch_name;
+        }
+    }
+
+    @Override
+    public void setBank_branch_name(String bank_branch_name) {
+        _bank_branch_name = bank_branch_name;
+    }
+
+    @JSON
+    @Override
+    public double getBase_wage_rates() {
+        return _base_wage_rates;
+    }
+
+    @Override
+    public void setBase_wage_rates(double base_wage_rates) {
+        _base_wage_rates = base_wage_rates;
+    }
+
+    @JSON
+    @Override
+    public double getPosition_wage_rates() {
+        return _position_wage_rates;
+    }
+
+    @Override
+    public void setPosition_wage_rates(double position_wage_rates) {
+        _position_wage_rates = position_wage_rates;
+    }
+
+    @JSON
+    @Override
+    public double getCapacity_salary() {
+        return _capacity_salary;
+    }
+
+    @Override
+    public void setCapacity_salary(double capacity_salary) {
+        _capacity_salary = capacity_salary;
+    }
+
+    @JSON
+    @Override
+    public double getTotal_salary() {
+        return _total_salary;
+    }
+
+    @Override
+    public void setTotal_salary(double total_salary) {
+        _total_salary = total_salary;
+    }
+
+    @JSON
+    @Override
+    public double getBonus() {
+        return _bonus;
+    }
+
+    @Override
+    public void setBonus(double bonus) {
+        _bonus = bonus;
+    }
+
+    @JSON
+    @Override
+    public Date getResigned_date() {
+        return _resigned_date;
+    }
+
+    @Override
+    public void setResigned_date(Date resigned_date) {
+        _resigned_date = resigned_date;
+    }
+
+    @JSON
+    @Override
+    public long getEmployee_userId() {
+        return _employee_userId;
+    }
+
+    @Override
+    public void setEmployee_userId(long employee_userId) {
+        _employee_userId = employee_userId;
     }
 
     @JSON
@@ -433,21 +1139,6 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @JSON
     @Override
-    public String getUserName() {
-        if (_userName == null) {
-            return StringPool.BLANK;
-        } else {
-            return _userName;
-        }
-    }
-
-    @Override
-    public void setUserName(String userName) {
-        _userName = userName;
-    }
-
-    @JSON
-    @Override
     public Date getCreateDate() {
         return _createDate;
     }
@@ -470,230 +1161,18 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @JSON
     @Override
-    public String getEmp_code() {
-        if (_emp_code == null) {
-            return StringPool.BLANK;
-        } else {
-            return _emp_code;
-        }
+    public boolean getIsDeleted() {
+        return _isDeleted;
     }
 
     @Override
-    public void setEmp_code(String emp_code) {
-        _emp_code = emp_code;
-    }
-
-    @JSON
-    @Override
-    public String getFirstname() {
-        if (_firstname == null) {
-            return StringPool.BLANK;
-        } else {
-            return _firstname;
-        }
+    public boolean isIsDeleted() {
+        return _isDeleted;
     }
 
     @Override
-    public void setFirstname(String firstname) {
-        _columnBitmask |= FIRSTNAME_COLUMN_BITMASK;
-
-        if (_originalFirstname == null) {
-            _originalFirstname = _firstname;
-        }
-
-        _firstname = firstname;
-    }
-
-    public String getOriginalFirstname() {
-        return GetterUtil.getString(_originalFirstname);
-    }
-
-    @JSON
-    @Override
-    public String getMiddle_name() {
-        if (_middle_name == null) {
-            return StringPool.BLANK;
-        } else {
-            return _middle_name;
-        }
-    }
-
-    @Override
-    public void setMiddle_name(String middle_name) {
-        _columnBitmask |= MIDDLE_NAME_COLUMN_BITMASK;
-
-        if (_originalMiddle_name == null) {
-            _originalMiddle_name = _middle_name;
-        }
-
-        _middle_name = middle_name;
-    }
-
-    public String getOriginalMiddle_name() {
-        return GetterUtil.getString(_originalMiddle_name);
-    }
-
-    @JSON
-    @Override
-    public String getLastname() {
-        if (_lastname == null) {
-            return StringPool.BLANK;
-        } else {
-            return _lastname;
-        }
-    }
-
-    @Override
-    public void setLastname(String lastname) {
-        _columnBitmask |= LASTNAME_COLUMN_BITMASK;
-
-        if (_originalLastname == null) {
-            _originalLastname = _lastname;
-        }
-
-        _lastname = lastname;
-    }
-
-    public String getOriginalLastname() {
-        return GetterUtil.getString(_originalLastname);
-    }
-
-    @JSON
-    @Override
-    public String getEmail() {
-        if (_email == null) {
-            return StringPool.BLANK;
-        } else {
-            return _email;
-        }
-    }
-
-    @Override
-    public void setEmail(String email) {
-        _email = email;
-    }
-
-    @JSON
-    @Override
-    public String getContact_number() {
-        if (_contact_number == null) {
-            return StringPool.BLANK;
-        } else {
-            return _contact_number;
-        }
-    }
-
-    @Override
-    public void setContact_number(String contact_number) {
-        _contact_number = contact_number;
-    }
-
-    @JSON
-    @Override
-    public String getNickname() {
-        if (_nickname == null) {
-            return StringPool.BLANK;
-        } else {
-            return _nickname;
-        }
-    }
-
-    @Override
-    public void setNickname(String nickname) {
-        _nickname = nickname;
-    }
-
-    @JSON
-    @Override
-    public Date getBirthday() {
-        return _birthday;
-    }
-
-    @Override
-    public void setBirthday(Date birthday) {
-        _birthday = birthday;
-    }
-
-    @JSON
-    @Override
-    public String getGender() {
-        if (_gender == null) {
-            return StringPool.BLANK;
-        } else {
-            return _gender;
-        }
-    }
-
-    @Override
-    public void setGender(String gender) {
-        _gender = gender;
-    }
-
-    @JSON
-    @Override
-    public String getMarital_status() {
-        if (_marital_status == null) {
-            return StringPool.BLANK;
-        } else {
-            return _marital_status;
-        }
-    }
-
-    @Override
-    public void setMarital_status(String marital_status) {
-        _marital_status = marital_status;
-    }
-
-    @JSON
-    @Override
-    public String getStatus() {
-        if (_status == null) {
-            return StringPool.BLANK;
-        } else {
-            return _status;
-        }
-    }
-
-    @Override
-    public void setStatus(String status) {
-        _status = status;
-    }
-
-    @JSON
-    @Override
-    public long getJobtitleId() {
-        return _jobtitleId;
-    }
-
-    @Override
-    public void setJobtitleId(long jobtitleId) {
-        _jobtitleId = jobtitleId;
-    }
-
-    @JSON
-    @Override
-    public Date getJoined_date() {
-        return _joined_date;
-    }
-
-    @Override
-    public void setJoined_date(Date joined_date) {
-        _joined_date = joined_date;
-    }
-
-    @JSON
-    @Override
-    public long getSubUnitId() {
-        return _subUnitId;
-    }
-
-    @Override
-    public void setSubUnitId(long subUnitId) {
-        _subUnitId = subUnitId;
-    }
-
-    public long getColumnBitmask() {
-        return _columnBitmask;
+    public void setIsDeleted(boolean isDeleted) {
+        _isDeleted = isDeleted;
     }
 
     @Override
@@ -724,26 +1203,49 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         EmployeeImpl employeeImpl = new EmployeeImpl();
 
         employeeImpl.setEmployeeId(getEmployeeId());
-        employeeImpl.setGroupId(getGroupId());
-        employeeImpl.setCompanyId(getCompanyId());
-        employeeImpl.setUserId(getUserId());
-        employeeImpl.setUserName(getUserName());
-        employeeImpl.setCreateDate(getCreateDate());
-        employeeImpl.setModifiedDate(getModifiedDate());
         employeeImpl.setEmp_code(getEmp_code());
-        employeeImpl.setFirstname(getFirstname());
-        employeeImpl.setMiddle_name(getMiddle_name());
-        employeeImpl.setLastname(getLastname());
-        employeeImpl.setEmail(getEmail());
         employeeImpl.setContact_number(getContact_number());
-        employeeImpl.setNickname(getNickname());
         employeeImpl.setBirthday(getBirthday());
-        employeeImpl.setGender(getGender());
-        employeeImpl.setMarital_status(getMarital_status());
-        employeeImpl.setStatus(getStatus());
         employeeImpl.setJobtitleId(getJobtitleId());
         employeeImpl.setJoined_date(getJoined_date());
         employeeImpl.setSubUnitId(getSubUnitId());
+        employeeImpl.setTitles_id(getTitles_id());
+        employeeImpl.setLevel_id(getLevel_id());
+        employeeImpl.setPromoted_date(getPromoted_date());
+        employeeImpl.setLabour_contract_signed_date(getLabour_contract_signed_date());
+        employeeImpl.setLabour_contract_expired_date(getLabour_contract_expired_date());
+        employeeImpl.setLabour_contract_type(getLabour_contract_type());
+        employeeImpl.setGender(getGender());
+        employeeImpl.setPlace_of_birth(getPlace_of_birth());
+        employeeImpl.setEducation(getEducation());
+        employeeImpl.setEducation_specialize(getEducation_specialize());
+        employeeImpl.setUniversityId(getUniversityId());
+        employeeImpl.setMarital_status(getMarital_status());
+        employeeImpl.setIdentityCardNo(getIdentityCardNo());
+        employeeImpl.setIssued_date(getIssued_date());
+        employeeImpl.setIssued_place(getIssued_place());
+        employeeImpl.setAddressId(getAddressId());
+        employeeImpl.setCompany_email(getCompany_email());
+        employeeImpl.setPersonal_tax_code(getPersonal_tax_code());
+        employeeImpl.setNumber_of_dependents(getNumber_of_dependents());
+        employeeImpl.setDependent_names(getDependent_names());
+        employeeImpl.setSocial_insurance_no(getSocial_insurance_no());
+        employeeImpl.setHealth_insurance_no(getHealth_insurance_no());
+        employeeImpl.setBank_account_no(getBank_account_no());
+        employeeImpl.setBank_branch_name(getBank_branch_name());
+        employeeImpl.setBase_wage_rates(getBase_wage_rates());
+        employeeImpl.setPosition_wage_rates(getPosition_wage_rates());
+        employeeImpl.setCapacity_salary(getCapacity_salary());
+        employeeImpl.setTotal_salary(getTotal_salary());
+        employeeImpl.setBonus(getBonus());
+        employeeImpl.setResigned_date(getResigned_date());
+        employeeImpl.setEmployee_userId(getEmployee_userId());
+        employeeImpl.setGroupId(getGroupId());
+        employeeImpl.setCompanyId(getCompanyId());
+        employeeImpl.setUserId(getUserId());
+        employeeImpl.setCreateDate(getCreateDate());
+        employeeImpl.setModifiedDate(getModifiedDate());
+        employeeImpl.setIsDeleted(getIsDeleted());
 
         employeeImpl.resetOriginalValues();
 
@@ -791,15 +1293,6 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public void resetOriginalValues() {
-        EmployeeModelImpl employeeModelImpl = this;
-
-        employeeModelImpl._originalFirstname = employeeModelImpl._firstname;
-
-        employeeModelImpl._originalMiddle_name = employeeModelImpl._middle_name;
-
-        employeeModelImpl._originalLastname = employeeModelImpl._lastname;
-
-        employeeModelImpl._columnBitmask = 0;
     }
 
     @Override
@@ -808,19 +1301,233 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
         employeeCacheModel.employeeId = getEmployeeId();
 
+        employeeCacheModel.emp_code = getEmp_code();
+
+        String emp_code = employeeCacheModel.emp_code;
+
+        if ((emp_code != null) && (emp_code.length() == 0)) {
+            employeeCacheModel.emp_code = null;
+        }
+
+        employeeCacheModel.contact_number = getContact_number();
+
+        String contact_number = employeeCacheModel.contact_number;
+
+        if ((contact_number != null) && (contact_number.length() == 0)) {
+            employeeCacheModel.contact_number = null;
+        }
+
+        Date birthday = getBirthday();
+
+        if (birthday != null) {
+            employeeCacheModel.birthday = birthday.getTime();
+        } else {
+            employeeCacheModel.birthday = Long.MIN_VALUE;
+        }
+
+        employeeCacheModel.jobtitleId = getJobtitleId();
+
+        Date joined_date = getJoined_date();
+
+        if (joined_date != null) {
+            employeeCacheModel.joined_date = joined_date.getTime();
+        } else {
+            employeeCacheModel.joined_date = Long.MIN_VALUE;
+        }
+
+        employeeCacheModel.subUnitId = getSubUnitId();
+
+        employeeCacheModel.titles_id = getTitles_id();
+
+        employeeCacheModel.level_id = getLevel_id();
+
+        Date promoted_date = getPromoted_date();
+
+        if (promoted_date != null) {
+            employeeCacheModel.promoted_date = promoted_date.getTime();
+        } else {
+            employeeCacheModel.promoted_date = Long.MIN_VALUE;
+        }
+
+        Date labour_contract_signed_date = getLabour_contract_signed_date();
+
+        if (labour_contract_signed_date != null) {
+            employeeCacheModel.labour_contract_signed_date = labour_contract_signed_date.getTime();
+        } else {
+            employeeCacheModel.labour_contract_signed_date = Long.MIN_VALUE;
+        }
+
+        Date labour_contract_expired_date = getLabour_contract_expired_date();
+
+        if (labour_contract_expired_date != null) {
+            employeeCacheModel.labour_contract_expired_date = labour_contract_expired_date.getTime();
+        } else {
+            employeeCacheModel.labour_contract_expired_date = Long.MIN_VALUE;
+        }
+
+        employeeCacheModel.labour_contract_type = getLabour_contract_type();
+
+        String labour_contract_type = employeeCacheModel.labour_contract_type;
+
+        if ((labour_contract_type != null) &&
+                (labour_contract_type.length() == 0)) {
+            employeeCacheModel.labour_contract_type = null;
+        }
+
+        employeeCacheModel.gender = getGender();
+
+        String gender = employeeCacheModel.gender;
+
+        if ((gender != null) && (gender.length() == 0)) {
+            employeeCacheModel.gender = null;
+        }
+
+        employeeCacheModel.place_of_birth = getPlace_of_birth();
+
+        String place_of_birth = employeeCacheModel.place_of_birth;
+
+        if ((place_of_birth != null) && (place_of_birth.length() == 0)) {
+            employeeCacheModel.place_of_birth = null;
+        }
+
+        employeeCacheModel.education = getEducation();
+
+        String education = employeeCacheModel.education;
+
+        if ((education != null) && (education.length() == 0)) {
+            employeeCacheModel.education = null;
+        }
+
+        employeeCacheModel.education_specialize = getEducation_specialize();
+
+        String education_specialize = employeeCacheModel.education_specialize;
+
+        if ((education_specialize != null) &&
+                (education_specialize.length() == 0)) {
+            employeeCacheModel.education_specialize = null;
+        }
+
+        employeeCacheModel.universityId = getUniversityId();
+
+        employeeCacheModel.marital_status = getMarital_status();
+
+        String marital_status = employeeCacheModel.marital_status;
+
+        if ((marital_status != null) && (marital_status.length() == 0)) {
+            employeeCacheModel.marital_status = null;
+        }
+
+        employeeCacheModel.identityCardNo = getIdentityCardNo();
+
+        String identityCardNo = employeeCacheModel.identityCardNo;
+
+        if ((identityCardNo != null) && (identityCardNo.length() == 0)) {
+            employeeCacheModel.identityCardNo = null;
+        }
+
+        Date issued_date = getIssued_date();
+
+        if (issued_date != null) {
+            employeeCacheModel.issued_date = issued_date.getTime();
+        } else {
+            employeeCacheModel.issued_date = Long.MIN_VALUE;
+        }
+
+        employeeCacheModel.issued_place = getIssued_place();
+
+        String issued_place = employeeCacheModel.issued_place;
+
+        if ((issued_place != null) && (issued_place.length() == 0)) {
+            employeeCacheModel.issued_place = null;
+        }
+
+        employeeCacheModel.addressId = getAddressId();
+
+        employeeCacheModel.company_email = getCompany_email();
+
+        String company_email = employeeCacheModel.company_email;
+
+        if ((company_email != null) && (company_email.length() == 0)) {
+            employeeCacheModel.company_email = null;
+        }
+
+        employeeCacheModel.personal_tax_code = getPersonal_tax_code();
+
+        String personal_tax_code = employeeCacheModel.personal_tax_code;
+
+        if ((personal_tax_code != null) && (personal_tax_code.length() == 0)) {
+            employeeCacheModel.personal_tax_code = null;
+        }
+
+        employeeCacheModel.number_of_dependents = getNumber_of_dependents();
+
+        employeeCacheModel.dependent_names = getDependent_names();
+
+        String dependent_names = employeeCacheModel.dependent_names;
+
+        if ((dependent_names != null) && (dependent_names.length() == 0)) {
+            employeeCacheModel.dependent_names = null;
+        }
+
+        employeeCacheModel.social_insurance_no = getSocial_insurance_no();
+
+        String social_insurance_no = employeeCacheModel.social_insurance_no;
+
+        if ((social_insurance_no != null) &&
+                (social_insurance_no.length() == 0)) {
+            employeeCacheModel.social_insurance_no = null;
+        }
+
+        employeeCacheModel.health_insurance_no = getHealth_insurance_no();
+
+        String health_insurance_no = employeeCacheModel.health_insurance_no;
+
+        if ((health_insurance_no != null) &&
+                (health_insurance_no.length() == 0)) {
+            employeeCacheModel.health_insurance_no = null;
+        }
+
+        employeeCacheModel.bank_account_no = getBank_account_no();
+
+        String bank_account_no = employeeCacheModel.bank_account_no;
+
+        if ((bank_account_no != null) && (bank_account_no.length() == 0)) {
+            employeeCacheModel.bank_account_no = null;
+        }
+
+        employeeCacheModel.bank_branch_name = getBank_branch_name();
+
+        String bank_branch_name = employeeCacheModel.bank_branch_name;
+
+        if ((bank_branch_name != null) && (bank_branch_name.length() == 0)) {
+            employeeCacheModel.bank_branch_name = null;
+        }
+
+        employeeCacheModel.base_wage_rates = getBase_wage_rates();
+
+        employeeCacheModel.position_wage_rates = getPosition_wage_rates();
+
+        employeeCacheModel.capacity_salary = getCapacity_salary();
+
+        employeeCacheModel.total_salary = getTotal_salary();
+
+        employeeCacheModel.bonus = getBonus();
+
+        Date resigned_date = getResigned_date();
+
+        if (resigned_date != null) {
+            employeeCacheModel.resigned_date = resigned_date.getTime();
+        } else {
+            employeeCacheModel.resigned_date = Long.MIN_VALUE;
+        }
+
+        employeeCacheModel.employee_userId = getEmployee_userId();
+
         employeeCacheModel.groupId = getGroupId();
 
         employeeCacheModel.companyId = getCompanyId();
 
         employeeCacheModel.userId = getUserId();
-
-        employeeCacheModel.userName = getUserName();
-
-        String userName = employeeCacheModel.userName;
-
-        if ((userName != null) && (userName.length() == 0)) {
-            employeeCacheModel.userName = null;
-        }
 
         Date createDate = getCreateDate();
 
@@ -838,155 +1545,103 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
             employeeCacheModel.modifiedDate = Long.MIN_VALUE;
         }
 
-        employeeCacheModel.emp_code = getEmp_code();
-
-        String emp_code = employeeCacheModel.emp_code;
-
-        if ((emp_code != null) && (emp_code.length() == 0)) {
-            employeeCacheModel.emp_code = null;
-        }
-
-        employeeCacheModel.firstname = getFirstname();
-
-        String firstname = employeeCacheModel.firstname;
-
-        if ((firstname != null) && (firstname.length() == 0)) {
-            employeeCacheModel.firstname = null;
-        }
-
-        employeeCacheModel.middle_name = getMiddle_name();
-
-        String middle_name = employeeCacheModel.middle_name;
-
-        if ((middle_name != null) && (middle_name.length() == 0)) {
-            employeeCacheModel.middle_name = null;
-        }
-
-        employeeCacheModel.lastname = getLastname();
-
-        String lastname = employeeCacheModel.lastname;
-
-        if ((lastname != null) && (lastname.length() == 0)) {
-            employeeCacheModel.lastname = null;
-        }
-
-        employeeCacheModel.email = getEmail();
-
-        String email = employeeCacheModel.email;
-
-        if ((email != null) && (email.length() == 0)) {
-            employeeCacheModel.email = null;
-        }
-
-        employeeCacheModel.contact_number = getContact_number();
-
-        String contact_number = employeeCacheModel.contact_number;
-
-        if ((contact_number != null) && (contact_number.length() == 0)) {
-            employeeCacheModel.contact_number = null;
-        }
-
-        employeeCacheModel.nickname = getNickname();
-
-        String nickname = employeeCacheModel.nickname;
-
-        if ((nickname != null) && (nickname.length() == 0)) {
-            employeeCacheModel.nickname = null;
-        }
-
-        Date birthday = getBirthday();
-
-        if (birthday != null) {
-            employeeCacheModel.birthday = birthday.getTime();
-        } else {
-            employeeCacheModel.birthday = Long.MIN_VALUE;
-        }
-
-        employeeCacheModel.gender = getGender();
-
-        String gender = employeeCacheModel.gender;
-
-        if ((gender != null) && (gender.length() == 0)) {
-            employeeCacheModel.gender = null;
-        }
-
-        employeeCacheModel.marital_status = getMarital_status();
-
-        String marital_status = employeeCacheModel.marital_status;
-
-        if ((marital_status != null) && (marital_status.length() == 0)) {
-            employeeCacheModel.marital_status = null;
-        }
-
-        employeeCacheModel.status = getStatus();
-
-        String status = employeeCacheModel.status;
-
-        if ((status != null) && (status.length() == 0)) {
-            employeeCacheModel.status = null;
-        }
-
-        employeeCacheModel.jobtitleId = getJobtitleId();
-
-        Date joined_date = getJoined_date();
-
-        if (joined_date != null) {
-            employeeCacheModel.joined_date = joined_date.getTime();
-        } else {
-            employeeCacheModel.joined_date = Long.MIN_VALUE;
-        }
-
-        employeeCacheModel.subUnitId = getSubUnitId();
+        employeeCacheModel.isDeleted = getIsDeleted();
 
         return employeeCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(43);
+        StringBundler sb = new StringBundler(89);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
-        sb.append(", groupId=");
-        sb.append(getGroupId());
-        sb.append(", companyId=");
-        sb.append(getCompanyId());
-        sb.append(", userId=");
-        sb.append(getUserId());
-        sb.append(", userName=");
-        sb.append(getUserName());
-        sb.append(", createDate=");
-        sb.append(getCreateDate());
-        sb.append(", modifiedDate=");
-        sb.append(getModifiedDate());
         sb.append(", emp_code=");
         sb.append(getEmp_code());
-        sb.append(", firstname=");
-        sb.append(getFirstname());
-        sb.append(", middle_name=");
-        sb.append(getMiddle_name());
-        sb.append(", lastname=");
-        sb.append(getLastname());
-        sb.append(", email=");
-        sb.append(getEmail());
         sb.append(", contact_number=");
         sb.append(getContact_number());
-        sb.append(", nickname=");
-        sb.append(getNickname());
         sb.append(", birthday=");
         sb.append(getBirthday());
-        sb.append(", gender=");
-        sb.append(getGender());
-        sb.append(", marital_status=");
-        sb.append(getMarital_status());
-        sb.append(", status=");
-        sb.append(getStatus());
         sb.append(", jobtitleId=");
         sb.append(getJobtitleId());
         sb.append(", joined_date=");
         sb.append(getJoined_date());
         sb.append(", subUnitId=");
         sb.append(getSubUnitId());
+        sb.append(", titles_id=");
+        sb.append(getTitles_id());
+        sb.append(", level_id=");
+        sb.append(getLevel_id());
+        sb.append(", promoted_date=");
+        sb.append(getPromoted_date());
+        sb.append(", labour_contract_signed_date=");
+        sb.append(getLabour_contract_signed_date());
+        sb.append(", labour_contract_expired_date=");
+        sb.append(getLabour_contract_expired_date());
+        sb.append(", labour_contract_type=");
+        sb.append(getLabour_contract_type());
+        sb.append(", gender=");
+        sb.append(getGender());
+        sb.append(", place_of_birth=");
+        sb.append(getPlace_of_birth());
+        sb.append(", education=");
+        sb.append(getEducation());
+        sb.append(", education_specialize=");
+        sb.append(getEducation_specialize());
+        sb.append(", universityId=");
+        sb.append(getUniversityId());
+        sb.append(", marital_status=");
+        sb.append(getMarital_status());
+        sb.append(", identityCardNo=");
+        sb.append(getIdentityCardNo());
+        sb.append(", issued_date=");
+        sb.append(getIssued_date());
+        sb.append(", issued_place=");
+        sb.append(getIssued_place());
+        sb.append(", addressId=");
+        sb.append(getAddressId());
+        sb.append(", company_email=");
+        sb.append(getCompany_email());
+        sb.append(", personal_tax_code=");
+        sb.append(getPersonal_tax_code());
+        sb.append(", number_of_dependents=");
+        sb.append(getNumber_of_dependents());
+        sb.append(", dependent_names=");
+        sb.append(getDependent_names());
+        sb.append(", social_insurance_no=");
+        sb.append(getSocial_insurance_no());
+        sb.append(", health_insurance_no=");
+        sb.append(getHealth_insurance_no());
+        sb.append(", bank_account_no=");
+        sb.append(getBank_account_no());
+        sb.append(", bank_branch_name=");
+        sb.append(getBank_branch_name());
+        sb.append(", base_wage_rates=");
+        sb.append(getBase_wage_rates());
+        sb.append(", position_wage_rates=");
+        sb.append(getPosition_wage_rates());
+        sb.append(", capacity_salary=");
+        sb.append(getCapacity_salary());
+        sb.append(", total_salary=");
+        sb.append(getTotal_salary());
+        sb.append(", bonus=");
+        sb.append(getBonus());
+        sb.append(", resigned_date=");
+        sb.append(getResigned_date());
+        sb.append(", employee_userId=");
+        sb.append(getEmployee_userId());
+        sb.append(", groupId=");
+        sb.append(getGroupId());
+        sb.append(", companyId=");
+        sb.append(getCompanyId());
+        sb.append(", userId=");
+        sb.append(getUserId());
+        sb.append(", createDate=");
+        sb.append(getCreateDate());
+        sb.append(", modifiedDate=");
+        sb.append(getModifiedDate());
+        sb.append(", isDeleted=");
+        sb.append(getIsDeleted());
         sb.append("}");
 
         return sb.toString();
@@ -994,7 +1649,7 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(67);
+        StringBundler sb = new StringBundler(136);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -1003,6 +1658,154 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(
             "<column><column-name>employeeId</column-name><column-value><![CDATA[");
         sb.append(getEmployeeId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>emp_code</column-name><column-value><![CDATA[");
+        sb.append(getEmp_code());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
+        sb.append(getContact_number());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>birthday</column-name><column-value><![CDATA[");
+        sb.append(getBirthday());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
+        sb.append(getJobtitleId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>joined_date</column-name><column-value><![CDATA[");
+        sb.append(getJoined_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
+        sb.append(getSubUnitId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>titles_id</column-name><column-value><![CDATA[");
+        sb.append(getTitles_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>level_id</column-name><column-value><![CDATA[");
+        sb.append(getLevel_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>promoted_date</column-name><column-value><![CDATA[");
+        sb.append(getPromoted_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_signed_date</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_signed_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_expired_date</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_expired_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_type</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_type());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>gender</column-name><column-value><![CDATA[");
+        sb.append(getGender());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>place_of_birth</column-name><column-value><![CDATA[");
+        sb.append(getPlace_of_birth());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>education</column-name><column-value><![CDATA[");
+        sb.append(getEducation());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>education_specialize</column-name><column-value><![CDATA[");
+        sb.append(getEducation_specialize());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>universityId</column-name><column-value><![CDATA[");
+        sb.append(getUniversityId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>marital_status</column-name><column-value><![CDATA[");
+        sb.append(getMarital_status());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>identityCardNo</column-name><column-value><![CDATA[");
+        sb.append(getIdentityCardNo());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>issued_date</column-name><column-value><![CDATA[");
+        sb.append(getIssued_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>issued_place</column-name><column-value><![CDATA[");
+        sb.append(getIssued_place());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>addressId</column-name><column-value><![CDATA[");
+        sb.append(getAddressId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>company_email</column-name><column-value><![CDATA[");
+        sb.append(getCompany_email());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>personal_tax_code</column-name><column-value><![CDATA[");
+        sb.append(getPersonal_tax_code());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>number_of_dependents</column-name><column-value><![CDATA[");
+        sb.append(getNumber_of_dependents());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>dependent_names</column-name><column-value><![CDATA[");
+        sb.append(getDependent_names());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>social_insurance_no</column-name><column-value><![CDATA[");
+        sb.append(getSocial_insurance_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>health_insurance_no</column-name><column-value><![CDATA[");
+        sb.append(getHealth_insurance_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bank_account_no</column-name><column-value><![CDATA[");
+        sb.append(getBank_account_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bank_branch_name</column-name><column-value><![CDATA[");
+        sb.append(getBank_branch_name());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>base_wage_rates</column-name><column-value><![CDATA[");
+        sb.append(getBase_wage_rates());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>position_wage_rates</column-name><column-value><![CDATA[");
+        sb.append(getPosition_wage_rates());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>capacity_salary</column-name><column-value><![CDATA[");
+        sb.append(getCapacity_salary());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>total_salary</column-name><column-value><![CDATA[");
+        sb.append(getTotal_salary());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bonus</column-name><column-value><![CDATA[");
+        sb.append(getBonus());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>resigned_date</column-name><column-value><![CDATA[");
+        sb.append(getResigned_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>employee_userId</column-name><column-value><![CDATA[");
+        sb.append(getEmployee_userId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -1017,10 +1820,6 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(getUserId());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>userName</column-name><column-value><![CDATA[");
-        sb.append(getUserName());
-        sb.append("]]></column-value></column>");
-        sb.append(
             "<column><column-name>createDate</column-name><column-value><![CDATA[");
         sb.append(getCreateDate());
         sb.append("]]></column-value></column>");
@@ -1029,60 +1828,8 @@ public class EmployeeModelImpl extends BaseModelImpl<Employee>
         sb.append(getModifiedDate());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>emp_code</column-name><column-value><![CDATA[");
-        sb.append(getEmp_code());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>firstname</column-name><column-value><![CDATA[");
-        sb.append(getFirstname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>middle_name</column-name><column-value><![CDATA[");
-        sb.append(getMiddle_name());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>lastname</column-name><column-value><![CDATA[");
-        sb.append(getLastname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>email</column-name><column-value><![CDATA[");
-        sb.append(getEmail());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
-        sb.append(getContact_number());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>nickname</column-name><column-value><![CDATA[");
-        sb.append(getNickname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>birthday</column-name><column-value><![CDATA[");
-        sb.append(getBirthday());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>gender</column-name><column-value><![CDATA[");
-        sb.append(getGender());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>marital_status</column-name><column-value><![CDATA[");
-        sb.append(getMarital_status());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>status</column-name><column-value><![CDATA[");
-        sb.append(getStatus());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
-        sb.append(getJobtitleId());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>joined_date</column-name><column-value><![CDATA[");
-        sb.append(getJoined_date());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
-        sb.append(getSubUnitId());
+            "<column><column-name>isDeleted</column-name><column-value><![CDATA[");
+        sb.append(getIsDeleted());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

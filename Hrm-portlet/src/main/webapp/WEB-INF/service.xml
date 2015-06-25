@@ -217,9 +217,6 @@
         <column name="emp_code" type="String"></column>
 
 		<!-- Audit fields -->
-		<column name="firstname" type="String"></column>
-		<column name="middle_name" type="String"></column>
-		<column name="lastname" type="String"></column>
 		<column name="contact_number" type="String"></column>
 		<column name="birthday" type="Date"></column>
 		<column name="jobtitleId" type="long"></column>
@@ -234,21 +231,19 @@
         <column name="gender" type="String"></column>
         <column name="place_of_birth" type="String"></column>
         <column name="education" type="String"></column>
-        <column name="education_major" type="String"></column>
+        <column name="education_specialize" type="String"></column>
         <column name="universityId" type="long"></column>
         <column name="marital_status" type="String"></column>
         <column name="identityCardNo" type="String"></column>
         <column name="issued_date" type="Date"></column>
         <column name="issued_place" type="String"></column>
-        <column name="permanent_address" type="String"></column>
-        <column name="temporary_residence_address" type="String"></column>
-        <column name="email" type="String"></column>
+        <column name="addressId" type="long"></column>
         <column name="company_email" type="String"></column>
         <column name="personal_tax_code" type="String"></column>
         <column name="number_of_dependents" type="int"></column>
         <column name="dependent_names" type="String"></column>
-        <column name="social_insurrance_no" type="String"></column>
-        <column name="health_insurrance_no" type="String"></column>
+        <column name="social_insurance_no" type="String"></column>
+        <column name="health_insurance_no" type="String"></column>
         <column name="bank_account_no" type="String"></column>
         <column name="bank_branch_name" type="String"></column>
         <column name="base_wage_rates" type="double"></column>
@@ -257,18 +252,13 @@
         <column name="total_salary" type="double"></column>
         <column name="bonus" type="double"></column>
         <column name="resigned_date" type="Date"></column>
+        <column name="employee_userId" type="long"></column>
         <column name="groupId" type="long"></column>
         <column name="companyId" type="long"></column>
         <column name="userId" type="long"></column>
-        <column name="userName" type="String"></column>
         <column name="createDate" type="Date"></column>
         <column name="modifiedDate" type="Date"></column>
         <column name="isDeleted" type="boolean"></column>
-        <finder name="Name" return-type="Collection">
-            <finder-column name="firstname" comparator="LIKE" arrayable-operator="OR"></finder-column>
-            <finder-column name="middle_name" comparator="LIKE" arrayable-operator="OR"></finder-column>
-            <finder-column name="lastname" comparator="LIKE"></finder-column>
-        </finder>
 	</entity>
 	<entity name="Location" local-service="true">
 
@@ -399,6 +389,26 @@
 
 		<!-- Group instance -->
         <column name="name" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="University" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="universityId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="name" type="String"></column>
+        <column name="code" type="String"></column>
+        <column name="tel_fax" type="String"></column>
 
 		<column name="groupId" type="long"></column>
 

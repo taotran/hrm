@@ -22,27 +22,50 @@ import java.util.Map;
 
 public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     private long _employeeId;
+    private String _emp_code;
+    private String _contact_number;
+    private Date _birthday;
+    private long _jobtitleId;
+    private Date _joined_date;
+    private long _subUnitId;
+    private long _titles_id;
+    private long _level_id;
+    private Date _promoted_date;
+    private Date _labour_contract_signed_date;
+    private Date _labour_contract_expired_date;
+    private String _labour_contract_type;
+    private String _gender;
+    private String _place_of_birth;
+    private String _education;
+    private String _education_specialize;
+    private long _universityId;
+    private String _marital_status;
+    private String _identityCardNo;
+    private Date _issued_date;
+    private String _issued_place;
+    private long _addressId;
+    private String _company_email;
+    private String _personal_tax_code;
+    private int _number_of_dependents;
+    private String _dependent_names;
+    private String _social_insurance_no;
+    private String _health_insurance_no;
+    private String _bank_account_no;
+    private String _bank_branch_name;
+    private double _base_wage_rates;
+    private double _position_wage_rates;
+    private double _capacity_salary;
+    private double _total_salary;
+    private double _bonus;
+    private Date _resigned_date;
+    private long _employee_userId;
     private long _groupId;
     private long _companyId;
     private long _userId;
     private String _userUuid;
-    private String _userName;
     private Date _createDate;
     private Date _modifiedDate;
-    private String _emp_code;
-    private String _firstname;
-    private String _middle_name;
-    private String _lastname;
-    private String _email;
-    private String _contact_number;
-    private String _nickname;
-    private Date _birthday;
-    private String _gender;
-    private String _marital_status;
-    private String _status;
-    private long _jobtitleId;
-    private Date _joined_date;
-    private long _subUnitId;
+    private boolean _isDeleted;
     private BaseModel<?> _employeeRemoteModel;
     private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.service.ClpSerializer.class;
 
@@ -84,26 +107,51 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         Map<String, Object> attributes = new HashMap<String, Object>();
 
         attributes.put("employeeId", getEmployeeId());
-        attributes.put("groupId", getGroupId());
-        attributes.put("companyId", getCompanyId());
-        attributes.put("userId", getUserId());
-        attributes.put("userName", getUserName());
-        attributes.put("createDate", getCreateDate());
-        attributes.put("modifiedDate", getModifiedDate());
         attributes.put("emp_code", getEmp_code());
-        attributes.put("firstname", getFirstname());
-        attributes.put("middle_name", getMiddle_name());
-        attributes.put("lastname", getLastname());
-        attributes.put("email", getEmail());
         attributes.put("contact_number", getContact_number());
-        attributes.put("nickname", getNickname());
         attributes.put("birthday", getBirthday());
-        attributes.put("gender", getGender());
-        attributes.put("marital_status", getMarital_status());
-        attributes.put("status", getStatus());
         attributes.put("jobtitleId", getJobtitleId());
         attributes.put("joined_date", getJoined_date());
         attributes.put("subUnitId", getSubUnitId());
+        attributes.put("titles_id", getTitles_id());
+        attributes.put("level_id", getLevel_id());
+        attributes.put("promoted_date", getPromoted_date());
+        attributes.put("labour_contract_signed_date",
+            getLabour_contract_signed_date());
+        attributes.put("labour_contract_expired_date",
+            getLabour_contract_expired_date());
+        attributes.put("labour_contract_type", getLabour_contract_type());
+        attributes.put("gender", getGender());
+        attributes.put("place_of_birth", getPlace_of_birth());
+        attributes.put("education", getEducation());
+        attributes.put("education_specialize", getEducation_specialize());
+        attributes.put("universityId", getUniversityId());
+        attributes.put("marital_status", getMarital_status());
+        attributes.put("identityCardNo", getIdentityCardNo());
+        attributes.put("issued_date", getIssued_date());
+        attributes.put("issued_place", getIssued_place());
+        attributes.put("addressId", getAddressId());
+        attributes.put("company_email", getCompany_email());
+        attributes.put("personal_tax_code", getPersonal_tax_code());
+        attributes.put("number_of_dependents", getNumber_of_dependents());
+        attributes.put("dependent_names", getDependent_names());
+        attributes.put("social_insurance_no", getSocial_insurance_no());
+        attributes.put("health_insurance_no", getHealth_insurance_no());
+        attributes.put("bank_account_no", getBank_account_no());
+        attributes.put("bank_branch_name", getBank_branch_name());
+        attributes.put("base_wage_rates", getBase_wage_rates());
+        attributes.put("position_wage_rates", getPosition_wage_rates());
+        attributes.put("capacity_salary", getCapacity_salary());
+        attributes.put("total_salary", getTotal_salary());
+        attributes.put("bonus", getBonus());
+        attributes.put("resigned_date", getResigned_date());
+        attributes.put("employee_userId", getEmployee_userId());
+        attributes.put("groupId", getGroupId());
+        attributes.put("companyId", getCompanyId());
+        attributes.put("userId", getUserId());
+        attributes.put("createDate", getCreateDate());
+        attributes.put("modifiedDate", getModifiedDate());
+        attributes.put("isDeleted", getIsDeleted());
 
         return attributes;
     }
@@ -114,6 +162,236 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
         if (employeeId != null) {
             setEmployeeId(employeeId);
+        }
+
+        String emp_code = (String) attributes.get("emp_code");
+
+        if (emp_code != null) {
+            setEmp_code(emp_code);
+        }
+
+        String contact_number = (String) attributes.get("contact_number");
+
+        if (contact_number != null) {
+            setContact_number(contact_number);
+        }
+
+        Date birthday = (Date) attributes.get("birthday");
+
+        if (birthday != null) {
+            setBirthday(birthday);
+        }
+
+        Long jobtitleId = (Long) attributes.get("jobtitleId");
+
+        if (jobtitleId != null) {
+            setJobtitleId(jobtitleId);
+        }
+
+        Date joined_date = (Date) attributes.get("joined_date");
+
+        if (joined_date != null) {
+            setJoined_date(joined_date);
+        }
+
+        Long subUnitId = (Long) attributes.get("subUnitId");
+
+        if (subUnitId != null) {
+            setSubUnitId(subUnitId);
+        }
+
+        Long titles_id = (Long) attributes.get("titles_id");
+
+        if (titles_id != null) {
+            setTitles_id(titles_id);
+        }
+
+        Long level_id = (Long) attributes.get("level_id");
+
+        if (level_id != null) {
+            setLevel_id(level_id);
+        }
+
+        Date promoted_date = (Date) attributes.get("promoted_date");
+
+        if (promoted_date != null) {
+            setPromoted_date(promoted_date);
+        }
+
+        Date labour_contract_signed_date = (Date) attributes.get(
+                "labour_contract_signed_date");
+
+        if (labour_contract_signed_date != null) {
+            setLabour_contract_signed_date(labour_contract_signed_date);
+        }
+
+        Date labour_contract_expired_date = (Date) attributes.get(
+                "labour_contract_expired_date");
+
+        if (labour_contract_expired_date != null) {
+            setLabour_contract_expired_date(labour_contract_expired_date);
+        }
+
+        String labour_contract_type = (String) attributes.get(
+                "labour_contract_type");
+
+        if (labour_contract_type != null) {
+            setLabour_contract_type(labour_contract_type);
+        }
+
+        String gender = (String) attributes.get("gender");
+
+        if (gender != null) {
+            setGender(gender);
+        }
+
+        String place_of_birth = (String) attributes.get("place_of_birth");
+
+        if (place_of_birth != null) {
+            setPlace_of_birth(place_of_birth);
+        }
+
+        String education = (String) attributes.get("education");
+
+        if (education != null) {
+            setEducation(education);
+        }
+
+        String education_specialize = (String) attributes.get(
+                "education_specialize");
+
+        if (education_specialize != null) {
+            setEducation_specialize(education_specialize);
+        }
+
+        Long universityId = (Long) attributes.get("universityId");
+
+        if (universityId != null) {
+            setUniversityId(universityId);
+        }
+
+        String marital_status = (String) attributes.get("marital_status");
+
+        if (marital_status != null) {
+            setMarital_status(marital_status);
+        }
+
+        String identityCardNo = (String) attributes.get("identityCardNo");
+
+        if (identityCardNo != null) {
+            setIdentityCardNo(identityCardNo);
+        }
+
+        Date issued_date = (Date) attributes.get("issued_date");
+
+        if (issued_date != null) {
+            setIssued_date(issued_date);
+        }
+
+        String issued_place = (String) attributes.get("issued_place");
+
+        if (issued_place != null) {
+            setIssued_place(issued_place);
+        }
+
+        Long addressId = (Long) attributes.get("addressId");
+
+        if (addressId != null) {
+            setAddressId(addressId);
+        }
+
+        String company_email = (String) attributes.get("company_email");
+
+        if (company_email != null) {
+            setCompany_email(company_email);
+        }
+
+        String personal_tax_code = (String) attributes.get("personal_tax_code");
+
+        if (personal_tax_code != null) {
+            setPersonal_tax_code(personal_tax_code);
+        }
+
+        Integer number_of_dependents = (Integer) attributes.get(
+                "number_of_dependents");
+
+        if (number_of_dependents != null) {
+            setNumber_of_dependents(number_of_dependents);
+        }
+
+        String dependent_names = (String) attributes.get("dependent_names");
+
+        if (dependent_names != null) {
+            setDependent_names(dependent_names);
+        }
+
+        String social_insurance_no = (String) attributes.get(
+                "social_insurance_no");
+
+        if (social_insurance_no != null) {
+            setSocial_insurance_no(social_insurance_no);
+        }
+
+        String health_insurance_no = (String) attributes.get(
+                "health_insurance_no");
+
+        if (health_insurance_no != null) {
+            setHealth_insurance_no(health_insurance_no);
+        }
+
+        String bank_account_no = (String) attributes.get("bank_account_no");
+
+        if (bank_account_no != null) {
+            setBank_account_no(bank_account_no);
+        }
+
+        String bank_branch_name = (String) attributes.get("bank_branch_name");
+
+        if (bank_branch_name != null) {
+            setBank_branch_name(bank_branch_name);
+        }
+
+        Double base_wage_rates = (Double) attributes.get("base_wage_rates");
+
+        if (base_wage_rates != null) {
+            setBase_wage_rates(base_wage_rates);
+        }
+
+        Double position_wage_rates = (Double) attributes.get(
+                "position_wage_rates");
+
+        if (position_wage_rates != null) {
+            setPosition_wage_rates(position_wage_rates);
+        }
+
+        Double capacity_salary = (Double) attributes.get("capacity_salary");
+
+        if (capacity_salary != null) {
+            setCapacity_salary(capacity_salary);
+        }
+
+        Double total_salary = (Double) attributes.get("total_salary");
+
+        if (total_salary != null) {
+            setTotal_salary(total_salary);
+        }
+
+        Double bonus = (Double) attributes.get("bonus");
+
+        if (bonus != null) {
+            setBonus(bonus);
+        }
+
+        Date resigned_date = (Date) attributes.get("resigned_date");
+
+        if (resigned_date != null) {
+            setResigned_date(resigned_date);
+        }
+
+        Long employee_userId = (Long) attributes.get("employee_userId");
+
+        if (employee_userId != null) {
+            setEmployee_userId(employee_userId);
         }
 
         Long groupId = (Long) attributes.get("groupId");
@@ -134,12 +412,6 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
             setUserId(userId);
         }
 
-        String userName = (String) attributes.get("userName");
-
-        if (userName != null) {
-            setUserName(userName);
-        }
-
         Date createDate = (Date) attributes.get("createDate");
 
         if (createDate != null) {
@@ -152,88 +424,10 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
             setModifiedDate(modifiedDate);
         }
 
-        String emp_code = (String) attributes.get("emp_code");
+        Boolean isDeleted = (Boolean) attributes.get("isDeleted");
 
-        if (emp_code != null) {
-            setEmp_code(emp_code);
-        }
-
-        String firstname = (String) attributes.get("firstname");
-
-        if (firstname != null) {
-            setFirstname(firstname);
-        }
-
-        String middle_name = (String) attributes.get("middle_name");
-
-        if (middle_name != null) {
-            setMiddle_name(middle_name);
-        }
-
-        String lastname = (String) attributes.get("lastname");
-
-        if (lastname != null) {
-            setLastname(lastname);
-        }
-
-        String email = (String) attributes.get("email");
-
-        if (email != null) {
-            setEmail(email);
-        }
-
-        String contact_number = (String) attributes.get("contact_number");
-
-        if (contact_number != null) {
-            setContact_number(contact_number);
-        }
-
-        String nickname = (String) attributes.get("nickname");
-
-        if (nickname != null) {
-            setNickname(nickname);
-        }
-
-        Date birthday = (Date) attributes.get("birthday");
-
-        if (birthday != null) {
-            setBirthday(birthday);
-        }
-
-        String gender = (String) attributes.get("gender");
-
-        if (gender != null) {
-            setGender(gender);
-        }
-
-        String marital_status = (String) attributes.get("marital_status");
-
-        if (marital_status != null) {
-            setMarital_status(marital_status);
-        }
-
-        String status = (String) attributes.get("status");
-
-        if (status != null) {
-            setStatus(status);
-        }
-
-        Long jobtitleId = (Long) attributes.get("jobtitleId");
-
-        if (jobtitleId != null) {
-            setJobtitleId(jobtitleId);
-        }
-
-        Date joined_date = (Date) attributes.get("joined_date");
-
-        if (joined_date != null) {
-            setJoined_date(joined_date);
-        }
-
-        Long subUnitId = (Long) attributes.get("subUnitId");
-
-        if (subUnitId != null) {
-            setSubUnitId(subUnitId);
+        if (isDeleted != null) {
+            setIsDeleted(isDeleted);
         }
     }
 
@@ -253,6 +447,839 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
                 Method method = clazz.getMethod("setEmployeeId", long.class);
 
                 method.invoke(_employeeRemoteModel, employeeId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getEmp_code() {
+        return _emp_code;
+    }
+
+    @Override
+    public void setEmp_code(String emp_code) {
+        _emp_code = emp_code;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setEmp_code", String.class);
+
+                method.invoke(_employeeRemoteModel, emp_code);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getContact_number() {
+        return _contact_number;
+    }
+
+    @Override
+    public void setContact_number(String contact_number) {
+        _contact_number = contact_number;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setContact_number",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, contact_number);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getBirthday() {
+        return _birthday;
+    }
+
+    @Override
+    public void setBirthday(Date birthday) {
+        _birthday = birthday;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setBirthday", Date.class);
+
+                method.invoke(_employeeRemoteModel, birthday);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getJobtitleId() {
+        return _jobtitleId;
+    }
+
+    @Override
+    public void setJobtitleId(long jobtitleId) {
+        _jobtitleId = jobtitleId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setJobtitleId", long.class);
+
+                method.invoke(_employeeRemoteModel, jobtitleId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getJoined_date() {
+        return _joined_date;
+    }
+
+    @Override
+    public void setJoined_date(Date joined_date) {
+        _joined_date = joined_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setJoined_date", Date.class);
+
+                method.invoke(_employeeRemoteModel, joined_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getSubUnitId() {
+        return _subUnitId;
+    }
+
+    @Override
+    public void setSubUnitId(long subUnitId) {
+        _subUnitId = subUnitId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setSubUnitId", long.class);
+
+                method.invoke(_employeeRemoteModel, subUnitId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getTitles_id() {
+        return _titles_id;
+    }
+
+    @Override
+    public void setTitles_id(long titles_id) {
+        _titles_id = titles_id;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setTitles_id", long.class);
+
+                method.invoke(_employeeRemoteModel, titles_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getLevel_id() {
+        return _level_id;
+    }
+
+    @Override
+    public void setLevel_id(long level_id) {
+        _level_id = level_id;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setLevel_id", long.class);
+
+                method.invoke(_employeeRemoteModel, level_id);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getPromoted_date() {
+        return _promoted_date;
+    }
+
+    @Override
+    public void setPromoted_date(Date promoted_date) {
+        _promoted_date = promoted_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setPromoted_date", Date.class);
+
+                method.invoke(_employeeRemoteModel, promoted_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getLabour_contract_signed_date() {
+        return _labour_contract_signed_date;
+    }
+
+    @Override
+    public void setLabour_contract_signed_date(Date labour_contract_signed_date) {
+        _labour_contract_signed_date = labour_contract_signed_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setLabour_contract_signed_date",
+                        Date.class);
+
+                method.invoke(_employeeRemoteModel, labour_contract_signed_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getLabour_contract_expired_date() {
+        return _labour_contract_expired_date;
+    }
+
+    @Override
+    public void setLabour_contract_expired_date(
+        Date labour_contract_expired_date) {
+        _labour_contract_expired_date = labour_contract_expired_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setLabour_contract_expired_date",
+                        Date.class);
+
+                method.invoke(_employeeRemoteModel, labour_contract_expired_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getLabour_contract_type() {
+        return _labour_contract_type;
+    }
+
+    @Override
+    public void setLabour_contract_type(String labour_contract_type) {
+        _labour_contract_type = labour_contract_type;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setLabour_contract_type",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, labour_contract_type);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getGender() {
+        return _gender;
+    }
+
+    @Override
+    public void setGender(String gender) {
+        _gender = gender;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setGender", String.class);
+
+                method.invoke(_employeeRemoteModel, gender);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getPlace_of_birth() {
+        return _place_of_birth;
+    }
+
+    @Override
+    public void setPlace_of_birth(String place_of_birth) {
+        _place_of_birth = place_of_birth;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setPlace_of_birth",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, place_of_birth);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getEducation() {
+        return _education;
+    }
+
+    @Override
+    public void setEducation(String education) {
+        _education = education;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setEducation", String.class);
+
+                method.invoke(_employeeRemoteModel, education);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getEducation_specialize() {
+        return _education_specialize;
+    }
+
+    @Override
+    public void setEducation_specialize(String education_specialize) {
+        _education_specialize = education_specialize;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setEducation_specialize",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, education_specialize);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getUniversityId() {
+        return _universityId;
+    }
+
+    @Override
+    public void setUniversityId(long universityId) {
+        _universityId = universityId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUniversityId", long.class);
+
+                method.invoke(_employeeRemoteModel, universityId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getMarital_status() {
+        return _marital_status;
+    }
+
+    @Override
+    public void setMarital_status(String marital_status) {
+        _marital_status = marital_status;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setMarital_status",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, marital_status);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getIdentityCardNo() {
+        return _identityCardNo;
+    }
+
+    @Override
+    public void setIdentityCardNo(String identityCardNo) {
+        _identityCardNo = identityCardNo;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setIdentityCardNo",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, identityCardNo);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getIssued_date() {
+        return _issued_date;
+    }
+
+    @Override
+    public void setIssued_date(Date issued_date) {
+        _issued_date = issued_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setIssued_date", Date.class);
+
+                method.invoke(_employeeRemoteModel, issued_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getIssued_place() {
+        return _issued_place;
+    }
+
+    @Override
+    public void setIssued_place(String issued_place) {
+        _issued_place = issued_place;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setIssued_place", String.class);
+
+                method.invoke(_employeeRemoteModel, issued_place);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getAddressId() {
+        return _addressId;
+    }
+
+    @Override
+    public void setAddressId(long addressId) {
+        _addressId = addressId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setAddressId", long.class);
+
+                method.invoke(_employeeRemoteModel, addressId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getCompany_email() {
+        return _company_email;
+    }
+
+    @Override
+    public void setCompany_email(String company_email) {
+        _company_email = company_email;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setCompany_email", String.class);
+
+                method.invoke(_employeeRemoteModel, company_email);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getPersonal_tax_code() {
+        return _personal_tax_code;
+    }
+
+    @Override
+    public void setPersonal_tax_code(String personal_tax_code) {
+        _personal_tax_code = personal_tax_code;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setPersonal_tax_code",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, personal_tax_code);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public int getNumber_of_dependents() {
+        return _number_of_dependents;
+    }
+
+    @Override
+    public void setNumber_of_dependents(int number_of_dependents) {
+        _number_of_dependents = number_of_dependents;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setNumber_of_dependents",
+                        int.class);
+
+                method.invoke(_employeeRemoteModel, number_of_dependents);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getDependent_names() {
+        return _dependent_names;
+    }
+
+    @Override
+    public void setDependent_names(String dependent_names) {
+        _dependent_names = dependent_names;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setDependent_names",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, dependent_names);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getSocial_insurance_no() {
+        return _social_insurance_no;
+    }
+
+    @Override
+    public void setSocial_insurance_no(String social_insurance_no) {
+        _social_insurance_no = social_insurance_no;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setSocial_insurance_no",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, social_insurance_no);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getHealth_insurance_no() {
+        return _health_insurance_no;
+    }
+
+    @Override
+    public void setHealth_insurance_no(String health_insurance_no) {
+        _health_insurance_no = health_insurance_no;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setHealth_insurance_no",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, health_insurance_no);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getBank_account_no() {
+        return _bank_account_no;
+    }
+
+    @Override
+    public void setBank_account_no(String bank_account_no) {
+        _bank_account_no = bank_account_no;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setBank_account_no",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, bank_account_no);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getBank_branch_name() {
+        return _bank_branch_name;
+    }
+
+    @Override
+    public void setBank_branch_name(String bank_branch_name) {
+        _bank_branch_name = bank_branch_name;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setBank_branch_name",
+                        String.class);
+
+                method.invoke(_employeeRemoteModel, bank_branch_name);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public double getBase_wage_rates() {
+        return _base_wage_rates;
+    }
+
+    @Override
+    public void setBase_wage_rates(double base_wage_rates) {
+        _base_wage_rates = base_wage_rates;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setBase_wage_rates",
+                        double.class);
+
+                method.invoke(_employeeRemoteModel, base_wage_rates);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public double getPosition_wage_rates() {
+        return _position_wage_rates;
+    }
+
+    @Override
+    public void setPosition_wage_rates(double position_wage_rates) {
+        _position_wage_rates = position_wage_rates;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setPosition_wage_rates",
+                        double.class);
+
+                method.invoke(_employeeRemoteModel, position_wage_rates);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public double getCapacity_salary() {
+        return _capacity_salary;
+    }
+
+    @Override
+    public void setCapacity_salary(double capacity_salary) {
+        _capacity_salary = capacity_salary;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setCapacity_salary",
+                        double.class);
+
+                method.invoke(_employeeRemoteModel, capacity_salary);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public double getTotal_salary() {
+        return _total_salary;
+    }
+
+    @Override
+    public void setTotal_salary(double total_salary) {
+        _total_salary = total_salary;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setTotal_salary", double.class);
+
+                method.invoke(_employeeRemoteModel, total_salary);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public double getBonus() {
+        return _bonus;
+    }
+
+    @Override
+    public void setBonus(double bonus) {
+        _bonus = bonus;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setBonus", double.class);
+
+                method.invoke(_employeeRemoteModel, bonus);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public Date getResigned_date() {
+        return _resigned_date;
+    }
+
+    @Override
+    public void setResigned_date(Date resigned_date) {
+        _resigned_date = resigned_date;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setResigned_date", Date.class);
+
+                method.invoke(_employeeRemoteModel, resigned_date);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getEmployee_userId() {
+        return _employee_userId;
+    }
+
+    @Override
+    public void setEmployee_userId(long employee_userId) {
+        _employee_userId = employee_userId;
+
+        if (_employeeRemoteModel != null) {
+            try {
+                Class<?> clazz = _employeeRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setEmployee_userId", long.class);
+
+                method.invoke(_employeeRemoteModel, employee_userId);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -336,28 +1363,6 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     }
 
     @Override
-    public String getUserName() {
-        return _userName;
-    }
-
-    @Override
-    public void setUserName(String userName) {
-        _userName = userName;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setUserName", String.class);
-
-                method.invoke(_employeeRemoteModel, userName);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
     public Date getCreateDate() {
         return _createDate;
     }
@@ -402,309 +1407,26 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
     }
 
     @Override
-    public String getEmp_code() {
-        return _emp_code;
+    public boolean getIsDeleted() {
+        return _isDeleted;
     }
 
     @Override
-    public void setEmp_code(String emp_code) {
-        _emp_code = emp_code;
+    public boolean isIsDeleted() {
+        return _isDeleted;
+    }
+
+    @Override
+    public void setIsDeleted(boolean isDeleted) {
+        _isDeleted = isDeleted;
 
         if (_employeeRemoteModel != null) {
             try {
                 Class<?> clazz = _employeeRemoteModel.getClass();
 
-                Method method = clazz.getMethod("setEmp_code", String.class);
+                Method method = clazz.getMethod("setIsDeleted", boolean.class);
 
-                method.invoke(_employeeRemoteModel, emp_code);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getFirstname() {
-        return _firstname;
-    }
-
-    @Override
-    public void setFirstname(String firstname) {
-        _firstname = firstname;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setFirstname", String.class);
-
-                method.invoke(_employeeRemoteModel, firstname);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getMiddle_name() {
-        return _middle_name;
-    }
-
-    @Override
-    public void setMiddle_name(String middle_name) {
-        _middle_name = middle_name;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setMiddle_name", String.class);
-
-                method.invoke(_employeeRemoteModel, middle_name);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getLastname() {
-        return _lastname;
-    }
-
-    @Override
-    public void setLastname(String lastname) {
-        _lastname = lastname;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setLastname", String.class);
-
-                method.invoke(_employeeRemoteModel, lastname);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getEmail() {
-        return _email;
-    }
-
-    @Override
-    public void setEmail(String email) {
-        _email = email;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setEmail", String.class);
-
-                method.invoke(_employeeRemoteModel, email);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getContact_number() {
-        return _contact_number;
-    }
-
-    @Override
-    public void setContact_number(String contact_number) {
-        _contact_number = contact_number;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setContact_number",
-                        String.class);
-
-                method.invoke(_employeeRemoteModel, contact_number);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getNickname() {
-        return _nickname;
-    }
-
-    @Override
-    public void setNickname(String nickname) {
-        _nickname = nickname;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setNickname", String.class);
-
-                method.invoke(_employeeRemoteModel, nickname);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public Date getBirthday() {
-        return _birthday;
-    }
-
-    @Override
-    public void setBirthday(Date birthday) {
-        _birthday = birthday;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setBirthday", Date.class);
-
-                method.invoke(_employeeRemoteModel, birthday);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getGender() {
-        return _gender;
-    }
-
-    @Override
-    public void setGender(String gender) {
-        _gender = gender;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setGender", String.class);
-
-                method.invoke(_employeeRemoteModel, gender);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getMarital_status() {
-        return _marital_status;
-    }
-
-    @Override
-    public void setMarital_status(String marital_status) {
-        _marital_status = marital_status;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setMarital_status",
-                        String.class);
-
-                method.invoke(_employeeRemoteModel, marital_status);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public String getStatus() {
-        return _status;
-    }
-
-    @Override
-    public void setStatus(String status) {
-        _status = status;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setStatus", String.class);
-
-                method.invoke(_employeeRemoteModel, status);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public long getJobtitleId() {
-        return _jobtitleId;
-    }
-
-    @Override
-    public void setJobtitleId(long jobtitleId) {
-        _jobtitleId = jobtitleId;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setJobtitleId", long.class);
-
-                method.invoke(_employeeRemoteModel, jobtitleId);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public Date getJoined_date() {
-        return _joined_date;
-    }
-
-    @Override
-    public void setJoined_date(Date joined_date) {
-        _joined_date = joined_date;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setJoined_date", Date.class);
-
-                method.invoke(_employeeRemoteModel, joined_date);
-            } catch (Exception e) {
-                throw new UnsupportedOperationException(e);
-            }
-        }
-    }
-
-    @Override
-    public long getSubUnitId() {
-        return _subUnitId;
-    }
-
-    @Override
-    public void setSubUnitId(long subUnitId) {
-        _subUnitId = subUnitId;
-
-        if (_employeeRemoteModel != null) {
-            try {
-                Class<?> clazz = _employeeRemoteModel.getClass();
-
-                Method method = clazz.getMethod("setSubUnitId", long.class);
-
-                method.invoke(_employeeRemoteModel, subUnitId);
+                method.invoke(_employeeRemoteModel, isDeleted);
             } catch (Exception e) {
                 throw new UnsupportedOperationException(e);
             }
@@ -779,26 +1501,49 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         EmployeeClp clone = new EmployeeClp();
 
         clone.setEmployeeId(getEmployeeId());
-        clone.setGroupId(getGroupId());
-        clone.setCompanyId(getCompanyId());
-        clone.setUserId(getUserId());
-        clone.setUserName(getUserName());
-        clone.setCreateDate(getCreateDate());
-        clone.setModifiedDate(getModifiedDate());
         clone.setEmp_code(getEmp_code());
-        clone.setFirstname(getFirstname());
-        clone.setMiddle_name(getMiddle_name());
-        clone.setLastname(getLastname());
-        clone.setEmail(getEmail());
         clone.setContact_number(getContact_number());
-        clone.setNickname(getNickname());
         clone.setBirthday(getBirthday());
-        clone.setGender(getGender());
-        clone.setMarital_status(getMarital_status());
-        clone.setStatus(getStatus());
         clone.setJobtitleId(getJobtitleId());
         clone.setJoined_date(getJoined_date());
         clone.setSubUnitId(getSubUnitId());
+        clone.setTitles_id(getTitles_id());
+        clone.setLevel_id(getLevel_id());
+        clone.setPromoted_date(getPromoted_date());
+        clone.setLabour_contract_signed_date(getLabour_contract_signed_date());
+        clone.setLabour_contract_expired_date(getLabour_contract_expired_date());
+        clone.setLabour_contract_type(getLabour_contract_type());
+        clone.setGender(getGender());
+        clone.setPlace_of_birth(getPlace_of_birth());
+        clone.setEducation(getEducation());
+        clone.setEducation_specialize(getEducation_specialize());
+        clone.setUniversityId(getUniversityId());
+        clone.setMarital_status(getMarital_status());
+        clone.setIdentityCardNo(getIdentityCardNo());
+        clone.setIssued_date(getIssued_date());
+        clone.setIssued_place(getIssued_place());
+        clone.setAddressId(getAddressId());
+        clone.setCompany_email(getCompany_email());
+        clone.setPersonal_tax_code(getPersonal_tax_code());
+        clone.setNumber_of_dependents(getNumber_of_dependents());
+        clone.setDependent_names(getDependent_names());
+        clone.setSocial_insurance_no(getSocial_insurance_no());
+        clone.setHealth_insurance_no(getHealth_insurance_no());
+        clone.setBank_account_no(getBank_account_no());
+        clone.setBank_branch_name(getBank_branch_name());
+        clone.setBase_wage_rates(getBase_wage_rates());
+        clone.setPosition_wage_rates(getPosition_wage_rates());
+        clone.setCapacity_salary(getCapacity_salary());
+        clone.setTotal_salary(getTotal_salary());
+        clone.setBonus(getBonus());
+        clone.setResigned_date(getResigned_date());
+        clone.setEmployee_userId(getEmployee_userId());
+        clone.setGroupId(getGroupId());
+        clone.setCompanyId(getCompanyId());
+        clone.setUserId(getUserId());
+        clone.setCreateDate(getCreateDate());
+        clone.setModifiedDate(getModifiedDate());
+        clone.setIsDeleted(getIsDeleted());
 
         return clone;
     }
@@ -848,50 +1593,96 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(43);
+        StringBundler sb = new StringBundler(89);
 
         sb.append("{employeeId=");
         sb.append(getEmployeeId());
-        sb.append(", groupId=");
-        sb.append(getGroupId());
-        sb.append(", companyId=");
-        sb.append(getCompanyId());
-        sb.append(", userId=");
-        sb.append(getUserId());
-        sb.append(", userName=");
-        sb.append(getUserName());
-        sb.append(", createDate=");
-        sb.append(getCreateDate());
-        sb.append(", modifiedDate=");
-        sb.append(getModifiedDate());
         sb.append(", emp_code=");
         sb.append(getEmp_code());
-        sb.append(", firstname=");
-        sb.append(getFirstname());
-        sb.append(", middle_name=");
-        sb.append(getMiddle_name());
-        sb.append(", lastname=");
-        sb.append(getLastname());
-        sb.append(", email=");
-        sb.append(getEmail());
         sb.append(", contact_number=");
         sb.append(getContact_number());
-        sb.append(", nickname=");
-        sb.append(getNickname());
         sb.append(", birthday=");
         sb.append(getBirthday());
-        sb.append(", gender=");
-        sb.append(getGender());
-        sb.append(", marital_status=");
-        sb.append(getMarital_status());
-        sb.append(", status=");
-        sb.append(getStatus());
         sb.append(", jobtitleId=");
         sb.append(getJobtitleId());
         sb.append(", joined_date=");
         sb.append(getJoined_date());
         sb.append(", subUnitId=");
         sb.append(getSubUnitId());
+        sb.append(", titles_id=");
+        sb.append(getTitles_id());
+        sb.append(", level_id=");
+        sb.append(getLevel_id());
+        sb.append(", promoted_date=");
+        sb.append(getPromoted_date());
+        sb.append(", labour_contract_signed_date=");
+        sb.append(getLabour_contract_signed_date());
+        sb.append(", labour_contract_expired_date=");
+        sb.append(getLabour_contract_expired_date());
+        sb.append(", labour_contract_type=");
+        sb.append(getLabour_contract_type());
+        sb.append(", gender=");
+        sb.append(getGender());
+        sb.append(", place_of_birth=");
+        sb.append(getPlace_of_birth());
+        sb.append(", education=");
+        sb.append(getEducation());
+        sb.append(", education_specialize=");
+        sb.append(getEducation_specialize());
+        sb.append(", universityId=");
+        sb.append(getUniversityId());
+        sb.append(", marital_status=");
+        sb.append(getMarital_status());
+        sb.append(", identityCardNo=");
+        sb.append(getIdentityCardNo());
+        sb.append(", issued_date=");
+        sb.append(getIssued_date());
+        sb.append(", issued_place=");
+        sb.append(getIssued_place());
+        sb.append(", addressId=");
+        sb.append(getAddressId());
+        sb.append(", company_email=");
+        sb.append(getCompany_email());
+        sb.append(", personal_tax_code=");
+        sb.append(getPersonal_tax_code());
+        sb.append(", number_of_dependents=");
+        sb.append(getNumber_of_dependents());
+        sb.append(", dependent_names=");
+        sb.append(getDependent_names());
+        sb.append(", social_insurance_no=");
+        sb.append(getSocial_insurance_no());
+        sb.append(", health_insurance_no=");
+        sb.append(getHealth_insurance_no());
+        sb.append(", bank_account_no=");
+        sb.append(getBank_account_no());
+        sb.append(", bank_branch_name=");
+        sb.append(getBank_branch_name());
+        sb.append(", base_wage_rates=");
+        sb.append(getBase_wage_rates());
+        sb.append(", position_wage_rates=");
+        sb.append(getPosition_wage_rates());
+        sb.append(", capacity_salary=");
+        sb.append(getCapacity_salary());
+        sb.append(", total_salary=");
+        sb.append(getTotal_salary());
+        sb.append(", bonus=");
+        sb.append(getBonus());
+        sb.append(", resigned_date=");
+        sb.append(getResigned_date());
+        sb.append(", employee_userId=");
+        sb.append(getEmployee_userId());
+        sb.append(", groupId=");
+        sb.append(getGroupId());
+        sb.append(", companyId=");
+        sb.append(getCompanyId());
+        sb.append(", userId=");
+        sb.append(getUserId());
+        sb.append(", createDate=");
+        sb.append(getCreateDate());
+        sb.append(", modifiedDate=");
+        sb.append(getModifiedDate());
+        sb.append(", isDeleted=");
+        sb.append(getIsDeleted());
         sb.append("}");
 
         return sb.toString();
@@ -899,7 +1690,7 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(67);
+        StringBundler sb = new StringBundler(136);
 
         sb.append("<model><model-name>");
         sb.append("vn.com.ecopharma.hrm.model.Employee");
@@ -908,6 +1699,154 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(
             "<column><column-name>employeeId</column-name><column-value><![CDATA[");
         sb.append(getEmployeeId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>emp_code</column-name><column-value><![CDATA[");
+        sb.append(getEmp_code());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
+        sb.append(getContact_number());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>birthday</column-name><column-value><![CDATA[");
+        sb.append(getBirthday());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
+        sb.append(getJobtitleId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>joined_date</column-name><column-value><![CDATA[");
+        sb.append(getJoined_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
+        sb.append(getSubUnitId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>titles_id</column-name><column-value><![CDATA[");
+        sb.append(getTitles_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>level_id</column-name><column-value><![CDATA[");
+        sb.append(getLevel_id());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>promoted_date</column-name><column-value><![CDATA[");
+        sb.append(getPromoted_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_signed_date</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_signed_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_expired_date</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_expired_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>labour_contract_type</column-name><column-value><![CDATA[");
+        sb.append(getLabour_contract_type());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>gender</column-name><column-value><![CDATA[");
+        sb.append(getGender());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>place_of_birth</column-name><column-value><![CDATA[");
+        sb.append(getPlace_of_birth());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>education</column-name><column-value><![CDATA[");
+        sb.append(getEducation());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>education_specialize</column-name><column-value><![CDATA[");
+        sb.append(getEducation_specialize());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>universityId</column-name><column-value><![CDATA[");
+        sb.append(getUniversityId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>marital_status</column-name><column-value><![CDATA[");
+        sb.append(getMarital_status());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>identityCardNo</column-name><column-value><![CDATA[");
+        sb.append(getIdentityCardNo());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>issued_date</column-name><column-value><![CDATA[");
+        sb.append(getIssued_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>issued_place</column-name><column-value><![CDATA[");
+        sb.append(getIssued_place());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>addressId</column-name><column-value><![CDATA[");
+        sb.append(getAddressId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>company_email</column-name><column-value><![CDATA[");
+        sb.append(getCompany_email());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>personal_tax_code</column-name><column-value><![CDATA[");
+        sb.append(getPersonal_tax_code());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>number_of_dependents</column-name><column-value><![CDATA[");
+        sb.append(getNumber_of_dependents());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>dependent_names</column-name><column-value><![CDATA[");
+        sb.append(getDependent_names());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>social_insurance_no</column-name><column-value><![CDATA[");
+        sb.append(getSocial_insurance_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>health_insurance_no</column-name><column-value><![CDATA[");
+        sb.append(getHealth_insurance_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bank_account_no</column-name><column-value><![CDATA[");
+        sb.append(getBank_account_no());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bank_branch_name</column-name><column-value><![CDATA[");
+        sb.append(getBank_branch_name());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>base_wage_rates</column-name><column-value><![CDATA[");
+        sb.append(getBase_wage_rates());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>position_wage_rates</column-name><column-value><![CDATA[");
+        sb.append(getPosition_wage_rates());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>capacity_salary</column-name><column-value><![CDATA[");
+        sb.append(getCapacity_salary());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>total_salary</column-name><column-value><![CDATA[");
+        sb.append(getTotal_salary());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>bonus</column-name><column-value><![CDATA[");
+        sb.append(getBonus());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>resigned_date</column-name><column-value><![CDATA[");
+        sb.append(getResigned_date());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>employee_userId</column-name><column-value><![CDATA[");
+        sb.append(getEmployee_userId());
         sb.append("]]></column-value></column>");
         sb.append(
             "<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -922,10 +1861,6 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(getUserId());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>userName</column-name><column-value><![CDATA[");
-        sb.append(getUserName());
-        sb.append("]]></column-value></column>");
-        sb.append(
             "<column><column-name>createDate</column-name><column-value><![CDATA[");
         sb.append(getCreateDate());
         sb.append("]]></column-value></column>");
@@ -934,60 +1869,8 @@ public class EmployeeClp extends BaseModelImpl<Employee> implements Employee {
         sb.append(getModifiedDate());
         sb.append("]]></column-value></column>");
         sb.append(
-            "<column><column-name>emp_code</column-name><column-value><![CDATA[");
-        sb.append(getEmp_code());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>firstname</column-name><column-value><![CDATA[");
-        sb.append(getFirstname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>middle_name</column-name><column-value><![CDATA[");
-        sb.append(getMiddle_name());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>lastname</column-name><column-value><![CDATA[");
-        sb.append(getLastname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>email</column-name><column-value><![CDATA[");
-        sb.append(getEmail());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>contact_number</column-name><column-value><![CDATA[");
-        sb.append(getContact_number());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>nickname</column-name><column-value><![CDATA[");
-        sb.append(getNickname());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>birthday</column-name><column-value><![CDATA[");
-        sb.append(getBirthday());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>gender</column-name><column-value><![CDATA[");
-        sb.append(getGender());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>marital_status</column-name><column-value><![CDATA[");
-        sb.append(getMarital_status());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>status</column-name><column-value><![CDATA[");
-        sb.append(getStatus());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>jobtitleId</column-name><column-value><![CDATA[");
-        sb.append(getJobtitleId());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>joined_date</column-name><column-value><![CDATA[");
-        sb.append(getJoined_date());
-        sb.append("]]></column-value></column>");
-        sb.append(
-            "<column><column-name>subUnitId</column-name><column-value><![CDATA[");
-        sb.append(getSubUnitId());
+            "<column><column-name>isDeleted</column-name><column-value><![CDATA[");
+        sb.append(getIsDeleted());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

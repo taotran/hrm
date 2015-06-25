@@ -49,7 +49,7 @@ public class EmployeeFinderImpl extends BasePersistenceImpl<Employee> implements
 		for (Employee e : emps) {
 			final JSONObject obj = new JSONObject();
 			obj.put("id", e.getEmployeeId());
-			obj.put("text", e.getFirstname() + " " + e.getMiddle_name() + " " + e.getLastname());
+			/*obj.put("text", e.getFirstname() + " " + e.getMiddle_name() + " " + e.getLastname());*/
 			result.put(obj);
 		}
 		return result;

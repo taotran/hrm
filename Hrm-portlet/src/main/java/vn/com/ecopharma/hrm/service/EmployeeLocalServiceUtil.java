@@ -281,7 +281,7 @@ public class EmployeeLocalServiceUtil {
         return getService().findAll(start, end, orderByComparator);
     }
 
-    public static vn.com.ecopharma.hrm.model.Employee create(
+    public static vn.com.ecopharma.hrm.model.Employee create1(
         java.lang.String emp_code, java.lang.String firstname,
         java.lang.String middle_name, java.lang.String lastname,
         java.lang.String email, java.lang.String contact_number,
@@ -290,9 +290,59 @@ public class EmployeeLocalServiceUtil {
         long userId, com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService()
-                   .create(emp_code, firstname, middle_name, lastname, email,
+                   .create1(emp_code, firstname, middle_name, lastname, email,
             contact_number, nickname, birthday, gender, jobTitleId,
             joined_date, userId, serviceContext);
+    }
+
+    public static vn.com.ecopharma.hrm.model.Employee addEmployee(
+        long creatorUserId, long companyId, boolean autoPassword,
+        java.lang.String password1, java.lang.String password2,
+        boolean autoScreenName, java.lang.String screenName,
+        java.lang.String emailAddress, long facebookId,
+        java.lang.String openId, java.util.Locale locale,
+        java.lang.String firstName, java.lang.String middleName,
+        java.lang.String lastName, int prefixId, int suffixId, boolean male,
+        int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
+        long[] organizationIds, long[] roleIds, long[] userGroupIds,
+        boolean sendEmail, java.lang.String emp_code,
+        java.lang.String contact_number, long jobtitleId,
+        java.util.Date joined_date, long subUnitId, long titles_id,
+        long level_id, java.util.Date promoted_date,
+        java.util.Date labour_contract_signed_date,
+        java.util.Date labour_contract_expired_date,
+        java.lang.String labour_contract_type, java.lang.String gender,
+        java.lang.String place_of_birth, java.lang.String education,
+        java.lang.String education_specialize, long universityId,
+        java.lang.String marital_status, java.lang.String identityCardNo,
+        java.util.Date issued_date, java.lang.String issued_place,
+        long addressId, java.lang.String company_email,
+        java.lang.String personal_tax_code, int number_of_dependents,
+        java.lang.String dependent_names, java.lang.String social_insurance_no,
+        java.lang.String health_insurance_no, java.lang.String bank_account_no,
+        java.lang.String bank_branch_name, double base_wage_rates,
+        double position_wage_rates, double capacity_salary,
+        double total_salary, double bonus, java.util.Date resigned_date,
+        long emp_userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .addEmployee(creatorUserId, companyId, autoPassword,
+            password1, password2, autoScreenName, screenName, emailAddress,
+            facebookId, openId, locale, firstName, middleName, lastName,
+            prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+            groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
+            emp_code, contact_number, jobtitleId, joined_date, subUnitId,
+            titles_id, level_id, promoted_date, labour_contract_signed_date,
+            labour_contract_expired_date, labour_contract_type, gender,
+            place_of_birth, education, education_specialize, universityId,
+            marital_status, identityCardNo, issued_date, issued_place,
+            addressId, company_email, personal_tax_code, number_of_dependents,
+            dependent_names, social_insurance_no, health_insurance_no,
+            bank_account_no, bank_branch_name, base_wage_rates,
+            position_wage_rates, capacity_salary, total_salary, bonus,
+            resigned_date, emp_userId, serviceContext);
     }
 
     public static vn.com.ecopharma.hrm.model.Employee tranferCandidate(

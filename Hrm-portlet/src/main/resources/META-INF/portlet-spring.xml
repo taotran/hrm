@@ -36,6 +36,10 @@
 	<bean id="vn.com.ecopharma.hrm.service.SubUnitLocalService" class="vn.com.ecopharma.hrm.service.impl.SubUnitLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.SubUnitService" class="vn.com.ecopharma.hrm.service.impl.SubUnitServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistence" class="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.UniversityLocalService" class="vn.com.ecopharma.hrm.service.impl.UniversityLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.UniversityService" class="vn.com.ecopharma.hrm.service.impl.UniversityServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.UniversityPersistence" class="vn.com.ecopharma.hrm.service.persistence.UniversityPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.UniversityFinder" class="vn.com.ecopharma.hrm.service.persistence.UniversityFinderImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyLocalService" class="vn.com.ecopharma.hrm.service.impl.VacancyLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.VacancyService" class="vn.com.ecopharma.hrm.service.impl.VacancyServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.service.persistence.VacancyPersistence" class="vn.com.ecopharma.hrm.service.persistence.VacancyPersistenceImpl" parent="basePersistence" />

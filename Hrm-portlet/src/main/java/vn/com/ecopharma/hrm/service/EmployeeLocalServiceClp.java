@@ -68,6 +68,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     private String[] _methodParameterTypes29;
     private String _methodName30;
     private String[] _methodParameterTypes30;
+    private String _methodName31;
+    private String[] _methodParameterTypes31;
 
     public EmployeeLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -176,7 +178,7 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName22 = "create";
+        _methodName22 = "create1";
 
         _methodParameterTypes22 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
@@ -186,40 +188,62 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName23 = "tranferCandidate";
+        _methodName23 = "addEmployee";
 
         _methodParameterTypes23 = new String[] {
+                "long", "long", "boolean", "java.lang.String",
+                "java.lang.String", "boolean", "java.lang.String",
+                "java.lang.String", "long", "java.lang.String",
+                "java.util.Locale", "java.lang.String", "java.lang.String",
+                "java.lang.String", "int", "int", "boolean", "int", "int", "int",
+                "long[][]", "long[][]", "long[][]", "long[][]", "boolean",
+                "java.lang.String", "java.lang.String", "long", "java.util.Date",
+                "long", "long", "long", "java.util.Date", "java.util.Date",
+                "java.util.Date", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "long", "java.lang.String", "java.lang.String", "java.util.Date",
+                "java.lang.String", "long", "java.lang.String",
+                "java.lang.String", "int", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "double", "double", "double", "double",
+                "double", "java.util.Date", "long",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName24 = "tranferCandidate";
+
+        _methodParameterTypes24 = new String[] {
                 "vn.com.ecopharma.hrm.model.Candidate", "java.lang.String",
                 "java.lang.String", "java.util.Date", "long", "java.util.Date"
             };
 
-        _methodName24 = "delete";
+        _methodName25 = "delete";
 
-        _methodParameterTypes24 = new String[] { "long" };
+        _methodParameterTypes25 = new String[] { "long" };
 
-        _methodName25 = "getListInterviewersStringByIds";
-
-        _methodParameterTypes25 = new String[] { "java.util.List" };
-
-        _methodName26 = "getListInterviewersStringByEmps";
+        _methodName26 = "getListInterviewersStringByIds";
 
         _methodParameterTypes26 = new String[] { "java.util.List" };
 
-        _methodName27 = "findByIds";
+        _methodName27 = "getListInterviewersStringByEmps";
 
         _methodParameterTypes27 = new String[] { "java.util.List" };
 
-        _methodName28 = "filterEmployeeByTermSize";
+        _methodName28 = "findByIds";
 
-        _methodParameterTypes28 = new String[] { "java.lang.String" };
+        _methodParameterTypes28 = new String[] { "java.util.List" };
 
-        _methodName29 = "filterEmployeeByTerm";
+        _methodName29 = "filterEmployeeByTermSize";
 
-        _methodParameterTypes29 = new String[] { "java.lang.String", "int", "int" };
+        _methodParameterTypes29 = new String[] { "java.lang.String" };
 
-        _methodName30 = "countAll";
+        _methodName30 = "filterEmployeeByTerm";
 
-        _methodParameterTypes30 = new String[] {  };
+        _methodParameterTypes30 = new String[] { "java.lang.String", "int", "int" };
+
+        _methodName31 = "countAll";
+
+        _methodParameterTypes31 = new String[] {  };
     }
 
     @Override
@@ -821,7 +845,7 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     }
 
     @Override
-    public vn.com.ecopharma.hrm.model.Employee create(
+    public vn.com.ecopharma.hrm.model.Employee create1(
         java.lang.String emp_code, java.lang.String firstname,
         java.lang.String middle_name, java.lang.String lastname,
         java.lang.String email, java.lang.String contact_number,
@@ -880,6 +904,190 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
     }
 
     @Override
+    public vn.com.ecopharma.hrm.model.Employee addEmployee(long creatorUserId,
+        long companyId, boolean autoPassword, java.lang.String password1,
+        java.lang.String password2, boolean autoScreenName,
+        java.lang.String screenName, java.lang.String emailAddress,
+        long facebookId, java.lang.String openId, java.util.Locale locale,
+        java.lang.String firstName, java.lang.String middleName,
+        java.lang.String lastName, int prefixId, int suffixId, boolean male,
+        int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
+        long[] organizationIds, long[] roleIds, long[] userGroupIds,
+        boolean sendEmail, java.lang.String emp_code,
+        java.lang.String contact_number, long jobtitleId,
+        java.util.Date joined_date, long subUnitId, long titles_id,
+        long level_id, java.util.Date promoted_date,
+        java.util.Date labour_contract_signed_date,
+        java.util.Date labour_contract_expired_date,
+        java.lang.String labour_contract_type, java.lang.String gender,
+        java.lang.String place_of_birth, java.lang.String education,
+        java.lang.String education_specialize, long universityId,
+        java.lang.String marital_status, java.lang.String identityCardNo,
+        java.util.Date issued_date, java.lang.String issued_place,
+        long addressId, java.lang.String company_email,
+        java.lang.String personal_tax_code, int number_of_dependents,
+        java.lang.String dependent_names, java.lang.String social_insurance_no,
+        java.lang.String health_insurance_no, java.lang.String bank_account_no,
+        java.lang.String bank_branch_name, double base_wage_rates,
+        double position_wage_rates, double capacity_salary,
+        double total_salary, double bonus, java.util.Date resigned_date,
+        long emp_userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName23,
+                    _methodParameterTypes23,
+                    new Object[] {
+                        creatorUserId,
+                        
+                    companyId,
+                        
+                    autoPassword,
+                        
+                    ClpSerializer.translateInput(password1),
+                        
+                    ClpSerializer.translateInput(password2),
+                        
+                    autoScreenName,
+                        
+                    ClpSerializer.translateInput(screenName),
+                        
+                    ClpSerializer.translateInput(emailAddress),
+                        
+                    facebookId,
+                        
+                    ClpSerializer.translateInput(openId),
+                        
+                    ClpSerializer.translateInput(locale),
+                        
+                    ClpSerializer.translateInput(firstName),
+                        
+                    ClpSerializer.translateInput(middleName),
+                        
+                    ClpSerializer.translateInput(lastName),
+                        
+                    prefixId,
+                        
+                    suffixId,
+                        
+                    male,
+                        
+                    birthdayMonth,
+                        
+                    birthdayDay,
+                        
+                    birthdayYear,
+                        
+                    ClpSerializer.translateInput(groupIds),
+                        
+                    ClpSerializer.translateInput(organizationIds),
+                        
+                    ClpSerializer.translateInput(roleIds),
+                        
+                    ClpSerializer.translateInput(userGroupIds),
+                        
+                    sendEmail,
+                        
+                    ClpSerializer.translateInput(emp_code),
+                        
+                    ClpSerializer.translateInput(contact_number),
+                        
+                    jobtitleId,
+                        
+                    ClpSerializer.translateInput(joined_date),
+                        
+                    subUnitId,
+                        
+                    titles_id,
+                        
+                    level_id,
+                        
+                    ClpSerializer.translateInput(promoted_date),
+                        
+                    ClpSerializer.translateInput(labour_contract_signed_date),
+                        
+                    ClpSerializer.translateInput(labour_contract_expired_date),
+                        
+                    ClpSerializer.translateInput(labour_contract_type),
+                        
+                    ClpSerializer.translateInput(gender),
+                        
+                    ClpSerializer.translateInput(place_of_birth),
+                        
+                    ClpSerializer.translateInput(education),
+                        
+                    ClpSerializer.translateInput(education_specialize),
+                        
+                    universityId,
+                        
+                    ClpSerializer.translateInput(marital_status),
+                        
+                    ClpSerializer.translateInput(identityCardNo),
+                        
+                    ClpSerializer.translateInput(issued_date),
+                        
+                    ClpSerializer.translateInput(issued_place),
+                        
+                    addressId,
+                        
+                    ClpSerializer.translateInput(company_email),
+                        
+                    ClpSerializer.translateInput(personal_tax_code),
+                        
+                    number_of_dependents,
+                        
+                    ClpSerializer.translateInput(dependent_names),
+                        
+                    ClpSerializer.translateInput(social_insurance_no),
+                        
+                    ClpSerializer.translateInput(health_insurance_no),
+                        
+                    ClpSerializer.translateInput(bank_account_no),
+                        
+                    ClpSerializer.translateInput(bank_branch_name),
+                        
+                    base_wage_rates,
+                        
+                    position_wage_rates,
+                        
+                    capacity_salary,
+                        
+                    total_salary,
+                        
+                    bonus,
+                        
+                    ClpSerializer.translateInput(resigned_date),
+                        
+                    emp_userId,
+                        
+                    ClpSerializer.translateInput(serviceContext)
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (vn.com.ecopharma.hrm.model.Employee) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public vn.com.ecopharma.hrm.model.Employee tranferCandidate(
         vn.com.ecopharma.hrm.model.Candidate candidate,
         java.lang.String emp_code, java.lang.String nickname,
@@ -888,8 +1096,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName23,
-                    _methodParameterTypes23,
+            returnObj = _invokableLocalService.invokeMethod(_methodName24,
+                    _methodParameterTypes24,
                     new Object[] {
                         ClpSerializer.translateInput(candidate),
                         
@@ -927,8 +1135,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
             com.liferay.portal.kernel.exception.SystemException,
             vn.com.ecopharma.hrm.NoSuchVacancyCandidateException {
         try {
-            _invokableLocalService.invokeMethod(_methodName24,
-                _methodParameterTypes24, new Object[] { employeeId });
+            _invokableLocalService.invokeMethod(_methodName25,
+                _methodParameterTypes25, new Object[] { employeeId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -961,8 +1169,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName25,
-                    _methodParameterTypes25,
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26,
                     new Object[] { ClpSerializer.translateInput(ids) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -992,8 +1200,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName26,
-                    _methodParameterTypes26,
+            returnObj = _invokableLocalService.invokeMethod(_methodName27,
+                    _methodParameterTypes27,
                     new Object[] { ClpSerializer.translateInput(emps) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1017,8 +1225,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName27,
-                    _methodParameterTypes27,
+            returnObj = _invokableLocalService.invokeMethod(_methodName28,
+                    _methodParameterTypes28,
                     new Object[] { ClpSerializer.translateInput(ids) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1047,8 +1255,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName28,
-                    _methodParameterTypes28,
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29,
                     new Object[] { ClpSerializer.translateInput(term) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1070,8 +1278,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName29,
-                    _methodParameterTypes29,
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30,
                     new Object[] { ClpSerializer.translateInput(term), start, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1093,8 +1301,8 @@ public class EmployeeLocalServiceClp implements EmployeeLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName30,
-                    _methodParameterTypes30, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName31,
+                    _methodParameterTypes31, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 

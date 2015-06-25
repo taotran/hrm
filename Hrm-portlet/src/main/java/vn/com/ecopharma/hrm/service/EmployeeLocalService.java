@@ -249,7 +249,7 @@ public interface EmployeeLocalService extends BaseLocalService,
         com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
         throws com.liferay.portal.kernel.exception.SystemException;
 
-    public vn.com.ecopharma.hrm.model.Employee create(
+    public vn.com.ecopharma.hrm.model.Employee create1(
         java.lang.String emp_code, java.lang.String firstname,
         java.lang.String middle_name, java.lang.String lastname,
         java.lang.String email, java.lang.String contact_number,
@@ -257,6 +257,38 @@ public interface EmployeeLocalService extends BaseLocalService,
         java.lang.String gender, long jobTitleId, java.util.Date joined_date,
         long userId, com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    public vn.com.ecopharma.hrm.model.Employee addEmployee(long creatorUserId,
+        long companyId, boolean autoPassword, java.lang.String password1,
+        java.lang.String password2, boolean autoScreenName,
+        java.lang.String screenName, java.lang.String emailAddress,
+        long facebookId, java.lang.String openId, java.util.Locale locale,
+        java.lang.String firstName, java.lang.String middleName,
+        java.lang.String lastName, int prefixId, int suffixId, boolean male,
+        int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
+        long[] organizationIds, long[] roleIds, long[] userGroupIds,
+        boolean sendEmail, java.lang.String emp_code,
+        java.lang.String contact_number, long jobtitleId,
+        java.util.Date joined_date, long subUnitId, long titles_id,
+        long level_id, java.util.Date promoted_date,
+        java.util.Date labour_contract_signed_date,
+        java.util.Date labour_contract_expired_date,
+        java.lang.String labour_contract_type, java.lang.String gender,
+        java.lang.String place_of_birth, java.lang.String education,
+        java.lang.String education_specialize, long universityId,
+        java.lang.String marital_status, java.lang.String identityCardNo,
+        java.util.Date issued_date, java.lang.String issued_place,
+        long addressId, java.lang.String company_email,
+        java.lang.String personal_tax_code, int number_of_dependents,
+        java.lang.String dependent_names, java.lang.String social_insurance_no,
+        java.lang.String health_insurance_no, java.lang.String bank_account_no,
+        java.lang.String bank_branch_name, double base_wage_rates,
+        double position_wage_rates, double capacity_salary,
+        double total_salary, double bonus, java.util.Date resigned_date,
+        long emp_userId,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
 
     @java.lang.Deprecated
     public vn.com.ecopharma.hrm.model.Employee tranferCandidate(

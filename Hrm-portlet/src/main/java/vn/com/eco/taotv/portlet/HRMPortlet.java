@@ -13,8 +13,10 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -26,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -62,6 +66,7 @@ import vn.com.ecopharma.hrm.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.SubUnitLocalServiceUtil;
+import vn.com.ecopharma.hrm.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.util.HRMUtil;
@@ -87,15 +92,23 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.CalendarUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -245,6 +258,68 @@ public class HRMPortlet extends MVCPortlet {
 				response.getWriter().print(object);
 
 			}
+			
+			if ("loadRegionData".equalsIgnoreCase(resourceRequestId)) {
+				final List<Region> allRegions = RegionServiceUtil.getRegions(17L, true);
+				final String term = ParamUtil.getString(request, "q");
+				final JSONObject result = new JSONObject();
+				final JSONArray resultArr = new JSONArray();
+				System.out.println("REGIONS SIZE: " + allRegions.size());
+				System.out.println("TERM: " + term);
+				if (term.equalsIgnoreCase("") || term.equalsIgnoreCase("*")) {
+					for (Region r: allRegions) {
+						JSONObject obj = new JSONObject();
+						obj.put("id", r.getRegionId());
+						obj.put("text", r.getName());
+						resultArr.put(obj);
+					}
+				} else {
+					for(Region r: allRegions) {
+						String s = r.getName();
+						System.out.println(HRMUtil.replaceVietnameseLocaleChar(s.toLowerCase()));
+						if (HRMUtil.replaceVietnameseLocaleChar(s.toLowerCase()).contains(term.toLowerCase())) {
+							JSONObject obj = new JSONObject();
+							obj.put("id", r.getRegionId());
+							obj.put("text", r.getName());
+							resultArr.put(obj);
+						}
+					}
+				}
+				System.out.println(resultArr);
+				result.put("aaData", resultArr);
+				JSONServiceUtil.writeJSON(response.getWriter(), result);
+			}
+			
+			if ("filterJobTitleByTerm".equalsIgnoreCase(resourceRequestId)) {
+				final List<JTitle> allJTitles = JTitleLocalServiceUtil.findAll();
+				final String term = ParamUtil.getString(request, "q");
+				final JSONObject result = new JSONObject();
+				final JSONArray resultArr = new JSONArray();
+				System.out.println("REGIONS SIZE: " + allJTitles.size());
+				System.out.println("TERM: " + term);
+				if (term.equalsIgnoreCase("") || term.equalsIgnoreCase("*")) {
+					for (JTitle r: allJTitles) {
+						JSONObject obj = new JSONObject();
+						obj.put("id", r.getJobtitleId());
+						obj.put("text", r.getTitle());
+						resultArr.put(obj);
+					}
+				} else {
+					for(JTitle r: allJTitles) {
+						if (r.getTitle().toLowerCase().contains(term.toLowerCase())) {
+							System.out.println(r.getTitle());
+							JSONObject obj = new JSONObject();
+							obj.put("id", r.getJobtitleId());
+							obj.put("text", r.getTitle());
+							resultArr.put(obj);
+						}
+					}
+				}
+				System.out.println(resultArr);
+				result.put("aaData", resultArr);
+				JSONServiceUtil.writeJSON(response.getWriter(), result);
+			}
+			
 
 		} catch (InterviewScheduleExistedException e) {
 			e.printStackTrace();
@@ -261,6 +336,8 @@ public class HRMPortlet extends MVCPortlet {
 		}
 		super.serveResource(request, response);
 	}
+	
+	
 
 	private void onCandidateServeResourceAction(ResourceRequest request,
 			ResourceResponse response, String resourceRequestId)
@@ -936,36 +1013,137 @@ public class HRMPortlet extends MVCPortlet {
 			long vacancyId = object.get("vacancyId").getAsLong();
 			final SimpleDateFormat sdf = new SimpleDateFormat(
 					FILTER_DATE_FORMAT);
-			final String firstname = object.get("first_name").getAsString();
-			final String middle_name = object.get("middle_name").getAsString();
-			final String lastname = object.get("last_name").getAsString();
-			final String email = object.get("email").getAsString();
-			final String contact_number = object.get("contact_number")
-					.getAsString();
+			final String firstName = object.get("first_name").getAsString();
+			final String middleName = object.get("middle_name").getAsString();
+			final String lastName = object.get("last_name").getAsString();
+			
+			
 			final String gender = object.get("gender").getAsString();
+			final String emailAddress = object.get("email").getAsString();
+			final String company_email = object.get("companyEmail").getAsString();
 			final java.util.Date birthday = sdf.parse(object.get("birthday")
 					.getAsString());
-			final java.util.Date joined_date = sdf.parse(object.get(
-					"joined_date").getAsString());
+			final String contact_number = object.get("contact_number")
+					.getAsString();
+			final long subUnitId = object.get("subUnit").getAsLong();
+			final java.util.Date start_date = sdf.parse(object.get("start_date")
+					.getAsString());
+			
+			final long titlesId = object.get("titlesId").getAsLong();
+			final long levelId = object.get("levelId").getAsLong();
+			final java.util.Date promoted_date = sdf.parse(object.get("promoted_date")
+					.getAsString());
+			
+			final java.util.Date labour_contract_signed_date = sdf.parse(object.get("lc_signed_date")
+					.getAsString());
+			final java.util.Date labour_contract_expired_date = sdf.parse(object.get("lc_expired_date")
+					.getAsString());
+			final String labour_contract_type = object.get("lc_type").getAsString();
+			
+			final String education = object.get("edu").getAsString();
+			final String education_specialize = object.get("edu_spec").getAsString();
+			final long education_university = object.get("edu_uni").getAsLong();
+			
+			final String marital_status = object.get("marital_status").getAsString(); 
+			
+			final String identityCardNo = object.get("identity_no").getAsString(); 
+			final java.util.Date issued_date = sdf.parse(object.get("identity_issued_date").getAsString());
+			final String issued_place = object.get("identity_issued_place").getAsString(); 
+			
+			
+			final String personal_tax_code = object.get("personal_tax_code").getAsString(); 
+			final int number_of_dependents = object.get("no_of_dependents").getAsInt(); 
+			final String dependent_names = object.get("dependent_names").getAsString(); 
+			
+			final String social_insurance_no = object.get("social_ins_code").getAsString(); 
+			final String health_insurance_no = object.get("health_ins_code").getAsString(); 
+			
+			final String bank_account_no = object.get("bank_acc").getAsString(); 
+			final String bank_branch_name = object.get("bank_name").getAsString(); 
+			
+			final double base_wage_rates = object.get("base_wage_rates").getAsDouble(); 
+			final double position_wage_rates = object.get("position_wage_rates").getAsDouble(); 
+			final double capacity_salary = object.get("capacity_salary").getAsDouble(); 
+			final double total_salary = object.get("total_salary").getAsDouble(); 
+			final double bonus = object.get("bonus").getAsDouble(); 
+			
+			final java.util.Date resigned_date = sdf.parse(object.get("e_resigned_date").getAsString()); 
+			
+			/* USER INFORMATION */
+			final String username = object.get("username").getAsString(); 
+			final String password1 = object.get("password1").getAsString(); 
+			final String password2 = object.get("password2").getAsString(); 
+			
+			long creatorUserId = serviceContext.getUserId();
+			long companyId = serviceContext.getCompanyId();
+			boolean autoPassword = false;
+			boolean autoScreenName = false;
+			Locale locale = LocaleUtil.getDefault();
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(birthday);
+			int birthdayMonth = cal.get(Calendar.MONTH);
+			int birthdayDay = cal.get(Calendar.DAY_OF_MONTH);
+			int birthdayYear = cal.get(Calendar.YEAR);
+			
+			boolean sendEmail = false;
+			String emp_code = "ECO";
+			
+			
+/*			EmployeeLocalServiceUtil.addEmployee(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, 
+					username, emailAddress, facebookId, openId, locale, firstName, 
+					middleName, lastName, 0, 0, gender.equalsIgnoreCase("male"), birthdayMonth, birthdayDay, 
+					birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, 
+					sendEmail, emp_code, contact_number, jobtitleId, start_date, subUnitId, 
+					titles_id, level_id, promoted_date, labour_contract_signed_date, labour_contract_expired_date, 
+					labour_contract_type, gender, place_of_birth, education, education_specialize, universityId, marital_status, 
+					identityCardNo, issued_date, issued_place, addressId, company_email, personal_tax_code, number_of_dependents, 
+					dependent_names, social_insurance_no, health_insurance_no, bank_account_no, bank_branch_name, base_wage_rates, 
+					position_wage_rates, capacity_salary, total_salary, bonus, resigned_date, 0, serviceContext);*/
+			
+			EmployeeLocalServiceUtil.addEmployee(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, 
+					username, emailAddress, 0, "", locale, firstName, 
+					middleName, lastName, 0, 0, gender.equalsIgnoreCase("male"), birthdayMonth, birthdayDay, 
+					birthdayYear, new long[]{20192}, null, new long[] {20165}, null, 
+					sendEmail, emp_code, contact_number, 0, start_date, subUnitId, 
+					0, 0, promoted_date, labour_contract_signed_date, labour_contract_expired_date, 
+					labour_contract_type, gender, "POB", education, education_specialize, 0, marital_status, 
+					identityCardNo, issued_date, issued_place, 0, company_email, personal_tax_code, number_of_dependents, 
+					dependent_names, social_insurance_no, health_insurance_no, bank_account_no, bank_branch_name, base_wage_rates, 
+					position_wage_rates, capacity_salary, total_salary, bonus, resigned_date, 0, serviceContext);
+			
 			if (employeeId == -1) {
-				// get jobtitleId from vacancyId
 				long jobTitleId = VacancyLocalServiceUtil.getVacancy(vacancyId)
 						.getJobtitleId();
-				EmployeeLocalServiceUtil.create("EMP", firstname, middle_name,
-						lastname, email, contact_number, "", birthday, gender,
-						jobTitleId, joined_date, userId, serviceContext);
 				final Candidate candidate = CandidateLocalServiceUtil
 						.getCandidate(candidateId);
 				candidate.setCandidate_status(CandidateStatus.HIRE.toString());
 				CandidateLocalServiceUtil.updateCandidate(candidate);
 			} else {
-				// TODO implement for editing
 			}
+			
+			/*EmployeeLocalServiceUtil.addEmployee(serviceContext.getUserId(), serviceContext.getCompanyId(),
+					false, "123", "123", 
+					false, "taotran", "a@a.com", 
+					0, "", LocaleUtil.getDefault(), 
+					"A", "A", "A", 0, 
+					0, true, 9, 23, 1988, 
+					"TestJTitle", new long[]{20192}, null, new long[] {20166}, 
+					null, false, "EMP001", "12345", 
+					0, new Date(System.currentTimeMillis()), 0, 0, 0, 
+					new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 
+					"TEMPORARY", "Male", "Thai Binh", "12/12", "Computer Science", 0, "Single", 
+					"024374362", new Date(System.currentTimeMillis()), "CA TPHCM", 0, "t@t.com", "00001", 1, 
+					"dad", "12345", "45678", "9101112", "VCB", 1000, 
+					10000, 100000, 200000, 15000, new Date(System.currentTimeMillis()), 0, serviceContext);*/
+			
+			
 			response.getWriter().print(new JSONObject());
 		} else if ("filterEmpByName".equalsIgnoreCase(resourceRequestId)) {
 			final JsonObject object = getPOSTJsonObjectFromRequest(request);
 			System.out.println(object);
-		} else if ("getManagerSelectData".equalsIgnoreCase(resourceRequestId)) {
+		} 
+		else if ("getManagerSelectData".equalsIgnoreCase(resourceRequestId)) {
 			String term = ParamUtil.getString(request, "q");
 			Integer iTotalRecords = 0;
 			Integer iTotalDisplayRecords = 0;
@@ -982,6 +1160,34 @@ public class HRMPortlet extends MVCPortlet {
 					.filterEmployeeByTermSize(term);
 			JSONArray resultArr = EmployeeLocalServiceUtil
 					.filterEmployeeByTerm(term, iDisplayStart, iDisplayLength);
+			/*
+			 * JSONArray arr = new JSONArray(); for (Employee e:
+			 * EmployeeLocalServiceUtil.findAll()) { JSONObject obj = new
+			 * JSONObject(); obj.put("id", e.getEmployeeId()); obj.put("text",
+			 * e.getFirstname() + " " + e.getMiddle_name() + " " +
+			 * e.getLastname()); arr.put(obj); }
+			 */
+			
+			
+			JSONObject result = new JSONObject();
+			result.put("iTotalRecords", iTotalRecords);
+			result.put("iTotalDisplayRecords", iTotalDisplayRecords);
+			result.put("aaData", resultArr);
+			response.getWriter().print(result);
+		} else if ("filterUniversitiesByTerm".equalsIgnoreCase(resourceRequestId)) {
+			System.out.println("INSIDE filterUniversitiesByTerm");
+			String term = ParamUtil.getString(request, "q");
+			Integer iTotalRecords = 0;
+			Integer iTotalDisplayRecords = 0;
+			Integer iDisplayStart = ParamUtil.getInteger(request,
+					"iDisplayStart");
+			Integer iDisplayLength = ParamUtil.getInteger(request,
+					"iDisplayLength");
+			iTotalRecords = UniversityLocalServiceUtil.countAll();
+			iTotalDisplayRecords = UniversityLocalServiceUtil
+					.filterUniversitiesByTermSize(term);
+			JSONArray resultArr = UniversityLocalServiceUtil
+					.filterUniversitiesByTerm(term, iDisplayStart, iDisplayLength);
 			/*
 			 * JSONArray arr = new JSONArray(); for (Employee e:
 			 * EmployeeLocalServiceUtil.findAll()) { JSONObject obj = new
@@ -1106,10 +1312,10 @@ public class HRMPortlet extends MVCPortlet {
 
 			for (Employee e : EmployeeLocalServiceUtil.findAll()) {
 				final JSONObject object = new JSONObject();
-				final String fullName = e.getFirstname() + " "
-						+ e.getMiddle_name() + " " + e.getLastname();
+//				final String fullName = e.getFirstname() + " "
+//						+ e.getMiddle_name() + " " + e.getLastname();
 				object.put("employeeId", e.getEmployeeId());
-				object.put("name", fullName);
+//				object.put("name", fullName);
 				eArray.put(object);
 			}
 
@@ -1147,8 +1353,8 @@ public class HRMPortlet extends MVCPortlet {
 			for (Employee e : EmployeeLocalServiceUtil.findAll()) {
 				JSONObject object = new JSONObject();
 				object.put("employeeId", e.getEmployeeId());
-				object.put("employeeName",
-						e.getFirstname() + e.getMiddle_name() + e.getLastname());
+//				object.put("employeeName",
+//						e.getFirstname() + e.getMiddle_name() + e.getLastname());
 				eArray.put(object);
 			}
 			result.put("interviews", iArray);
@@ -1392,6 +1598,7 @@ public class HRMPortlet extends MVCPortlet {
 		object.put("no_of_pos", v.getNo_of_positions());
 		object.put("vacancy_status", v.getVacancy_status());
 		object.put("jTitleId", v.getJobtitleId());
+		object.put("jTitleName", JTitleLocalServiceUtil.getJTitle(v.getJobtitleId()).getTitle());
 		object.put("subUnitId", v.getSubUnitId());
 		if (v.getFileEntryId() != -1) {
 			ThemeDisplay themeDisplay = (ThemeDisplay) request
@@ -1416,10 +1623,10 @@ public class HRMPortlet extends MVCPortlet {
 			final Employee employee = EmployeeLocalServiceUtil
 					.getEmployee(employeeVacancy.getEmployeeId());
 			final JSONObject empObj = new JSONObject();
-			final String fullName = employee.getFirstname() + " "
-					+ employee.getMiddle_name() + " " + employee.getLastname();
+//			final String fullName = employee.getFirstname() + " "
+//					+ employee.getMiddle_name() + " " + employee.getLastname();
 			empObj.put("employeeId", employee.getEmployeeId());
-			empObj.put("name", fullName);
+//			empObj.put("name", fullName);
 			empArr.put(empObj);
 		}
 		object.put("employees", empArr);

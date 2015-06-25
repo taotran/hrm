@@ -60,34 +60,67 @@
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeModelImpl">
 		<attributes>
 			<id name="employeeId" />
+			<basic name="emp_code" />
+			<basic name="contact_number" />
+			<basic name="birthday">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobtitleId" />
+			<basic name="joined_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="subUnitId" />
+			<basic name="titles_id" />
+			<basic name="level_id" />
+			<basic name="promoted_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_signed_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_expired_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_type" />
+			<basic name="gender" />
+			<basic name="place_of_birth" />
+			<basic name="education" />
+			<basic name="education_specialize" />
+			<basic name="universityId" />
+			<basic name="marital_status" />
+			<basic name="identityCardNo" />
+			<basic name="issued_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="issued_place" />
+			<basic name="addressId" />
+			<basic name="company_email" />
+			<basic name="personal_tax_code" />
+			<basic name="number_of_dependents" />
+			<basic name="dependent_names" />
+			<basic name="social_insurance_no" />
+			<basic name="health_insurance_no" />
+			<basic name="bank_account_no" />
+			<basic name="bank_branch_name" />
+			<basic name="base_wage_rates" />
+			<basic name="position_wage_rates" />
+			<basic name="capacity_salary" />
+			<basic name="total_salary" />
+			<basic name="bonus" />
+			<basic name="resigned_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="employee_userId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
-			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="emp_code" />
-			<basic name="firstname" />
-			<basic name="middle_name" />
-			<basic name="lastname" />
-			<basic name="email" />
-			<basic name="contact_number" />
-			<basic name="nickname" />
-			<basic name="birthday">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="gender" />
-			<basic name="marital_status" />
-			<basic name="status" />
-			<basic name="jobtitleId" />
-			<basic name="joined_date">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="subUnitId" />
+			<basic name="isDeleted" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -273,6 +306,29 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.UniversityModelImpl">
+		<attributes>
+			<id name="universityId" />
+			<basic name="name" />
+			<basic name="code">
+				<column name="CODE_" />
+			</basic>
+			<basic name="tel_fax" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.VacancyModelImpl">
 		<attributes>
 			<id name="v_id" />
@@ -362,6 +418,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.SubUnitImpl" name="SubUnit">
 		<table name="HRM_Recruitment_SubUnit" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.UniversityImpl" name="University">
+		<table name="HRM_Recruitment_University" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.model.impl.VacancyImpl" name="Vacancy">

@@ -22,6 +22,7 @@ import vn.com.ecopharma.hrm.model.InterviewScheduleClp;
 import vn.com.ecopharma.hrm.model.JTitleClp;
 import vn.com.ecopharma.hrm.model.LocationClp;
 import vn.com.ecopharma.hrm.model.SubUnitClp;
+import vn.com.ecopharma.hrm.model.UniversityClp;
 import vn.com.ecopharma.hrm.model.VacancyCandidateClp;
 import vn.com.ecopharma.hrm.model.VacancyClp;
 
@@ -143,6 +144,10 @@ public class ClpSerializer {
 
         if (oldModelClassName.equals(SubUnitClp.class.getName())) {
             return translateInputSubUnit(oldModel);
+        }
+
+        if (oldModelClassName.equals(UniversityClp.class.getName())) {
+            return translateInputUniversity(oldModel);
         }
 
         if (oldModelClassName.equals(VacancyClp.class.getName())) {
@@ -273,6 +278,16 @@ public class ClpSerializer {
         SubUnitClp oldClpModel = (SubUnitClp) oldModel;
 
         BaseModel<?> newModel = oldClpModel.getSubUnitRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
+    }
+
+    public static Object translateInputUniversity(BaseModel<?> oldModel) {
+        UniversityClp oldClpModel = (UniversityClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getUniversityRemoteModel();
 
         newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -700,6 +715,41 @@ public class ClpSerializer {
         }
 
         if (oldModelClassName.equals(
+                    "vn.com.ecopharma.hrm.model.impl.UniversityImpl")) {
+            return translateOutputUniversity(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
+
+        if (oldModelClassName.equals(
                     "vn.com.ecopharma.hrm.model.impl.VacancyImpl")) {
             return translateOutputVacancy(oldModel);
         } else if (oldModelClassName.endsWith("Clp")) {
@@ -894,6 +944,10 @@ public class ClpSerializer {
             return new vn.com.ecopharma.hrm.NoSuchSubUnitException();
         }
 
+        if (className.equals("vn.com.ecopharma.hrm.NoSuchUniversityException")) {
+            return new vn.com.ecopharma.hrm.NoSuchUniversityException();
+        }
+
         if (className.equals("vn.com.ecopharma.hrm.NoSuchVacancyException")) {
             return new vn.com.ecopharma.hrm.NoSuchVacancyException();
         }
@@ -1013,6 +1067,16 @@ public class ClpSerializer {
         newModel.setModelAttributes(oldModel.getModelAttributes());
 
         newModel.setSubUnitRemoteModel(oldModel);
+
+        return newModel;
+    }
+
+    public static Object translateOutputUniversity(BaseModel<?> oldModel) {
+        UniversityClp newModel = new UniversityClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setUniversityRemoteModel(oldModel);
 
         return newModel;
     }

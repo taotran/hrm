@@ -38,26 +38,49 @@
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.Employee">
 		<field name="employeeId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
 		<field name="emp_code" type="String" />
-		<field name="firstname" type="String" />
-		<field name="middle_name" type="String" />
-		<field name="lastname" type="String" />
-		<field name="email" type="String" />
 		<field name="contact_number" type="String" />
-		<field name="nickname" type="String" />
 		<field name="birthday" type="Date" />
-		<field name="gender" type="String" />
-		<field name="marital_status" type="String" />
-		<field name="status" type="String" />
 		<field name="jobtitleId" type="long" />
 		<field name="joined_date" type="Date" />
 		<field name="subUnitId" type="long" />
+		<field name="titles_id" type="long" />
+		<field name="level_id" type="long" />
+		<field name="promoted_date" type="Date" />
+		<field name="labour_contract_signed_date" type="Date" />
+		<field name="labour_contract_expired_date" type="Date" />
+		<field name="labour_contract_type" type="String" />
+		<field name="gender" type="String" />
+		<field name="place_of_birth" type="String" />
+		<field name="education" type="String" />
+		<field name="education_specialize" type="String" />
+		<field name="universityId" type="long" />
+		<field name="marital_status" type="String" />
+		<field name="identityCardNo" type="String" />
+		<field name="issued_date" type="Date" />
+		<field name="issued_place" type="String" />
+		<field name="addressId" type="long" />
+		<field name="company_email" type="String" />
+		<field name="personal_tax_code" type="String" />
+		<field name="number_of_dependents" type="int" />
+		<field name="dependent_names" type="String" />
+		<field name="social_insurance_no" type="String" />
+		<field name="health_insurance_no" type="String" />
+		<field name="bank_account_no" type="String" />
+		<field name="bank_branch_name" type="String" />
+		<field name="base_wage_rates" type="double" />
+		<field name="position_wage_rates" type="double" />
+		<field name="capacity_salary" type="double" />
+		<field name="total_salary" type="double" />
+		<field name="bonus" type="double" />
+		<field name="resigned_date" type="Date" />
+		<field name="employee_userId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="isDeleted" type="boolean" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.model.EmployeeInterviewSchedule">
 		<field name="employeeInterviewScheduleId" type="long" />
@@ -149,6 +172,17 @@
 	<model name="vn.com.ecopharma.hrm.model.SubUnit">
 		<field name="subUnitId" type="long" />
 		<field name="name" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.model.University">
+		<field name="universityId" type="long" />
+		<field name="name" type="String" />
+		<field name="code" type="String" />
+		<field name="tel_fax" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

@@ -41,26 +41,10 @@ public class EmployeeLocalServiceClpInvoker {
     private String[] _methodParameterTypes14;
     private String _methodName15;
     private String[] _methodParameterTypes15;
-    private String _methodName112;
-    private String[] _methodParameterTypes112;
-    private String _methodName113;
-    private String[] _methodParameterTypes113;
-    private String _methodName118;
-    private String[] _methodParameterTypes118;
-    private String _methodName119;
-    private String[] _methodParameterTypes119;
     private String _methodName120;
     private String[] _methodParameterTypes120;
     private String _methodName121;
     private String[] _methodParameterTypes121;
-    private String _methodName122;
-    private String[] _methodParameterTypes122;
-    private String _methodName123;
-    private String[] _methodParameterTypes123;
-    private String _methodName124;
-    private String[] _methodParameterTypes124;
-    private String _methodName125;
-    private String[] _methodParameterTypes125;
     private String _methodName126;
     private String[] _methodParameterTypes126;
     private String _methodName127;
@@ -69,6 +53,24 @@ public class EmployeeLocalServiceClpInvoker {
     private String[] _methodParameterTypes128;
     private String _methodName129;
     private String[] _methodParameterTypes129;
+    private String _methodName130;
+    private String[] _methodParameterTypes130;
+    private String _methodName131;
+    private String[] _methodParameterTypes131;
+    private String _methodName132;
+    private String[] _methodParameterTypes132;
+    private String _methodName133;
+    private String[] _methodParameterTypes133;
+    private String _methodName134;
+    private String[] _methodParameterTypes134;
+    private String _methodName135;
+    private String[] _methodParameterTypes135;
+    private String _methodName136;
+    private String[] _methodParameterTypes136;
+    private String _methodName137;
+    private String[] _methodParameterTypes137;
+    private String _methodName138;
+    private String[] _methodParameterTypes138;
 
     public EmployeeLocalServiceClpInvoker() {
         _methodName0 = "addEmployee";
@@ -153,31 +155,31 @@ public class EmployeeLocalServiceClpInvoker {
                 "vn.com.ecopharma.hrm.model.Employee"
             };
 
-        _methodName112 = "getBeanIdentifier";
+        _methodName120 = "getBeanIdentifier";
 
-        _methodParameterTypes112 = new String[] {  };
+        _methodParameterTypes120 = new String[] {  };
 
-        _methodName113 = "setBeanIdentifier";
+        _methodName121 = "setBeanIdentifier";
 
-        _methodParameterTypes113 = new String[] { "java.lang.String" };
+        _methodParameterTypes121 = new String[] { "java.lang.String" };
 
-        _methodName118 = "findAll";
+        _methodName126 = "findAll";
 
-        _methodParameterTypes118 = new String[] {  };
+        _methodParameterTypes126 = new String[] {  };
 
-        _methodName119 = "findAll";
+        _methodName127 = "findAll";
 
-        _methodParameterTypes119 = new String[] { "int", "int" };
+        _methodParameterTypes127 = new String[] { "int", "int" };
 
-        _methodName120 = "findAll";
+        _methodName128 = "findAll";
 
-        _methodParameterTypes120 = new String[] {
+        _methodParameterTypes128 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName121 = "create";
+        _methodName129 = "create1";
 
-        _methodParameterTypes121 = new String[] {
+        _methodParameterTypes129 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.util.Date", "java.lang.String", "long",
@@ -185,40 +187,62 @@ public class EmployeeLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName122 = "tranferCandidate";
+        _methodName130 = "addEmployee";
 
-        _methodParameterTypes122 = new String[] {
+        _methodParameterTypes130 = new String[] {
+                "long", "long", "boolean", "java.lang.String",
+                "java.lang.String", "boolean", "java.lang.String",
+                "java.lang.String", "long", "java.lang.String",
+                "java.util.Locale", "java.lang.String", "java.lang.String",
+                "java.lang.String", "int", "int", "boolean", "int", "int", "int",
+                "long[][]", "long[][]", "long[][]", "long[][]", "boolean",
+                "java.lang.String", "java.lang.String", "long", "java.util.Date",
+                "long", "long", "long", "java.util.Date", "java.util.Date",
+                "java.util.Date", "java.lang.String", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "long", "java.lang.String", "java.lang.String", "java.util.Date",
+                "java.lang.String", "long", "java.lang.String",
+                "java.lang.String", "int", "java.lang.String",
+                "java.lang.String", "java.lang.String", "java.lang.String",
+                "java.lang.String", "double", "double", "double", "double",
+                "double", "java.util.Date", "long",
+                "com.liferay.portal.service.ServiceContext"
+            };
+
+        _methodName131 = "tranferCandidate";
+
+        _methodParameterTypes131 = new String[] {
                 "vn.com.ecopharma.hrm.model.Candidate", "java.lang.String",
                 "java.lang.String", "java.util.Date", "long", "java.util.Date"
             };
 
-        _methodName123 = "delete";
+        _methodName132 = "delete";
 
-        _methodParameterTypes123 = new String[] { "long" };
+        _methodParameterTypes132 = new String[] { "long" };
 
-        _methodName124 = "getListInterviewersStringByIds";
+        _methodName133 = "getListInterviewersStringByIds";
 
-        _methodParameterTypes124 = new String[] { "java.util.List" };
+        _methodParameterTypes133 = new String[] { "java.util.List" };
 
-        _methodName125 = "getListInterviewersStringByEmps";
+        _methodName134 = "getListInterviewersStringByEmps";
 
-        _methodParameterTypes125 = new String[] { "java.util.List" };
+        _methodParameterTypes134 = new String[] { "java.util.List" };
 
-        _methodName126 = "findByIds";
+        _methodName135 = "findByIds";
 
-        _methodParameterTypes126 = new String[] { "java.util.List" };
+        _methodParameterTypes135 = new String[] { "java.util.List" };
 
-        _methodName127 = "filterEmployeeByTermSize";
+        _methodName136 = "filterEmployeeByTermSize";
 
-        _methodParameterTypes127 = new String[] { "java.lang.String" };
+        _methodParameterTypes136 = new String[] { "java.lang.String" };
 
-        _methodName128 = "filterEmployeeByTerm";
+        _methodName137 = "filterEmployeeByTerm";
 
-        _methodParameterTypes128 = new String[] { "java.lang.String", "int", "int" };
+        _methodParameterTypes137 = new String[] { "java.lang.String", "int", "int" };
 
-        _methodName129 = "countAll";
+        _methodName138 = "countAll";
 
-        _methodParameterTypes129 = new String[] {  };
+        _methodParameterTypes138 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -310,39 +334,39 @@ public class EmployeeLocalServiceClpInvoker {
             return EmployeeLocalServiceUtil.updateEmployee((vn.com.ecopharma.hrm.model.Employee) arguments[0]);
         }
 
-        if (_methodName112.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+        if (_methodName120.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
             return EmployeeLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName113.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+        if (_methodName121.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
             EmployeeLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName118.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+        if (_methodName126.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
             return EmployeeLocalServiceUtil.findAll();
         }
 
-        if (_methodName119.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+        if (_methodName127.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
             return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
-        if (_methodName120.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+        if (_methodName128.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
             return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName121.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
-            return EmployeeLocalServiceUtil.create((java.lang.String) arguments[0],
+        if (_methodName129.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+            return EmployeeLocalServiceUtil.create1((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
                 (java.lang.String) arguments[3],
@@ -356,50 +380,113 @@ public class EmployeeLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[12]);
         }
 
-        if (_methodName122.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+        if (_methodName130.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+            return EmployeeLocalServiceUtil.addEmployee(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Boolean) arguments[2]).booleanValue(),
+                (java.lang.String) arguments[3],
+                (java.lang.String) arguments[4],
+                ((Boolean) arguments[5]).booleanValue(),
+                (java.lang.String) arguments[6],
+                (java.lang.String) arguments[7],
+                ((Long) arguments[8]).longValue(),
+                (java.lang.String) arguments[9],
+                (java.util.Locale) arguments[10],
+                (java.lang.String) arguments[11],
+                (java.lang.String) arguments[12],
+                (java.lang.String) arguments[13],
+                ((Integer) arguments[14]).intValue(),
+                ((Integer) arguments[15]).intValue(),
+                ((Boolean) arguments[16]).booleanValue(),
+                ((Integer) arguments[17]).intValue(),
+                ((Integer) arguments[18]).intValue(),
+                ((Integer) arguments[19]).intValue(), (long[]) arguments[20],
+                (long[]) arguments[21], (long[]) arguments[22],
+                (long[]) arguments[23],
+                ((Boolean) arguments[24]).booleanValue(),
+                (java.lang.String) arguments[25],
+                (java.lang.String) arguments[26],
+                ((Long) arguments[27]).longValue(),
+                (java.util.Date) arguments[28],
+                ((Long) arguments[29]).longValue(),
+                ((Long) arguments[30]).longValue(),
+                ((Long) arguments[31]).longValue(),
+                (java.util.Date) arguments[32], (java.util.Date) arguments[33],
+                (java.util.Date) arguments[34],
+                (java.lang.String) arguments[35],
+                (java.lang.String) arguments[36],
+                (java.lang.String) arguments[37],
+                (java.lang.String) arguments[38],
+                (java.lang.String) arguments[39],
+                ((Long) arguments[40]).longValue(),
+                (java.lang.String) arguments[41],
+                (java.lang.String) arguments[42],
+                (java.util.Date) arguments[43],
+                (java.lang.String) arguments[44],
+                ((Long) arguments[45]).longValue(),
+                (java.lang.String) arguments[46],
+                (java.lang.String) arguments[47],
+                ((Integer) arguments[48]).intValue(),
+                (java.lang.String) arguments[49],
+                (java.lang.String) arguments[50],
+                (java.lang.String) arguments[51],
+                (java.lang.String) arguments[52],
+                (java.lang.String) arguments[53],
+                ((Double) arguments[54]).doubleValue(),
+                ((Double) arguments[55]).doubleValue(),
+                ((Double) arguments[56]).doubleValue(),
+                ((Double) arguments[57]).doubleValue(),
+                ((Double) arguments[58]).doubleValue(),
+                (java.util.Date) arguments[59],
+                ((Long) arguments[60]).longValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[61]);
+        }
+
+        if (_methodName131.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
             return EmployeeLocalServiceUtil.tranferCandidate((vn.com.ecopharma.hrm.model.Candidate) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2], (java.util.Date) arguments[3],
                 ((Long) arguments[4]).longValue(), (java.util.Date) arguments[5]);
         }
 
-        if (_methodName123.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+        if (_methodName132.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
             EmployeeLocalServiceUtil.delete(((Long) arguments[0]).longValue());
 
             return null;
         }
 
-        if (_methodName124.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+        if (_methodName133.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
             return EmployeeLocalServiceUtil.getListInterviewersStringByIds((java.util.List<java.lang.Long>) arguments[0]);
         }
 
-        if (_methodName125.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+        if (_methodName134.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
             return EmployeeLocalServiceUtil.getListInterviewersStringByEmps((java.util.List<vn.com.ecopharma.hrm.model.Employee>) arguments[0]);
         }
 
-        if (_methodName126.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+        if (_methodName135.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
             return EmployeeLocalServiceUtil.findByIds((java.util.List<java.lang.Long>) arguments[0]);
         }
 
-        if (_methodName127.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+        if (_methodName136.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
             return EmployeeLocalServiceUtil.filterEmployeeByTermSize((java.lang.String) arguments[0]);
         }
 
-        if (_methodName128.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+        if (_methodName137.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
             return EmployeeLocalServiceUtil.filterEmployeeByTerm((java.lang.String) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName129.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+        if (_methodName138.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
             return EmployeeLocalServiceUtil.countAll();
         }
 

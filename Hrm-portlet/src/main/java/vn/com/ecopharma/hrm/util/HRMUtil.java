@@ -171,4 +171,65 @@ public class HRMUtil {
 		result.put("docURL", docURL);
 		return result;
 	}
+	
+	
+	/**
+	 * @param s
+	 * @return
+	 */
+	public static String replaceVietnameseLocaleChar(String s) {
+		s = s.replace("á", "a");
+		s = s.replace("ầ", "àa");
+		s = s.replace("ấ", "a");
+		s = s.replace("à", "a");
+		s = s.replace("ạ", "a");
+		s = s.replace("ã", "a");
+		s = s.replace("â", "a");
+		s = s.replace("ậ", "a");
+		s = s.replace("ă", "a");
+		s = s.replace("ắ", "a");
+		s = s.replace("ằ", "a");
+		s = s.replace("ả", "a");
+		s = s.replace("ẵ", "a");
+		s = s.replace("ặ", "a");
+		
+		s = s.replace("ó", "o");
+		s = s.replace("ọ", "o");
+		s = s.replace("ò", "o");
+		s = s.replace("õ", "o");
+		s = s.replace("ô", "o");
+		s = s.replace("ố", "o");
+		s = s.replace("ộ", "o");
+		s = s.replace("ồ", "o");
+		s = s.replace("ỗ", "o");
+		
+		s = s.replace("ơ", "u");
+		s = s.replace("ớ", "u");
+		s = s.replace("ợ", "u");
+		s = s.replace("ờ", "u");
+		s = s.replace("ỡ", "u");
+		
+		s = s.replace("ị", "i");
+		s = s.replace("í", "i");
+		s = s.replace("ì", "i");
+		s = s.replace("ĩ", "i");
+		
+		s = s.replace("ũ", "u");
+		s = s.replace("ụ", "u");
+		s = s.replace("ù", "u");
+		s = s.replace("ú", "u");
+		s = s.replace("ư", "u");
+		s = s.replace("ừ", "u");
+		s = s.replace("ứ", "u");
+		s = s.replace("ự", "u");
+		
+		s = s.replace("ê", "e");
+		s = s.replace("ế", "e");
+		s = s.replace("ệ", "e");
+		s = s.replace("ề", "e");
+		
+		s = s.replace("đ", "d");
+		
+		return s;
+	}
 }
