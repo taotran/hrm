@@ -1,0 +1,659 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+		<h:form>
+			<p:commandButton id="newEmployee" value="Add New Employee"
+				onclick="PF('wNewEmployeeDialog').show()" />
+
+			<p:contextMenu id="employeeContextMenu" for="employees">
+				<p:menuitem value="View" update="employeeDetail"
+					icon="ui-icon-search" oncomplete="PF('wEmployeeDialog').show()"/>
+				<p:menuitem value="Delete" update="employees" icon="ui-icon-close"
+					actionListener="#{contextMenu.deleteEmp}" />
+			</p:contextMenu>
+			
+			<p:dataTable id="employees" var="employeeInfo"
+				widgetVar="employeeTable" value="#{empView.lazyDataModel}"
+				paginator="true" rows="20" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single" 
+				selection="#{contextMenu.selectedEmployee}"
+				rowKey="#{employeeInfo.employee.employeeId}" scrollable="true">
+				<f:facet name="header">
+					<div class="globSearch">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter" style="width:150px"
+								placeholder="Enter keyword">
+								<p:ajax event="change" oncomplete="PF('employeeTable').filter()" />
+							</p:inputText>
+						</p:outputPanel>
+						<p:commandButton id="toggler" values="Columns" />
+						<p:columnToggler trigger="toggler" datasource="employees" />
+					</div>
+
+				</f:facet>
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+				<p:column headerText="Emp Code"
+					filterBy="#{employeeInfo.employee.emp_code}">
+					<h:outputText value="#{employeeInfo.employee.emp_code}" />
+				</p:column>
+
+				<p:column headerText="Name" filterBy="#{employeeInfo.user.fullName}">
+					<h:outputText value="#{employeeInfo.user.fullName}" />
+				</p:column>
+
+				<p:column headerText="Job Title"
+					filterBy="#{empFilterView.selectedJTitles}" filterMatchMode="in">
+					<f:facet name="filter">
+						<p:selectCheckboxMenu label="Job Titles"
+							onchange="PF('employeeTable').filter()"
+							value="#{empFilterView.selectedJTitles}" filter="true"
+							filterMatchMode="contains" panelStyle="width:300px"
+							scrollHeight="150" converter="jtitleConverter">
+							<f:selectItems value="#{empFilterView.allJTitles}" var="j"
+								itemLabel="#{j.title}" itemValue="#{j}" />
+						</p:selectCheckboxMenu>
+					</f:facet>
+					<h:outputText value="#{employeeInfo.jTitle.title}">
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Sex"
+					filterBy="#{employeeInfo.employee.gender}">
+					<h:outputText value="#{employeeInfo.employee.gender}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Birthday"
+					filterBy="#{employeeInfo.employee.birthday}">
+					<h:outputText value="#{employeeInfo.employee.birthday}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Joined Date">
+					<f:facet name="filter">
+						<input type="hidden" />
+					</f:facet>
+					<f:facet name="header">
+						Joined Date
+						<p:calendar value="#{empView.dateFrom}" pattern="dd/MM/yyyy"
+							showOn="button" styleClass="calendarClass">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('employeeTable').filter()" />
+						</p:calendar>
+						<p:calendar value="#{empView.dateTo}" pattern="dd/MM/yyyy"
+							showOn="button" styleClass="calendarClass">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('employeeTable').filter()" />
+						</p:calendar>
+					</f:facet>
+					<h:outputText value="#{employeeInfo.employee.joined_date}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:rowExpansion>
+					<h:panelGrid columnClasses="label,value" border="0">
+						<h:outputText value="Contact number" />
+						<h:outputText value="#{employeeInfo.employee.contact_number}" />
+
+						<h:outputText value="Labour Contract Signed Date" />
+						<h:outputText
+							value="#{employeeInfo.employee.labour_contract_signed_date}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+						<h:outputText value="Labour Contract Expired Date" />
+						<h:outputText
+							value="#{employeeInfo.employee.labour_contract_expired_date}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</h:panelGrid>
+				</p:rowExpansion>
+				<f:facet name="footer">
+		        In total there are of #{empView.lazyDataModel.rowCount} employees.
+		    </f:facet>
+			</p:dataTable>
+			
+			
+			<p:dialog header="Employee Information" widgetVar="wEmployeeDialog"
+				modal="true" closeOnEscape="true">
+				<p:outputPanel id="employeeDetail">
+					<p:tabView id="empDetailTabView">
+						<p:tab id="personal" title="Basic Info">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Firstname *" />
+								<p:inputText 
+									value="#{contextMenu.selectedEmployee.user.firstName}"
+									required="true" label="Firstname">
+									<f:validateLength minimum="2" maximum="30" />
+									<p:clientValidator />
+								</p:inputText>
+
+								<h:outputText value="Middlename *" />
+								<p:inputText
+									value="#{contextMenu.selectedEmployee.user.middleName}"
+									required="true" label="Middle Name" />
+
+								<h:outputText value="Lastname *" />
+								<p:inputText value="#{contextMenu.selectedEmployee.user.lastName}"
+									required="true" label="Last Name" />
+
+								<h:outputText value="Email *" />
+								<p:inputText type="email"
+									value="#{contextMenu.selectedEmployee.user.emailAddress}"
+									required="true" label="Email" />
+
+								<h:outputText value="Gender: " />
+								<p:selectOneRadio
+									value="#{contextMenu.selectedEmployee.employee.gender}">
+									<f:selectItem itemLabel="Male" itemValue="Male" />
+									<f:selectItem itemLabel="Female" itemValue="Female" />
+								</p:selectOneRadio>
+
+								<h:outputText value="Employee Code *" />
+								<p:inputText
+									value="#{contextMenu.selectedEmployee.employee.emp_code}"
+									required="true" label="Employee Code" />
+
+								<h:outputText value="Birthday *" />
+								<p:calendar
+									value="#{contextMenu.selectedEmployee.employee.birthday}"
+									required="true" pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:calendar>
+
+								<h:outputText value="Place of Birth *" />
+								<p:inputText
+									value="#{contextMenu.selectedEmployee.employee.place_of_birth}"
+									required="true" label="Place of Birth" />
+
+								<h:outputText value="Contact Number *" />
+								<p:inputText
+									value="#{contextMenu.selectedEmployee.employee.contact_number}"
+									required="true" label="Contact Number" />
+							</h:panelGrid>
+						</p:tab>
+						<p:tab id="personal1" title="Details">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Job Title:" />
+								<p:selectOneMenu value="#{employeeWizard.selectedJtitle}"
+									converter="jtitleConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="j">
+
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{employeeWizard.jtitles}" var="j"
+										itemLabel="#{j.title}" itemValue="#{j}" />
+
+									<p:column>
+					                #{j.jobtitleId} - #{j.title}
+					            </p:column>
+								</p:selectOneMenu>
+
+
+								<h:outputText value="SubUnit:" />
+								<p:selectOneMenu value="#{employeeWizard.selectedSubUnit}"
+									converter="subUnitConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="s">
+
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{employeeWizard.subUnits}" var="s"
+										itemLabel="#{s.name}" itemValue="#{s}" />
+									<p:column>
+					                #{s.subUnitId} - #{s.name}
+					            </p:column>
+								</p:selectOneMenu>
+
+								<h:outputText value="Titles:" />
+								<p:selectOneMenu value="#{employeeWizard.selectedTitles}"
+									converter="titlesConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="t">
+
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{employeeWizard.titlesList}" var="t"
+										itemLabel="#{t.name}" itemValue="#{t}" />
+
+									<p:column>
+					                #{t.titlesId} - #{t.name}
+					            </p:column>
+								</p:selectOneMenu>
+
+								<h:outputText value="Level:" />
+								<p:selectOneMenu value="#{employeeWizard.selectedLevel}" 
+									converter="levelConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="l">
+
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{employeeWizard.levels}" var="l"
+										itemLabel="#{l.name}" itemValue="#{l}" />
+
+									<p:column>
+					                #{l.levelId} - #{l.name}
+					            </p:column>
+								</p:selectOneMenu>
+
+								<h:outputText value="Join Date *" />
+								<p:calendar value="#{employeeWizard.employee.joined_date}"
+									required="true" pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:calendar>
+								<h:outputText value="Labour Contract Signed Date" />
+								<p:calendar
+									value="#{employeeWizard.employee.labour_contract_signed_date}"
+									pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:calendar>
+
+								<h:outputText value="Labour Contract Expired Date" />
+								<p:calendar
+									value="#{employeeWizard.employee.labour_contract_expired_date}"
+									required="true" pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:calendar>
+								<h:outputText value="Labour Contract Type" />
+								<p:inputText
+									value="#{employeeWizard.employee.labour_contract_type}"
+									label="Contract Type" />
+
+								<h:outputText value="Education:" />
+								<p:inputText value="#{employeeWizard.employee.education}"
+									required="true" label="Education" />
+
+								<h:outputText value="Education Specialize:" />
+								<p:inputText
+									value="#{employeeWizard.employee.education_specialize}"
+									required="true" label="Education Specialize" />
+
+								<h:outputText value="University:" />
+								<p:selectOneMenu value="#{employeeWizard.selectedUniversity}"
+									converter="universityConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="u">
+
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItems value="#{employeeWizard.universities}" var="u"
+										itemLabel="#{u.name}" itemValue="#{u}" />
+									<p:column>
+					                #{u.universityId} - #{u.name}
+					            </p:column>
+								</p:selectOneMenu>
+
+								<h:outputText value="Skip to last: " />
+								<h:selectBooleanCheckbox value="#{employeeWizard.skip}" />
+							</h:panelGrid>
+						</p:tab>
+						<p:tab id="GiayTo" title="GiayTo">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Identity Card No:" />
+								<p:inputText value="#{employeeWizard.employee.identityCardNo}"
+									required="true" label="Identity Card No" />
+
+								<h:outputText value="Issued Date" />
+								<p:calendar value="#{employeeWizard.employee.issued_date}"
+									required="true" pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:calendar>
+
+								<h:outputText value="Issued Place:" />
+								<p:inputText value="#{employeeWizard.employee.issued_place}"
+									required="true" label="Issued Place" />
+
+								<h:outputText value="Personal Tax Code:" />
+								<p:inputText
+									value="#{employeeWizard.employee.personal_tax_code}"
+									label="Personal Tax Code" />
+
+								<h:outputText value="Number of Dependents" />
+								<p:inputText
+									value="#{employeeWizard.employee.number_of_dependents}"
+									label="Education" />
+
+								<h:outputText value="Dependent Names:" />
+								<p:inputText value="#{employeeWizard.employee.dependent_names}"
+									label="Dependent Names" />
+
+								<h:outputText value="Social Insurance No:" />
+								<p:inputText
+									value="#{employeeWizard.employee.social_insurance_no}"
+									label="Social Insurance No" />
+
+								<h:outputText value="Health Insurance No:" />
+								<p:inputText
+									value="#{employeeWizard.employee.health_insurance_no}"
+									label="Health Insurance No" />
+
+								<h:outputText value="Bank Account No:" />
+								<p:inputText value="#{employeeWizard.employee.bank_account_no}"
+									label="Bank Account No" />
+
+								<h:outputText value="Bank Branch Name:" />
+								<p:inputText value="#{employeeWizard.employee.bank_branch_name}"
+									label="Bank Branch Name" />
+
+
+								<h:outputText value="Skip to last: " />
+								<h:selectBooleanCheckbox value="#{employeeWizard.skip}" />
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab id="benefit" title="Benefits">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Base Wage Rates:" />
+								<p:inputText value="#{employeeWizard.employee.base_wage_rates}"
+									required="true" label="Base Wage Rates" />
+								<h:outputText value="Capacity Salary:" />
+								<p:inputText value="#{employeeWizard.employee.capacity_salary}"
+									required="true" label="Capacity Salary" />
+
+								<h:outputText value="Total Salary:" />
+								<p:inputText value="#{employeeWizard.employee.total_salary}"
+									required="true" label="Total Salary" />
+
+								<h:outputText value="Bonus:" />
+								<p:inputText value="#{employeeWizard.employee.bonus}"
+									required="true" label="Bonus" />
+
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+
+		
+
+
+		<p:dialog id="newEmployeeDialog" header="Employee Information"
+			widgetVar="wNewEmployeeDialog" modal="true" resizable="true"
+			showEffect="fade" hideEffect="fade" dynamic="true"
+			closeOnEscape="true" maximizable="true">
+			<p:ajax event="close" listener="#{employeeWizard.onCloseOrFinish}" />
+			<h:form id="employeeForm">
+				<p:growl id="growl" sticky="true" showDetail="true" />
+				<p:wizard flowListener="#{employeeWizard.onFlowProcess}"
+					showStepStatus="true" showNavBar="true">
+					<p:tab id="personal" title="Basic Info">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Firstname *" />
+							<p:inputText id="firstName"
+								value="#{employeeWizard.user.firstName}" required="true"
+								label="Firstname">
+								<f:validateLength minimum="2" maximum="5" />
+								<p:clientValidator />
+							</p:inputText>
+
+							<h:outputText value="Middlename *" />
+							<p:inputText value="#{employeeWizard.user.middleName}"
+								required="true" label="Middle Name" />
+
+							<h:outputText value="Lastname *" />
+							<p:inputText value="#{employeeWizard.user.lastName}"
+								required="true" label="Last Name" />
+
+							<h:outputText value="Email *" />
+							<p:inputText type="email"
+								value="#{employeeWizard.user.emailAddress}" required="true"
+								label="Email" />
+
+							<h:outputText value="Gender: " />
+							<p:selectOneRadio value="#{employeeWizard.employee.gender}">
+								<f:selectItem itemLabel="Male" itemValue="Male" />
+								<f:selectItem itemLabel="Female" itemValue="Female" />
+							</p:selectOneRadio>
+
+							<h:outputText value="Employee Code *" />
+							<p:inputText value="#{employeeWizard.employee.emp_code}"
+								required="true" label="Employee Code" />
+
+							<h:outputText value="Birthday *" />
+							<p:calendar value="#{employeeWizard.employee.birthday}"
+								required="true" pattern="dd/MM/yyyy">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:calendar>
+
+							<h:outputText value="Place of Birth *" />
+							<p:inputText value="#{employeeWizard.employee.place_of_birth}"
+								required="true" label="Place of Birth" />
+
+							<h:outputText value="Contact Number *" />
+							<p:inputText value="#{employeeWizard.employee.contact_number}"
+								required="true" label="Contact Number" />
+
+							<h:outputText value="Skip to last: " />
+							<h:selectBooleanCheckbox value="#{employeeWizard.skip}" />
+
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="personal1" title="Details">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Job Title:" />
+							<p:selectOneMenu value="#{employeeWizard.selectedJtitle}"
+								converter="jtitleConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="j">
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{employeeWizard.jtitles}" var="j"
+									itemLabel="#{j.title}" itemValue="#{j}" />
+
+								<p:column>
+					                #{j.jobtitleId} - #{j.title}
+					            </p:column>
+							</p:selectOneMenu>
+
+
+							<h:outputText value="SubUnit:" />
+							<p:selectOneMenu value="#{employeeWizard.selectedSubUnit}"
+								converter="subUnitConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="s">
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{employeeWizard.subUnits}" var="s"
+									itemLabel="#{s.name}" itemValue="#{s}" />
+								<p:column>
+					                #{s.subUnitId} - #{s.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Titles:" />
+							<p:selectOneMenu value="#{employeeWizard.selectedTitles}"
+								converter="titlesConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="t">
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{employeeWizard.titlesList}" var="t"
+									itemLabel="#{t.name}" itemValue="#{t}" />
+
+								<p:column>
+					                #{t.titlesId} - #{t.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Level:" />
+							<p:selectOneMenu value="#{employeeWizard.selectedLevel}"
+								converter="levelConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="l">
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{employeeWizard.levels}" var="l"
+									itemLabel="#{l.name}" itemValue="#{l}" />
+
+								<p:column>
+					                #{l.levelId} - #{l.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Join Date *" />
+							<p:calendar value="#{employeeWizard.employee.joined_date}"
+								required="true" pattern="dd/MM/yyyy">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:calendar>
+							<h:outputText value="Labour Contract Signed Date" />
+							<p:calendar
+								value="#{employeeWizard.employee.labour_contract_signed_date}"
+								pattern="dd/MM/yyyy">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:calendar>
+
+							<h:outputText value="Labour Contract Expired Date" />
+							<p:calendar
+								value="#{employeeWizard.employee.labour_contract_expired_date}"
+								required="true" pattern="dd/MM/yyyy">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:calendar>
+							<h:outputText value="Labour Contract Type" />
+							<p:inputText
+								value="#{employeeWizard.employee.labour_contract_type}"
+								label="Contract Type" />
+
+							<h:outputText value="Education:" />
+							<p:inputText value="#{employeeWizard.employee.education}"
+								required="true" label="Education" />
+
+							<h:outputText value="Education Specialize:" />
+							<p:inputText
+								value="#{employeeWizard.employee.education_specialize}"
+								required="true" label="Education Specialize" />
+
+							<h:outputText value="University:" />
+							<p:selectOneMenu value="#{employeeWizard.selectedUniversity}"
+								converter="universityConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="u">
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{employeeWizard.universities}" var="u"
+									itemLabel="#{u.name}" itemValue="#{u}" />
+								<p:column>
+					                #{u.universityId} - #{u.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Skip to last: " />
+							<h:selectBooleanCheckbox value="#{employeeWizard.skip}" />
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="GiayTo" title="GiayTo">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Identity Card No:" />
+							<p:inputText value="#{employeeWizard.employee.identityCardNo}"
+								required="true" label="Identity Card No" />
+
+							<h:outputText value="Issued Date" />
+							<p:calendar value="#{employeeWizard.employee.issued_date}"
+								required="true" pattern="dd/MM/yyyy">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:calendar>
+
+							<h:outputText value="Issued Place:" />
+							<p:inputText value="#{employeeWizard.employee.issued_place}"
+								required="true" label="Issued Place" />
+
+							<h:outputText value="Personal Tax Code:" />
+							<p:inputText value="#{employeeWizard.employee.personal_tax_code}"
+								label="Personal Tax Code" />
+
+							<h:outputText value="Number of Dependents" />
+							<p:inputText
+								value="#{employeeWizard.employee.number_of_dependents}"
+								label="Education" />
+
+							<h:outputText value="Dependent Names:" />
+							<p:inputText value="#{employeeWizard.employee.dependent_names}"
+								label="Dependent Names" />
+
+							<h:outputText value="Social Insurance No:" />
+							<p:inputText
+								value="#{employeeWizard.employee.social_insurance_no}"
+								label="Social Insurance No" />
+
+							<h:outputText value="Health Insurance No:" />
+							<p:inputText
+								value="#{employeeWizard.employee.health_insurance_no}"
+								label="Health Insurance No" />
+
+							<h:outputText value="Bank Account No:" />
+							<p:inputText value="#{employeeWizard.employee.bank_account_no}"
+								label="Bank Account No" />
+
+							<h:outputText value="Bank Branch Name:" />
+							<p:inputText value="#{employeeWizard.employee.bank_branch_name}"
+								label="Bank Branch Name" />
+
+
+							<h:outputText value="Skip to last: " />
+							<h:selectBooleanCheckbox value="#{employeeWizard.skip}" />
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab id="benefit" title="Benefits">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Base Wage Rates:" />
+							<p:inputText value="#{employeeWizard.employee.base_wage_rates}"
+								required="true" label="Base Wage Rates" />
+							<h:outputText value="Capacity Salary:" />
+							<p:inputText value="#{employeeWizard.employee.capacity_salary}"
+								required="true" label="Capacity Salary" />
+
+							<h:outputText value="Total Salary:" />
+							<p:inputText value="#{employeeWizard.employee.total_salary}"
+								required="true" label="Total Salary" />
+
+							<h:outputText value="Bonus:" />
+							<p:inputText value="#{employeeWizard.employee.bonus}"
+								required="true" label="Bonus" />
+
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab id="emp_user" title="User Information">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Username:" />
+							<p:inputText value="#{employeeWizard.userName}" required="true"
+								label="Username" />
+
+							<h:outputText value="Password:" />
+							<p:inputText type="password"
+								value="#{employeeWizard.userPassword1}" required="true"
+								label="Password" />
+
+							<h:outputText value="Re-enter Password:" />
+							<p:inputText type="password"
+								value="#{employeeWizard.userPassword2}" required="true"
+								label="Re-enter Password" />
+
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab id="finalize" title="Finalize">
+						<p:messages />
+						<h:panelGrid columns="2" columnClasses="label, value">
+
+						</h:panelGrid>
+						<p:commandButton immediate="true" value="Save"
+							actionListener="#{employeeWizard.save}" ajax="false" />
+					</p:tab>
+				</p:wizard>
+			</h:form>
+		</p:dialog>
+	</h:body>
+</f:view>

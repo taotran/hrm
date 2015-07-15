@@ -1,0 +1,1 @@
+create index IX_F57CD800 on pf_District (regionId);
