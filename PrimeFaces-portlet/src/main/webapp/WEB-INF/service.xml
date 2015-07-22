@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="vn.com.ecopharma.hrm">
+	<author>tvt</author>
+	<namespace>pf</namespace>
+
+	<entity name="Candidate" local-service="true" trash-enabled="true"
+		remote-service="true">
+		<column name="c_id" type="long" primary="true"></column>
+		<column name="first_name" type="String"></column>
+		<column name="middle_name" type="String"></column>
+		<column name="last_name" type="String"></column>
+		<column name="email" type="String"></column>
+		<column name="contact_number" type="String"></column>
+		<column name="comment" type="String"></column>
+	</entity>
+	<entity name="Employee" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="employeeId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="emp_code" type="String"></column>
+
+		<!-- Audit fields -->
+		<column name="contact_number" type="String"></column>
+		<column name="birthday" type="Date"></column>
+		<column name="jobtitleId" type="long"></column>
+		<column name="joined_date" type="Date"></column>
+		<column name="subUnitId" type="long"></column>
+		<column name="titlesId" type="long"></column>
+		<column name="levelId" type="long"></column>
+		<column name="promoted_date" type="Date"></column>
+		<column name="labour_contract_signed_date" type="Date"></column>
+		<column name="labour_contract_expired_date" type="Date"></column>
+		<column name="labour_contract_type" type="String"></column>
+		<column name="gender" type="String"></column>
+		<column name="place_of_birth" type="String"></column>
+		<column name="education" type="String"></column>
+		<column name="education_specialize" type="String"></column>
+		<column name="universityId" type="long"></column>
+		<column name="marital_status" type="String"></column>
+		<column name="identityCardNo" type="String"></column>
+		<column name="issued_date" type="Date"></column>
+		<column name="issued_place" type="String"></column>
+		<column name="addressId" type="long"></column>
+		<column name="company_email" type="String"></column>
+		<column name="personal_tax_code" type="String"></column>
+		<column name="number_of_dependents" type="int"></column>
+		<column name="dependent_names" type="String"></column>
+		<column name="social_insurance_no" type="String"></column>
+		<column name="health_insurance_no" type="String"></column>
+		<column name="bank_account_no" type="String"></column>
+		<column name="bank_branch_name" type="String"></column>
+		<column name="base_wage_rates" type="double"></column>
+		<column name="position_wage_rates" type="double"></column>
+		<column name="capacity_salary" type="double"></column>
+		<column name="total_salary" type="double"></column>
+		<column name="bonus" type="double"></column>
+		<column name="resigned_date" type="Date"></column>
+		<column name="employee_userId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="isDeleted" type="boolean"></column>
+        <column name="companyEmailAddress" type="String"></column>
+	</entity>
+
+	<entity name="JTitle" local-service="true" trash-enabled="true"
+		remote-service="true">
+		<column name="jobtitleId" type="long" primary="true"></column>
+		<column name="title" type="String"></column>
+		<column name="description" type="String"></column>
+		<column name="note" type="String"></column>
+		<column name="isDeleted" type="boolean"></column>
+		<column name="userId" type="long"></column>
+		<column name="groupId" type="long"></column>
+	</entity>
+	<entity name="SubUnit" local-service="true">
+		<!-- PK fields -->
+		<column name="subUnitId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="name" type="String"></column>
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	
+	<entity name="University" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="universityId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="name" type="String"></column>
+        <column name="code" type="String"></column>
+        <column name="tel_fax" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="Titles" local-service="true">
+
+		<column name="titlesId" type="long" primary="true"></column>
+		<column name="name" type="String"></column>
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="Level" local-service="true">
+        <column name="levelId" primary="true" type="long"></column>
+    	<column name="name" type="String"></column>
+
+
+    	<!-- PK fields -->
+
+    	<!-- Group instance -->
+
+    	<column name="groupId" type="long"></column>
+
+    	<!-- Audit fields -->
+
+    	<column name="companyId" type="long"></column>
+    	<column name="userId" type="long"></column>
+    	<column name="createDate" type="Date"></column>
+    	<column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity name="Employee_Titles_History" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="employee_Titles_HistoryId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="employeeId" type="long"></column>
+        <column name="titlesId" type="long"></column>
+        <column name="set_date" type="Date"></column>
+        <column name="note" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="District" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<column name="districtId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="name" type="String"></column>
+        <column name="regionId" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="regionId" return-type="Collection">
+            <finder-column name="regionId"></finder-column>
+        </finder>
+	</entity>
+
+</service-builder>

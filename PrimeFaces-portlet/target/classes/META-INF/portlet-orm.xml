@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.CandidateModelImpl">
+		<attributes>
+			<id name="c_id" />
+			<basic name="first_name" />
+			<basic name="middle_name" />
+			<basic name="last_name" />
+			<basic name="email" />
+			<basic name="contact_number" />
+			<basic name="comment">
+				<column name="COMMENT_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.DistrictModelImpl">
+		<attributes>
+			<id name="districtId" />
+			<basic name="name" />
+			<basic name="regionId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.EmployeeModelImpl">
+		<attributes>
+			<id name="employeeId" />
+			<basic name="emp_code" />
+			<basic name="contact_number" />
+			<basic name="birthday">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="jobtitleId" />
+			<basic name="joined_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="subUnitId" />
+			<basic name="titlesId" />
+			<basic name="levelId" />
+			<basic name="promoted_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_signed_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_expired_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="labour_contract_type" />
+			<basic name="gender" />
+			<basic name="place_of_birth" />
+			<basic name="education" />
+			<basic name="education_specialize" />
+			<basic name="universityId" />
+			<basic name="marital_status" />
+			<basic name="identityCardNo" />
+			<basic name="issued_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="issued_place" />
+			<basic name="addressId" />
+			<basic name="company_email" />
+			<basic name="personal_tax_code" />
+			<basic name="number_of_dependents" />
+			<basic name="dependent_names" />
+			<basic name="social_insurance_no" />
+			<basic name="health_insurance_no" />
+			<basic name="bank_account_no" />
+			<basic name="bank_branch_name" />
+			<basic name="base_wage_rates" />
+			<basic name="position_wage_rates" />
+			<basic name="capacity_salary" />
+			<basic name="total_salary" />
+			<basic name="bonus" />
+			<basic name="resigned_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="employee_userId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="isDeleted" />
+			<basic name="companyEmailAddress" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.Employee_Titles_HistoryModelImpl">
+		<attributes>
+			<id name="employee_Titles_HistoryId" />
+			<basic name="employeeId" />
+			<basic name="titlesId" />
+			<basic name="set_date">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="note" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.JTitleModelImpl">
+		<attributes>
+			<id name="jobtitleId" />
+			<basic name="title" />
+			<basic name="description" />
+			<basic name="note" />
+			<basic name="isDeleted" />
+			<basic name="userId" />
+			<basic name="groupId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.LevelModelImpl">
+		<attributes>
+			<id name="levelId" />
+			<basic name="name" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.SubUnitModelImpl">
+		<attributes>
+			<id name="subUnitId" />
+			<basic name="name" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.TitlesModelImpl">
+		<attributes>
+			<id name="titlesId" />
+			<basic name="name" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.model.impl.UniversityModelImpl">
+		<attributes>
+			<id name="universityId" />
+			<basic name="name" />
+			<basic name="code">
+				<column name="CODE_" />
+			</basic>
+			<basic name="tel_fax" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="vn.com.ecopharma.hrm.model.impl.CandidateImpl" name="Candidate">
+		<table name="pf_Candidate" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.DistrictImpl" name="District">
+		<table name="pf_District" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.EmployeeImpl" name="Employee">
+		<table name="pf_Employee" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.Employee_Titles_HistoryImpl" name="Employee_Titles_History">
+		<table name="pf_Employee_Titles_History" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.JTitleImpl" name="JTitle">
+		<table name="pf_JTitle" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.LevelImpl" name="Level">
+		<table name="pf_Level" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.SubUnitImpl" name="SubUnit">
+		<table name="pf_SubUnit" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.TitlesImpl" name="Titles">
+		<table name="pf_Titles" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.model.impl.UniversityImpl" name="University">
+		<table name="pf_University" />
+		<attributes />
+	</entity>
+</entity-mappings>

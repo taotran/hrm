@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="vn.com.ecopharma.hrm.service.CandidateLocalService" class="vn.com.ecopharma.hrm.service.impl.CandidateLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.CandidateService" class="vn.com.ecopharma.hrm.service.impl.CandidateServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.CandidatePersistence" class="vn.com.ecopharma.hrm.service.persistence.CandidatePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.DistrictLocalService" class="vn.com.ecopharma.hrm.service.impl.DistrictLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.DistrictService" class="vn.com.ecopharma.hrm.service.impl.DistrictServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.DistrictPersistence" class="vn.com.ecopharma.hrm.service.persistence.DistrictPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.EmployeeLocalService" class="vn.com.ecopharma.hrm.service.impl.EmployeeLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.EmployeeService" class="vn.com.ecopharma.hrm.service.impl.EmployeeServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.EmployeePersistence" class="vn.com.ecopharma.hrm.service.persistence.EmployeePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.EmployeeFinder" class="vn.com.ecopharma.hrm.service.persistence.EmployeeFinderImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.Employee_Titles_HistoryLocalService" class="vn.com.ecopharma.hrm.service.impl.Employee_Titles_HistoryLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.Employee_Titles_HistoryService" class="vn.com.ecopharma.hrm.service.impl.Employee_Titles_HistoryServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.Employee_Titles_HistoryPersistence" class="vn.com.ecopharma.hrm.service.persistence.Employee_Titles_HistoryPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.JTitleLocalService" class="vn.com.ecopharma.hrm.service.impl.JTitleLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.JTitleService" class="vn.com.ecopharma.hrm.service.impl.JTitleServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.JTitlePersistence" class="vn.com.ecopharma.hrm.service.persistence.JTitlePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.LevelLocalService" class="vn.com.ecopharma.hrm.service.impl.LevelLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.LevelService" class="vn.com.ecopharma.hrm.service.impl.LevelServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.LevelPersistence" class="vn.com.ecopharma.hrm.service.persistence.LevelPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.SubUnitLocalService" class="vn.com.ecopharma.hrm.service.impl.SubUnitLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.SubUnitService" class="vn.com.ecopharma.hrm.service.impl.SubUnitServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistence" class="vn.com.ecopharma.hrm.service.persistence.SubUnitPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.TitlesLocalService" class="vn.com.ecopharma.hrm.service.impl.TitlesLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.TitlesService" class="vn.com.ecopharma.hrm.service.impl.TitlesServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.TitlesPersistence" class="vn.com.ecopharma.hrm.service.persistence.TitlesPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.service.UniversityLocalService" class="vn.com.ecopharma.hrm.service.impl.UniversityLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.UniversityService" class="vn.com.ecopharma.hrm.service.impl.UniversityServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.service.persistence.UniversityPersistence" class="vn.com.ecopharma.hrm.service.persistence.UniversityPersistenceImpl" parent="basePersistence" />
+</beans>
