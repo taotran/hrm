@@ -67,7 +67,6 @@
 		<column name="isDeleted" type="boolean"></column>
 		<column name="user_id" type="long"></column>
 		<column name="group_id" type="long"></column>
-		<!-- <column name="vacancies" type="Collection" entity="Vacancy" mapping-table="jtittle_id"></column> -->
 	</entity>
 
 

@@ -90,7 +90,7 @@
 							<label class="control-label" for="e_contact_number"><liferay-ui:message
 									key="candidate.contact_number" /></label>
 							<div class="controls">
-								<input type="text" id="e_contact_number" value="123-456-789"
+								<input type="text" id="e_contact_number" class="required" value="123-456-789"
 									placeholder="eg. 0902 548822">
 							</div>
 						</div>
@@ -175,7 +175,7 @@
 						<div class="control-group">
 							<label class="control-label" for="e_lc_signed_date">Labour contract signed date<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70 required" id="e_lc_signed_date"
+								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70" id="e_lc_signed_date"
 									placeholder="">
 							</div>
 						</div>
@@ -183,7 +183,7 @@
 						<div class="control-group">
 							<label class="control-label" for="e_lc_expired_date">Labour contract expired date<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70 required" id="e_lc_expired_date"
+								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70" id="e_lc_expired_date"
 									placeholder="">
 							</div>
 						</div>
@@ -211,7 +211,7 @@
 						<div class="control-group">
 							<label class="control-label" for="e_edu_spec">Education Specialize<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" id="e_edu_spec" placeholder="">
+								<input type="text" id="e_edu_spec" placeholder="" class="required">
 							</div>
 						</div>
 						
@@ -236,21 +236,21 @@
 						<div class="control-group">
 							<label class="control-label" for="e_identity_no">Identity card number<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" id="e_identity_no" placeholder="CMND">
+								<input type="text" id="e_identity_no" placeholder="CMND" class="required">
 							</div>
 						</div>
 						
 						<div class="control-group">
 							<label class="control-label" for="e_identity_issued_date">Issued Date<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70" id="e_identity_issued_date" placeholder="">
+								<input type="text" data-date-format="dd/mm/yyyy" class="hrm_dateTimePicker small70 required" id="e_identity_issued_date" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
 							<label class="control-label" for="e_identity_issued_place">Issued Place<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" id="e_identity_issued_place" placeholder="0123456789">
+								<input type="text" id="e_identity_issued_place" placeholder="CA. TPHCM" class="required">
 							</div>
 						</div>
 						
@@ -264,7 +264,7 @@
 								<label class="control-label" for="e_street1">Street 1<span
 									class="required">*</span></label>
 								<div class="controls">
-									<input type="text" name="e_street1" placeholder="Street 1">
+									<input type="text" name="e_street1" placeholder="Street 1" class="required">
 								</div>
 							</div>
 							<div class="control-group">
@@ -282,7 +282,7 @@
 							<div class="control-group">
 								<label class="control-label" for="e_city">City</label>
 								<div class="controls">
-									<input type="text" name="e_city" placeholder="City">
+									<input type="text" name="e_city" placeholder="City" class="required">
 								</div>
 							</div>
 							<div class="control-group">
@@ -297,84 +297,84 @@
 						
 						<!-- EO Address part -->
 						<div class="control-group">
-							<label class="control-label" for="e_personal_tax_code">Personal Tax Code<span class="required">*</span></label>
+							<label class="control-label" for="e_personal_tax_code">Personal Tax Code</label>
 							<div class="controls">
 								<input type="text" id="e_personal_tax_code" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_no_of_dependents">Number of Dependents<span class="required">*</span></label>
+							<label class="control-label" for="e_no_of_dependents">Number of Dependents</label>
 							<div class="controls">
 								<input type="text" id="e_no_of_dependents" value="0" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_dependent_names">Dependent Names<span class="required">*</span></label>
+							<label class="control-label" for="e_dependent_names">Dependent Names</label>
 							<div class="controls">
 								<input type="text" id="e_dependent_names" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_social_ins_code">Social Insurance Code<span class="required">*</span></label>
+							<label class="control-label" for="e_social_ins_code">Social Insurance Code</label>
 							<div class="controls">
 								<input type="text" id="e_social_ins_code" placeholder="">
 							</div>
 						</div>	
 											
 						<div class="control-group">
-							<label class="control-label" for="e_health_ins_code">Health Insurance Code<span class="required">*</span></label>
+							<label class="control-label" for="e_health_ins_code">Health Insurance Code</label>
 							<div class="controls">
 								<input type="text" id="e_health_ins_code" placeholder="">
 							</div>
 						</div>	
 
 						<div class="control-group">
-							<label class="control-label" for="e_bank_acc">Bank Account<span class="required">*</span></label>
+							<label class="control-label" for="e_bank_acc">Bank Account</label>
 							<div class="controls">
 								<input type="text" id="e_bank_acc" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_bank_name">Bank name<span class="required">*</span></label>
+							<label class="control-label" for="e_bank_name">Bank name</label>
 							<div class="controls">
 								<input type="text" id="e_bank_name" placeholder="">
 							</div>
 						</div>				
 						
 						<div class="control-group">
-							<label class="control-label" for="e_base_wage_rates">Base Wage Rates<span class="required">*</span></label>
+							<label class="control-label" for="e_base_wage_rates">Base Wage Rates</label>
 							<div class="controls">
 								<input type="text" id="e_base_wage_rates" placeholder="">
 							</div>
 						</div>	
 							
 						<div class="control-group">
-							<label class="control-label" for="e_position_wage_rates">Position Wage Rates<span class="required">*</span></label>
+							<label class="control-label" for="e_position_wage_rates">Position Wage Rates</label>
 							<div class="controls">
 								<input type="text" id="e_position_wage_rates" placeholder="">
 							</div>
 						</div>		
 						
 						<div class="control-group">
-							<label class="control-label" for="e_capacity_salary">Capacity Salary<span class="required">*</span></label>
+							<label class="control-label" for="e_capacity_salary">Capacity Salary</label>
 							<div class="controls">
 								<input type="text" id="e_capacity_salary" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_total_salary">Total Salary<span class="required">*</span></label>
+							<label class="control-label" for="e_total_salary">Total Salary</label>
 							<div class="controls">
 								<input type="text" id="e_total_salary" placeholder="">
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label" for="e_bonus">Bonus<span class="required">*</span></label>
+							<label class="control-label" for="e_bonus">Bonus</label>
 							<div class="controls">
 								<input type="text" id="e_bonus" placeholder="">
 							</div>
@@ -383,7 +383,7 @@
 						<div class="control-group">
 							<label class="control-label" for="e_resigned_date">Resigned Date<span class="required">*</span></label>
 							<div class="controls">
-								<input type="text" data-date-format="dd/mm/yyyy" id="e_resigned_date" class="hrm_dateTimePicker small70" placeholder="--/--/--">
+								<input type="text" data-date-format="dd/mm/yyyy" id="e_resigned_date" class="hrm_dateTimePicker small70" placeholder="__/__/___">
 							</div>
 						</div>	
 					</div>
@@ -565,8 +565,10 @@
 	/* $('.hrm_dateTimePicker').datepicker(); */
 	
 	function saveEmployee() {
-		/* if ($('#e_firstname').valid() && $('#e_middle_name').valid() && $('#e_last_name').valid() &&
-				$('#e_inputEmail').valid() && $('#e_birthday').valid() && $('#e_start_date').valid()) { */
+		if ($('#e_firstname').valid() && $('#e_middle_name').valid() && $('#e_last_name').valid() &&
+				$('#e_inputEmail').valid() && $('#e_birthday').valid() && $('#e_start_date').valid() && 
+				$('#e_promoted_date').valid() && $('#e_edu_spec').valid() && $('#e_identity_no').valid() &&
+				$('#e_identity_issued_date').valid() && $('#e_identity_issued_place').valid() && $('#e_promoted_date').valid()) {
 			var obj = new Object();
 			obj.employeeId = $('#employeeId').val();
 			obj.vacancyId = $('#e_vacancyId').val();
@@ -621,9 +623,9 @@
 			}
 			genericAJAXCalling("<portlet:resourceURL id='saveEmployee'/>", obj, onSuccessSaveEmployee);
 			$('#modify-employee-modal').modal('hide'); */
-		/* } else {
+		} else {
 			showBottomRightErrorNotifyShortDelay("All * fields are required! Please check");
-		} */
+		} 
 	}
 	
 	
