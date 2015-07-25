@@ -263,8 +263,69 @@ public class EmployeeLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
-    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll()
-        throws com.liferay.portal.kernel.exception.SystemException {
+    public static void indexAllEmployees() {
+        getService().indexAllEmployees();
+    }
+
+    public static void removeAllEmployeeIndexes(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId) {
+        getService().removeAllEmployeeIndexes(searchContext, companyId);
+    }
+
+    public static int countAllIndexedEmployeeDocuments(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId) {
+        return getService()
+                   .countAllIndexedEmployeeDocuments(searchContext, companyId);
+    }
+
+    public static int countAllUnDeletedIndexedEmployeeDocuments(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort) {
+        return getService()
+                   .countAllUnDeletedIndexedEmployeeDocuments(searchContext,
+            filterQueries, companyId, sort);
+    }
+
+    public static java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllUnDeletedEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+        int end) {
+        return getService()
+                   .searchAllUnDeletedEmployeeIndexedItems(searchContext,
+            filterQueries, companyId, sort, start, end);
+    }
+
+    public static java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId) {
+        return getService()
+                   .searchAllEmployeeIndexedItems(searchContext, companyId);
+    }
+
+    public static java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, int start, int end) {
+        return getService()
+                   .searchAllEmployeeIndexedItems(searchContext, filterQueries,
+            companyId, start, end);
+    }
+
+    public static java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+        int end) {
+        return getService()
+                   .searchAllEmployeeIndexedItems(searchContext, filterQueries,
+            companyId, sort, start, end);
+    }
+
+    public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll() {
         return getService().findAll();
     }
 
@@ -275,8 +336,7 @@ public class EmployeeLocalServiceUtil {
 
     public static java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
         int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException {
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
         return getService().findAll(start, end, orderByComparator);
     }
 

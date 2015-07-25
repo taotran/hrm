@@ -65,6 +65,22 @@ public class EmployeeLocalServiceClpInvoker {
     private String[] _methodParameterTypes98;
     private String _methodName99;
     private String[] _methodParameterTypes99;
+    private String _methodName100;
+    private String[] _methodParameterTypes100;
+    private String _methodName101;
+    private String[] _methodParameterTypes101;
+    private String _methodName102;
+    private String[] _methodParameterTypes102;
+    private String _methodName103;
+    private String[] _methodParameterTypes103;
+    private String _methodName104;
+    private String[] _methodParameterTypes104;
+    private String _methodName105;
+    private String[] _methodParameterTypes105;
+    private String _methodName106;
+    private String[] _methodParameterTypes106;
+    private String _methodName107;
+    private String[] _methodParameterTypes107;
 
     public EmployeeLocalServiceClpInvoker() {
         _methodName0 = "addEmployee";
@@ -157,23 +173,76 @@ public class EmployeeLocalServiceClpInvoker {
 
         _methodParameterTypes85 = new String[] { "java.lang.String" };
 
-        _methodName90 = "findAll";
+        _methodName90 = "indexAllEmployees";
 
         _methodParameterTypes90 = new String[] {  };
 
-        _methodName91 = "findAll";
+        _methodName91 = "removeAllEmployeeIndexes";
 
-        _methodParameterTypes91 = new String[] { "int", "int" };
+        _methodParameterTypes91 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext", "long"
+            };
 
-        _methodName92 = "findAll";
+        _methodName92 = "countAllIndexedEmployeeDocuments";
 
         _methodParameterTypes92 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext", "long"
+            };
+
+        _methodName93 = "countAllUnDeletedIndexedEmployeeDocuments";
+
+        _methodParameterTypes93 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext",
+                "java.util.List", "long",
+                "com.liferay.portal.kernel.search.Sort"
+            };
+
+        _methodName94 = "searchAllUnDeletedEmployeeIndexedItems";
+
+        _methodParameterTypes94 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext",
+                "java.util.List", "long",
+                "com.liferay.portal.kernel.search.Sort", "int", "int"
+            };
+
+        _methodName95 = "searchAllEmployeeIndexedItems";
+
+        _methodParameterTypes95 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext", "long"
+            };
+
+        _methodName96 = "searchAllEmployeeIndexedItems";
+
+        _methodParameterTypes96 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext",
+                "java.util.List", "long", "int", "int"
+            };
+
+        _methodName97 = "searchAllEmployeeIndexedItems";
+
+        _methodParameterTypes97 = new String[] {
+                "com.liferay.portal.kernel.search.SearchContext",
+                "java.util.List", "long",
+                "com.liferay.portal.kernel.search.Sort", "int", "int"
+            };
+
+        _methodName98 = "findAll";
+
+        _methodParameterTypes98 = new String[] {  };
+
+        _methodName99 = "findAll";
+
+        _methodParameterTypes99 = new String[] { "int", "int" };
+
+        _methodName100 = "findAll";
+
+        _methodParameterTypes100 = new String[] {
                 "int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
             };
 
-        _methodName93 = "filterEmployees";
+        _methodName101 = "filterEmployees";
 
-        _methodParameterTypes93 = new String[] {
+        _methodParameterTypes101 = new String[] {
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.lang.String", "java.lang.String",
                 "java.lang.String", "java.util.List", "java.lang.Long",
@@ -181,9 +250,9 @@ public class EmployeeLocalServiceClpInvoker {
                 "java.lang.String", "java.lang.String"
             };
 
-        _methodName94 = "addEmployee";
+        _methodName102 = "addEmployee";
 
-        _methodParameterTypes94 = new String[] {
+        _methodParameterTypes102 = new String[] {
                 "long", "long", "boolean", "java.lang.String",
                 "java.lang.String", "boolean", "java.lang.String",
                 "java.lang.String", "long", "java.lang.String",
@@ -203,9 +272,9 @@ public class EmployeeLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName95 = "addEmployee";
+        _methodName103 = "addEmployee";
 
-        _methodParameterTypes95 = new String[] {
+        _methodParameterTypes103 = new String[] {
                 "vn.com.ecopharma.hrm.model.Employee", "long", "long", "boolean",
                 "java.lang.String", "java.lang.String", "boolean",
                 "java.lang.String", "java.lang.String", "long",
@@ -216,9 +285,9 @@ public class EmployeeLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName96 = "update";
+        _methodName104 = "update";
 
-        _methodParameterTypes96 = new String[] {
+        _methodParameterTypes104 = new String[] {
                 "vn.com.ecopharma.hrm.model.Employee",
                 "com.liferay.portal.model.User",
                 "vn.com.ecopharma.hrm.model.JTitle",
@@ -229,19 +298,19 @@ public class EmployeeLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName97 = "markDeletedEmployee";
+        _methodName105 = "markDeletedEmployee";
 
-        _methodParameterTypes97 = new String[] {
+        _methodParameterTypes105 = new String[] {
                 "vn.com.ecopharma.hrm.model.Employee"
             };
 
-        _methodName98 = "markDeletedEmployee";
+        _methodName106 = "markDeletedEmployee";
 
-        _methodParameterTypes98 = new String[] { "long" };
+        _methodParameterTypes106 = new String[] { "long" };
 
-        _methodName99 = "countAll";
+        _methodName107 = "countAll";
 
-        _methodParameterTypes99 = new String[] {  };
+        _methodParameterTypes107 = new String[] {  };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -347,24 +416,88 @@ public class EmployeeLocalServiceClpInvoker {
 
         if (_methodName90.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
-            return EmployeeLocalServiceUtil.findAll();
+            EmployeeLocalServiceUtil.indexAllEmployees();
+
+            return null;
         }
 
         if (_methodName91.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
-            return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
-                ((Integer) arguments[1]).intValue());
+            EmployeeLocalServiceUtil.removeAllEmployeeIndexes((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                ((Long) arguments[1]).longValue());
+
+            return null;
         }
 
         if (_methodName92.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
+            return EmployeeLocalServiceUtil.countAllIndexedEmployeeDocuments((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                ((Long) arguments[1]).longValue());
+        }
+
+        if (_methodName93.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
+            return EmployeeLocalServiceUtil.countAllUnDeletedIndexedEmployeeDocuments((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                (java.util.List<com.liferay.portal.kernel.search.Query>) arguments[1],
+                ((Long) arguments[2]).longValue(),
+                (com.liferay.portal.kernel.search.Sort) arguments[3]);
+        }
+
+        if (_methodName94.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
+            return EmployeeLocalServiceUtil.searchAllUnDeletedEmployeeIndexedItems((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                (java.util.List<com.liferay.portal.kernel.search.Query>) arguments[1],
+                ((Long) arguments[2]).longValue(),
+                (com.liferay.portal.kernel.search.Sort) arguments[3],
+                ((Integer) arguments[4]).intValue(),
+                ((Integer) arguments[5]).intValue());
+        }
+
+        if (_methodName95.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
+            return EmployeeLocalServiceUtil.searchAllEmployeeIndexedItems((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                ((Long) arguments[1]).longValue());
+        }
+
+        if (_methodName96.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+            return EmployeeLocalServiceUtil.searchAllEmployeeIndexedItems((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                (java.util.List<com.liferay.portal.kernel.search.Query>) arguments[1],
+                ((Long) arguments[2]).longValue(),
+                ((Integer) arguments[3]).intValue(),
+                ((Integer) arguments[4]).intValue());
+        }
+
+        if (_methodName97.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
+            return EmployeeLocalServiceUtil.searchAllEmployeeIndexedItems((com.liferay.portal.kernel.search.SearchContext) arguments[0],
+                (java.util.List<com.liferay.portal.kernel.search.Query>) arguments[1],
+                ((Long) arguments[2]).longValue(),
+                (com.liferay.portal.kernel.search.Sort) arguments[3],
+                ((Integer) arguments[4]).intValue(),
+                ((Integer) arguments[5]).intValue());
+        }
+
+        if (_methodName98.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
+            return EmployeeLocalServiceUtil.findAll();
+        }
+
+        if (_methodName99.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+            return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName100.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
             return EmployeeLocalServiceUtil.findAll(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[2]);
         }
 
-        if (_methodName93.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
+        if (_methodName101.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
             return EmployeeLocalServiceUtil.filterEmployees((java.lang.String) arguments[0],
                 (java.lang.String) arguments[1],
                 (java.lang.String) arguments[2],
@@ -382,8 +515,8 @@ public class EmployeeLocalServiceClpInvoker {
                 (java.lang.String) arguments[15]);
         }
 
-        if (_methodName94.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
+        if (_methodName102.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
             return EmployeeLocalServiceUtil.addEmployee(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Boolean) arguments[2]).booleanValue(),
@@ -445,8 +578,8 @@ public class EmployeeLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[61]);
         }
 
-        if (_methodName95.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
+        if (_methodName103.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
             return EmployeeLocalServiceUtil.addEmployee((vn.com.ecopharma.hrm.model.Employee) arguments[0],
                 ((Long) arguments[1]).longValue(),
                 ((Long) arguments[2]).longValue(),
@@ -476,8 +609,8 @@ public class EmployeeLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[28]);
         }
 
-        if (_methodName96.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+        if (_methodName104.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
             return EmployeeLocalServiceUtil.update((vn.com.ecopharma.hrm.model.Employee) arguments[0],
                 (com.liferay.portal.model.User) arguments[1],
                 (vn.com.ecopharma.hrm.model.JTitle) arguments[2],
@@ -489,18 +622,18 @@ public class EmployeeLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[8]);
         }
 
-        if (_methodName97.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
+        if (_methodName105.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
             return EmployeeLocalServiceUtil.markDeletedEmployee((vn.com.ecopharma.hrm.model.Employee) arguments[0]);
         }
 
-        if (_methodName98.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
+        if (_methodName106.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
             return EmployeeLocalServiceUtil.markDeletedEmployee(((Long) arguments[0]).longValue());
         }
 
-        if (_methodName99.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+        if (_methodName107.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
             return EmployeeLocalServiceUtil.countAll();
         }
 

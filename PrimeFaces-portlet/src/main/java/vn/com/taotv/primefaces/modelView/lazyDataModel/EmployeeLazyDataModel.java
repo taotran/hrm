@@ -5,11 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -64,6 +60,11 @@ public class EmployeeLazyDataModel extends LazyDataModel<EmployeeInfoItem> {
 		String joined_dateTo = StringUtils.EMPTY;		
 		final List<JTitle> selectedJTitles = new ArrayList<JTitle>();
 		if (filters != null) {
+			
+			for(String s: filters.keySet()) {
+				System.out.println("FILTER KEY " + s);
+			}
+			
 			globalFilter = "";
 			fullName = filters.get("fullName") != null ? (String) filters
 					.get("fullName") : StringUtils.EMPTY;
@@ -98,6 +99,8 @@ public class EmployeeLazyDataModel extends LazyDataModel<EmployeeInfoItem> {
 			if (isJobTitleFiltered) {
 				selectedJTitles.addAll((List<JTitle>) filters
 						.get("selectedJTitles"));
+				
+				System.out.println("JobTitle Filter Size" + selectedJTitles.size());
 			}
 
 		}

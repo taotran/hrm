@@ -1,29 +1,18 @@
 package vn.com.taotv.primefaces.modelView;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.portlet.ResourceRequest;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.hrm.enumeration.LaborContractType;
 import vn.com.ecopharma.hrm.model.Employee;
@@ -40,41 +29,22 @@ import vn.com.ecopharma.hrm.service.SubUnitLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.UniversityLocalServiceUtil;
 import vn.com.taotv.primefaces.modelView.item.AddressObjectItem;
+import vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem;
 import vn.com.taotv.primefaces.modelView.item.EmployeeInfoItem;
-import vn.com.taotv.primefaces.modelView.lazyDataModel.EmployeeLazyDataModel;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
-import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 @ManagedBean(name = "empView")
 @ViewScoped
@@ -83,83 +53,23 @@ public class EmployeeView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(EmployeeView.class);
-
-	private Date dateFrom;
-	private Date dateTo;
-
+	
 	private EmployeeInfoItem modifyEmployeeInfoItem;
 	private EmployeeInfoItem selectedEmployeeInfoItem;
 
 	private List<Country> countries;
-
-	private String searchInputText;
-
+	
 	private boolean switchToModifyMode = false;
 
 	private boolean showUserTab = false;
 
-	private long deletedEmployeeId;
-
-	private EmployeeLazyDataModel lazyDataModel;
-
-	public LazyDataModel<EmployeeInfoItem> getLazyDataModel() {
-		return lazyDataModel;
-	}
+	private String deletedEmployeeId;
 
 	@PostConstruct
 	public void init() {
 		LOGGER.info("On Loading Employees");
 		try {
-
-			FacesContext context = FacesContext.getCurrentInstance();
-			LiferayFacesContext liferayFacesContext = LiferayFacesContext
-					.getInstance();
-
-			System.out.println("CURRENT LOCALE "
-					+ context.getViewRoot().getLocale().getCountry());
-
-			System.out.println("CURRENT LOCALE1 "
-					+ liferayFacesContext.getLocale().getCountry());
 			countries = CountryServiceUtil.getCountries(true);
-
-			lazyDataModel = new EmployeeLazyDataModel() {
-
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public List<EmployeeInfoItem> load(int first, int pageSize,
-						String sortField, SortOrder sortOrder,
-						Map<String, Object> filters) {
-
-					final SimpleDateFormat sdf = new SimpleDateFormat(
-							"dd/MM/yyyy");
-					final ELContext elContext = FacesContext
-							.getCurrentInstance().getELContext();
-					EmployeeView empView = (EmployeeView) FacesContext
-							.getCurrentInstance().getApplication()
-							.getELResolver()
-							.getValue(elContext, null, "empView");
-					String dateFromStr = empView.getDateFrom() != null ? sdf
-							.format(empView.getDateFrom()) : "";
-					String dateToStr = empView.getDateTo() != null ? sdf
-							.format(empView.getDateTo()) : "";
-					if (dateFromStr != StringUtils.EMPTY) {
-						filters.put("joined_dateFrom", dateFromStr);
-					}
-					if (dateToStr != StringUtils.EMPTY) {
-						filters.put("joined_dateTo", dateToStr);
-					}
-					return super.load(first, pageSize, sortField, sortOrder,
-							filters);
-				}
-
-			};
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Load employees", "Employees loaded");
-
-			FacesContext.getCurrentInstance().addMessage(null, message);
-
-			RequestContext.getCurrentInstance().update("growl");
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
@@ -184,10 +94,21 @@ public class EmployeeView implements Serializable {
 	/**
 	 * @param employeeInfoItem
 	 */
-	public void editEmployee(EmployeeInfoItem employeeInfoItem) {
-		switchToModifyMode = true;
-		modifyEmployeeInfoItem = employeeInfoItem;
-		showUserTab = false;
+	public void editEmployee(String employeeId) {
+		try {
+			switchToModifyMode = true;
+			modifyEmployeeInfoItem = new EmployeeInfoItem(
+					EmployeeLocalServiceUtil.getEmployee(Long
+							.valueOf(employeeId)));
+			showUserTab = false;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -227,9 +148,23 @@ public class EmployeeView implements Serializable {
 	}
 
 	public void onRowDblSelect(SelectEvent event) {
-		System.out.println("on Row Double Click");
-		switchToModifyMode = true;
-		modifyEmployeeInfoItem = (EmployeeInfoItem) event.getObject();
+		try {
+			System.out.println("on Row Double Click");
+			switchToModifyMode = true;
+			final EmployeeIndexedItem employeeIndexedItem = (EmployeeIndexedItem) event
+					.getObject();
+			modifyEmployeeInfoItem = new EmployeeInfoItem(
+					EmployeeLocalServiceUtil.getEmployee(Long
+							.valueOf(employeeIndexedItem.getEmployeeDocument()
+									.getField(EmployeeField.EMPLOYEE_ID)
+									.getValue())));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
 		showUserTab = false;
 	}
 
@@ -321,18 +256,10 @@ public class EmployeeView implements Serializable {
 	 * 
 	 * @param employeeInfoItem
 	 */
-	/*
-	 * public void setDeleteEmployee(EmployeeInfoItem employeeInfoItem) {
-	 * 
-	 * employeeInfoItem.getEmployee().setIsDeleted(true); try {
-	 * EmployeeLocalServiceUtil.markDeletedEmployee(employeeInfoItem
-	 * .getEmployee()); } catch (SystemException e) { e.printStackTrace(); }
-	 * catch (SearchException e) { e.printStackTrace(); } }
-	 */
-
 	public void setDeleteEmployee() {
 		try {
-			EmployeeLocalServiceUtil.markDeletedEmployee(deletedEmployeeId);
+			EmployeeLocalServiceUtil.markDeletedEmployee(Long
+					.valueOf(deletedEmployeeId));
 		} catch (SystemException e) {
 			e.printStackTrace();
 		} catch (SearchException e) {
@@ -340,219 +267,6 @@ public class EmployeeView implements Serializable {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void search1() {
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-
-		ResourceRequest req = (ResourceRequest) liferayFacesContext
-				.getExternalContext().getRequest();
-
-		HttpServletRequest httpServletRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(req));
-
-		SearchContext searchContext = SearchContextFactory
-				.getInstance(httpServletRequest);
-
-		searchContext.setKeywords("a");
-		searchContext.setPortletIds(new String[] { "Primefaces-portlet" });
-		searchContext.setEntryClassNames(new String[] { Employee.class
-				.getName() });
-
-		TermRangeQuery termRangeQuery = TermRangeQueryFactoryUtil.create(
-				searchContext, "modified", "201507040000000",
-				"201512040000000", true, true);
-
-		/*
-		 * Query stringQuery = StringQueryFactoryUtil
-		 * .create("entryClassName: vn.com.ecopharma.hrm.modal.Employee");
-		 * 
-		 * BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext,
-		 * stringQuery, BooleanClauseOccur.MUST.getName());
-		 * 
-		 * searchContext.setBooleanClauses(new BooleanClause[] { clause });
-		 */
-
-		try {
-			Hits hits = SearchEngineUtil.search(searchContext, termRangeQuery);
-
-			List<Document> docs = hits.toList();
-
-			System.out.println(docs.size());
-			for (Document doc : docs) {
-				System.out.println("PORTLET ID " + doc.getPortletId());
-				String emp_code = doc.getField("emp_code") != null ? doc
-						.getField("emp_code").getValue() : "";
-				System.out.println("EMP CODE  " + emp_code);
-			}
-		} catch (SearchException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void search2() {
-
-		final String[] entryClasses = new String[] { Employee.class.getName() };
-
-		final LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-
-		final ResourceRequest req = (ResourceRequest) liferayFacesContext
-				.getExternalContext().getRequest();
-
-		final HttpServletRequest httpServletRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(req));
-
-		final SearchContext searchContext = SearchContextFactory
-				.getInstance(httpServletRequest);
-
-		searchContext.setEntryClassNames(entryClasses);
-
-		/*
-		 * Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
-		 * assetEntriesFacet.setStatic(true);
-		 * searchContext.addFacet(assetEntriesFacet);
-		 * 
-		 * Facet scopeFacet = new ScopeFacet(searchContext);
-		 * scopeFacet.setStatic(true); searchContext.addFacet(scopeFacet);
-		 * 
-		 * searchContext.setGroupIds(new long[] {20182L}) ;
-		 */
-
-		TermRangeQuery termRangeQuery = TermRangeQueryFactoryUtil.create(
-				searchContext, "modified", "201507040000000",
-				"201512040000000", true, true);
-
-		/*
-		 * TermQuery termQuery = TermQueryFactoryUtil.create(searchContext,
-		 * "emp_code", "1");
-		 */
-
-		/*
-		 * Query stringQuery = StringQueryFactoryUtil
-		 * .create("entryClassName: vn.com.ecopharma.hrm.modal.Employee");
-		 * 
-		 * BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext,
-		 * stringQuery, BooleanClauseOccur.MUST.getName());
-		 * 
-		 * searchContext.setBooleanClauses(new BooleanClause[] { clause });
-		 */
-
-		try {
-
-			// Hits hits = SearchEngineUtil.search(searchContext,
-			// termRangeQuery);
-			// Hits hits = SearchEngineUtil.search(searchContext,
-			// termRangeQuery);
-			/*
-			 * Hits hits = SearchEngineUtil.search(
-			 * SearchEngineUtil.getDefaultSearchEngineId(), 20155l,
-			 * termRangeQuery, 0, 10);
-			 */
-
-			Hits hits = SearchEngineUtil.search(
-					SearchEngineUtil.getDefaultSearchEngineId(), 20155l,
-					termRangeQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			final List<Document> docs = hits.toList();
-
-			System.out.println("SEARCH SIZE: " + docs.size());
-
-			for (Document doc : docs) {
-				System.out.println("PORTLET ID " + doc.getPortletId());
-				String emp_code = doc.getField("emp_code") != null ? doc
-						.getField("emp_code").getValue() : "";
-				String fullName = doc.getField(EmployeeField.FULL_NAME) != null ? doc
-						.getField(EmployeeField.FULL_NAME).getValue() : "";
-				long emp_id = doc.getField(EmployeeField.EMPLOYEE_ID) != null ? Long
-						.valueOf(doc.getField(EmployeeField.EMPLOYEE_ID)
-								.getValue()) : 0l;
-				System.out.println("EMP ID  " + emp_id);
-				System.out.println("EMP CODE  " + emp_code);
-				System.out.println("FULL NAME " + fullName);
-			}
-
-			FacesContext context = FacesContext.getCurrentInstance();
-
-			context.addMessage(null, new FacesMessage("Successful",
-					"Search results shown"));
-
-		} catch (SearchException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void search() {
-		System.out.println(searchInputText);
-		final String[] entryClassNames = new String[] { Employee.class
-				.getName() };
-
-		final LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-		final ResourceRequest req = (ResourceRequest) liferayFacesContext
-				.getExternalContext().getRequest();
-
-		final HttpServletRequest httpServletRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(req));
-
-		final SearchContext searchContext = SearchContextFactory
-				.getInstance(httpServletRequest);
-
-		searchContext.setEntryClassNames(entryClassNames);
-		searchContext.setPortletIds(new String[] { "Primefaces-portlet" });
-		// Query query =
-		// StringQueryFactoryUtil.getStringQueryFactory().create("");
-		Query stringQuery = StringQueryFactoryUtil
-				.create("entryClassName: vn.com.ecopharma.hrm.modal.Employee");
-		BooleanClause clause = BooleanClauseFactoryUtil.create(searchContext,
-				stringQuery, BooleanClauseOccur.MUST.getName());
-		/*searchContext.setBooleanClauses(new BooleanClause[] { clause });*/
-		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
-		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		/*
-		 * BooleanQuery booleanQuery2 = BooleanQueryFactoryUtil
-		 * .create(searchContext);
-		 */
-		TermRangeQuery termRangeQuery = TermRangeQueryFactoryUtil.create(
-				searchContext, EmployeeField.BIRTHDAY, "201505010000000",
-				"201512040000000", true, true);
-		try {
-//			booleanQuery.addTerm(EmployeeField.FULL_NAME, "a", true);
-			booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, Employee.class.getName());
-			/* booleanQuery2.addTerm(EmployeeField.FULL_NAME, "a", true); */
-
-			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
-			// fullQuery.add(booleanQuery2, BooleanClauseOccur.MUST);
-//			fullQuery.add(termRangeQuery, BooleanClauseOccur.MUST);
-
-			Hits hits = SearchEngineUtil.search(
-					SearchEngineUtil.getDefaultSearchEngineId(), 20155l,
-					fullQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			List<Document> docs = hits.toList();
-
-			LOGGER.info("SEARCH RESULT SIZE " + hits.toList().size());
-
-			for (Document doc : docs) {
-				for (String s : doc.getFields().keySet()) {
-					System.out.println(s + " "
-							+ doc.getFields().get(s).getValue());
-				}
-				System.out.println("____________________________________");
-			}
-			
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (SearchException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public void onCountryChange(int index) {
@@ -601,30 +315,6 @@ public class EmployeeView implements Serializable {
 		this.countries = countries;
 	}
 
-	public String getSearchInputText() {
-		return searchInputText;
-	}
-
-	public void setSearchInputText(String searchInputText) {
-		this.searchInputText = searchInputText;
-	}
-
-	public Date getDateFrom() {
-		return dateFrom;
-	}
-
-	public void setDateFrom(Date dateFrom) {
-		this.dateFrom = dateFrom;
-	}
-
-	public Date getDateTo() {
-		return dateTo;
-	}
-
-	public void setDateTo(Date dateTo) {
-		this.dateTo = dateTo;
-	}
-
 	public EmployeeInfoItem getSelectedEmployeeInfoItem() {
 		return selectedEmployeeInfoItem;
 	}
@@ -634,11 +324,11 @@ public class EmployeeView implements Serializable {
 		this.selectedEmployeeInfoItem = selectedEmployeeInfoItem;
 	}
 
-	public long getDeletedEmployeeId() {
+	public String getDeletedEmployeeId() {
 		return deletedEmployeeId;
 	}
 
-	public void setDeletedEmployeeId(long deletedEmployeeId) {
+	public void setDeletedEmployeeId(String deletedEmployeeId) {
 		this.deletedEmployeeId = deletedEmployeeId;
 	}
 

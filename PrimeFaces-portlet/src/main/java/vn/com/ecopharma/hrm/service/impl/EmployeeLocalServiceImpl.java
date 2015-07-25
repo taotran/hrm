@@ -11,17 +11,32 @@ import vn.com.ecopharma.hrm.model.Level;
 import vn.com.ecopharma.hrm.model.SubUnit;
 import vn.com.ecopharma.hrm.model.Titles;
 import vn.com.ecopharma.hrm.model.University;
+import vn.com.ecopharma.hrm.search.EmployeeField;
 import vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.base.EmployeeLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.service.persistence.EmployeeFinderUtil;
 import vn.com.taotv.primefaces.modelView.item.AddressObjectItem;
+import vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem;
 
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
@@ -55,24 +70,195 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 	 * employee local service.
 	 */
 
-	public List<Employee> findAll() throws SystemException {
-		return employeePersistence
-				.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public static final Logger LOGGER = LoggerFactory
+			.getLogger(EmployeeLocalServiceImpl.class);
+
+	public void indexAllEmployees() {
+		final Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Employee.class);
+		final List<Employee> allEmps = findAll();
+		LOGGER.info("EMPLOYEE total size: " + allEmps.size());
+		for (Employee employee : findAll()) {
+			// index employee
+			try {
+				indexer.reindex(employee);
+			} catch (SearchException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void removeAllEmployeeIndexes(SearchContext searchContext,
+			long companyId) {
+		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addExactTerm(Field.ENTRY_CLASS_NAME,
+				Employee.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			final List<Document> docs = hits.toList();
+			for (Document doc : docs) {
+				LOGGER.info("DELETE employee's Index UID: " + doc.getUID());
+				SearchEngineUtil.deleteDocument(
+						SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+						doc.getUID());
+
+			}
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int countAllIndexedEmployeeDocuments(SearchContext searchContext,
+			long companyId) {
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Employee.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			return hits.getLength();
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int countAllUnDeletedIndexedEmployeeDocuments(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort) {
+		return searchAllUnDeletedEmployeeIndexedItems(searchContext,
+				filterQueries, companyId, sort, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS).size();
+	}
+
+	public List<EmployeeIndexedItem> searchAllUnDeletedEmployeeIndexedItems(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort, int start, int end) {
+		final List<EmployeeIndexedItem> results = new ArrayList<EmployeeIndexedItem>();
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allEmployeeEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery noneDeletedEmployeesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allEmployeeEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Employee.class.getName());
+		noneDeletedEmployeesBooleanQuery.addExactTerm(EmployeeField.IS_DELETED,
+				"false");
+
+		try {
+			// add filter queries
+			fullQuery.add(allEmployeeEntriesBooleanQuery,
+					BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			// always filter for none-delete item
+			fullQuery.add(noneDeletedEmployeesBooleanQuery,
+					BooleanClauseOccur.MUST);
+
+			System.out.println("SORT by " + sort.getFieldName() + " reverse: "
+					+ sort.isReverse());
+
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end);
+			for (Document document : hits.toList()) {
+				EmployeeIndexedItem employeeIndexedItem = new EmployeeIndexedItem(
+						document);
+				results.add(employeeIndexedItem);
+			}
+		} catch (SearchException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+
+	public List<EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+			SearchContext searchContext, long companyId) {
+		return searchAllEmployeeIndexedItems(searchContext, null, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, int start, int end) {
+		Sort sort = new Sort();
+		sort.setFieldName(EmployeeField.EMPLOYEE_ID);
+		return searchAllEmployeeIndexedItems(searchContext, filterQueries,
+				companyId, sort, start, end);
+	}
+
+	public List<EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort, int start, int end) {
+		final List<EmployeeIndexedItem> results = new ArrayList<EmployeeIndexedItem>();
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allEmployeeEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allEmployeeEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Employee.class.getName());
+
+		try {
+			// add filter queries
+			fullQuery.add(allEmployeeEntriesBooleanQuery,
+					BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			// always filter for none-delete item
+
+			System.out.println("SORT by " + sort.getFieldName() + " reverse: "
+					+ sort.isReverse());
+
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end);
+			for (Document document : hits.toList()) {
+				EmployeeIndexedItem employeeIndexedItem = new EmployeeIndexedItem(
+						document);
+				results.add(employeeIndexedItem);
+			}
+		} catch (SearchException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+
+	public List<Employee> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	public List<Employee> findAll(int start, int end) {
-		try {
-			return employeePersistence.findAll(start, end, null);
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<Employee>();
+		return findAll(start, end, null);
 	}
 
 	public List<Employee> findAll(int start, int end,
-			OrderByComparator orderByComparator) throws SystemException {
-		return employeePersistence.findAll(start, end, orderByComparator);
+			OrderByComparator orderByComparator) {
+		try {
+			return employeePersistence.findAll(start, end, orderByComparator);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public List<Employee> filterEmployees(String globStr, String fullName,
@@ -270,11 +456,12 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		employee.setModifiedDate(new Date(System.currentTimeMillis()));
 		// Update User for Email, name info
 		userPersistence.update(user);
-		
+
 		// Insert log (history) in case Employee is promoted to new position
 		if (isPositionChanged) {
 			employee_Titles_HistoryLocalService.addEmployee_Titles_History(
-					employee.getEmployeeId(), employee.getTitlesId(), "PROMOTED TO NEW TITLES",
+					employee.getEmployeeId(), employee.getTitlesId(),
+					"PROMOTED TO NEW TITLES",
 					new Date(System.currentTimeMillis()), serviceContext);
 		}
 
@@ -335,11 +522,12 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		return employeePersistence.update(employee);
 
 	}
-	
+
 	public Employee markDeletedEmployee(long employeeId)
 			throws SystemException, PortalException {
 
-		final Employee employee = EmployeeLocalServiceUtil.getEmployee(employeeId);
+		final Employee employee = EmployeeLocalServiceUtil
+				.getEmployee(employeeId);
 		employee.setIsDeleted(true);
 
 		// re-index modified employee

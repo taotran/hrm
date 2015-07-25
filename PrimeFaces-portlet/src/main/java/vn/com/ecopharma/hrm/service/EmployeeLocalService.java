@@ -237,16 +237,54 @@ public interface EmployeeLocalService extends BaseLocalService,
         java.lang.String[] parameterTypes, java.lang.Object[] arguments)
         throws java.lang.Throwable;
 
-    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll()
-        throws com.liferay.portal.kernel.exception.SystemException;
+    public void indexAllEmployees();
+
+    public void removeAllEmployeeIndexes(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId);
+
+    public int countAllIndexedEmployeeDocuments(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId);
+
+    public int countAllUnDeletedIndexedEmployeeDocuments(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllUnDeletedEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+        int end);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        long companyId);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, int start, int end);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<vn.com.taotv.primefaces.modelView.item.EmployeeIndexedItem> searchAllEmployeeIndexedItems(
+        com.liferay.portal.kernel.search.SearchContext searchContext,
+        java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+        long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+        int end);
+
+    public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll();
 
     public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
         int start, int end);
 
     public java.util.List<vn.com.ecopharma.hrm.model.Employee> findAll(
         int start, int end,
-        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-        throws com.liferay.portal.kernel.exception.SystemException;
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
     public java.util.List<vn.com.ecopharma.hrm.model.Employee> filterEmployees(
         java.lang.String globStr, java.lang.String fullName,

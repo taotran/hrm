@@ -9,6 +9,7 @@ import javax.portlet.PortletURL;
 import vn.com.ecopharma.hrm.model.Employee;
 import vn.com.ecopharma.hrm.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.EmpoyeeModelPermission;
+import vn.com.ecopharma.hrm.service.JTitleLocalServiceUtil;
 import vn.com.ecopharma.hrm.service.persistence.EmployeeActionableDynamicQuery;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -31,10 +32,6 @@ public class EmployeeIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = { Employee.class.getName() };
 
-	public EmployeeIndexer() {
-		setPermissionAware(true);
-	}
-
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
@@ -46,21 +43,43 @@ public class EmployeeIndexer extends BaseIndexer {
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return true;
+	}
+
+	@Override
 	protected void doDelete(Object obj) throws Exception {
 		Employee emp = (Employee) obj;
 		emp.setIsDeleted(true);
+		/*
+		 * Document document = getDocument(emp);
+		 * SearchEngineUtil.deleteDocument(
+		 * SearchEngineUtil.getDefaultSearchEngineId(), ((Employee)
+		 * obj).getCompanyId(), document.getUID());
+		 */
+		doReindex(emp);
 	}
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		Employee emp = (Employee) obj;
+		final Employee emp = (Employee) obj;
 		Document document = getBaseModelDocument(PORTLET_ID, emp);
 		document.addNumber(EmployeeField.EMPLOYEE_ID, emp.getEmployeeId());
-		document.addNumber(EmployeeField.EMPLOYEE_USER_ID, emp.getEmployee_userId());
-		document.addText(EmployeeField.FULL_NAME, UserLocalServiceUtil.getUser(emp.getEmployee_userId()).getFullName());
+		document.addNumber(EmployeeField.EMPLOYEE_USER_ID,
+				emp.getEmployee_userId());
+		document.addText(EmployeeField.FULL_NAME,
+				UserLocalServiceUtil.getUser(emp.getEmployee_userId())
+						.getFullName());
 		document.addDate(Field.MODIFIED_DATE, emp.getModifiedDate());
 		document.addText(EmployeeField.EMPLOYEE_CODE, emp.getEmp_code());
+		document.addText(EmployeeField.JOB_TITLE, JTitleLocalServiceUtil
+				.getJTitle(emp.getJobtitleId()).getTitle());
 		document.addDate(EmployeeField.BIRTHDAY, emp.getBirthday());
+		document.addText(EmployeeField.GENDER, emp.getGender());
+		document.addDate(EmployeeField.JOINED_DATE, emp.getJoined_date());
+		document.addText(EmployeeField.IS_DELETED, emp.isIsDeleted() ? "true"
+				: "false");
+
 		document.addKeyword(Field.GROUP_ID, getSiteGroupId(emp.getGroupId()));
 		document.addKeyword(Field.SCOPE_GROUP_ID, emp.getGroupId());
 		return document;
